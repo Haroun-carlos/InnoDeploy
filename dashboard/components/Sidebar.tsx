@@ -55,7 +55,6 @@ export default function Sidebar() {
 
       {/* ── Footer ─────────────────────────────── */}
       <div className="px-6 py-4 border-t text-xs text-muted-foreground">
-        InnoDeploy v1.0 &mdash; Sprint 1
       </div>
     </aside>
   );
