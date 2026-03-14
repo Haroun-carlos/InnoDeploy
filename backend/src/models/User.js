@@ -50,6 +50,11 @@ const userSchema = new mongoose.Schema(
         enum: ["light", "dark", "system"],
         default: "system",
       },
+      language: {
+        type: String,
+        enum: ["english", "french", "arabic"],
+        default: "english",
+      },
 
       defaultProject: {
         type: mongoose.Schema.Types.ObjectId,

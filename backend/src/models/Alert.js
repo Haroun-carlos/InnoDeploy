@@ -9,24 +9,18 @@ const alertSchema = new mongoose.Schema(
     },
     severity: {
       type: String,
-      enum: ["info", "warning", "error", "critical"],
+      enum: ["info", "warning", "critical"],
       required: true,
-    },
-    title: {
-      type: String,
-      required: [true, "Alert title is required"],
-      trim: true,
-      maxlength: 200,
     },
     message: {
       type: String,
       required: [true, "Alert message is required"],
       trim: true,
     },
-    environment: {
+    ruleType: {
       type: String,
-      default: "",
-      trim: true,
+      enum: ["cpu", "memory", "latency", "availability", "deployment"],
+      required: true,
     },
     acknowledged: {
       type: Boolean,
@@ -41,6 +35,18 @@ const alertSchema = new mongoose.Schema(
       type: Date,
       default: null,
     },
+    status: {
+      type: String,
+      enum: ["open", "acknowledged", "resolved"],
+      default: "open",
+    },
+    metricAtTrigger: [
+      {
+        label: { type: String, required: true, trim: true },
+        value: { type: Number, required: true },
+        unit: { type: String, default: "", trim: true },
+      },
+    ],
   },
   { timestamps: true }
 );

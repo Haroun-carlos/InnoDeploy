@@ -39,6 +39,188 @@ const organisationSchema = new mongoose.Schema(
         },
       },
     ],
+    alertRules: {
+      cpuThreshold: {
+        type: Number,
+        default: 80,
+      },
+      memoryThreshold: {
+        type: Number,
+        default: 85,
+      },
+      latencyThreshold: {
+        type: Number,
+        default: 250,
+      },
+      availabilityThreshold: {
+        type: Number,
+        default: 99,
+      },
+      emailNotifications: {
+        type: Boolean,
+        default: true,
+      },
+      slackNotifications: {
+        type: Boolean,
+        default: false,
+      },
+    },
+    billingInfo: {
+      contactEmail: {
+        type: String,
+        default: "",
+        trim: true,
+      },
+      companyAddress: {
+        type: String,
+        default: "",
+        trim: true,
+      },
+      taxId: {
+        type: String,
+        default: "",
+        trim: true,
+      },
+    },
+    notificationChannels: {
+      slackWebhook: {
+        type: String,
+        default: "",
+        trim: true,
+      },
+      discordWebhook: {
+        type: String,
+        default: "",
+        trim: true,
+      },
+      smtpHost: {
+        type: String,
+        default: "",
+        trim: true,
+      },
+      smtpPort: {
+        type: Number,
+        default: 587,
+      },
+      smtpUsername: {
+        type: String,
+        default: "",
+        trim: true,
+      },
+      smtpPassword: {
+        type: String,
+        default: "",
+        trim: true,
+      },
+      smtpFromEmail: {
+        type: String,
+        default: "",
+        trim: true,
+      },
+    },
+    dockerRegistry: {
+      registryUrl: {
+        type: String,
+        default: "",
+        trim: true,
+      },
+      username: {
+        type: String,
+        default: "",
+        trim: true,
+      },
+      password: {
+        type: String,
+        default: "",
+        trim: true,
+      },
+      namespace: {
+        type: String,
+        default: "",
+        trim: true,
+      },
+    },
+    gitProvider: {
+      provider: {
+        type: String,
+        enum: ["github", "gitlab", "bitbucket", "none"],
+        default: "none",
+      },
+      installationUrl: {
+        type: String,
+        default: "",
+        trim: true,
+      },
+      webhookSecret: {
+        type: String,
+        default: "",
+        trim: true,
+      },
+      repositoryOwner: {
+        type: String,
+        default: "",
+        trim: true,
+      },
+    },
+    invitations: [
+      {
+        email: {
+          type: String,
+          required: true,
+          lowercase: true,
+          trim: true,
+        },
+        role: {
+          type: String,
+          enum: ["owner", "admin", "developer", "viewer"],
+          default: "developer",
+        },
+        status: {
+          type: String,
+          enum: ["pending", "accepted", "revoked"],
+          default: "pending",
+        },
+        invitedAt: {
+          type: Date,
+          default: Date.now,
+        },
+      },
+    ],
+    apiKeys: [
+      {
+        name: {
+          type: String,
+          required: true,
+          trim: true,
+        },
+        prefix: {
+          type: String,
+          required: true,
+          trim: true,
+        },
+        secretHash: {
+          type: String,
+          required: true,
+        },
+        createdByUserId: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "User",
+          required: true,
+        },
+        createdAt: {
+          type: Date,
+          default: Date.now,
+        },
+        lastUsedAt: {
+          type: Date,
+          default: null,
+        },
+        revokedAt: {
+          type: Date,
+          default: null,
+        },
+      },
+    ],
   },
   { timestamps: true }
 );

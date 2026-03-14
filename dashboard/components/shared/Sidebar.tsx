@@ -7,6 +7,8 @@ import {
   FolderKanban,
   GitBranch,
   Activity,
+  ShieldAlert,
+  Server,
   Settings,
   Rocket,
 } from "lucide-react";
@@ -15,8 +17,10 @@ import { cn } from "@/lib/utils";
 const navItems = [
   { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
   { label: "Projects", href: "/dashboard/projects", icon: FolderKanban },
+  { label: "Hosts", href: "/dashboard/hosts", icon: Server },
   { label: "Pipelines", href: "/dashboard/pipelines", icon: GitBranch },
   { label: "Deployments", href: "/dashboard/deployments", icon: Activity },
+  { label: "Alerts", href: "/dashboard/alerts", icon: ShieldAlert },
   { label: "Settings", href: "/dashboard/settings", icon: Settings },
 ];
 
@@ -34,7 +38,9 @@ export default function Sidebar() {
       {/* ── Navigation ─────────────────────────── */}
       <nav className="flex-1 px-3 py-4 space-y-1">
         {navItems.map(({ label, href, icon: Icon }) => {
-          const isActive = pathname === href;
+          const isActive = href === "/dashboard"
+            ? pathname === href
+            : pathname === href || pathname.startsWith(`${href}/`);
           return (
             <Link
               key={href}

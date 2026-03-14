@@ -96,3 +96,199 @@ export interface ApiError {
   message: string;
   errors?: string[];
 }
+
+// ─── Pipeline types ────────────────────────────────────────────────────────────
+
+export type PipelineRunStatus = "queued" | "running" | "success" | "failed";
+export type PipelineTriggerType = "manual" | "push" | "schedule" | "api";
+export type StageStatus = "pending" | "running" | "success" | "failed" | "skipped";
+
+export interface PipelineStage {
+  id: string;
+  name: string;
+  status: StageStatus;
+  duration: string | null;
+  logs: string[];
+}
+
+export interface PipelineRun {
+  id: string;
+  branch: string;
+  commit: string;
+  commitMsg: string;
+  status: PipelineRunStatus;
+  duration: string | null;
+  triggeredBy: string;
+  triggerType: PipelineTriggerType;
+  createdAt: string;
+  stages: PipelineStage[];
+}
+
+// ─── Monitoring types ──────────────────────────────────────────────────────────
+
+export type MonitoringTimeRange = "1h" | "6h" | "24h" | "7d" | "30d" | "custom";
+export type ServiceStatus = "healthy" | "degraded" | "down";
+export type AlertSeverity = "critical" | "warning" | "info";
+
+export interface AlertHistoryEntry {
+  id: string;
+  severity: AlertSeverity;
+  message: string;
+  triggeredAt: string;
+  resolved: boolean;
+  resolvedAt: string | null;
+}
+
+// ─── Logs types ────────────────────────────────────────────────────────────────
+
+export type LogLevel = "debug" | "info" | "warn" | "error" | "fatal";
+
+export interface LogEntry {
+  id: string;
+  timestamp: string;
+  level: LogLevel;
+  container: string;
+  message: string;
+}
+
+// ─── Hosts and alerts types ───────────────────────────────────────────────────
+
+export type HostStatus = "online" | "offline";
+export type ConnectionTestStatus = "idle" | "running" | "success" | "failed";
+export type AlertRuleType = "cpu" | "memory" | "latency" | "availability" | "deployment";
+export type AlertStatus = "open" | "acknowledged" | "resolved";
+
+export interface HostDeployedContainer {
+  id: string;
+  name: string;
+  image: string;
+  status: "running" | "stopped";
+}
+
+export interface Host {
+  id: string;
+  hostname: string;
+  ip: string;
+  status: HostStatus;
+  cpu: number;
+  memory: number;
+  disk: number;
+  sshUser: string;
+  os: string;
+  dockerVersion: string;
+  activeDeployments: number;
+  containers: HostDeployedContainer[];
+}
+
+export interface HostFormData {
+  hostname: string;
+  ip: string;
+  sshUser: string;
+  sshPrivateKeyName: string;
+}
+
+export interface ProjectAlert {
+  id: string;
+  severity: Exclude<AlertSeverity, "info"> | "info";
+  project: string;
+  ruleType: AlertRuleType;
+  message: string;
+  timestamp: string;
+  status: AlertStatus;
+  metricAtTrigger: { label: string; value: number; unit: string }[];
+}
+
+export interface AlertRuleConfig {
+  cpuThreshold: number;
+  memoryThreshold: number;
+  latencyThreshold: number;
+  availabilityThreshold: number;
+  emailNotifications: boolean;
+  slackNotifications: boolean;
+ }
+
+// ─── Settings types ───────────────────────────────────────────────────────────
+
+export type MemberRole = "owner" | "admin" | "developer" | "viewer";
+export type ThemePreference = "light" | "dark" | "system";
+export type LanguagePreference = "english" | "french" | "arabic";
+export type GitProviderOption = "github" | "gitlab" | "bitbucket" | "none";
+
+export interface OrganisationBillingInfo {
+  contactEmail: string;
+  companyAddress: string;
+  taxId: string;
+}
+
+export interface OrganisationSettingsProfile {
+  id: string;
+  name: string;
+  slug: string;
+  plan: "free" | "pro" | "enterprise";
+  billingInfo: OrganisationBillingInfo;
+}
+
+export interface OrganisationMember {
+  id: string;
+  name: string;
+  email: string;
+  role: MemberRole;
+  joinedAt: string;
+}
+
+export interface OrganisationInvitation {
+  id: string;
+  email: string;
+  role: MemberRole;
+  status: "pending" | "accepted" | "revoked";
+  invitedAt: string;
+}
+
+export interface NotificationChannelsConfig {
+  slackWebhook: string;
+  discordWebhook: string;
+  smtpHost: string;
+  smtpPort: number;
+  smtpUsername: string;
+  smtpPassword: string;
+  smtpFromEmail: string;
+}
+
+export interface DockerRegistrySettings {
+  registryUrl: string;
+  username: string;
+  password: string;
+  namespace: string;
+}
+
+export interface GitProviderSettings {
+  provider: GitProviderOption;
+  installationUrl: string;
+  webhookSecret: string;
+  repositoryOwner: string;
+}
+
+export interface OrganisationApiKey {
+  id: string;
+  name: string;
+  prefix: string;
+  createdAt: string;
+  lastUsedAt: string | null;
+  revokedAt: string | null;
+}
+
+export interface UserSettingsPreferences {
+  theme: ThemePreference;
+  language: LanguagePreference;
+}
+
+export interface SettingsPayload {
+  organisation: OrganisationSettingsProfile;
+  members: OrganisationMember[];
+  invitations: OrganisationInvitation[];
+  notificationChannels: NotificationChannelsConfig;
+  dockerRegistry: DockerRegistrySettings;
+  gitProvider: GitProviderSettings;
+  apiKeys: OrganisationApiKey[];
+  preferences: UserSettingsPreferences;
+}

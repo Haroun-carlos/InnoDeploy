@@ -5,6 +5,9 @@ const morgan = require("morgan");
 
 const authRoutes = require("./routes/authRoutes");
 const projectRoutes = require("./routes/projectRoutes");
+const hostRoutes = require("./routes/hostRoutes");
+const alertRoutes = require("./routes/alertRoutes");
+const settingsRoutes = require("./routes/settingsRoutes");
 const errorMiddleware = require("./middleware/errorMiddleware");
 
 const app = express();
@@ -23,6 +26,9 @@ app.get("/api/health", (_req, res) => {
 // ── API routes ────────────────────────────────────────────
 app.use("/api/auth", authRoutes);
 app.use("/api/projects", projectRoutes);
+app.use("/api/hosts", hostRoutes);
+app.use("/api/alerts", alertRoutes);
+app.use("/api/settings", settingsRoutes);
 
 // ── 404 catch-all ─────────────────────────────────────────
 app.use((_req, res) => {

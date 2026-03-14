@@ -78,4 +78,102 @@ export const projectApi = {
   }) => apiClient.post("/projects", payload),
 };
 
+export const hostApi = {
+  getHosts: () => apiClient.get("/hosts"),
+
+  testDraftConnection: (payload: {
+    ip: string;
+    sshUser: string;
+    sshPrivateKeyName: string;
+  }) => apiClient.post("/hosts/test-connection", payload),
+
+  createHost: (payload: {
+    hostname: string;
+    ip: string;
+    sshUser: string;
+    sshPrivateKeyName: string;
+  }) => apiClient.post("/hosts", payload),
+
+  testConnection: (hostId: string) => apiClient.post(`/hosts/${hostId}/test-connection`),
+
+  removeHost: (hostId: string) => apiClient.delete(`/hosts/${hostId}`),
+};
+
+export const alertApi = {
+  getAlerts: () => apiClient.get("/alerts"),
+
+  acknowledgeAlert: (alertId: string) => apiClient.patch(`/alerts/${alertId}/acknowledge`),
+
+  getRules: () => apiClient.get("/alerts/rules/config"),
+
+  updateRules: (payload: {
+    cpuThreshold: number;
+    memoryThreshold: number;
+    latencyThreshold: number;
+    availabilityThreshold: number;
+    emailNotifications: boolean;
+    slackNotifications: boolean;
+  }) => apiClient.put("/alerts/rules/config", payload),
+
+  testNotification: () => apiClient.post("/alerts/rules/test-notification"),
+};
+
+export const settingsApi = {
+  getSettings: () => apiClient.get("/settings"),
+
+  updateOrganisation: (payload: {
+    name: string;
+    slug: string;
+    billingInfo: {
+      contactEmail: string;
+      companyAddress: string;
+      taxId: string;
+    };
+  }) => apiClient.put("/settings/organisation", payload),
+
+  inviteMember: (payload: { email: string; role: string }) =>
+    apiClient.post("/settings/members/invite", payload),
+
+  updateMemberRole: (memberId: string, payload: { role: string }) =>
+    apiClient.patch(`/settings/members/${memberId}/role`, payload),
+
+  removeMember: (memberId: string) => apiClient.delete(`/settings/members/${memberId}`),
+
+  revokeInvitation: (invitationId: string) => apiClient.delete(`/settings/invitations/${invitationId}`),
+
+  updateNotifications: (payload: {
+    slackWebhook: string;
+    discordWebhook: string;
+    smtpHost: string;
+    smtpPort: number;
+    smtpUsername: string;
+    smtpPassword: string;
+    smtpFromEmail: string;
+  }) => apiClient.put("/settings/notifications", payload),
+
+  updateDockerRegistry: (payload: {
+    registryUrl: string;
+    username: string;
+    password: string;
+    namespace: string;
+  }) => apiClient.put("/settings/docker-registry", payload),
+
+  updateGitProvider: (payload: {
+    provider: string;
+    installationUrl: string;
+    webhookSecret: string;
+    repositoryOwner: string;
+  }) => apiClient.put("/settings/git-provider", payload),
+
+  updatePreferences: (payload: { theme: string; language: string }) =>
+    apiClient.put("/settings/preferences", payload),
+
+  createApiKey: (payload: { name: string }) => apiClient.post("/settings/api-keys", payload),
+
+  revokeApiKey: (apiKeyId: string) => apiClient.delete(`/settings/api-keys/${apiKeyId}`),
+
+  deleteOrganisation: (payload: { confirmation: string }) =>
+    apiClient.delete("/settings/organisation", { data: payload }),
+};
+
 export default apiClient;
