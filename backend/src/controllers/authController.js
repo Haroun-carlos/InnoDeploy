@@ -1,6 +1,7 @@
 const User = require("../models/User");
 const Organisation = require("../models/Organisation");
 const { redisClient } = require("../config/redis");
+const crypto = require("crypto");
 const {
   generateAccessToken,
   generateRefreshToken,
@@ -9,6 +10,171 @@ const {
 
 // Refresh token TTL in Redis (7 days in seconds)
 const REFRESH_TOKEN_TTL = 7 * 24 * 60 * 60;
+const OAUTH_STATE_TTL = 10 * 60;
+
+const getApiBaseUrl = () => process.env.API_BASE_URL || `http://localhost:${process.env.PORT || 5000}/api`;
+const getOAuthRedirectUrl = () => process.env.OAUTH_REDIRECT_URL || `${process.env.CLIENT_URL || "http://localhost:3000"}/auth/callback`;
+const getGoogleCallbackUrl = () => process.env.GOOGLE_CALLBACK_URL || `${getApiBaseUrl()}/auth/google/callback`;
+const getGithubCallbackUrl = () => process.env.GITHUB_CALLBACK_URL || `${getApiBaseUrl()}/auth/github/callback`;
+
+const encodeUserParam = (user) => Buffer.from(JSON.stringify(user)).toString("base64url");
+
+const redirectWithResult = (res, params) => {
+  const callbackUrl = new URL(getOAuthRedirectUrl());
+  Object.entries(params).forEach(([key, value]) => {
+    callbackUrl.searchParams.set(key, String(value));
+  });
+  return res.redirect(callbackUrl.toString());
+};
+
+const createStateToken = async (provider) => {
+  const state = crypto.randomBytes(18).toString("hex");
+  await redisClient.set(`oauth:state:${state}`, provider, { EX: OAUTH_STATE_TTL });
+  return state;
+};
+
+const validateStateToken = async (state, expectedProvider) => {
+  if (!state) return false;
+  const key = `oauth:state:${state}`;
+  const storedProvider = await redisClient.get(key);
+  if (!storedProvider || storedProvider !== expectedProvider) {
+    return false;
+  }
+  await redisClient.del(key);
+  return true;
+};
+
+const issueAuthTokens = async (user) => {
+  const tokenPayload = { id: user._id, email: user.email, role: user.role };
+  const accessToken = generateAccessToken(tokenPayload);
+  const refreshToken = generateRefreshToken(tokenPayload);
+  await redisClient.set(`refresh:${user._id}`, refreshToken, { EX: REFRESH_TOKEN_TTL });
+  return { accessToken, refreshToken };
+};
+
+const findOrCreateOAuthUser = async ({ name, email, avatar }) => {
+  const normalizedEmail = String(email || "").trim().toLowerCase();
+  if (!normalizedEmail) {
+    throw new Error("OAuth provider did not return an email");
+  }
+
+  let user = await User.findOne({ email: normalizedEmail });
+  if (!user) {
+    user = await User.create({
+      name: String(name || normalizedEmail.split("@")[0] || "InnoDeploy User").trim(),
+      email: normalizedEmail,
+      passwordHash: crypto.randomBytes(24).toString("hex"),
+      avatar: avatar || null,
+      role: "developer",
+      organisationId: null,
+    });
+    return user;
+  }
+
+  if (avatar && user.avatar !== avatar) {
+    user.avatar = avatar;
+    await user.save();
+  }
+
+  return user;
+};
+
+const exchangeGoogleCodeForProfile = async (code) => {
+  const tokenResponse = await fetch("https://oauth2.googleapis.com/token", {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: new URLSearchParams({
+      code,
+      client_id: process.env.GOOGLE_CLIENT_ID || "",
+      client_secret: process.env.GOOGLE_CLIENT_SECRET || "",
+      redirect_uri: getGoogleCallbackUrl(),
+      grant_type: "authorization_code",
+    }),
+  });
+
+  if (!tokenResponse.ok) {
+    const details = await tokenResponse.text();
+    throw new Error(`Google token exchange failed (${tokenResponse.status}): ${details}`);
+  }
+
+  const tokenData = await tokenResponse.json();
+  const userInfoResponse = await fetch("https://openidconnect.googleapis.com/v1/userinfo", {
+    headers: { Authorization: `Bearer ${tokenData.access_token}` },
+  });
+
+  if (!userInfoResponse.ok) {
+    const details = await userInfoResponse.text();
+    throw new Error(`Failed to fetch Google profile (${userInfoResponse.status}): ${details}`);
+  }
+
+  const profile = await userInfoResponse.json();
+  return {
+    name: profile.name,
+    email: profile.email,
+    avatar: profile.picture,
+  };
+};
+
+const exchangeGithubCodeForProfile = async (code) => {
+  const tokenResponse = await fetch("https://github.com/login/oauth/access_token", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+      Accept: "application/json",
+      "User-Agent": "InnoDeploy",
+    },
+    body: new URLSearchParams({
+      code,
+      client_id: process.env.GITHUB_CLIENT_ID || "",
+      client_secret: process.env.GITHUB_CLIENT_SECRET || "",
+      redirect_uri: getGithubCallbackUrl(),
+    }),
+  });
+
+  if (!tokenResponse.ok) {
+    throw new Error("GitHub token exchange failed");
+  }
+
+  const tokenData = await tokenResponse.json();
+  const accessToken = tokenData.access_token;
+  if (!accessToken) {
+    throw new Error("GitHub access token missing");
+  }
+
+  const profileResponse = await fetch("https://api.github.com/user", {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      Accept: "application/vnd.github+json",
+      "User-Agent": "InnoDeploy",
+    },
+  });
+
+  if (!profileResponse.ok) {
+    throw new Error("Failed to fetch GitHub profile");
+  }
+
+  const profile = await profileResponse.json();
+
+  const emailsResponse = await fetch("https://api.github.com/user/emails", {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      Accept: "application/vnd.github+json",
+      "User-Agent": "InnoDeploy",
+    },
+  });
+
+  if (!emailsResponse.ok) {
+    throw new Error("Failed to fetch GitHub emails");
+  }
+
+  const emails = await emailsResponse.json();
+  const primary = emails.find((item) => item.primary && item.verified) || emails.find((item) => item.verified) || emails[0];
+  return {
+    name: profile.name || profile.login,
+    email: primary?.email,
+    avatar: profile.avatar_url || null,
+  };
+};
 
 // ── Register ──────────────────────────────────────────────
 const register = async (req, res, next) => {
@@ -165,4 +331,125 @@ const logout = async (req, res, next) => {
   }
 };
 
-module.exports = { register, login, refresh, logout };
+const startGoogleOAuth = async (req, res, next) => {
+  try {
+    if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
+      return res.status(500).json({ message: "Google OAuth is not configured" });
+    }
+
+    const state = await createStateToken("google");
+    const googleAuthUrl = new URL("https://accounts.google.com/o/oauth2/v2/auth");
+    googleAuthUrl.searchParams.set("client_id", process.env.GOOGLE_CLIENT_ID);
+    googleAuthUrl.searchParams.set("redirect_uri", getGoogleCallbackUrl());
+    googleAuthUrl.searchParams.set("response_type", "code");
+    googleAuthUrl.searchParams.set("scope", "openid email profile");
+    googleAuthUrl.searchParams.set("state", state);
+    googleAuthUrl.searchParams.set("prompt", "select_account");
+    res.redirect(googleAuthUrl.toString());
+  } catch (error) {
+    next(error);
+  }
+};
+
+const googleOAuthCallback = async (req, res, next) => {
+  try {
+    const { code, state, error, error_description: errorDescription } = req.query;
+    if (error) {
+      return redirectWithResult(res, {
+        error: "google_oauth_provider_error",
+        reason: String(errorDescription || error),
+      });
+    }
+
+    if (!code) {
+      return redirectWithResult(res, { error: "google_oauth_missing_code" });
+    }
+
+    const isStateValid = await validateStateToken(state, "google");
+    if (!isStateValid) {
+      return redirectWithResult(res, { error: "google_oauth_invalid_state" });
+    }
+
+    const profile = await exchangeGoogleCodeForProfile(String(code));
+    const user = await findOrCreateOAuthUser(profile);
+    const { accessToken, refreshToken } = await issueAuthTokens(user);
+
+    return redirectWithResult(res, {
+      accessToken,
+      refreshToken,
+      user: encodeUserParam({ id: String(user._id), name: user.name, email: user.email, role: user.role }),
+    });
+  } catch (error) {
+    console.error("Google OAuth callback failed:", error?.message || error);
+    return redirectWithResult(res, {
+      error: "google_oauth_failed",
+      reason: String(error?.message || "Unknown Google OAuth error"),
+    });
+  }
+};
+
+const startGithubOAuth = async (req, res, next) => {
+  try {
+    if (!process.env.GITHUB_CLIENT_ID || !process.env.GITHUB_CLIENT_SECRET) {
+      return res.status(500).json({ message: "GitHub OAuth is not configured" });
+    }
+
+    const state = await createStateToken("github");
+    const githubAuthUrl = new URL("https://github.com/login/oauth/authorize");
+    githubAuthUrl.searchParams.set("client_id", process.env.GITHUB_CLIENT_ID);
+    githubAuthUrl.searchParams.set("redirect_uri", getGithubCallbackUrl());
+    githubAuthUrl.searchParams.set("scope", "read:user user:email");
+    githubAuthUrl.searchParams.set("state", state);
+    res.redirect(githubAuthUrl.toString());
+  } catch (error) {
+    next(error);
+  }
+};
+
+const githubOAuthCallback = async (req, res, next) => {
+  try {
+    const { code, state, error, error_description: errorDescription } = req.query;
+    if (error) {
+      return redirectWithResult(res, {
+        error: "github_oauth_provider_error",
+        reason: String(errorDescription || error),
+      });
+    }
+
+    if (!code) {
+      return redirectWithResult(res, { error: "github_oauth_missing_code" });
+    }
+
+    const isStateValid = await validateStateToken(state, "github");
+    if (!isStateValid) {
+      return redirectWithResult(res, { error: "github_oauth_invalid_state" });
+    }
+
+    const profile = await exchangeGithubCodeForProfile(String(code));
+    const user = await findOrCreateOAuthUser(profile);
+    const { accessToken, refreshToken } = await issueAuthTokens(user);
+
+    return redirectWithResult(res, {
+      accessToken,
+      refreshToken,
+      user: encodeUserParam({ id: String(user._id), name: user.name, email: user.email, role: user.role }),
+    });
+  } catch (error) {
+    console.error("GitHub OAuth callback failed:", error?.message || error);
+    return redirectWithResult(res, {
+      error: "github_oauth_failed",
+      reason: String(error?.message || "Unknown GitHub OAuth error"),
+    });
+  }
+};
+
+module.exports = {
+  register,
+  login,
+  refresh,
+  logout,
+  startGoogleOAuth,
+  googleOAuthCallback,
+  startGithubOAuth,
+  githubOAuthCallback,
+};

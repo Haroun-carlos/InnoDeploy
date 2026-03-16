@@ -32,10 +32,20 @@ const pipelineSchema = new mongoose.Schema(
       enum: ["rolling", "blue-green", "canary", "recreate"],
       default: "rolling",
     },
+    runType: {
+      type: String,
+      enum: ["pipeline", "deployment", "rollback"],
+      default: "pipeline",
+    },
     status: {
       type: String,
       enum: ["pending", "in-progress", "success", "failed", "cancelled"],
       default: "pending",
+    },
+    branch: {
+      type: String,
+      default: "main",
+      trim: true,
     },
     triggeredBy: {
       type: String,
@@ -55,6 +65,10 @@ const pipelineSchema = new mongoose.Schema(
     config: {
       type: String,
       default: "",
+    },
+    cancelledAt: {
+      type: Date,
+      default: null,
     },
   },
   { timestamps: true }

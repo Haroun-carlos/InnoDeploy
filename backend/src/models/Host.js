@@ -81,4 +81,7 @@ const hostSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+hostSchema.index({ organisationId: 1, hostname: 1 }, { unique: true });
+hostSchema.index({ organisationId: 1, ip: 1 }, { unique: true });
+
 module.exports = mongoose.model("Host", hostSchema);

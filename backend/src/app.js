@@ -8,6 +8,10 @@ const projectRoutes = require("./routes/projectRoutes");
 const hostRoutes = require("./routes/hostRoutes");
 const alertRoutes = require("./routes/alertRoutes");
 const settingsRoutes = require("./routes/settingsRoutes");
+const orgRoutes = require("./routes/orgRoutes");
+const pipelineRoutes = require("./routes/pipelineRoutes");
+const monitoringRoutes = require("./routes/monitoringRoutes");
+const webhookRoutes = require("./routes/webhookRoutes");
 const errorMiddleware = require("./middleware/errorMiddleware");
 
 const app = express();
@@ -29,6 +33,10 @@ app.use("/api/projects", projectRoutes);
 app.use("/api/hosts", hostRoutes);
 app.use("/api/alerts", alertRoutes);
 app.use("/api/settings", settingsRoutes);
+app.use("/api", orgRoutes);
+app.use("/api", pipelineRoutes);
+app.use("/api", monitoringRoutes);
+app.use("/api/webhooks", webhookRoutes);
 
 // ── 404 catch-all ─────────────────────────────────────────
 app.use((_req, res) => {

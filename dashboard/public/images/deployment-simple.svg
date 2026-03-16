@@ -1,0 +1,33 @@
+<svg width="1200" height="760" viewBox="0 0 1200 760" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1200" y2="760" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#072041"/>
+      <stop offset="1" stop-color="#0A315D"/>
+    </linearGradient>
+    <linearGradient id="line" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#8CEBFF"/>
+      <stop offset="1" stop-color="#52BFE9"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="760" rx="28" fill="url(#bg)"/>
+
+  <rect x="120" y="120" width="960" height="520" rx="24" fill="#0A2C53" stroke="#58C3E6" stroke-opacity="0.55"/>
+
+  <text x="180" y="210" fill="#E8FAFF" font-family="Arial, sans-serif" font-size="54" font-weight="700">Deploy in 3 Steps</text>
+
+  <rect x="180" y="270" width="240" height="84" rx="16" fill="#0E3A63" stroke="#5CCCEC"/>
+  <rect x="480" y="270" width="240" height="84" rx="16" fill="#0E3A63" stroke="#5CCCEC"/>
+  <rect x="780" y="270" width="240" height="84" rx="16" fill="#0E3A63" stroke="#5CCCEC"/>
+
+  <text x="250" y="323" fill="#B8F2FF" font-family="Arial, sans-serif" font-size="28" font-weight="700">Build</text>
+  <text x="545" y="323" fill="#B8F2FF" font-family="Arial, sans-serif" font-size="28" font-weight="700">Deploy</text>
+  <text x="846" y="323" fill="#B8F2FF" font-family="Arial, sans-serif" font-size="28" font-weight="700">Monitor</text>
+
+  <path d="M420 312H480" stroke="url(#line)" stroke-width="10" stroke-linecap="round"/>
+  <path d="M720 312H780" stroke="url(#line)" stroke-width="10" stroke-linecap="round"/>
+
+  <rect x="180" y="420" width="840" height="56" rx="14" fill="#103E67"/>
+  <rect x="180" y="510" width="620" height="14" rx="7" fill="url(#line)" fill-opacity="0.9"/>
+  <rect x="180" y="538" width="760" height="14" rx="7" fill="url(#line)" fill-opacity="0.65"/>
+</svg>

@@ -22,21 +22,23 @@ export default function Navbar() {
   };
 
   return (
-    <header className="flex items-center justify-between h-16 px-6 border-b bg-card">
+    <header className="flex items-center justify-between h-16 px-6 border-b border-blue-200/15 bg-[#0a2148]/70 backdrop-blur">
       {/* ── Page title area ──────────────────── */}
-      <div className="text-lg font-semibold">Dashboard</div>
+      <div className="text-lg font-semibold text-blue-50">Dashboard</div>
 
       {/* ── User info + logout ───────────────── */}
       <div className="flex items-center gap-4">
         {user && (
-          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+          <div className="flex items-center gap-2 text-sm text-blue-100/70">
             <User className="h-4 w-4" />
             <span>{user.name}</span>
-            <span className="text-xs bg-secondary px-2 py-0.5 rounded-full">{user.role}</span>
+            <span className="text-xs bg-cyan-300/15 text-cyan-200 px-2 py-0.5 rounded-full border border-cyan-300/30">
+              {user.role}
+            </span>
           </div>
         )}
 
-        <Button variant="ghost" size="sm" onClick={handleLogout}>
+        <Button variant="ghost" size="sm" onClick={handleLogout} className="text-blue-100 hover:bg-blue-100/10 hover:text-blue-50">
           <LogOut className="h-4 w-4 mr-2" />
           Logout
         </Button>

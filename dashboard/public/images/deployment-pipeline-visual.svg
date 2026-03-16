@@ -1,0 +1,79 @@
+<svg width="1400" height="900" viewBox="0 0 1400 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1400" y2="900" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#071833"/>
+      <stop offset="1" stop-color="#0A2C53"/>
+    </linearGradient>
+    <linearGradient id="card" x1="120" y1="120" x2="1280" y2="760" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0B3E63"/>
+      <stop offset="1" stop-color="#072646"/>
+    </linearGradient>
+    <linearGradient id="node" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#8CF1FF"/>
+      <stop offset="1" stop-color="#32B8E5"/>
+    </linearGradient>
+    <linearGradient id="line" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#8CF1FF"/>
+      <stop offset="1" stop-color="#2CA5D6"/>
+    </linearGradient>
+    <filter id="shadow" x="0" y="0" width="1400" height="900" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="10" stdDeviation="14" flood-color="#021224" flood-opacity="0.7"/>
+    </filter>
+    <filter id="glow" x="0" y="0" width="1400" height="900" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feGaussianBlur stdDeviation="9"/>
+    </filter>
+  </defs>
+
+  <rect width="1400" height="900" rx="38" fill="url(#bg)"/>
+
+  <g opacity="0.1" stroke="#A9E7FF" stroke-width="1">
+    <path d="M0 100H1400"/>
+    <path d="M0 200H1400"/>
+    <path d="M0 300H1400"/>
+    <path d="M0 400H1400"/>
+    <path d="M0 500H1400"/>
+    <path d="M0 600H1400"/>
+    <path d="M0 700H1400"/>
+    <path d="M0 800H1400"/>
+    <path d="M140 0V900"/>
+    <path d="M280 0V900"/>
+    <path d="M420 0V900"/>
+    <path d="M560 0V900"/>
+    <path d="M700 0V900"/>
+    <path d="M840 0V900"/>
+    <path d="M980 0V900"/>
+    <path d="M1120 0V900"/>
+    <path d="M1260 0V900"/>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="110" y="100" width="1180" height="700" rx="30" fill="url(#card)" stroke="#4EC3E9" stroke-opacity="0.65"/>
+  </g>
+
+  <text x="170" y="190" fill="#E0F7FF" font-family="Arial, sans-serif" font-size="56" font-weight="700">Deployment Pipeline</text>
+  <text x="170" y="235" fill="#A5DDF3" font-family="Arial, sans-serif" font-size="28" font-weight="500">Code -> Build -> Test -> Release -> Monitor</text>
+
+  <g opacity="0.35" filter="url(#glow)">
+    <circle cx="330" cy="460" r="36" fill="#7DEAFF"/>
+    <circle cx="560" cy="460" r="36" fill="#7DEAFF"/>
+    <circle cx="790" cy="460" r="36" fill="#7DEAFF"/>
+    <circle cx="1020" cy="460" r="36" fill="#7DEAFF"/>
+  </g>
+
+  <path d="M365 460H525" stroke="url(#line)" stroke-width="12" stroke-linecap="round"/>
+  <path d="M595 460H755" stroke="url(#line)" stroke-width="12" stroke-linecap="round"/>
+  <path d="M825 460H985" stroke="url(#line)" stroke-width="12" stroke-linecap="round"/>
+
+  <circle cx="330" cy="460" r="54" fill="url(#node)"/>
+  <circle cx="560" cy="460" r="54" fill="url(#node)"/>
+  <circle cx="790" cy="460" r="54" fill="url(#node)"/>
+  <circle cx="1020" cy="460" r="54" fill="url(#node)"/>
+
+  <text x="302" y="470" fill="#05385C" font-family="Arial, sans-serif" font-size="24" font-weight="700">Code</text>
+  <text x="526" y="470" fill="#05385C" font-family="Arial, sans-serif" font-size="24" font-weight="700">Build</text>
+  <text x="768" y="470" fill="#05385C" font-family="Arial, sans-serif" font-size="24" font-weight="700">Test</text>
+  <text x="990" y="470" fill="#05385C" font-family="Arial, sans-serif" font-size="24" font-weight="700">Deploy</text>
+
+  <rect x="220" y="620" width="940" height="120" rx="20" fill="#092D4F" stroke="#4EC3E9" stroke-opacity="0.55"/>
+  <text x="265" y="680" fill="#D7F5FF" font-family="Arial, sans-serif" font-size="34" font-weight="700">Live Status: 12 Services Deployed • 99.98% Uptime</text>
+</svg>

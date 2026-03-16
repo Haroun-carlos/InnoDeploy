@@ -1,5 +1,26 @@
 const mongoose = require("mongoose");
 
+const environmentSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      required: true,
+      trim: true,
+      lowercase: true,
+    },
+    config: {
+      type: mongoose.Schema.Types.Mixed,
+      default: {},
+    },
+    secrets: {
+      type: Map,
+      of: String,
+      default: {},
+    },
+  },
+  { _id: false, timestamps: true }
+);
+
 const projectSchema = new mongoose.Schema(
   {
     name: {
@@ -37,6 +58,7 @@ const projectSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
+    environments: [environmentSchema],
     organisationId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Organisation",
@@ -50,5 +72,7 @@ const projectSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
+projectSchema.index({ organisationId: 1, name: 1 }, { unique: true });
 
 module.exports = mongoose.model("Project", projectSchema);
