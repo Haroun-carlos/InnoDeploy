@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useMemo, useEffect } from "react";
-import { Check, X, Loader2, Clock, ChevronRight } from "lucide-react";
+import { Check, X, Loader2, Clock, ChevronRight, CircleDot } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import StageLogViewer from "./StageLogViewer";
@@ -39,10 +39,20 @@ interface PipelineDetailPanelProps {
   run: PipelineRun;
   onCancel: (runId: string) => Promise<void>;
   onRetry: (runId: string) => Promise<void>;
+  streamState?: "idle" | "connecting" | "live" | "reconnecting" | "offline";
 }
 
-export default function PipelineDetailPanel({ run, onCancel, onRetry }: PipelineDetailPanelProps) {
+const streamStatusConfig: Record<NonNullable<PipelineDetailPanelProps["streamState"]>, { label: string; className: string }> = {
+  idle: { label: "Idle", className: "border-border bg-muted/40 text-muted-foreground" },
+  connecting: { label: "Connecting", className: "border-blue-300/30 bg-blue-100/50 text-blue-700" },
+  live: { label: "Live", className: "border-emerald-300/30 bg-emerald-100/50 text-emerald-700" },
+  reconnecting: { label: "Reconnecting", className: "border-amber-300/30 bg-amber-100/50 text-amber-700" },
+  offline: { label: "Offline", className: "border-red-300/30 bg-red-100/50 text-red-700" },
+};
+
+export default function PipelineDetailPanel({ run, onCancel, onRetry, streamState = "idle" }: PipelineDetailPanelProps) {
   const [selectedStageId, setSelectedStageId] = useState<string>(run.stages[0]?.id ?? "");
+  const streamStatus = streamStatusConfig[streamState];
 
   // Reset selected stage when a different run is opened
   useEffect(() => {
@@ -60,12 +70,18 @@ export default function PipelineDetailPanel({ run, onCancel, onRetry }: Pipeline
     <Card>
       <CardHeader className="pb-3">
         <div className="flex items-center justify-between flex-wrap gap-2">
-          <CardTitle className="text-base">
-            Run <span className="font-mono text-primary">#{run.id}</span>
-            <span className="text-muted-foreground font-normal ml-2 text-sm">
-              {run.branch} · {run.commit.slice(0, 7)}
+          <div className="flex items-center gap-2 flex-wrap">
+            <CardTitle className="text-base">
+              Run <span className="font-mono text-primary">#{run.id}</span>
+              <span className="text-muted-foreground font-normal ml-2 text-sm">
+                {run.branch} · {run.commit.slice(0, 7)}
+              </span>
+            </CardTitle>
+            <span className={cn("inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-[11px] font-medium", streamStatus.className)}>
+              <CircleDot className={cn("h-3 w-3", streamState === "live" ? "animate-pulse" : "")} />
+              {streamStatus.label}
             </span>
-          </CardTitle>
+          </div>
           <div className="flex gap-2">
             {run.status === "running" && (
               <CancelRunButton runId={run.id} onCancel={onCancel} />

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { useParams } from "next/navigation";
 import { useRequireAuth } from "@/hooks/useRequireAuth";
 import Sidebar from "@/components/shared/Sidebar";
@@ -33,7 +33,68 @@ import LiveToggle, { type LogMode } from "@/components/logs/LiveToggle";
 import LogTerminal from "@/components/logs/LogTerminal";
 import LogTable from "@/components/logs/LogTable";
 import DownloadLogsButton from "@/components/logs/DownloadLogsButton";
+import { apiBaseUrl, pipelineApi } from "@/lib/apiClient";
 import type { ProjectDetail, Secret, PipelineRun, MonitoringTimeRange, AlertHistoryEntry, LogEntry, LogLevel } from "@/types";
+
+type BackendPipelineStep = {
+  name: string;
+  status: "pending" | "running" | "success" | "failed" | "skipped";
+  duration?: number;
+  output?: string;
+};
+
+type BackendPipelineRun = {
+  id: string;
+  version: string;
+  status: "pending" | "in-progress" | "success" | "failed" | "cancelled";
+  branch: string;
+  triggeredBy: string;
+  duration?: number;
+  steps: BackendPipelineStep[];
+  createdAt: string;
+  strategy?: string;
+  environment?: string;
+};
+
+type PipelineStreamState = "idle" | "connecting" | "live" | "reconnecting" | "offline";
+
+const asDurationLabel = (durationMs: number | undefined) => {
+  if (!durationMs || durationMs <= 0) return null;
+  const totalSeconds = Math.floor(durationMs / 1000);
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = totalSeconds % 60;
+  if (minutes > 0) return `${minutes}m ${seconds}s`;
+  return `${seconds}s`;
+};
+
+const mapRunStatus = (status: BackendPipelineRun["status"]): PipelineRun["status"] => {
+  if (status === "pending") return "queued";
+  if (status === "in-progress") return "running";
+  if (status === "cancelled") return "failed";
+  return status;
+};
+
+const mapBackendRunToUi = (run: BackendPipelineRun): PipelineRun => ({
+  id: run.id,
+  branch: run.branch,
+  commit: String(run.version || "unknown"),
+  commitMsg: `${run.strategy || "pipeline"} / ${run.environment || "staging"}`,
+  status: mapRunStatus(run.status),
+  duration: asDurationLabel(run.duration),
+  triggeredBy: run.triggeredBy,
+  triggerType: "manual",
+  createdAt: run.createdAt,
+  stages: (run.steps || []).map((step, index) => ({
+    id: `${run.id}-stage-${index}`,
+    name: step.name,
+    status: step.status,
+    duration: asDurationLabel(step.duration),
+    logs: String(step.output || "")
+      .split("\n")
+      .map((line) => line.trimEnd())
+      .filter(Boolean),
+  })),
+});
 
 /** Mock data — replace with API call */
 const mockProject: ProjectDetail = {
@@ -432,8 +493,11 @@ export default function ProjectDetailPage() {
   const [activeEnvId, setActiveEnvId] = useState(mockProject.environments[0].id);
   const [secrets, setSecrets] = useState<Secret[]>(mockProject.secrets);
   const [pipelineConfig, setPipelineConfig] = useState(mockProject.pipelineConfig);
-  const [pipelineRuns, setPipelineRuns] = useState<PipelineRun[]>(mockPipelineRuns);
+  const [pipelineRuns, setPipelineRuns] = useState<PipelineRun[]>([]);
   const [selectedRun, setSelectedRun] = useState<PipelineRun | null>(null);
+  const [pipelineLoading, setPipelineLoading] = useState(false);
+  const [pipelineError, setPipelineError] = useState<string | null>(null);
+  const [pipelineStreamState, setPipelineStreamState] = useState<PipelineStreamState>("idle");
   const [monitoringRange, setMonitoringRange] = useState<MonitoringTimeRange>("24h");
 
   // Logs state
@@ -467,6 +531,136 @@ export default function ProjectDetailPage() {
     [activeEnvId]
   );
 
+  const mergeRun = (incoming: PipelineRun) => {
+    setPipelineRuns((prev) => {
+      const idx = prev.findIndex((run) => run.id === incoming.id);
+      if (idx === -1) return [incoming, ...prev];
+      const updated = [...prev];
+      updated[idx] = incoming;
+      return updated;
+    });
+
+    setSelectedRun((prev) => (prev?.id === incoming.id ? incoming : prev));
+  };
+
+  const fetchRunById = async (runId: string) => {
+    const { data } = await pipelineApi.getRun(runId);
+    const mapped = mapBackendRunToUi(data.run as BackendPipelineRun);
+    mergeRun(mapped);
+  };
+
+  useEffect(() => {
+    if (!isReady) return;
+
+    const loadRuns = async () => {
+      try {
+        setPipelineLoading(true);
+        setPipelineError(null);
+        const { data } = await pipelineApi.listProjectRuns(_projectId);
+        const mappedRuns = ((data.runs || []) as BackendPipelineRun[]).map(mapBackendRunToUi);
+        setPipelineRuns(mappedRuns);
+        setSelectedRun((prev) => {
+          if (prev) {
+            return mappedRuns.find((run) => run.id === prev.id) || mappedRuns[0] || null;
+          }
+          return mappedRuns[0] || null;
+        });
+      } catch (error: unknown) {
+        const axiosErr = error as { response?: { data?: { message?: string } } };
+        setPipelineError(axiosErr.response?.data?.message || "Failed to load pipeline runs");
+        setPipelineRuns(mockPipelineRuns);
+        setSelectedRun((prev) => prev || mockPipelineRuns[0] || null);
+      } finally {
+        setPipelineLoading(false);
+      }
+    };
+
+    void loadRuns();
+  }, [isReady, _projectId]);
+
+  useEffect(() => {
+    if (!isReady || !selectedRun) {
+      setPipelineStreamState("idle");
+      return;
+    }
+
+    if (!["queued", "running"].includes(selectedRun.status)) {
+      setPipelineStreamState("idle");
+      return;
+    }
+
+    const accessToken = localStorage.getItem("accessToken");
+    if (!accessToken) {
+      setPipelineStreamState("offline");
+      return;
+    }
+
+    const abortController = new AbortController();
+    const streamUrl = `${apiBaseUrl}/pipelines/${selectedRun.id}/stream`;
+    let reconnectAttempts = 0;
+
+    const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
+    const consumeStream = async () => {
+      while (!abortController.signal.aborted) {
+        try {
+          setPipelineStreamState(reconnectAttempts === 0 ? "connecting" : "reconnecting");
+
+          const response = await fetch(streamUrl, {
+            method: "GET",
+            headers: {
+              Accept: "text/event-stream",
+              Authorization: `Bearer ${accessToken}`,
+            },
+            signal: abortController.signal,
+            cache: "no-store",
+          });
+
+          if (!response.ok || !response.body) {
+            reconnectAttempts += 1;
+            setPipelineStreamState("reconnecting");
+            await wait(Math.min(1000 * reconnectAttempts, 5000));
+            continue;
+          }
+
+          reconnectAttempts = 0;
+          setPipelineStreamState("live");
+
+          const reader = response.body.getReader();
+          const decoder = new TextDecoder();
+          let buffer = "";
+
+          while (!abortController.signal.aborted) {
+            const { value, done } = await reader.read();
+            if (done) break;
+
+            buffer += decoder.decode(value, { stream: true });
+            const chunks = buffer.split("\n\n");
+            buffer = chunks.pop() || "";
+
+            for (const chunk of chunks) {
+              const lines = chunk.split("\n").filter(Boolean);
+              const hasData = lines.some((line) => line.startsWith("data:"));
+              if (!hasData) continue;
+              await fetchRunById(selectedRun.id);
+            }
+          }
+        } catch {
+          reconnectAttempts += 1;
+          setPipelineStreamState("reconnecting");
+          await wait(Math.min(1000 * reconnectAttempts, 5000));
+        }
+      }
+    };
+
+    void consumeStream();
+
+    return () => {
+      abortController.abort();
+      setPipelineStreamState("idle");
+    };
+  }, [isReady, selectedRun?.id, selectedRun?.status]);
+
   if (!isReady) return null;
 
   const handleDeploy = async () => {
@@ -480,50 +674,37 @@ export default function ProjectDetailPage() {
   };
 
   const handleTriggerPipeline = async (branch: string) => {
-    // TODO: call trigger API
-    await new Promise((r) => setTimeout(r, 800));
-    const newRun: PipelineRun = {
-      id: `run-${String(pipelineRuns.length).padStart(3, "0")}`,
-      branch,
-      commit: Math.random().toString(16).slice(2, 10),
-      commitMsg: "Manually triggered run",
-      status: "queued",
-      duration: null,
-      triggeredBy: "You",
-      triggerType: "manual",
-      createdAt: new Date().toISOString(),
-      stages: [
-        { id: `new-s1`, name: "Checkout",   status: "pending", duration: null, logs: [] },
-        { id: `new-s2`, name: "Build",      status: "pending", duration: null, logs: [] },
-        { id: `new-s3`, name: "Test",       status: "pending", duration: null, logs: [] },
-        { id: `new-s4`, name: "Push Image", status: "pending", duration: null, logs: [] },
-        { id: `new-s5`, name: "Deploy",     status: "pending", duration: null, logs: [] },
-      ],
-    };
-    setPipelineRuns((prev) => [newRun, ...prev]);
-    setSelectedRun(newRun);
+    try {
+      setPipelineError(null);
+      const { data } = await pipelineApi.triggerRun(_projectId, {
+        branch,
+        config: pipelineConfig,
+      });
+
+      const mapped = mapBackendRunToUi(data.run as BackendPipelineRun);
+      mergeRun(mapped);
+      setSelectedRun(mapped);
+    } catch (error: unknown) {
+      const axiosErr = error as { response?: { data?: { message?: string } } };
+      setPipelineError(axiosErr.response?.data?.message || "Failed to trigger pipeline");
+    }
   };
 
   const handleCancelRun = async (runId: string) => {
-    // TODO: call cancel API
-    await new Promise((r) => setTimeout(r, 800));
-    setPipelineRuns((prev) =>
-      prev.map((r) => (r.id === runId ? { ...r, status: "failed" } : r))
-    );
-    setSelectedRun((prev) =>
-      prev?.id === runId ? { ...prev, status: "failed" } : prev
-    );
+    try {
+      setPipelineError(null);
+      await pipelineApi.cancelRun(runId);
+      await fetchRunById(runId);
+    } catch (error: unknown) {
+      const axiosErr = error as { response?: { data?: { message?: string } } };
+      setPipelineError(axiosErr.response?.data?.message || "Failed to cancel pipeline run");
+    }
   };
 
   const handleRetryRun = async (runId: string) => {
-    // TODO: call retry API
-    await new Promise((r) => setTimeout(r, 800));
-    setPipelineRuns((prev) =>
-      prev.map((r) => (r.id === runId ? { ...r, status: "running" } : r))
-    );
-    setSelectedRun((prev) =>
-      prev?.id === runId ? { ...prev, status: "running" } : prev
-    );
+    const run = pipelineRuns.find((item) => item.id === runId);
+    if (!run) return;
+    await handleTriggerPipeline(run.branch);
   };
 
   const handleAddSecret = (key: string, value: string) => {
@@ -582,6 +763,14 @@ export default function ProjectDetailPage() {
                 <TriggerPipelineButton onTrigger={handleTriggerPipeline} />
               </div>
 
+              {pipelineLoading && (
+                <p className="text-xs text-muted-foreground">Loading pipeline runs...</p>
+              )}
+
+              {pipelineError && (
+                <p className="text-xs text-red-500">{pipelineError}</p>
+              )}
+
               <PipelineRunsTable
                 runs={pipelineRuns}
                 selectedRunId={selectedRun?.id ?? null}
@@ -594,6 +783,7 @@ export default function ProjectDetailPage() {
                   run={selectedRun}
                   onCancel={handleCancelRun}
                   onRetry={handleRetryRun}
+                  streamState={pipelineStreamState}
                 />
               )}
             </div>
