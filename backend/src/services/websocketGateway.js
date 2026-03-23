@@ -4,6 +4,8 @@ const http = require("http");
 const express = require("express");
 const { WebSocketServer } = require("ws");
 const { createClient } = require("redis");
+const { promises: dns } = require("dns");
+const { URL } = require("url");
 
 const WS_PORT = Number(process.env.WS_PORT || 7070);
 const WS_PATH = String(process.env.WS_PATH || "/ws");
@@ -16,6 +18,8 @@ const PIPELINE_EVENTS_CHANNEL = String(process.env.PIPELINE_EVENTS_CHANNEL || "p
 const PIPELINE_LOGS_CHANNEL = String(process.env.PIPELINE_LOGS_CHANNEL || "pipeline:logs");
 const PIPELINE_LOGS_CHANNEL_PREFIX = String(process.env.PIPELINE_LOGS_CHANNEL_PREFIX || "pipeline:logs:");
 const DEPLOY_EVENTS_CHANNEL = String(process.env.DEPLOY_EVENTS_CHANNEL || "deploy:events");
+const LOG_STREAM_CHANNEL = String(process.env.LOG_STREAM_CHANNEL || "logs:stream");
+const LOG_PROJECT_CHANNEL_PREFIX = String(process.env.LOG_PROJECT_CHANNEL_PREFIX || "logs:project:");
 
 const app = express();
 app.get("/health", (_req, res) => {
@@ -49,7 +53,9 @@ const shouldReceiveProjectEvent = (ws, channel) => {
     return true;
   }
 
-  const projectId = channel.replace(MONITOR_PROJECT_CHANNEL_PREFIX, "");
+  const projectId = channel.startsWith(MONITOR_PROJECT_CHANNEL_PREFIX)
+    ? channel.replace(MONITOR_PROJECT_CHANNEL_PREFIX, "")
+    : channel.replace(LOG_PROJECT_CHANNEL_PREFIX, "");
   return wantedProjects.has(projectId);
 };
 
@@ -77,6 +83,8 @@ wss.on("connection", (ws) => {
       pipelineLogs: PIPELINE_LOGS_CHANNEL,
       pipelineLogsPrefix: PIPELINE_LOGS_CHANNEL_PREFIX,
       deployEvents: DEPLOY_EVENTS_CHANNEL,
+      logStream: LOG_STREAM_CHANNEL,
+      logProjectPrefix: LOG_PROJECT_CHANNEL_PREFIX,
     },
     createdAt: new Date().toISOString(),
   });
@@ -125,15 +133,101 @@ wss.on("connection", (ws) => {
   });
 });
 
-const redisSub = createClient({ url: REDIS_URL });
+let redisSub = null;
 
-redisSub.on("error", (error) => {
-  console.error("[websocket-gateway] redis error", error.message);
-});
+const buildRedisClient = (url) => {
+  const client = createClient({
+    url,
+    // Fail fast; startup performs explicit fallback selection.
+    socket: {
+      connectTimeout: 3000,
+      reconnectStrategy: () => new Error("Reconnect disabled during startup"),
+    },
+  });
+
+  client.on("error", (error) => {
+    console.error("[websocket-gateway] redis error", error.message);
+  });
+
+  return client;
+};
+
+const resolveLocalFallbackUrl = (url) => {
+  try {
+    const parsed = new URL(url);
+    if (parsed.hostname !== "redis") {
+      return null;
+    }
+
+    parsed.hostname = "localhost";
+    return parsed.toString();
+  } catch (_error) {
+    return null;
+  }
+};
+
+const resolveRedisHost = (url) => {
+  try {
+    return new URL(url).hostname;
+  } catch (_error) {
+    return null;
+  }
+};
+
+const canResolveHost = async (host) => {
+  if (!host) {
+    return false;
+  }
+
+  if (host === "localhost" || host === "127.0.0.1") {
+    return true;
+  }
+
+  try {
+    await dns.lookup(host);
+    return true;
+  } catch (_error) {
+    return false;
+  }
+};
+
+const connectRedisSubscriber = async () => {
+  const fallbackUrl = resolveLocalFallbackUrl(REDIS_URL);
+  const candidates = [REDIS_URL, fallbackUrl].filter(Boolean);
+
+  for (const candidateUrl of candidates) {
+    const host = resolveRedisHost(candidateUrl);
+    if (!(await canResolveHost(host))) {
+      continue;
+    }
+
+    const client = buildRedisClient(candidateUrl);
+    try {
+      await client.connect();
+
+      if (candidateUrl !== REDIS_URL) {
+        console.warn(
+          `[websocket-gateway] Redis host from REDIS_URL is not resolvable here; using ${candidateUrl}`
+        );
+      }
+
+      return client;
+    } catch (_error) {
+      await client.disconnect().catch(() => {});
+    }
+  }
+
+  throw new Error(
+    `Unable to connect to Redis. Checked: ${candidates.join(", ")}. Set REDIS_URL for this runtime environment.`
+  );
+};
 
 const broadcast = (payload, channel) => {
   for (const ws of wss.clients) {
     if (channel.startsWith(MONITOR_PROJECT_CHANNEL_PREFIX) && !shouldReceiveProjectEvent(ws, channel)) {
+      continue;
+    }
+    if (channel.startsWith(LOG_PROJECT_CHANNEL_PREFIX) && !shouldReceiveProjectEvent(ws, channel)) {
       continue;
     }
     if (channel.startsWith(PIPELINE_LOGS_CHANNEL_PREFIX) && !shouldReceivePipelineEvent(ws, channel)) {
@@ -145,7 +239,7 @@ const broadcast = (payload, channel) => {
 };
 
 const startGateway = async () => {
-  await redisSub.connect();
+  redisSub = await connectRedisSubscriber();
 
   await redisSub.subscribe(MONITOR_STREAM_CHANNEL, (message) => {
     const payload = parseMaybeJson(message) || { type: "monitoring.stream", raw: String(message) };
@@ -171,6 +265,12 @@ const startGateway = async () => {
     broadcast(payload, DEPLOY_EVENTS_CHANNEL);
   });
 
+  await redisSub.subscribe(LOG_STREAM_CHANNEL, (message) => {
+    const payload = parseMaybeJson(message) || { type: "log.line", raw: String(message) };
+    payload.channel = LOG_STREAM_CHANNEL;
+    broadcast(payload, LOG_STREAM_CHANNEL);
+  });
+
   await redisSub.pSubscribe(`${MONITOR_PROJECT_CHANNEL_PREFIX}*`, (message, channel) => {
     const payload = parseMaybeJson(message) || { type: "monitoring.project", raw: String(message) };
     payload.channel = channel;
@@ -179,6 +279,12 @@ const startGateway = async () => {
 
   await redisSub.pSubscribe(`${PIPELINE_LOGS_CHANNEL_PREFIX}*`, (message, channel) => {
     const payload = parseMaybeJson(message) || { type: "pipeline.log", raw: String(message) };
+    payload.channel = channel;
+    broadcast(payload, channel);
+  });
+
+  await redisSub.pSubscribe(`${LOG_PROJECT_CHANNEL_PREFIX}*`, (message, channel) => {
+    const payload = parseMaybeJson(message) || { type: "log.line", raw: String(message) };
     payload.channel = channel;
     broadcast(payload, channel);
   });

@@ -13,10 +13,13 @@ import { alertApi } from "@/lib/apiClient";
 import type { AlertRuleConfig, ProjectAlert } from "@/types";
 
 const initialRules: AlertRuleConfig = {
-  cpuThreshold: 80,
-  memoryThreshold: 85,
-  latencyThreshold: 250,
+  cpuThreshold: 90,
+  memoryThreshold: 95,
+  latencyThreshold: 2000,
   availabilityThreshold: 99,
+  serviceDownFailures: 5,
+  diskThreshold: 85,
+  certExpiryDays: 14,
   emailNotifications: true,
   slackNotifications: true,
 };
@@ -44,7 +47,7 @@ export default function AlertsPage() {
         const { data } = await alertApi.getAlerts();
         setAlerts(data.alerts as ProjectAlert[]);
         if (data.rules) {
-          setRules(data.rules as AlertRuleConfig);
+          setRules({ ...initialRules, ...(data.rules as Partial<AlertRuleConfig>) });
         }
       } catch (loadError: unknown) {
         setError(loadError instanceof Error ? loadError.message : "Failed to load alerts");

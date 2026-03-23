@@ -48,9 +48,18 @@ const logSchema = new mongoose.Schema(
       enum: ["stdout", "stderr", "system"],
       default: "system",
     },
+    timestamp: {
+      type: Date,
+      default: Date.now,
+    },
     eventAt: {
       type: Date,
       default: Date.now,
+    },
+    ingestionSource: {
+      type: String,
+      default: "docker.logs",
+      trim: true,
     },
     metadata: {
       type: mongoose.Schema.Types.Mixed,
@@ -64,8 +73,18 @@ const logSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-logSchema.index({ projectId: 1, createdAt: -1 });
-logSchema.index({ projectId: 1, level: 1, createdAt: -1 });
+logSchema.pre("validate", function syncTimestampFields(next) {
+  if (!this.timestamp && this.eventAt) {
+    this.timestamp = this.eventAt;
+  }
+  if (!this.eventAt && this.timestamp) {
+    this.eventAt = this.timestamp;
+  }
+  next();
+});
+
+logSchema.index({ projectId: 1, eventAt: -1 });
+logSchema.index({ projectId: 1, level: 1, eventAt: -1 });
 logSchema.index({ message: "text", source: "text", containerName: "text" });
 logSchema.index({ expiresAt: 1 }, { expireAfterSeconds: 0 });
 

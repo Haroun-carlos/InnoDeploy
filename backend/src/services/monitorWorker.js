@@ -1,8 +1,12 @@
 const Docker = require("dockerode");
+const { statfs } = require("fs/promises");
+const net = require("net");
 
 const Log = require("../models/Log");
 const Metric = require("../models/Metric");
 const Project = require("../models/Project");
+const { evaluateMonitoringAlertRules } = require("./alertRulesEngine");
+const { dispatchProjectNotification } = require("./notificationDispatcher");
 const { redisClient } = require("../config/redis");
 
 const TRUE_VALUES = new Set(["1", "true", "yes", "on"]);
@@ -11,7 +15,8 @@ const MONITOR_WORKER_ENABLED = TRUE_VALUES.has(
   String(process.env.MONITOR_WORKER_ENABLED || "false").toLowerCase()
 );
 const MONITOR_INTERVAL_MS = Math.max(5000, Number(process.env.MONITOR_INTERVAL_MS) || 15000);
-const MONITOR_HTTP_TIMEOUT_MS = Math.max(500, Number(process.env.MONITOR_HTTP_TIMEOUT_MS) || 4000);
+const MONITOR_HTTP_TIMEOUT_MS = Math.max(500, Number(process.env.MONITOR_HTTP_TIMEOUT_MS) || 5000);
+const MONITOR_TCP_TIMEOUT_MS = Math.max(500, Number(process.env.MONITOR_TCP_TIMEOUT_MS) || 5000);
 const MONITOR_DOCKER_STATS_TIMEOUT_MS = Math.max(
   1000,
   Number(process.env.MONITOR_DOCKER_STATS_TIMEOUT_MS) || 5000
@@ -21,6 +26,11 @@ const MONITOR_DEFAULT_HEALTH_PATH = String(process.env.MONITOR_DEFAULT_HEALTH_PA
 const MONITOR_STREAM_CHANNEL = String(process.env.MONITOR_STREAM_CHANNEL || "monitoring:stream");
 const MONITOR_PROJECT_CHANNEL_PREFIX = String(
   process.env.MONITOR_PROJECT_CHANNEL_PREFIX || "monitoring:project:"
+);
+const MONITOR_DEGRADED_AFTER_FAILURES = Math.max(2, Number(process.env.MONITOR_DEGRADED_AFTER_FAILURES) || 2);
+const MONITOR_DOWN_AFTER_FAILURES = Math.max(
+  MONITOR_DEGRADED_AFTER_FAILURES + 1,
+  Number(process.env.MONITOR_DOWN_AFTER_FAILURES) || 5
 );
 
 let dockerClient = null;
@@ -33,6 +43,7 @@ let lastTickDurationMs = null;
 let lastTickProjectCount = 0;
 let lastTickError = null;
 let lastPublishedAt = null;
+const healthStateByProject = new Map();
 
 const createDockerClient = () => {
   if (process.env.DOCKER_SOCKET_PATH) {
@@ -66,6 +77,8 @@ const toPercent = (numerator, denominator) => {
   if (!denominator || denominator <= 0) return 0;
   return Math.max(0, Math.min((numerator / denominator) * 100, 100));
 };
+
+const toMb = (bytes) => Number((Number(bytes || 0) / (1024 * 1024)).toFixed(2));
 
 const calcCpuPercent = (stats) => {
   const currentCpuTotal = Number(stats?.cpu_stats?.cpu_usage?.total_usage || 0);
@@ -111,6 +124,25 @@ const parseHealthUrl = (project) => {
   return null;
 };
 
+const parseTcpTarget = (project) => {
+  for (const environment of project.environments || []) {
+    const cfg = environment?.config || {};
+
+    const hostCandidates = [cfg.tcpHost, cfg.host, cfg.serviceHost, cfg.redisHost, cfg.dbHost, cfg.hostname];
+    const portCandidates = [cfg.tcpPort, cfg.port, cfg.servicePort, cfg.redisPort, cfg.dbPort];
+
+    const host = hostCandidates.find((candidate) => typeof candidate === "string" && candidate.trim());
+    const rawPort = portCandidates.find((candidate) => Number.isFinite(Number(candidate)));
+    const port = Number(rawPort || 0);
+
+    if (host && port > 0 && port <= 65535) {
+      return { host: host.trim(), port };
+    }
+  }
+
+  return null;
+};
+
 const probeHttpHealth = async (url) => {
   const start = process.hrtime.bigint();
 
@@ -137,6 +169,86 @@ const probeHttpHealth = async (url) => {
       latency: 0,
       statusCode: 0,
     };
+  }
+};
+
+const probeTcpHealth = ({ host, port }) =>
+  new Promise((resolve) => {
+    const socket = new net.Socket();
+    const startedAt = process.hrtime.bigint();
+    let settled = false;
+
+    const finish = (ok) => {
+      if (settled) {
+        return;
+      }
+
+      settled = true;
+      const endedAt = process.hrtime.bigint();
+      const latencyMs = Number(endedAt - startedAt) / 1e6;
+      socket.destroy();
+      resolve({ ok, latency: Math.round(latencyMs), statusCode: ok ? 200 : 0 });
+    };
+
+    socket.setTimeout(MONITOR_TCP_TIMEOUT_MS);
+    socket.once("connect", () => finish(true));
+    socket.once("timeout", () => finish(false));
+    socket.once("error", () => finish(false));
+    socket.connect(port, host);
+  });
+
+const updateProbeHealthState = ({ projectId, probeOk }) => {
+  const key = String(projectId);
+  const previous = healthStateByProject.get(key) || { failedProbes: 0, state: "up" };
+  const failedProbes = probeOk ? 0 : previous.failedProbes + 1;
+
+  let state = "up";
+  if (failedProbes >= MONITOR_DOWN_AFTER_FAILURES) {
+    state = "down";
+  } else if (failedProbes >= MONITOR_DEGRADED_AFTER_FAILURES) {
+    state = "degraded";
+  }
+
+  const next = { failedProbes, state, updatedAt: new Date() };
+  healthStateByProject.set(key, next);
+  return {
+    ...next,
+    previousState: previous.state,
+    changed: previous.state !== state,
+  };
+};
+
+const notifyHealthTransition = async ({ project, healthState, probeMode, healthUrl, tcpTarget, containerState }) => {
+  if (!healthState.changed) {
+    return;
+  }
+
+  const severity = healthState.state === "down" ? "critical" : healthState.state === "degraded" ? "warning" : "info";
+  const transition = `${healthState.previousState} -> ${healthState.state}`;
+
+  try {
+    await dispatchProjectNotification({
+      projectId: String(project._id),
+      event: {
+        severity,
+        title: `Service health ${healthState.state}`,
+        message: `${project.name} health changed (${transition}) after ${healthState.failedProbes} failed probe(s).`,
+        serviceName: project.name,
+        metricAtTrigger: [
+          { label: "failed_probes", value: healthState.failedProbes, unit: "" },
+        ],
+        metadata: {
+          source: "monitor-worker",
+          probeMode,
+          healthUrl,
+          tcpTarget,
+          containerState,
+          transition,
+        },
+      },
+    });
+  } catch (_error) {
+    // Notification failures should not affect monitoring loop.
   }
 };
 
@@ -167,9 +279,15 @@ const getProjectContainer = async (project) => {
 const getContainerStats = async (container) => {
   if (!container) {
     return {
-      cpu: 0,
-      memory: 0,
+      cpuPercent: 0,
+      memoryMb: 0,
+      memoryPercent: 0,
+      netRxBytes: 0,
+      netTxBytes: 0,
+      restartCount: 0,
+      uptimeSeconds: 0,
       hasContainer: false,
+      containerState: "missing",
       containerName: "",
       containerId: "",
     };
@@ -182,14 +300,56 @@ const getContainerStats = async (container) => {
 
   const memoryUsage = Number(stats?.memory_stats?.usage || 0);
   const memoryLimit = Number(stats?.memory_stats?.limit || 0);
+  const networks = stats?.networks && typeof stats.networks === "object" ? Object.values(stats.networks) : [];
+  const netRxBytes = networks.reduce((sum, network) => sum + Number(network?.rx_bytes || 0), 0);
+  const netTxBytes = networks.reduce((sum, network) => sum + Number(network?.tx_bytes || 0), 0);
+
+  const startedAt = inspect?.State?.StartedAt ? new Date(inspect.State.StartedAt) : null;
+  const uptimeSeconds = startedAt && Number.isFinite(startedAt.getTime())
+    ? Math.max(0, Math.floor((Date.now() - startedAt.getTime()) / 1000))
+    : 0;
 
   return {
-    cpu: Number(calcCpuPercent(stats).toFixed(2)),
-    memory: Number(toPercent(memoryUsage, memoryLimit).toFixed(2)),
+    cpuPercent: Number(calcCpuPercent(stats).toFixed(2)),
+    memoryMb: toMb(memoryUsage),
+    memoryPercent: Number(toPercent(memoryUsage, memoryLimit).toFixed(2)),
+    netRxBytes,
+    netTxBytes,
+    restartCount: Number(inspect?.RestartCount || 0),
+    uptimeSeconds,
     hasContainer: true,
+    containerState: String(inspect?.State?.Status || "unknown").toLowerCase(),
     containerName: String(inspect?.Name || "").replace(/^\//, ""),
     containerId: String(inspect?.Id || ""),
   };
+};
+
+const getHostDiskUsage = async () => {
+  try {
+    const stats = await withTimeout(
+      () => statfs(process.cwd()),
+      MONITOR_DOCKER_STATS_TIMEOUT_MS,
+      "Host disk usage probe timeout"
+    );
+
+    const blockSize = Number(stats?.bsize || 0);
+    const totalBlocks = Number(stats?.blocks || 0);
+    const freeBlocks = Number(stats?.bfree || 0);
+    if (blockSize <= 0 || totalBlocks <= 0) {
+      return { mb: 0, percent: 0 };
+    }
+
+    const usedBytes = Math.max(0, (totalBlocks - freeBlocks) * blockSize);
+    const totalBytes = totalBlocks * blockSize;
+    const percent = totalBytes > 0 ? Math.min(100, Math.max(0, (usedBytes / totalBytes) * 100)) : 0;
+
+    return {
+      mb: toMb(usedBytes),
+      percent: Number(percent.toFixed(2)),
+    };
+  } catch (_error) {
+    return { mb: 0, percent: 0 };
+  }
 };
 
 const getContainerLogSignals = async (container) => {
@@ -240,15 +400,47 @@ const publishDelta = async (payload) => {
   lastPublishedAt = new Date();
 };
 
-const createMetricRecord = async ({ projectId, environment, cpu, memory, latency, uptime }) => {
+const createMetricRecord = async ({
+  projectId,
+  environment,
+  cpuPercent,
+  memoryMb,
+  memoryPercent,
+  netRxBytes,
+  netTxBytes,
+  httpStatus,
+  httpLatencyMs,
+  restartCount,
+  uptimeSeconds,
+  diskUsageMb,
+  diskUsagePercent,
+  healthState,
+  failedProbes,
+  probeMode,
+  uptime,
+}) => {
   return Metric.create({
     projectId,
     hostId: null,
     environment,
-    cpu,
-    memory,
-    latency,
+    cpu: cpuPercent,
+    cpu_percent: cpuPercent,
+    memory: memoryPercent,
+    memory_mb: memoryMb,
+    memory_percent: memoryPercent,
+    net_rx_bytes: netRxBytes,
+    net_tx_bytes: netTxBytes,
+    http_status: httpStatus,
+    latency: httpLatencyMs,
+    http_latency_ms: httpLatencyMs,
+    restart_count: restartCount,
     uptime,
+    uptime_s: uptimeSeconds,
+    disk_usage_mb: diskUsageMb,
+    disk_usage_percent: diskUsagePercent,
+    health_state: healthState,
+    failed_probes: failedProbes,
+    probe_mode: probeMode,
     recordedAt: new Date(),
   });
 };
@@ -280,9 +472,15 @@ const resolveEnvironmentName = (project) => {
 const evaluateProject = async (project) => {
   const environment = resolveEnvironmentName(project);
   const healthUrl = parseHealthUrl(project);
+  const tcpTarget = parseTcpTarget(project);
+  const probeMode = healthUrl ? "http" : tcpTarget ? "tcp" : "container";
 
-  const [healthResult, containerResult] = await Promise.all([
-    healthUrl ? probeHttpHealth(healthUrl) : Promise.resolve({ ok: false, latency: 0, statusCode: 0 }),
+  const [healthResult, containerResult, diskUsage] = await Promise.all([
+    healthUrl
+      ? probeHttpHealth(healthUrl)
+      : tcpTarget
+        ? probeTcpHealth(tcpTarget)
+        : Promise.resolve({ ok: false, latency: 0, statusCode: 0 }),
     (async () => {
       try {
         const container = await getProjectContainer(project);
@@ -291,28 +489,60 @@ const evaluateProject = async (project) => {
         return { ...stats, signal };
       } catch (_error) {
         return {
-          cpu: 0,
-          memory: 0,
+          cpuPercent: 0,
+          memoryMb: 0,
+          memoryPercent: 0,
+          netRxBytes: 0,
+          netTxBytes: 0,
+          restartCount: 0,
+          uptimeSeconds: 0,
           hasContainer: false,
+          containerState: "missing",
           containerName: "",
           containerId: "",
           signal: { errors: 0, warns: 0 },
         };
       }
     })(),
+    getHostDiskUsage(),
   ]);
 
-  const uptime = healthUrl ? (healthResult.ok ? 100 : 0) : containerResult.hasContainer ? 100 : 0;
-  const latency = healthResult.latency;
-  const cpu = containerResult.cpu;
-  const memory = containerResult.memory;
+  const probeOk = probeMode === "container"
+    ? containerResult.hasContainer && containerResult.containerState === "running"
+    : healthResult.ok;
+  const healthState = updateProbeHealthState({ projectId: project._id, probeOk });
+
+  const uptime = probeOk ? 100 : 0;
+  const httpStatus = healthResult.statusCode;
+  const httpLatencyMs = healthResult.latency;
+  const cpuPercent = containerResult.cpuPercent;
+  const memoryMb = containerResult.memoryMb;
+  const memoryPercent = containerResult.memoryPercent;
+  const netRxBytes = containerResult.netRxBytes;
+  const netTxBytes = containerResult.netTxBytes;
+  const restartCount = containerResult.restartCount;
+  const uptimeSeconds = containerResult.uptimeSeconds;
+
+  const diskUsageMb = Number(diskUsage?.mb || 0);
+  const diskUsagePercent = Number(diskUsage?.percent || 0);
 
   const metric = await createMetricRecord({
     projectId: project._id,
     environment,
-    cpu,
-    memory,
-    latency,
+    cpuPercent,
+    memoryMb,
+    memoryPercent,
+    netRxBytes,
+    netTxBytes,
+    httpStatus,
+    httpLatencyMs,
+    restartCount,
+    uptimeSeconds,
+    diskUsageMb,
+    diskUsagePercent,
+    healthState: healthState.state,
+    failedProbes: healthState.failedProbes,
+    probeMode,
     uptime,
   });
 
@@ -322,6 +552,17 @@ const evaluateProject = async (project) => {
     signal: containerResult.signal,
   });
 
+  await notifyHealthTransition({
+    project,
+    healthState,
+    probeMode,
+    healthUrl,
+    tcpTarget,
+    containerState: containerResult.containerState,
+  });
+
+  await evaluateMonitoringAlertRules({ project, metric });
+
   const deltaPayload = {
     type: "metric.delta",
     projectId: String(project._id),
@@ -329,21 +570,40 @@ const evaluateProject = async (project) => {
     environment,
     metric: {
       id: String(metric._id),
-      cpu,
-      memory,
-      latency,
+      cpu: cpuPercent,
+      cpu_percent: cpuPercent,
+      memory: memoryPercent,
+      memory_mb: memoryMb,
+      memory_percent: memoryPercent,
+      net_rx_bytes: netRxBytes,
+      net_tx_bytes: netTxBytes,
+      http_status: httpStatus,
+      latency: httpLatencyMs,
+      http_latency_ms: httpLatencyMs,
+      restart_count: restartCount,
       uptime,
+      uptime_s: uptimeSeconds,
+      disk_usage_mb: diskUsageMb,
+      disk_usage_percent: diskUsagePercent,
+      health_state: healthState.state,
+      failed_probes: healthState.failedProbes,
+      probe_mode: probeMode,
       recordedAt: metric.recordedAt,
     },
     health: {
       url: healthUrl,
+      tcp: tcpTarget,
+      mode: probeMode,
       statusCode: healthResult.statusCode,
-      ok: healthResult.ok,
+      ok: probeOk,
+      state: healthState.state,
+      failedProbes: healthState.failedProbes,
     },
     container: {
       id: containerResult.containerId,
       name: containerResult.containerName,
       hasContainer: containerResult.hasContainer,
+      state: containerResult.containerState,
       signal: containerResult.signal,
     },
     createdAt: new Date().toISOString(),
@@ -362,7 +622,7 @@ const monitorTick = async () => {
   const startedAtMs = Date.now();
 
   try {
-    const projects = await Project.find({ status: "running" }).select("_id name repoUrl environments status");
+    const projects = await Project.find({ status: "running" }).select("_id name repoUrl environments status organisationId branch");
     lastTickProjectCount = projects.length;
     lastTickError = null;
 
@@ -444,6 +704,9 @@ const getMonitorWorkerStatus = () => ({
   tickInProgress,
   intervalMs: MONITOR_INTERVAL_MS,
   httpTimeoutMs: MONITOR_HTTP_TIMEOUT_MS,
+  tcpTimeoutMs: MONITOR_TCP_TIMEOUT_MS,
+  degradedAfterFailures: MONITOR_DEGRADED_AFTER_FAILURES,
+  downAfterFailures: MONITOR_DOWN_AFTER_FAILURES,
   dockerStatsTimeoutMs: MONITOR_DOCKER_STATS_TIMEOUT_MS,
   logTailLines: MONITOR_LOG_TAIL_LINES,
   defaultHealthPath: MONITOR_DEFAULT_HEALTH_PATH,

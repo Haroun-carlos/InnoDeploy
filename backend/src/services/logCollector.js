@@ -3,6 +3,7 @@ const { PassThrough } = require("stream");
 const Docker = require("dockerode");
 const mongoose = require("mongoose");
 
+const { redisClient } = require("../config/redis");
 const Log = require("../models/Log");
 
 const TRUE_VALUES = new Set(["1", "true", "yes", "on"]);
@@ -10,6 +11,12 @@ const LOG_COLLECTOR_ENABLED = TRUE_VALUES.has(String(process.env.LOG_COLLECTOR_E
 const LOG_COLLECTOR_SOURCE = String(process.env.LOG_COLLECTOR_SOURCE || "docker");
 const LOG_COLLECTOR_SINCE_SECONDS = Math.max(0, Number(process.env.LOG_COLLECTOR_SINCE_SECONDS) || 5);
 const LOG_MAX_MESSAGE_LENGTH = Math.max(256, Number(process.env.LOG_MAX_MESSAGE_LENGTH) || 8000);
+const LOG_STREAM_CHANNEL = String(process.env.LOG_STREAM_CHANNEL || "logs:stream");
+const LOG_PROJECT_CHANNEL_PREFIX = String(process.env.LOG_PROJECT_CHANNEL_PREFIX || "logs:project:");
+const LOG_COLLECTION_CAPPED_ENABLED = TRUE_VALUES.has(
+  String(process.env.LOG_COLLECTION_CAPPED_ENABLED || "true").toLowerCase()
+);
+const LOG_COLLECTION_CAP_BYTES = Math.max(1024 * 1024, Number(process.env.LOG_COLLECTION_CAP_BYTES) || 100 * 1024 * 1024);
 
 const containerLogStreams = new Map();
 
@@ -45,6 +52,15 @@ const normalizeLevel = (value, streamName) => {
 };
 
 const isValidObjectId = (value) => mongoose.Types.ObjectId.isValid(value);
+
+const parseDateCandidate = (value) => {
+  if (!value) return null;
+  const parsed = new Date(String(value));
+  if (Number.isNaN(parsed.getTime())) {
+    return null;
+  }
+  return parsed;
+};
 
 const extractProjectId = (parsedPayload, context) => {
   const labels = context.labels || {};
@@ -92,7 +108,54 @@ const parseLine = (rawLine) => {
     parsedPayload = null;
   }
 
+  if (parsedPayload && typeof parsedPayload === "object") {
+    const payloadTimestamp =
+      parseDateCandidate(parsedPayload.timestamp) ||
+      parseDateCandidate(parsedPayload.time) ||
+      parseDateCandidate(parsedPayload.ts) ||
+      parseDateCandidate(parsedPayload.datetime);
+
+    if (payloadTimestamp) {
+      eventAt = payloadTimestamp;
+    }
+  }
+
   return { eventAt, messageSegment, parsedPayload };
+};
+
+const extractMessage = (parsedPayload, messageSegment) => {
+  if (!parsedPayload || typeof parsedPayload !== "object") {
+    return messageSegment;
+  }
+
+  const candidate =
+    (typeof parsedPayload.message === "string" && parsedPayload.message) ||
+    (typeof parsedPayload.msg === "string" && parsedPayload.msg) ||
+    (typeof parsedPayload.log === "string" && parsedPayload.log) ||
+    messageSegment;
+
+  return candidate;
+};
+
+const extractLevel = (parsedPayload, streamName) => {
+  if (!parsedPayload || typeof parsedPayload !== "object") {
+    return normalizeLevel(null, streamName);
+  }
+
+  const candidate = parsedPayload.level || parsedPayload.severity || parsedPayload.lvl;
+  return normalizeLevel(candidate, streamName);
+};
+
+const publishLogLine = async (payload) => {
+  if (!redisClient?.isOpen) {
+    return;
+  }
+
+  const serialized = JSON.stringify(payload);
+  await Promise.all([
+    redisClient.publish(LOG_STREAM_CHANNEL, serialized),
+    redisClient.publish(`${LOG_PROJECT_CHANNEL_PREFIX}${payload.projectId}`, serialized),
+  ]);
 };
 
 const persistLogLine = async ({ streamName, line, context }) => {
@@ -106,23 +169,41 @@ const persistLogLine = async ({ streamName, line, context }) => {
     return;
   }
 
-  const payloadMessage = parsedPayload && typeof parsedPayload.message === "string" ? parsedPayload.message : messageSegment;
+  const payloadMessage = extractMessage(parsedPayload, messageSegment);
   const message = payloadMessage.length > LOG_MAX_MESSAGE_LENGTH
     ? payloadMessage.slice(0, LOG_MAX_MESSAGE_LENGTH)
     : payloadMessage;
 
-  await Log.create({
+  const document = {
     projectId,
     pipelineId: extractPipelineId(parsedPayload),
-    level: normalizeLevel(parsedPayload?.level, streamName),
+    level: extractLevel(parsedPayload, streamName),
     message,
     environment: toSafeString(parsedPayload?.environment, ""),
     source: toSafeString(parsedPayload?.source, `${LOG_COLLECTOR_SOURCE}:${context.containerName}`),
     containerId: context.containerId,
     containerName: context.containerName,
     stream: streamName,
+    timestamp: eventAt,
     eventAt,
+    ingestionSource: "docker.logs",
     metadata: parsedPayload && typeof parsedPayload === "object" ? parsedPayload : null,
+  };
+
+  const saved = await Log.create(document);
+
+  await publishLogLine({
+    type: "log.line",
+    id: String(saved._id),
+    projectId,
+    pipelineId: saved.pipelineId ? String(saved.pipelineId) : null,
+    timestamp: saved.timestamp,
+    level: saved.level,
+    message: saved.message,
+    containerId: saved.containerId,
+    containerName: saved.containerName,
+    stream: saved.stream,
+    source: saved.source,
   });
 };
 
@@ -300,6 +381,34 @@ const watchDockerEvents = async () => {
   });
 };
 
+const ensureLogCollectionPrepared = async () => {
+  const db = Log.db.db;
+  if (!db) {
+    return;
+  }
+
+  const collectionName = Log.collection.collectionName || "logs";
+  const collections = await db.listCollections({ name: collectionName }).toArray();
+
+  if (collections.length === 0 && LOG_COLLECTION_CAPPED_ENABLED) {
+    try {
+      await db.createCollection(collectionName, {
+        capped: true,
+        size: LOG_COLLECTION_CAP_BYTES,
+      });
+      console.log(`[log-collector] Created capped collection '${collectionName}'`);
+    } catch (error) {
+      console.warn("[log-collector] Could not create capped collection", error.message);
+    }
+  }
+
+  try {
+    await Log.syncIndexes();
+  } catch (error) {
+    console.warn("[log-collector] Could not sync log indexes", error.message);
+  }
+};
+
 const startLogCollector = async () => {
   if (!LOG_COLLECTOR_ENABLED || collectorStarted || collectorStarting) {
     return;
@@ -310,6 +419,7 @@ const startLogCollector = async () => {
   try {
     dockerClient = createDockerClient();
     await dockerClient.ping();
+    await ensureLogCollectionPrepared();
     await hydrateRunningContainers();
     await watchDockerEvents();
 

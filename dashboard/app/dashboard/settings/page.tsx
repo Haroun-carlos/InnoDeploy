@@ -32,6 +32,7 @@ import type {
 type SavingKey =
   | "organisation"
   | "notifications"
+  | "notificationsTest"
   | "registry"
   | "provider"
   | "preferences"
@@ -156,6 +157,25 @@ export default function SettingsPage() {
       const { data } = await settingsApi.updateNotifications(notificationsForm);
       setSettings((current) => current ? { ...current, notificationChannels: data.notificationChannels as NotificationChannelsConfig } : current);
       setSuccess(String(data.message ?? "Channels updated"));
+    });
+  };
+
+  const handleNotificationsTest = async (channels?: string[]) => {
+    await runAction("notificationsTest", async () => {
+      const { data } = await settingsApi.testNotifications({
+        channels,
+        severity: "info",
+        title: "InnoDeploy channel test",
+        message: "This is a test notification from settings.",
+        serviceName: "settings-ui",
+      });
+
+      const channelStates = Object.entries((data.result?.channels || {}) as Record<string, { status?: string }>);
+      const summary = channelStates
+        .map(([name, state]) => `${name}:${String(state?.status || "unknown")}`)
+        .join(", ");
+
+      setSuccess(summary ? `Notification test completed (${summary})` : String(data.message ?? "Notification test completed"));
     });
   };
 
@@ -296,7 +316,9 @@ export default function SettingsPage() {
                   value={notificationsForm}
                   onChange={setNotificationsForm}
                   onSubmit={handleNotificationsSave}
+                  onTest={handleNotificationsTest}
                   saving={Boolean(saving.notifications)}
+                  testing={Boolean(saving.notificationsTest)}
                   disabled={!canManage}
                 />
                 <DockerRegistryConfig

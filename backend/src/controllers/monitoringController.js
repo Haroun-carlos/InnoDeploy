@@ -43,7 +43,7 @@ const findLogsWithSearch = async ({ projectId, baseQuery, searchTerm, limit }) =
             },
           },
         },
-        { $sort: { createdAt: -1 } },
+        { $sort: { eventAt: -1, createdAt: -1 } },
         { $limit: limit },
       ]);
 
@@ -61,7 +61,7 @@ const findLogsWithSearch = async ({ projectId, baseQuery, searchTerm, limit }) =
       },
       { score: { $meta: "textScore" } }
     )
-      .sort({ score: { $meta: "textScore" }, createdAt: -1 })
+      .sort({ score: { $meta: "textScore" }, eventAt: -1, createdAt: -1 })
       .limit(limit);
 
     if (logs.length > 0) {
@@ -72,7 +72,7 @@ const findLogsWithSearch = async ({ projectId, baseQuery, searchTerm, limit }) =
   }
 
   return Log.find({ ...baseQuery, message: { $regex: searchTerm, $options: "i" } })
-    .sort({ createdAt: -1 })
+    .sort({ eventAt: -1, createdAt: -1 })
     .limit(limit);
 };
 
@@ -147,7 +147,7 @@ const getProjectLogs = async (req, res, next) => {
           searchTerm: normalizedSearch,
           limit: parseLimit(limit),
         })
-      : await Log.find(query).sort({ createdAt: -1 }).limit(parseLimit(limit));
+      : await Log.find(query).sort({ eventAt: -1, createdAt: -1 }).limit(parseLimit(limit));
 
     res.json({ logs });
   } catch (error) {
@@ -172,13 +172,23 @@ const getProjectStatus = async (req, res, next) => {
       Pipeline.findOne({ projectId: project._id }).sort({ createdAt: -1 }),
     ]);
 
-    const degraded =
-      (latestMetric && (latestMetric.cpu > 90 || latestMetric.memory > 90 || latestMetric.uptime < 95)) ||
-      (latestRun && latestRun.status === "failed");
+    const cpuLoad = Number(latestMetric?.cpu_percent ?? latestMetric?.cpu ?? 0);
+    const memoryLoad = Number(latestMetric?.memory_percent ?? latestMetric?.memory ?? 0);
+    const availability = Number(latestMetric?.uptime ?? 0);
+    const healthState = String(latestMetric?.health_state || "").toLowerCase();
+
+    let status = "up";
+    if (healthState === "down") {
+      status = "down";
+    } else if (healthState === "degraded") {
+      status = "degraded";
+    } else if ((latestMetric && (cpuLoad > 90 || memoryLoad > 90 || availability < 95)) || (latestRun && latestRun.status === "failed")) {
+      status = "degraded";
+    }
 
     res.json({
       projectId: String(project._id),
-      status: degraded ? "degraded" : "up",
+      status,
       projectStatus: project.status,
       latestMetric,
       latestRun,

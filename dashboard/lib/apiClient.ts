@@ -111,6 +111,9 @@ export const alertApi = {
     memoryThreshold: number;
     latencyThreshold: number;
     availabilityThreshold: number;
+    serviceDownFailures?: number;
+    diskThreshold?: number;
+    certExpiryDays?: number;
     emailNotifications: boolean;
     slackNotifications: boolean;
   }) => apiClient.put("/alerts/rules/config", payload),
@@ -142,6 +145,11 @@ export const settingsApi = {
   revokeInvitation: (invitationId: string) => apiClient.delete(`/settings/invitations/${invitationId}`),
 
   updateNotifications: (payload: {
+    emailEnabled: boolean;
+    slackEnabled: boolean;
+    discordEnabled: boolean;
+    expoEnabled: boolean;
+    webhookEnabled: boolean;
     slackWebhook: string;
     discordWebhook: string;
     smtpHost: string;
@@ -149,7 +157,20 @@ export const settingsApi = {
     smtpUsername: string;
     smtpPassword: string;
     smtpFromEmail: string;
+    emailRecipients: string[];
+    expoAccessToken: string;
+    expoPushTokens: string[];
+    webhookUrl: string;
+    webhookHeaders: Record<string, string>;
   }) => apiClient.put("/settings/notifications", payload),
+
+  testNotifications: (payload: {
+    channels?: string[];
+    severity?: "info" | "warning" | "critical";
+    title?: string;
+    message?: string;
+    serviceName?: string;
+  }) => apiClient.post("/settings/notifications/test", payload),
 
   updateDockerRegistry: (payload: {
     registryUrl: string;

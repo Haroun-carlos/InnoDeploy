@@ -18,7 +18,7 @@ interface AlertFilterBarProps {
 }
 
 const severityOptions: Array<"all" | AlertSeverity> = ["all", "critical", "warning", "info"];
-const ruleOptions: Array<"all" | AlertRuleType> = ["all", "cpu", "memory", "latency", "availability", "deployment"];
+const ruleOptions: Array<"all" | AlertRuleType> = ["all", "cpu", "memory", "latency", "availability", "deployment", "disk", "certificate"];
 
 export default function AlertFilterBar(props: AlertFilterBarProps) {
   const {

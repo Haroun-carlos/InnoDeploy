@@ -6,6 +6,9 @@ const { Worker } = require("bullmq");
 const mongoose = require("mongoose");
 
 const { redisClient } = require("../config/redis");
+const { reportDeploymentFailureAlert } = require("./alertRulesEngine");
+const { enqueueDeployJob } = require("./jobQueue");
+const { dispatchProjectNotification } = require("./notificationDispatcher");
 const Log = require("../models/Log");
 const Pipeline = require("../models/Pipeline");
 const { uploadJsonArtifact } = require("./objectStore");
@@ -28,6 +31,42 @@ let runnerWorker = null;
 let runnerStarted = false;
 
 const isValidObjectId = (value) => mongoose.Types.ObjectId.isValid(value);
+
+const parseConfigJson = (config) => {
+  if (!config || typeof config !== "string") {
+    return {};
+  }
+
+  try {
+    return JSON.parse(config);
+  } catch (_error) {
+    return {};
+  }
+};
+
+const notifyPipeline = async ({ pipeline, severity, title, message, requestedChannels }) => {
+  try {
+    await dispatchProjectNotification({
+      projectId: String(pipeline.projectId),
+      event: {
+        severity,
+        title,
+        message,
+        serviceName: "pipeline-runner",
+        metadata: {
+          pipelineId: String(pipeline._id),
+          version: pipeline.version,
+          branch: pipeline.branch,
+          strategy: pipeline.strategy,
+          status: pipeline.status,
+        },
+      },
+      requestedChannels,
+    });
+  } catch (_error) {
+    // Notification failures should not fail pipeline execution.
+  }
+};
 
 const getDockerClient = () => {
   if (dockerClient) {
@@ -205,7 +244,7 @@ const createPipelineFromJob = async (job) => {
     branch: String(job.branch || "main"),
     triggeredBy: String(job.triggeredBy || "system"),
     environment: String(job.environment || "production"),
-    config: JSON.stringify({ repoUrl: String(job.repoUrl || "") }),
+    config: JSON.stringify({ repoUrl: String(job.repoUrl || ""), notifications: job.notifications || {} }),
     steps: steps.map((step) => ({
       name: String(step.name || "step"),
       command: String(step.command || "echo noop"),
@@ -216,9 +255,42 @@ const createPipelineFromJob = async (job) => {
   });
 };
 
+const resolvePipelineRun = async (job) => {
+  if (isValidObjectId(job.pipelineId)) {
+    const existing = await Pipeline.findById(job.pipelineId);
+    if (existing) {
+      return existing;
+    }
+  }
+
+  return createPipelineFromJob(job);
+};
+
 const runPipelineJob = async (job) => {
-  const pipeline = await createPipelineFromJob(job);
+  const pipeline = await resolvePipelineRun(job);
+  const configBlob = parseConfigJson(pipeline.config);
+  const jobNotifications = job.notifications && typeof job.notifications === "object" ? job.notifications : {};
+  const configNotifications =
+    configBlob.notifications && typeof configBlob.notifications === "object" ? configBlob.notifications : {};
+  const notifications = {
+    slack: jobNotifications.slack ?? configNotifications.slack ?? true,
+    email: jobNotifications.email ?? configNotifications.email ?? true,
+  };
+
+  const repoUrl = String(job.repoUrl || configBlob.repoUrl || "");
+  if (!repoUrl) {
+    throw new Error("pipeline job must include repoUrl");
+  }
+
   const startedAt = Date.now();
+
+  pipeline.status = "in-progress";
+  for (const step of pipeline.steps) {
+    if (step.status === "running") {
+      step.status = "pending";
+    }
+  }
+  await pipeline.save();
 
   await Log.create({
     projectId: pipeline.projectId,
@@ -260,7 +332,7 @@ const runPipelineJob = async (job) => {
         pipeline: {
           _id: pipeline._id,
           projectId: pipeline.projectId,
-          repoUrl: String(job.repoUrl || ""),
+          repoUrl,
           branch: pipeline.branch,
         },
         stage,
@@ -305,9 +377,59 @@ const runPipelineJob = async (job) => {
         createdAt: new Date().toISOString(),
       });
 
+      await reportDeploymentFailureAlert({
+        projectId: String(pipeline.projectId),
+        stageName: stage.name,
+        exitCode: 1,
+        errorMessage: `Pipeline ${pipeline.version} failed on stage '${stage.name}': ${error.message}`,
+      });
+
+      await notifyPipeline({
+        pipeline,
+        severity: "critical",
+        title: "Pipeline execution failed",
+        message: `Pipeline ${pipeline.version} failed on stage '${stage.name}': ${error.message}`,
+        requestedChannels: notifications,
+      });
+
       throw error;
     }
   }
+
+  const deployJob = await enqueueDeployJob({
+    projectId: String(pipeline.projectId),
+    pipelineId: String(pipeline._id),
+    version: pipeline.version,
+    strategy: pipeline.strategy,
+    branch: pipeline.branch,
+    triggeredBy: pipeline.triggeredBy,
+    environment: pipeline.environment,
+  });
+
+  await publishEvent({
+    type: "pipeline.deploy.queued",
+    projectId: String(pipeline.projectId),
+    pipelineId: String(pipeline._id),
+    strategy: pipeline.strategy,
+    deployJobId: String(deployJob.id),
+    createdAt: new Date().toISOString(),
+  });
+
+  await publishEvent({
+    type: "pipeline.notifications.sent",
+    projectId: String(pipeline.projectId),
+    pipelineId: String(pipeline._id),
+    channels: notifications,
+    createdAt: new Date().toISOString(),
+  });
+
+  await notifyPipeline({
+    pipeline,
+    severity: "info",
+    title: "Pipeline execution completed",
+    message: `Pipeline ${pipeline.version} completed successfully and deployment job ${deployJob.id} was queued.`,
+    requestedChannels: notifications,
+  });
 
   pipeline.status = "success";
   pipeline.duration = Date.now() - startedAt;
@@ -332,6 +454,14 @@ const runPipelineJob = async (job) => {
     pipelineId: String(pipeline._id),
     status: pipeline.status,
     duration: pipeline.duration,
+    artifact,
+    createdAt: new Date().toISOString(),
+  });
+
+  await publishEvent({
+    type: "pipeline.archived",
+    projectId: String(pipeline.projectId),
+    pipelineId: String(pipeline._id),
     artifact,
     createdAt: new Date().toISOString(),
   });
