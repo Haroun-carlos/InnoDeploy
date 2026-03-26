@@ -6,6 +6,7 @@
 innodeploy/
 ├── backend/        # Express.js REST API
 ├── dashboard/      # Next.js 14 (App Router) front-end
+├── cli/            # InnoDeploy command-line client
 ├── docker/         # Docker Compose for local services
 └── docs/           # Architecture & planning docs
 ```
@@ -95,6 +96,47 @@ npm run dev
 ```
 
 The dashboard will be available at **http://localhost:3000**.
+
+---
+
+## 4 — CLI Tool (`innodeploy-cli`)
+
+### Overview
+
+`innodeploy-cli` is the command-line tool for InnoDeploy API.
+It lets developers manage projects, trigger pipelines, stream logs, and run deployments without leaving the terminal.
+
+### Installation
+
+```bash
+# Option A: install from npm (published package)
+npm install -g @innoorb/innodeploy-cli
+
+# Option B: install from this repository
+# cd cli && npm install && npm link
+
+innodeploy login
+```
+
+`innodeploy login` prompts for email and password, then stores a JWT locally.
+
+### Command Reference
+
+| Command | Description |
+|---------|-------------|
+| `innodeploy login` | Authenticate and store JWT locally |
+| `innodeploy projects list` | List all projects in current org |
+| `innodeploy projects create <name>` | Create a new project in current org |
+| `innodeploy deploy <project> [--env]` | Trigger deployment (default env: production) |
+| `innodeploy rollback <project> [--env]` | Roll back to previous version |
+| `innodeploy pipeline trigger <project>` | Manually trigger a pipeline run |
+| `innodeploy pipeline status <runId>` | Check pipeline run status |
+| `innodeploy logs <project> [--env] [--follow]` | Stream or tail logs |
+| `innodeploy status <project>` | Show service health + metrics summary |
+| `innodeploy hosts list` | List registered hosts |
+| `innodeploy hosts add` | Add a new host interactively |
+| `innodeploy secrets set <project> <key> <value>` | Set a secret env var |
+| `innodeploy init` | Scaffold a `.innodeploy.yml` template |
 
 ---
 

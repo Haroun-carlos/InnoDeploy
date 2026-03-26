@@ -12,19 +12,22 @@ import {
   Settings,
   Rocket,
 } from "lucide-react";
+import { useLanguagePreference } from "@/hooks/useLanguagePreference";
+import { t } from "@/lib/settingsI18n";
 import { cn } from "@/lib/utils";
 
 const navItems = [
-  { label: "Overview", href: "/dashboard", icon: LayoutDashboard },
-  { label: "Projects", href: "/dashboard/projects", icon: FolderKanban },
-  { label: "Hosts", href: "/dashboard/hosts", icon: Server },
-  { label: "Pipelines", href: "/dashboard/pipelines", icon: GitBranch },
-  { label: "Deployments", href: "/dashboard/deployments", icon: Activity },
-  { label: "Alerts", href: "/dashboard/alerts", icon: ShieldAlert },
-  { label: "Settings", href: "/dashboard/settings", icon: Settings },
+  { labelKey: "nav.overview", href: "/dashboard", icon: LayoutDashboard },
+  { labelKey: "nav.projects", href: "/dashboard/projects", icon: FolderKanban },
+  { labelKey: "nav.hosts", href: "/dashboard/hosts", icon: Server },
+  { labelKey: "nav.pipelines", href: "/dashboard/pipelines", icon: GitBranch },
+  { labelKey: "nav.deployments", href: "/dashboard/deployments", icon: Activity },
+  { labelKey: "nav.alerts", href: "/dashboard/alerts", icon: ShieldAlert },
+  { labelKey: "nav.settings", href: "/dashboard/settings", icon: Settings },
 ];
 
 export default function Sidebar() {
+  const language = useLanguagePreference();
   const pathname = usePathname();
 
   return (
@@ -37,7 +40,7 @@ export default function Sidebar() {
 
       {/* ── Navigation ─────────────────────────── */}
       <nav className="flex-1 px-3 py-4 space-y-1">
-        {navItems.map(({ label, href, icon: Icon }) => {
+        {navItems.map(({ labelKey, href, icon: Icon }) => {
           const isActive = href === "/dashboard"
             ? pathname === href
             : pathname === href || pathname.startsWith(`${href}/`);
@@ -53,7 +56,7 @@ export default function Sidebar() {
               )}
             >
               <Icon className="h-4 w-4" />
-              {label}
+              {t(language, labelKey)}
             </Link>
           );
         })}

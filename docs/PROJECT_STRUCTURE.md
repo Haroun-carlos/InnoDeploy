@@ -80,6 +80,14 @@ InnoDeploy/
 │   └── types/
 │       └── index.ts            # TypeScript interfaces (User, AuthResponse, Project, ApiError)
 │
+├── cli/                        # Node.js CLI package (innodeploy command)
+│   ├── package.json            # CLI dependencies + bin mapping
+│   ├── bin/
+│   │   └── innodeploy.js       # Command entrypoint (Commander)
+│   └── src/
+│       ├── config.js           # Local CLI auth/api config persistence
+│       └── prompts.js          # Interactive terminal prompts
+│
 ├── docker/
 │   └── docker-compose.yml      # 3-service stack (backend, MongoDB, Redis)
 │

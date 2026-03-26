@@ -33,7 +33,7 @@ apiClient.interceptors.response.use(
       if (refreshToken) {
         try {
           const { data } = await axios.post(
-            `${process.env.NEXT_PUBLIC_API_URL}/auth/refresh`,
+            `${apiBaseUrl}/auth/refresh`,
             { refreshToken }
           );
 
@@ -72,12 +72,30 @@ export const authApi = {
 export const projectApi = {
   getProjects: () => apiClient.get("/projects"),
 
+  getProject: (projectId: string) => apiClient.get(`/projects/${projectId}`),
+
   createProject: (payload: {
     name: string;
     repoUrl: string;
     branch: string;
     envSetup?: string;
   }) => apiClient.post("/projects", payload),
+
+  getDeploymentHistory: (projectId: string) => apiClient.get(`/projects/${projectId}/deploy/history`),
+
+  triggerDeploy: (projectId: string, payload?: { environment?: string; strategy?: string; version?: string }) =>
+    apiClient.post(`/projects/${projectId}/deploy`, payload || {}),
+
+  triggerRollback: (projectId: string, payload?: { environment?: string; version?: string }) =>
+    apiClient.post(`/projects/${projectId}/rollback`, payload || {}),
+
+  getProjectMetrics: (projectId: string, params?: Record<string, string | number>) =>
+    apiClient.get(`/projects/${projectId}/metrics`, { params }),
+
+  getProjectLogs: (projectId: string, params?: Record<string, string | number>) =>
+    apiClient.get(`/projects/${projectId}/logs`, { params }),
+
+  getProjectStatus: (projectId: string) => apiClient.get(`/projects/${projectId}/status`),
 };
 
 export const hostApi = {

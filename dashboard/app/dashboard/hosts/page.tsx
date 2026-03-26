@@ -8,10 +8,13 @@ import AddHostButton from "@/components/hostspage/AddHostButton";
 import AddHostModal from "@/components/hostspage/AddHostModal";
 import HostDetailPanel from "@/components/hostspage/HostDetailPanel";
 import HostsList from "@/components/hostspage/HostsList";
+import { useLanguagePreference } from "@/hooks/useLanguagePreference";
 import { hostApi } from "@/lib/apiClient";
+import { t } from "@/lib/settingsI18n";
 import type { Host, HostFormData } from "@/types";
 
 export default function HostsPage() {
+  const language = useLanguagePreference();
   const isReady = useRequireAuth();
   const [hosts, setHosts] = useState<Host[]>([]);
   const [requestedHostId, setRequestedHostId] = useState<string | null>(null);
@@ -112,8 +115,8 @@ export default function HostsPage() {
         <main className="flex-1 space-y-6 p-6">
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div>
-              <h1 className="text-2xl font-semibold tracking-tight">Hosts</h1>
-              <p className="text-sm text-muted-foreground">Manage deployment nodes, inspect capacity, and verify SSH connectivity.</p>
+              <h1 className="text-2xl font-semibold tracking-tight">{t(language, "hosts.pageTitle")}</h1>
+              <p className="text-sm text-muted-foreground">{t(language, "hosts.pageSubtitle")}</p>
             </div>
             <AddHostButton onClick={() => setModalOpen(true)} />
           </div>
@@ -125,9 +128,9 @@ export default function HostsPage() {
           )}
 
           {loading ? (
-            <div className="rounded-xl border bg-card px-4 py-10 text-center text-sm text-muted-foreground">Loading hosts...</div>
+            <div className="rounded-xl border bg-card px-4 py-10 text-center text-sm text-muted-foreground">{t(language, "hosts.loading")}</div>
           ) : hosts.length === 0 ? (
-            <div className="rounded-xl border bg-card px-4 py-10 text-center text-sm text-muted-foreground">No hosts yet. Add your first deployment host.</div>
+            <div className="rounded-xl border bg-card px-4 py-10 text-center text-sm text-muted-foreground">{t(language, "hosts.empty")}</div>
           ) : (
             <HostsList hosts={hosts} selectedHostId={selectedHost?.id ?? null} onSelect={(host) => setSelectedHostId(host.id)} />
           )}

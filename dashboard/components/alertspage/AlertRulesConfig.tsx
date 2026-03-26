@@ -3,6 +3,8 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useLanguagePreference } from "@/hooks/useLanguagePreference";
+import { t } from "@/lib/settingsI18n";
 import type { AlertRuleConfig } from "@/types";
 
 interface AlertRulesConfigProps {
@@ -11,6 +13,8 @@ interface AlertRulesConfigProps {
 }
 
 export default function AlertRulesConfig({ value, onChange }: AlertRulesConfigProps) {
+  const language = useLanguagePreference();
+
   const updateNumber = (key: keyof AlertRuleConfig, raw: string) => {
     onChange({ ...value, [key]: Number(raw) });
   };
@@ -22,7 +26,7 @@ export default function AlertRulesConfig({ value, onChange }: AlertRulesConfigPr
   return (
     <Card>
       <CardHeader className="pb-3">
-        <CardTitle className="text-base">Alert Rules</CardTitle>
+        <CardTitle className="text-base">{t(language, "alerts.rulesTitle")}</CardTitle>
       </CardHeader>
       <CardContent className="grid gap-4 md:grid-cols-2">
         <div className="space-y-2">

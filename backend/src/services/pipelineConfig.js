@@ -7,12 +7,6 @@ const yaml = require("js-yaml");
 
 const CLONE_TIMEOUT_MS = Math.max(10000, Number(process.env.PIPELINE_CONFIG_CLONE_TIMEOUT_MS) || 45000);
 
-const DEFAULT_STEPS = [
-  { name: "Install", command: "npm ci" },
-  { name: "Test", command: "npm test -- --watch=false" },
-  { name: "Build", command: "npm run build" },
-];
-
 const runCommand = (command, args, options = {}) =>
   new Promise((resolve, reject) => {
     const child = spawn(command, args, { stdio: "ignore", shell: false, ...options });
@@ -79,8 +73,12 @@ const parsePipelineConfigText = (text) => {
     .map((step, index) => normalizeStep(step, index))
     .filter(Boolean);
 
+  if (steps.length === 0) {
+    throw new Error("Pipeline config is missing stages/steps");
+  }
+
   return {
-    steps: steps.length > 0 ? steps : DEFAULT_STEPS,
+    steps,
     strategy: String(root.strategy || parsed.strategy || "rolling"),
     environment: String(root.environment || parsed.environment || "staging"),
     notifications: {
@@ -127,15 +125,8 @@ const resolvePipelineConfig = async ({ repoUrl, branch, inlineConfig }) => {
       source: "repository",
       sourcePath: loaded.path,
     };
-  } catch (_error) {
-    return {
-      steps: DEFAULT_STEPS,
-      strategy: "rolling",
-      environment: "staging",
-      notifications: { slack: true, email: true },
-      source: "fallback",
-      sourcePath: "defaults",
-    };
+  } catch (error) {
+    throw new Error(`Unable to resolve pipeline config from repository: ${error.message}`);
   }
 };
 

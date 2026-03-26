@@ -55,11 +55,18 @@ const triggerPipelineRun = async (req, res, next) => {
     }
 
     const branch = String(req.body.branch || project.branch || "main");
-    const resolvedConfig = await resolvePipelineConfig({
-      repoUrl: project.repoUrl,
-      branch,
-      inlineConfig: req.body.pipelineConfig || req.body.config,
-    });
+    let resolvedConfig;
+    try {
+      resolvedConfig = await resolvePipelineConfig({
+        repoUrl: project.repoUrl,
+        branch,
+        inlineConfig: req.body.pipelineConfig || req.body.config,
+      });
+    } catch (error) {
+      return res.status(400).json({
+        message: error.message || "Failed to resolve pipeline configuration",
+      });
+    }
 
     const run = await Pipeline.create({
       projectId: project._id,

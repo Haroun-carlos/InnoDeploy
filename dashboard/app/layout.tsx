@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { applyStoredPreferences, getStoredPreferences, applyThemePreference } from "@/lib/preferences";
 import { useAuthStore } from "@/store/authStore";
 import "./globals.css";
 
@@ -18,6 +19,21 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   useEffect(() => {
     hydrate();
   }, [hydrate]);
+
+  useEffect(() => {
+    applyStoredPreferences();
+
+    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+    const listener = () => {
+      const stored = getStoredPreferences();
+      if ((stored?.theme ?? "system") === "system") {
+        applyThemePreference("system");
+      }
+    };
+
+    mediaQuery.addEventListener("change", listener);
+    return () => mediaQuery.removeEventListener("change", listener);
+  }, []);
 
   return (
     <html lang="en" suppressHydrationWarning>

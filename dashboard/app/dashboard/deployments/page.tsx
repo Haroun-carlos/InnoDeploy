@@ -4,16 +4,19 @@ import DeployActivityChart from "@/components/homepage/DeployActivityChart";
 import Sidebar from "@/components/shared/Sidebar";
 import Navbar from "@/components/shared/Navbar";
 import { useRequireAuth } from "@/hooks/useRequireAuth";
+import { useLanguagePreference } from "@/hooks/useLanguagePreference";
+import { t } from "@/lib/settingsI18n";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-const deploymentStats = [
-  { label: "Successful", value: 128 },
-  { label: "Failed", value: 7 },
-  { label: "In Progress", value: 3 },
-];
-
 export default function DeploymentsPage() {
+  const language = useLanguagePreference();
   const isReady = useRequireAuth();
+
+  const deploymentStats = [
+    { label: t(language, "deployments.successful"), value: 128 },
+    { label: t(language, "deployments.failed"), value: 7 },
+    { label: t(language, "deployments.inProgress"), value: 3 },
+  ];
 
   if (!isReady) return null;
 
@@ -24,9 +27,9 @@ export default function DeploymentsPage() {
         <Navbar />
         <main className="flex-1 space-y-6 p-6">
           <div>
-            <h1 className="text-2xl font-semibold tracking-tight">Deployments</h1>
+            <h1 className="text-2xl font-semibold tracking-tight">{t(language, "deployments.pageTitle")}</h1>
             <p className="text-sm text-muted-foreground">
-              Monitor deployment throughput and release health.
+              {t(language, "deployments.subtitle")}
             </p>
           </div>
 
