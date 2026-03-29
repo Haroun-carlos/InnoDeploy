@@ -230,4 +230,8 @@ export const settingsApi = {
     apiClient.delete("/settings/organisation", { data: payload }),
 };
 
+export const githubApi = {
+  listRepositories: () => apiClient.get("/github/repositories"),
+};
+
 export default apiClient;

@@ -699,8 +699,8 @@ export default function ProjectDetailPage() {
                   total: String(logEntries.length),
                 })}
                 {logMode === "live" && (
-                  <span className="ml-2 inline-flex items-center gap-1 text-blue-600">
-                    <span className="inline-block w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse" />
+                  <span className="ml-2 inline-flex items-center gap-1 text-cyan-300">
+                    <span className="inline-block w-1.5 h-1.5 rounded-full bg-cyan-300 animate-pulse" />
                     {t(language, "projectDetail.liveStreamActive")}
                   </span>
                 )}

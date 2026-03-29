@@ -29,6 +29,8 @@ export default function OAuthCallbackPage() {
     const encodedUser = params.get("user");
     const callbackError = params.get("error");
     const callbackReason = params.get("reason");
+    const mode = params.get("mode");
+    const nextPath = params.get("next");
 
     if (callbackError) {
       const reason = callbackReason ? ` (${callbackReason})` : "";
@@ -48,20 +50,24 @@ export default function OAuthCallbackPage() {
     }
 
     setAuth(user, accessToken, refreshToken);
-    router.replace("/dashboard");
+    if (mode === "connect" && nextPath && nextPath.startsWith("/")) {
+      router.replace(nextPath);
+      return;
+    }
+    router.replace("/auth/terms");
   }, [router, setAuth]);
 
   return (
-    <main className="flex min-h-screen items-center justify-center bg-[#061634] px-4 text-blue-50">
-      <div className="w-full max-w-md rounded-xl border border-blue-100/20 bg-[#0b234a]/60 p-6 text-center">
+    <main className="flex min-h-screen items-center justify-center bg-[#030711] px-4 text-slate-50">
+      <div className="w-full max-w-md rounded-xl border border-slate-200/15 bg-[#06132b]/75 p-6 text-center">
         {error ? (
           <>
             <h1 className="text-xl font-semibold">Authentication Error</h1>
-            <p className="mt-3 text-sm text-blue-100/75">{error}</p>
+            <p className="mt-3 text-sm text-slate-300/85">{error}</p>
             <button
               type="button"
               onClick={() => router.replace("/login")}
-              className="mt-6 rounded-full bg-blue-100 px-5 py-2 text-sm font-semibold text-[#05122f] transition hover:bg-blue-50"
+              className="mt-6 rounded-full bg-cyan-300 px-5 py-2 text-sm font-semibold text-[#05203f] transition hover:bg-cyan-200"
             >
               Back to Login
             </button>
@@ -70,7 +76,7 @@ export default function OAuthCallbackPage() {
           <>
             <Loader2 className="mx-auto h-6 w-6 animate-spin text-cyan-300" />
             <h1 className="mt-4 text-xl font-semibold">Completing sign in...</h1>
-            <p className="mt-2 text-sm text-blue-100/75">Please wait while we prepare your workspace.</p>
+            <p className="mt-2 text-sm text-slate-300/85">Please wait while we prepare your workspace.</p>
           </>
         )}
       </div>

@@ -12,7 +12,7 @@ export default function QuickActions() {
 
   return (
     <div className="flex flex-wrap gap-3">
-      <Button onClick={() => router.push("/dashboard/projects?new=1")}>
+      <Button onClick={() => router.push("/dashboard/new-project")}>
         <Plus className="h-4 w-4 mr-2" />
         {t(language, "quickActions.newProject")}
       </Button>
