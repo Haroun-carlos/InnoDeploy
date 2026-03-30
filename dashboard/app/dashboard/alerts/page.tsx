@@ -12,6 +12,7 @@ import NotificationTestButton from "@/components/alertspage/NotificationTestButt
 import { alertApi } from "@/lib/apiClient";
 import { useLanguagePreference } from "@/hooks/useLanguagePreference";
 import { localeFromLanguage, t } from "@/lib/settingsI18n";
+import { ShieldAlert } from "lucide-react";
 import type { AlertRuleConfig, ProjectAlert } from "@/types";
 
 const initialRules: AlertRuleConfig = {
@@ -106,42 +107,51 @@ export default function AlertsPage() {
   };
 
   return (
-    <div className="flex min-h-screen bg-background">
+    <div className="flex min-h-screen bg-[#030711]">
       <Sidebar />
       <div className="flex flex-1 flex-col">
         <Navbar />
-        <main className="flex-1 space-y-6 p-6">
-          <div className="flex flex-wrap items-center justify-between gap-4">
-            <div>
-              <h1 className="text-2xl font-semibold tracking-tight">{t(language, "alerts.pageTitle")}</h1>
-              <p className="text-sm text-muted-foreground">{t(language, "alerts.pageSubtitle")}</p>
+        <main className="relative flex-1 space-y-6 p-6 overflow-hidden">
+          {/* Background */}
+          <div className="pointer-events-none absolute inset-0 grid-pattern" />
+          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,rgba(56,189,248,0.06),transparent)]" />
+
+          <div className="relative flex flex-wrap items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-amber-500/20 to-orange-500/10 border border-amber-500/20">
+                <ShieldAlert className="h-5 w-5 text-amber-400" />
+              </div>
+              <div>
+                <h1 className="text-2xl font-bold tracking-tight text-white">{t(language, "alerts.pageTitle")}</h1>
+                <p className="text-sm text-slate-500">{t(language, "alerts.pageSubtitle")}</p>
+              </div>
             </div>
             <NotificationTestButton onTest={handleNotificationTest} />
           </div>
 
           {error && (
-            <div className="rounded-md border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
-              {error}
-            </div>
+            <div className="relative rounded-xl border border-rose-500/20 bg-rose-500/[0.06] px-4 py-3 text-sm text-rose-300 backdrop-blur-sm">{error}</div>
           )}
 
-          <AlertFilterBar
-            severity={severity}
-            project={project}
-            ruleType={ruleType}
-            dateRange={dateRange}
-            search={search}
-            projects={projects}
-            onSeverityChange={setSeverity}
-            onProjectChange={setProject}
-            onRuleTypeChange={setRuleType}
-            onDateRangeChange={setDateRange}
-            onSearchChange={setSearch}
-          />
+          <div className="relative">
+            <AlertFilterBar
+              severity={severity}
+              project={project}
+              ruleType={ruleType}
+              dateRange={dateRange}
+              search={search}
+              projects={projects}
+              onSeverityChange={setSeverity}
+              onProjectChange={setProject}
+              onRuleTypeChange={setRuleType}
+              onDateRangeChange={setDateRange}
+              onSearchChange={setSearch}
+            />
+          </div>
 
-          <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_360px]">
+          <div className="relative grid gap-6 xl:grid-cols-[minmax(0,1fr)_360px]">
             {loading ? (
-              <div className="rounded-xl border bg-card px-4 py-10 text-center text-sm text-muted-foreground">{t(language, "alerts.loading")}</div>
+              <div className="rounded-2xl border border-white/[0.06] bg-[#0a1628]/60 px-4 py-10 text-center text-sm text-slate-500">{t(language, "alerts.loading")}</div>
             ) : (
               <AlertsTable
                 alerts={filteredAlerts}

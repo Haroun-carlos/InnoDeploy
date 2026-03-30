@@ -4,53 +4,6 @@ const { enqueuePipelineJob } = require("../services/jobQueue");
 const Pipeline = require("../models/Pipeline");
 const Project = require("../models/Project");
 const User = require("../models/User");
-<<<<<<< HEAD
-const {
-  parseInnoDeployConfig,
-  validateInnoDeployConfig,
-  buildStepsFromConfig,
-} = require("../utils/pipelineConfig");
-const { enqueuePipelineRun } = require("../services/pipelineQueue");
-const { onPipelineUpdate } = require("../services/pipelineEvents");
-
-const DEFAULT_STEP_IMAGE = "node:20-alpine";
-const DEFAULT_STEP_TIMEOUT_MS = 10 * 60 * 1000;
-
-const normalizeStep = (step) => ({
-  name: String(step?.name || "step").trim(),
-  command: String(step?.command || "").trim(),
-  image: String(step?.image || DEFAULT_STEP_IMAGE).trim() || DEFAULT_STEP_IMAGE,
-  retries: Math.max(0, Number(step?.retries || 0)),
-  timeoutMs: Math.max(1000, Number(step?.timeoutMs || DEFAULT_STEP_TIMEOUT_MS)),
-  attempt: 0,
-  status: step?.status || "pending",
-  duration: Number(step?.duration || 0),
-  output: String(step?.output || ""),
-});
-=======
-const {
-  parseInnoDeployConfig,
-  validateInnoDeployConfig,
-  buildStepsFromConfig,
-} = require("../utils/pipelineConfig");
-const { enqueuePipelineRun } = require("../services/pipelineQueue");
-const { onPipelineUpdate } = require("../services/pipelineEvents");
-
-const DEFAULT_STEP_IMAGE = "node:20-alpine";
-const DEFAULT_STEP_TIMEOUT_MS = 10 * 60 * 1000;
-
-const normalizeStep = (step) => ({
-  name: String(step?.name || "step").trim(),
-  command: String(step?.command || "").trim(),
-  image: String(step?.image || DEFAULT_STEP_IMAGE).trim() || DEFAULT_STEP_IMAGE,
-  retries: Math.max(0, Number(step?.retries || 0)),
-  timeoutMs: Math.max(1000, Number(step?.timeoutMs || DEFAULT_STEP_TIMEOUT_MS)),
-  attempt: 0,
-  status: step?.status || "pending",
-  duration: Number(step?.duration || 0),
-  output: String(step?.output || ""),
-});
->>>>>>> feat/backend-deployment-engine
 
 const getOrganisationId = async (userId) => {
   const user = await User.findById(userId).select("organisationId");
@@ -106,63 +59,6 @@ const triggerPipelineRun = async (req, res, next) => {
       return res.status(404).json({ message: "Project not found" });
     }
 
-<<<<<<< HEAD
-    const branch = String(req.body.branch || project.branch || "main");
-    let resolvedConfig;
-    try {
-      resolvedConfig = await resolvePipelineConfig({
-        repoUrl: project.repoUrl,
-        branch,
-        inlineConfig: req.body.pipelineConfig || req.body.config,
-      });
-    } catch (error) {
-      return res.status(400).json({
-        message: error.message || "Failed to resolve pipeline configuration",
-      });
-    }
-
-    const run = await Pipeline.create({
-      projectId: project._id,
-      version: String(req.body.version || `v${Date.now()}`),
-      strategy: String(req.body.strategy || resolvedConfig.strategy || "rolling"),
-      runType: "pipeline",
-      status: "pending",
-      branch,
-      triggeredBy: req.user.email || req.user.id,
-      environment: String(req.body.environment || resolvedConfig.environment || "staging"),
-      steps: (Array.isArray(req.body.steps) && req.body.steps.length > 0 ? req.body.steps : resolvedConfig.steps).map((step) => ({
-        name: String(step.name || "stage"),
-        command: String(step.command || "echo noop"),
-        status: "pending",
-        duration: 0,
-        output: "",
-      })),
-      config: JSON.stringify({
-        repoUrl: String(project.repoUrl || ""),
-        configSource: resolvedConfig.source,
-        configPath: resolvedConfig.sourcePath,
-      }),
-    });
-
-    const queueJob = await enqueuePipelineJob({
-      pipelineId: String(run._id),
-      projectId: String(project._id),
-      version: run.version,
-      strategy: run.strategy,
-      branch: run.branch,
-      triggeredBy: run.triggeredBy,
-      environment: run.environment,
-      repoUrl: project.repoUrl,
-      notifications: resolvedConfig.notifications,
-      steps: run.steps.map((step) => ({ name: step.name, command: step.command })),
-    });
-
-    res.status(201).json({
-      message: "Pipeline run queued",
-      queueJobId: String(queueJob.id),
-      run: mapRun(run),
-    });
-=======
     let parsedConfig = null;
     if (req.body.config !== undefined && req.body.config !== null && String(req.body.config).trim() !== "") {
       try {
@@ -203,9 +99,7 @@ const triggerPipelineRun = async (req, res, next) => {
     });
 
     await enqueuePipelineRun(run._id);
-
     res.status(201).json({ message: "Pipeline run triggered", run: mapRun(run) });
->>>>>>> feat/backend-deployment-engine
   } catch (error) {
     next(error);
   }

@@ -26,16 +26,26 @@ import {
   MessageCircle,
   Radio,
   Rocket,
+  Shield,
   Sparkles,
+  Terminal,
   Ticket,
   Twitter,
   Users,
   Youtube,
+  Zap,
+  GitBranch,
+  BarChart3,
+  Eye,
+  Clock,
+  Server,
 } from "lucide-react";
 import RevealOnScroll from "@/components/homepage/RevealOnScroll";
+import TerminalMockup from "@/components/homepage/TerminalMockup";
 
 const spaceGrotesk = Space_Grotesk({ subsets: ["latin"], weight: ["400", "500", "700"] });
 
+/* ─── Navigation ────────────────────────────────────────── */
 const navItems = [
   {
     label: "Features",
@@ -92,183 +102,209 @@ const navItems = [
       {
         title: "Community",
         items: [
-          {
-            title: "Ask our community",
-            description: "Connect with other developers and master new skills.",
-            icon: Users,
-            href: "/support/ask-our-community",
-          },
-          {
-            title: "FAQ",
-            description: "Find answers to common questions.",
-            icon: CircleHelp,
-            href: "/support/faq",
-          },
+          { title: "Ask our community", description: "Connect with other developers and master new skills.", icon: Users, href: "/support/ask-our-community" },
+          { title: "FAQ", description: "Find answers to common questions.", icon: CircleHelp, href: "/support/faq" },
         ],
       },
       {
         title: "Contact",
         items: [
-          {
-            title: "Chat with the experts",
-            description: "Open a chat and get help from our team.",
-            icon: Headset,
-            href: "/support/chat-with-experts",
-          },
+          { title: "Chat with the experts", description: "Open a chat and get help from our team.", icon: Headset, href: "/support/chat-with-experts" },
           { title: "Submit ticket", description: "Get direct support for your project.", icon: Ticket },
         ],
       },
     ],
   },
-  {
-    label: "Pricing",
-    href: "/pricing/backend-as-a-service",
-  },
+  { label: "Pricing", href: "/pricing/backend-as-a-service" },
 ];
 
+/* ─── Features ──────────────────────────────────────────── */
 const uniqueFeatures = [
   {
-    title: "Zero Downtime deployments",
-    description:
-      "New containers are always ready to work when deploying a new commit or changing configurations, guaranteeing zero downtime.",
+    title: "Zero Downtime Deploys",
+    description: "New containers are always ready when deploying a new commit or changing configurations. Zero downtime, every time.",
     icon: CheckCircle2,
+    gradient: "from-emerald-500/20 to-cyan-500/10",
+    iconColor: "text-emerald-400",
+    borderHover: "hover:border-emerald-400/30",
   },
   {
-    title: "Low Learning Curve",
-    description:
-      "Connect to your GitHub repository and we'll handle the rest with easy-to-analyze logs for deployment monitoring.",
-    icon: BookOpen,
+    title: "Push-to-Deploy",
+    description: "Connect your GitHub repository and every push triggers an automated build, test, and deploy pipeline.",
+    icon: GitBranch,
+    gradient: "from-violet-500/20 to-indigo-500/10",
+    iconColor: "text-violet-400",
+    borderHover: "hover:border-violet-400/30",
   },
   {
-    title: "Real-time monitoring",
-    description:
-      "Identify bottlenecks and optimize performance by monitoring CPU, RAM, Bandwidth, and logs in real time.",
+    title: "Real-time Monitoring",
+    description: "Identify bottlenecks instantly with live CPU, RAM, bandwidth monitoring and intelligent log analysis.",
     icon: Activity,
+    gradient: "from-cyan-500/20 to-blue-500/10",
+    iconColor: "text-cyan-400",
+    borderHover: "hover:border-cyan-400/30",
   },
   {
     title: "Predictable Pricing",
-    description:
-      "Full control of your costs. Plans are straightforward, transparent, and easy to understand with no surprises.",
+    description: "Full control of your costs. Plans are transparent, straightforward, and built for no surprises.",
     icon: CircleDollarSign,
+    gradient: "from-amber-500/20 to-orange-500/10",
+    iconColor: "text-amber-400",
+    borderHover: "hover:border-amber-400/30",
   },
   {
-    title: "Dedicated & Enterprise",
-    description:
-      "From small teams to large enterprises, we have robust and flexible plans built for fully managed growth.",
-    icon: BriefcaseBusiness,
-    tag: "Scale",
+    title: "Enterprise Grade Security",
+    description: "SOC2 compliant, encrypted at rest and in transit. Role-based access control and audit logging built in.",
+    icon: Shield,
+    gradient: "from-rose-500/20 to-pink-500/10",
+    iconColor: "text-rose-400",
+    borderHover: "hover:border-rose-400/30",
+    tag: "Secure",
   },
   {
-    title: "Global Scale",
-    description:
-      "Built on top of AWS, GCP, Azure, and Alicloud, allowing you to scale globally and run closer to your end users.",
+    title: "Global Edge Network",
+    description: "Built on AWS, GCP, and Azure. Deploy closer to your users with multi-region support and edge caching.",
     icon: Globe,
+    gradient: "from-sky-500/20 to-teal-500/10",
+    iconColor: "text-sky-400",
+    borderHover: "hover:border-sky-400/30",
     tag: "Fast",
   },
 ];
 
+/* ─── How it works ──────────────────────────────────────── */
 const launchSteps = [
   {
-    title: "Connect to GitHub",
-    description:
-      "Just bring your code, and we'll handle the rest. Simply link the GitHub repository you want to deploy, and you're ready to go.",
+    step: "01",
+    title: "Connect Repository",
+    description: "Link your GitHub, GitLab, or Bitbucket repo. We auto-detect your framework and configure the build.",
     icon: Github,
-    iconBox:
-      "border-[#2c4c76]/70 bg-[#123257]/70 shadow-[inset_0_1px_0_rgba(148,163,184,0.08),0_0_0_1px_rgba(56,189,248,0.1),0_18px_34px_rgba(2,8,24,0.28)]",
+    color: "text-cyan-400",
+    bg: "bg-cyan-500/10",
+    border: "border-cyan-500/20",
   },
   {
+    step: "02",
     title: "Build & Deploy",
-    description:
-      "Launch in seconds! We'll build and deploy your project directly to a container with no delays, no errors, just a smooth launch.",
+    description: "Each push triggers a CI/CD pipeline. We build, test, and deploy your application with zero configuration needed.",
     icon: Cog,
-    iconBox:
-      "border-emerald-400/45 bg-[#10344f]/80 shadow-[inset_0_1px_0_rgba(45,212,191,0.15),0_0_0_1px_rgba(16,185,129,0.22),0_20px_38px_rgba(2,8,24,0.34)]",
+    color: "text-emerald-400",
+    bg: "bg-emerald-500/10",
+    border: "border-emerald-500/20",
   },
   {
-    title: "Effortless Scaling",
-    description:
-      "Seamlessly scale your apps from a simple dashboard interface, ensuring zero downtime while managing resources effortlessly.",
+    step: "03",
+    title: "Monitor & Scale",
+    description: "Real-time dashboards, intelligent alerts, and one-click scaling. Go from zero to millions of requests effortlessly.",
     icon: Rocket,
-    iconBox:
-      "border-[#2c4c76]/70 bg-[#123257]/70 shadow-[inset_0_1px_0_rgba(148,163,184,0.08),0_0_0_1px_rgba(56,189,248,0.1),0_18px_34px_rgba(2,8,24,0.28)]",
+    color: "text-violet-400",
+    bg: "bg-violet-500/10",
+    border: "border-violet-500/20",
   },
 ];
 
+/* ─── Stats ─────────────────────────────────────────────── */
+const stats = [
+  { value: "99.99%", label: "Uptime SLA", icon: Clock },
+  { value: "< 200ms", label: "Deploy Latency", icon: Zap },
+  { value: "50+", label: "Edge Regions", icon: Globe },
+  { value: "10K+", label: "Active Projects", icon: Server },
+];
+
+/* ─── Tech Stack ────────────────────────────────────────── */
 const stackCards = [
-  { id: "docker", label: "Docker", icon: Boxes, iconClass: "text-sky-400" },
-  { id: "nodejs", label: "Node.js", icon: Braces, iconClass: "text-emerald-400" },
-  { id: "mongodb", label: "MongoDB", icon: Leaf, iconClass: "text-emerald-400" },
-  { id: "redis", label: "Redis", icon: Database, iconClass: "text-rose-400" },
+  { id: "docker", label: "Docker", icon: Boxes, iconClass: "text-sky-400", desc: "Container Runtime" },
+  { id: "nodejs", label: "Node.js", icon: Braces, iconClass: "text-emerald-400", desc: "Server Runtime" },
+  { id: "mongodb", label: "MongoDB", icon: Leaf, iconClass: "text-emerald-400", desc: "Database Layer" },
+  { id: "redis", label: "Redis", icon: Database, iconClass: "text-rose-400", desc: "Cache & Queue" },
 ];
 
+/* ─── Footer ────────────────────────────────────────────── */
 const footerColumns = [
-  {
-    title: "Features",
-    links: ["Database", "Real-time", "Cloud Functions", "Web Deployment"],
-  },
-  {
-    title: "Docs",
-    links: ["Guides", "API Reference", "App Templates", "Release Notes"],
-  },
-  {
-    title: "Support",
-    links: ["Ask our community", "FAQ", "Chat with experts", "Submit ticket"],
-  },
+  { title: "Product", links: [
+    { label: "Features", href: "/#product" },
+    { label: "Pricing", href: "/pricing/backend-as-a-service" },
+    { label: "Changelog", href: "/docs" },
+    { label: "Roadmap", href: "/docs" },
+  ]},
+  { title: "Resources", links: [
+    { label: "Documentation", href: "/docs" },
+    { label: "API Reference", href: "/docs" },
+    { label: "Guides", href: "/docs" },
+    { label: "Templates", href: "/docs" },
+  ]},
+  { title: "Company", links: [
+    { label: "About", href: "/#company" },
+    { label: "Blog", href: "/docs" },
+    { label: "Careers", href: "/#company" },
+    { label: "Contact", href: "/#contact" },
+  ]},
+  { title: "Legal", links: [
+    { label: "Privacy Policy", href: "#" },
+    { label: "Terms of Service", href: "#" },
+    { label: "Cookie Policy", href: "#" },
+    { label: "DPA", href: "#" },
+  ]},
 ];
 
-function resolveFooterHref(item: string) {
-  if (["Guides", "API Reference", "App Templates", "Release Notes"].includes(item)) return "/docs";
-  if (["Ask our community", "FAQ", "Chat with experts", "Submit ticket"].includes(item)) return "/#contact";
-  return "/#product";
-}
-
+/* ═══════════════════════════════════════════════════════════ */
 export default function HomePage() {
   return (
     <main className={`${spaceGrotesk.className} min-h-screen scroll-smooth bg-[#030711] text-white`}>
       <div className="relative min-h-screen w-full overflow-x-clip">
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_10%_12%,rgba(56,189,248,0.16),transparent_28%),radial-gradient(circle_at_85%_8%,rgba(14,165,233,0.18),transparent_24%)]" />
 
-        <header className="sticky top-0 z-50 border-b border-slate-200/10 bg-[#06132b]/88 backdrop-blur-xl">
-          <div className="mx-auto flex h-[74px] w-full max-w-[1320px] items-center justify-between px-4 sm:px-6 lg:px-8">
+        {/* ─── Background Elements ─────────────────────────── */}
+        <div className="pointer-events-none fixed inset-0 grid-pattern" />
+        <div className="pointer-events-none fixed inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,rgba(56,189,248,0.12),transparent)]" />
+
+        {/* ─── Floating Orbs ───────────────────────────────── */}
+        <div className="pointer-events-none fixed left-1/4 top-1/4 h-[500px] w-[500px] rounded-full bg-cyan-500/[0.04] blur-[100px] animate-orb-float" />
+        <div className="pointer-events-none fixed right-1/4 top-1/3 h-[400px] w-[400px] rounded-full bg-emerald-500/[0.03] blur-[80px] animate-orb-float-2" />
+        <div className="pointer-events-none fixed left-1/2 bottom-1/4 h-[350px] w-[350px] rounded-full bg-violet-500/[0.03] blur-[90px] animate-orb-float" style={{ animationDelay: "4s" }} />
+
+        {/* ═══ Navigation ═══ */}
+        <header className="sticky top-0 z-50 border-b border-white/[0.06] bg-[#030711]/80 backdrop-blur-2xl">
+          <div className="mx-auto flex h-16 w-full max-w-[1320px] items-center justify-between px-4 sm:px-6 lg:px-8">
             <div className="flex items-center gap-8">
               <Link
                 href="/"
-                className="text-3xl font-semibold tracking-tight text-slate-50 transition hover:text-cyan-200"
+                className="flex items-center gap-2.5 text-xl font-bold tracking-tight text-white transition hover:opacity-90"
               >
+                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-cyan-400 to-emerald-400">
+                  <Rocket className="h-4 w-4 text-[#030711]" strokeWidth={2.5} />
+                </div>
                 InnoDeploy
               </Link>
 
-              <nav className="hidden items-center gap-5 lg:flex">
+              <nav className="hidden items-center gap-1 lg:flex">
                 {navItems.map((item) => (
                   <div key={item.label} className="group relative">
                     <Link
                       href={item.href}
-                      className="relative flex items-center gap-1 border-b-2 border-transparent px-2 py-5 text-[1.04rem] font-medium text-slate-100/95 transition hover:border-emerald-400 hover:text-white group-hover:border-emerald-400 group-hover:text-white"
+                      className="relative flex items-center gap-1 rounded-lg px-3 py-2 text-[0.9rem] font-medium text-slate-400 transition-colors hover:text-white"
                     >
                       {item.label}
-                      {item.columns ? <ChevronDown className="h-3.5 w-3.5 text-slate-300/85" /> : null}
+                      {item.columns ? <ChevronDown className="h-3 w-3 opacity-50" /> : null}
                     </Link>
 
                     {item.columns ? (
-                      <div className="pointer-events-none absolute left-0 top-full z-50 pt-0.5 opacity-0 transition-all duration-200 group-hover:pointer-events-auto group-hover:opacity-100">
-                        <div className="w-[780px] overflow-hidden rounded-b-xl border border-slate-200/10 bg-[#020f25] shadow-[0_20px_45px_rgba(0,0,0,0.5)]">
-                          <div className="grid bg-[#031127] sm:grid-cols-2">
+                      <div className="pointer-events-none absolute left-0 top-full z-50 pt-2 opacity-0 transition-all duration-200 group-hover:pointer-events-auto group-hover:opacity-100">
+                        <div className="w-[720px] overflow-hidden rounded-xl border border-white/[0.06] bg-[#0a1628]/95 shadow-[0_24px_80px_rgba(0,0,0,0.6)] backdrop-blur-xl">
+                          <div className="grid sm:grid-cols-2">
                             {item.columns.map((column, index) => (
                               <div
                                 key={column.title}
-                                className={`px-6 py-5 ${index === 0 ? "border-r border-slate-200/10" : ""}`}
+                                className={`px-5 py-4 ${index === 0 ? "border-r border-white/[0.06]" : ""}`}
                               >
-                                <p className="text-[11px] uppercase tracking-[0.2em] text-slate-400">{column.title}</p>
-                                <ul className="mt-4 space-y-2.5">
+                                <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500">{column.title}</p>
+                                <ul className="mt-3 space-y-1">
                                   {column.items.map((entry) => (
                                     <li key={entry.title}>
-                                      <Link href={entry.href ?? item.href} className="block rounded-md px-2 py-1.5 transition hover:bg-white/5">
-                                        <div className="flex items-start gap-2.5">
-                                          {"icon" in entry ? <entry.icon className="mt-0.5 h-[18px] w-[18px] text-slate-300/85" /> : null}
-                                          <div>
-                                            <p className="text-[1.03rem] font-semibold text-slate-100">{entry.title}</p>
-                                            <p className="mt-0.5 text-[0.96rem] leading-6 text-slate-400">{entry.description}</p>
-                                          </div>
+                                      <Link href={entry.href ?? item.href} className="group/item flex items-start gap-3 rounded-lg px-2 py-2 transition hover:bg-white/[0.04]">
+                                        {"icon" in entry ? <entry.icon className="mt-0.5 h-4 w-4 shrink-0 text-slate-500 transition group-hover/item:text-cyan-400" /> : null}
+                                        <div>
+                                          <p className="text-sm font-medium text-slate-200 transition group-hover/item:text-white">{entry.title}</p>
+                                          <p className="mt-0.5 text-xs leading-relaxed text-slate-500">{entry.description}</p>
                                         </div>
                                       </Link>
                                     </li>
@@ -278,13 +314,13 @@ export default function HomePage() {
                             ))}
                           </div>
                           {item.label === "Docs" ? (
-                            <div className="border-t border-slate-200/10 px-6 py-3.5">
+                            <div className="border-t border-white/[0.06] px-5 py-3">
                               <Link
                                 href="/docs"
-                                className="inline-flex items-center gap-2 text-base font-semibold text-emerald-300 transition hover:text-emerald-200"
+                                className="inline-flex items-center gap-1.5 text-sm font-semibold text-cyan-400 transition hover:text-cyan-300"
                               >
-                                See all Docs
-                                <ArrowRight className="h-4 w-4" />
+                                View all documentation
+                                <ArrowRight className="h-3.5 w-3.5" />
                               </Link>
                             </div>
                           ) : null}
@@ -299,29 +335,28 @@ export default function HomePage() {
             <div className="hidden items-center gap-3 sm:flex">
               <Link
                 href="/login"
-                className="rounded-md px-4 py-2 text-[1.03rem] font-medium text-slate-100 transition hover:bg-white/10"
+                className="rounded-lg px-4 py-2 text-sm font-medium text-slate-400 transition hover:text-white"
               >
-                Login
+                Sign in
               </Link>
-
               <Link
                 href="/register"
-                className="rounded-md bg-emerald-400 px-5 py-2.5 text-[1.03rem] font-semibold text-[#062515] transition hover:bg-emerald-300"
+                className="rounded-lg bg-white px-4 py-2 text-sm font-semibold text-[#030711] transition hover:bg-slate-100"
               >
-                Sign up
+                Start for free
               </Link>
             </div>
 
             <div className="flex items-center gap-2 sm:hidden">
               <Link
                 href="/login"
-                className="rounded-md px-3 py-2 text-sm font-medium text-slate-100 transition hover:bg-white/10"
+                className="rounded-lg px-3 py-2 text-sm font-medium text-slate-300 transition hover:text-white"
               >
                 Sign In
               </Link>
               <Link
                 href="/register"
-                className="rounded-md bg-white px-3 py-2 text-sm font-semibold text-slate-900 transition hover:bg-slate-100"
+                className="rounded-lg bg-white px-3 py-2 text-sm font-semibold text-[#030711] transition hover:bg-slate-100"
               >
                 Start
               </Link>
@@ -329,93 +364,171 @@ export default function HomePage() {
           </div>
         </header>
 
-        <section id="product" className="relative flex min-h-[92vh] items-center border-b border-slate-200/10 py-20 sm:py-24">
-          <RevealOnScroll className="mx-auto w-full max-w-[1320px] px-4 sm:px-6 lg:px-8">
-            <div className="mx-auto max-w-[980px] text-center">
-              <div className="inline-flex items-center gap-2 rounded-full border border-cyan-300/25 bg-cyan-300/10 px-3 py-1 text-xs uppercase tracking-[0.2em] text-cyan-200">
-                <Sparkles className="h-3.5 w-3.5" />
-                
+        {/* ═══ Hero Section ═══ */}
+        <section id="product" className="relative flex min-h-[94vh] items-center py-20 sm:py-28">
+          {/* Hero gradient */}
+          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_0%,rgba(56,189,248,0.08),transparent_60%)]" />
+
+          <RevealOnScroll className="relative mx-auto w-full max-w-[1320px] px-4 sm:px-6 lg:px-8">
+            <div className="mx-auto max-w-[900px] text-center">
+              {/* Badge */}
+              <div className="inline-flex items-center gap-2 rounded-full border border-cyan-400/20 bg-cyan-400/[0.06] px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.18em] text-cyan-300 backdrop-blur-sm">
+                <span className="relative flex h-2 w-2">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-cyan-400 opacity-75" />
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-cyan-400" />
+                </span>
+                Now in Public Beta
               </div>
 
-              <h1 className="mx-auto mt-6 max-w-[860px] text-3xl font-bold leading-[1.06] text-slate-50 sm:text-5xl lg:text-6xl">
-                Build, Deploy, and Monitor
-                <span className="block text-slate-300">with one DevOps workspace.</span>
+              {/* Heading */}
+              <h1 className="mx-auto mt-8 max-w-[840px] text-4xl font-bold leading-[1.08] tracking-tight text-white sm:text-5xl lg:text-[3.5rem]">
+                Ship to production
+                <br />
+                <span className="text-gradient-hero">with confidence.</span>
               </h1>
 
-              <p className="mx-auto mt-5 max-w-[700px] text-sm text-slate-300 sm:text-base">
-                InnoDeploy brings pipelines, environments, logs, alerts, and rollbacks into a single delivery surface that scales from side projects to enterprise systems.
+              <p className="mx-auto mt-6 max-w-[600px] text-base leading-relaxed text-slate-400 sm:text-lg">
+                InnoDeploy unifies CI/CD pipelines, monitoring, alerts, and rollbacks into one powerful DevOps workspace that scales from side projects to enterprise.
               </p>
 
-              <div className="mt-9 flex w-full flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:justify-center sm:gap-4">
+              {/* CTA Buttons */}
+              <div className="mt-10 flex flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:justify-center sm:gap-4">
                 <Link
                   href="/register"
-                  className="rounded-md bg-white px-6 py-2.5 text-center text-sm font-semibold text-slate-900 transition hover:bg-slate-100"
+                  className="group relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-xl bg-gradient-to-r from-cyan-400 to-emerald-400 px-8 py-3.5 text-sm font-semibold text-[#030711] transition-all hover:shadow-[0_0_32px_rgba(34,211,238,0.25)]"
                 >
-                  Start for free
+                  <span className="relative z-10 flex items-center gap-2">
+                    Start deploying free
+                    <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+                  </span>
                 </Link>
                 <Link
-                  href="/login"
-                  className="rounded-md border border-slate-200/30 px-6 py-2.5 text-center text-sm font-semibold text-slate-100 transition hover:border-slate-100/50 hover:bg-white/5"
+                  href="/docs"
+                  className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/[0.03] px-8 py-3.5 text-sm font-semibold text-slate-200 backdrop-blur-sm transition hover:border-white/20 hover:bg-white/[0.06]"
                 >
-                  Get started
+                  <BookOpen className="h-4 w-4" />
+                  Read the docs
                 </Link>
               </div>
 
+              {/* Social proof mini */}
+              <div className="mt-10 flex items-center justify-center gap-6 text-xs text-slate-500">
+                <span className="flex items-center gap-1.5">
+                  <CheckCircle2 className="h-3.5 w-3.5 text-emerald-500" />
+                  Free tier included
+                </span>
+                <span className="flex items-center gap-1.5">
+                  <CheckCircle2 className="h-3.5 w-3.5 text-emerald-500" />
+                  No credit card required
+                </span>
+                <span className="hidden items-center gap-1.5 sm:flex">
+                  <CheckCircle2 className="h-3.5 w-3.5 text-emerald-500" />
+                  SOC2 Compliant
+                </span>
+              </div>
+            </div>
+
+            {/* Terminal Mockup */}
+            <div className="mt-16 sm:mt-20">
+              <TerminalMockup />
             </div>
           </RevealOnScroll>
         </section>
 
-        <section className="flex min-h-[92vh] items-center border-b border-slate-200/10 py-20 sm:py-24">
+        {/* ═══ Stats Bar ═══ */}
+        <section className="relative border-y border-white/[0.06] bg-[#050d1e]/80 backdrop-blur-sm">
+          <RevealOnScroll className="mx-auto w-full max-w-[1320px] px-4 py-12 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-2 gap-8 sm:grid-cols-4">
+              {stats.map((stat) => (
+                <div key={stat.label} className="text-center">
+                  <stat.icon className="mx-auto mb-3 h-5 w-5 text-cyan-400/70" strokeWidth={1.5} />
+                  <p className="text-2xl font-bold tracking-tight text-white sm:text-3xl">{stat.value}</p>
+                  <p className="mt-1 text-xs font-medium uppercase tracking-[0.15em] text-slate-500">{stat.label}</p>
+                </div>
+              ))}
+            </div>
+          </RevealOnScroll>
+        </section>
+
+        {/* ═══ Features Section ═══ */}
+        <section className="relative py-24 sm:py-32">
           <RevealOnScroll className="mx-auto w-full max-w-[1320px] px-4 sm:px-6 lg:px-8">
-            <div className="mx-auto max-w-4xl text-center">
-              <h2 className="text-2xl font-bold tracking-tight text-slate-50 sm:text-3xl lg:text-4xl">
-                What makes us <span className="text-cyan-300">Unique?</span>
+            <div className="mx-auto max-w-2xl text-center">
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-cyan-400">Why InnoDeploy</p>
+              <h2 className="mt-4 text-3xl font-bold tracking-tight text-white sm:text-4xl">
+                Everything you need to
+                <span className="text-gradient"> ship faster</span>
               </h2>
-              <p className="mx-auto mt-4 max-w-3xl text-sm text-slate-300/90 sm:text-base">
-                Deployments, error messages, and scaling issues shouldn't slow you down. We handle the complexity so you can focus on building great products.
+              <p className="mt-4 text-base leading-relaxed text-slate-400">
+                Stop juggling tools. InnoDeploy gives your team a unified DevOps platform with enterprise features out of the box.
               </p>
             </div>
 
-            <div className="mx-auto mt-9 grid max-w-[1060px] gap-4 md:grid-cols-2 xl:grid-cols-3">
+            <div className="mx-auto mt-16 grid max-w-[1100px] gap-4 md:grid-cols-2 xl:grid-cols-3">
               {uniqueFeatures.map((item) => (
                 <article
                   key={item.title}
-                  className="group rounded-2xl border border-slate-200/10 bg-gradient-to-br from-[#142847]/85 to-[#0d1f39]/80 p-5 shadow-[inset_0_1px_0_rgba(148,163,184,0.08)] transition duration-300 hover:border-emerald-400/35 hover:from-[#17334f]/90 hover:to-[#12314a]/90"
+                  className={`group relative overflow-hidden rounded-2xl border border-white/[0.06] bg-[#0a1628]/60 p-6 transition-all duration-300 ${item.borderHover} hover:bg-[#0d1d35]/80 hover:shadow-[0_0_40px_rgba(0,0,0,0.3)]`}
                 >
-                  <div className="flex items-center justify-between">
-                    <item.icon className="h-5 w-5 text-emerald-400 transition group-hover:text-emerald-300" strokeWidth={2} />
-                    {item.tag ? (
-                      <span className="rounded-md border border-cyan-300/35 bg-cyan-300/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-cyan-200">
-                        {item.tag}
-                      </span>
-                    ) : null}
-                  </div>
+                  {/* Gradient overlay */}
+                  <div className={`absolute inset-0 bg-gradient-to-br ${item.gradient} opacity-0 transition-opacity duration-300 group-hover:opacity-100`} />
 
-                  <h3 className="mt-4 text-xl font-semibold leading-tight text-slate-100 transition group-hover:text-emerald-300 sm:text-[1.45rem]">{item.title}</h3>
-                  <p className="mt-2.5 text-sm leading-6 text-slate-300/90">{item.description}</p>
+                  <div className="relative">
+                    <div className="flex items-center justify-between">
+                      <div className={`flex h-10 w-10 items-center justify-center rounded-xl border border-white/[0.06] bg-white/[0.03] ${item.iconColor}`}>
+                        <item.icon className="h-5 w-5" strokeWidth={1.8} />
+                      </div>
+                      {item.tag ? (
+                        <span className="rounded-full border border-cyan-400/25 bg-cyan-400/[0.08] px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-[0.18em] text-cyan-300">
+                          {item.tag}
+                        </span>
+                      ) : null}
+                    </div>
+
+                    <h3 className="mt-5 text-lg font-semibold text-white transition group-hover:text-white">
+                      {item.title}
+                    </h3>
+                    <p className="mt-2 text-sm leading-relaxed text-slate-400">
+                      {item.description}
+                    </p>
+                  </div>
                 </article>
               ))}
             </div>
           </RevealOnScroll>
         </section>
 
-        <section className="relative flex min-h-[92vh] items-center border-b border-slate-200/10 py-20 sm:py-24">
-          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_34%,rgba(34,211,238,0.12),transparent_38%),radial-gradient(circle_at_78%_10%,rgba(56,189,248,0.16),transparent_32%)]" />
+        {/* ═══ How It Works ═══ */}
+        <section className="relative py-24 sm:py-32">
+          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_50%,rgba(34,211,238,0.06),transparent_50%),radial-gradient(circle_at_80%_20%,rgba(52,211,153,0.06),transparent_40%)]" />
 
           <RevealOnScroll className="relative mx-auto w-full max-w-[1320px] px-4 sm:px-6 lg:px-8">
-            <h2 className="text-center text-2xl font-bold tracking-tight text-slate-50 sm:text-3xl lg:text-4xl">How it works</h2>
+            <div className="mx-auto max-w-2xl text-center">
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-400">How It Works</p>
+              <h2 className="mt-4 text-3xl font-bold tracking-tight text-white sm:text-4xl">
+                From code to production in
+                <span className="text-gradient"> minutes</span>
+              </h2>
+            </div>
 
-            <div className="mt-8 grid gap-7 md:grid-cols-3 md:gap-8 lg:mt-10 lg:gap-10">
+            <div className="relative mt-16 grid gap-6 md:grid-cols-3 md:gap-0">
+              {/* Connector line */}
+              <div className="pointer-events-none absolute left-0 right-0 top-[52px] hidden h-px bg-gradient-to-r from-transparent via-white/10 to-transparent md:block" />
+
               {launchSteps.map((step, index) => (
-                <article key={step.title} className="text-center">
-                  <div
-                    className={`mx-auto flex h-20 w-20 items-center justify-center rounded-[1.2rem] border animate-icon-box ${index === 1 ? "anim-delay-2" : index === 2 ? "anim-delay-4" : ""} ${step.iconBox}`}
-                  >
-                    <step.icon className="h-7 w-7 text-slate-100" strokeWidth={1.75} />
+                <article key={step.title} className="relative text-center md:px-6">
+                  {/* Step number */}
+                  <div className={`relative mx-auto flex h-[104px] w-[104px] items-center justify-center rounded-2xl border ${step.border} ${step.bg} transition-all duration-500 hover:scale-105`}>
+                    <div className={`absolute -right-1 -top-1 flex h-6 w-6 items-center justify-center rounded-full bg-[#030711] text-[11px] font-bold ${step.color}`}>
+                      {step.step}
+                    </div>
+                    <step.icon className={`h-8 w-8 ${step.color}`} strokeWidth={1.5} />
+                    {/* Pulse ring */}
+                    <div className={`absolute inset-0 rounded-2xl border ${step.border} animate-pulse-ring`} style={{ animationDelay: `${index * 0.6}s` }} />
                   </div>
 
-                  <h3 className="mt-5 text-xl font-semibold leading-tight text-slate-100 sm:text-[1.45rem]">{step.title}</h3>
-                  <p className="mx-auto mt-3 max-w-md text-sm leading-7 text-slate-300/90">
+                  <h3 className="mt-6 text-xl font-semibold text-white">{step.title}</h3>
+                  <p className="mx-auto mt-3 max-w-xs text-sm leading-relaxed text-slate-400">
                     {step.description}
                   </p>
                 </article>
@@ -424,99 +537,97 @@ export default function HomePage() {
           </RevealOnScroll>
         </section>
 
-        <section className="flex min-h-[92vh] items-center border-t border-slate-200/10 bg-[#07142a] py-20 sm:py-24">
+        {/* ═══ Tech Stack ═══ */}
+        <section className="relative border-y border-white/[0.06] bg-[#050d1e]/60 py-24 sm:py-32">
           <RevealOnScroll className="mx-auto w-full max-w-[1320px] px-4 sm:px-6 lg:px-8">
-            <div className="mx-auto max-w-5xl text-center">
-              <h2 className="text-3xl font-bold tracking-tight text-slate-50 sm:text-4xl lg:text-5xl">Curious about what's under the hood?</h2>
-              <p className="mx-auto mt-4 max-w-3xl text-sm text-slate-300/90 sm:text-base">
-                InnoDeploy is powered by a combination of enterprise-grade, open-source tools, built on widely trusted technologies.
+            <div className="mx-auto max-w-2xl text-center">
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Under The Hood</p>
+              <h2 className="mt-4 text-3xl font-bold tracking-tight text-white sm:text-4xl">
+                Powered by technology
+                <span className="text-gradient"> you trust</span>
+              </h2>
+              <p className="mt-4 text-base leading-relaxed text-slate-400">
+                Battle-tested, open-source infrastructure. No vendor lock-in, no black boxes.
               </p>
             </div>
 
-            <form className="mx-auto mt-10 grid max-w-4xl gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              {stackCards.map((stack, index) => (
-                <div key={stack.id}>
-                  <input id={`stack-${stack.id}`} name="stack" type="radio" className="peer sr-only" defaultChecked={index === 0} />
-                  <label
-                    htmlFor={`stack-${stack.id}`}
-                    className="flex cursor-pointer flex-col items-center rounded-3xl border border-slate-200/10 bg-gradient-to-br from-[#1a2f4d]/90 to-[#142742]/90 px-5 py-7 text-center transition duration-300 hover:border-cyan-300/45 hover:brightness-105 peer-checked:border-cyan-300/60 peer-checked:from-[#1f4065]/95 peer-checked:to-[#17395f]/95 peer-checked:shadow-[0_0_0_1px_rgba(56,189,248,0.22),0_12px_28px_rgba(7,20,40,0.4)]"
-                  >
-                    <stack.icon className={`h-10 w-10 ${stack.iconClass}`} strokeWidth={1.8} />
-                    <span className="mt-5 text-xl font-semibold uppercase tracking-[0.08em] text-slate-100">{stack.label}</span>
-                  </label>
-                </div>
-              ))}
-            </form>
-          </RevealOnScroll>
-        </section>
-
-        <section className="flex min-h-[92vh] items-center border-t border-slate-200/10 bg-[#07142a] py-20 sm:py-24">
-          <RevealOnScroll className="mx-auto w-full max-w-[1320px] px-4 sm:px-6 lg:px-8">
-            <div className="mx-auto w-full max-w-5xl rounded-3xl border border-cyan-300/20 bg-gradient-to-r from-[#1a2f4d]/90 to-[#1f3f66]/90 px-6 py-14 text-center shadow-[0_18px_45px_rgba(2,8,24,0.32)] sm:px-10">
-              <h2 className="text-3xl font-bold tracking-tight text-slate-50 sm:text-4xl lg:text-5xl">Ready to ship software faster?</h2>
-              <p className="mx-auto mt-5 max-w-3xl text-base leading-8 text-slate-200/90 sm:text-xl">
-                Start for free and join teams around the world using InnoDeploy to launch faster, scale confidently, and simplify every release.
-              </p>
-
-              <div className="mt-8">
-                <Link
-                  href="/register"
-                  className="inline-flex h-14 items-center justify-center rounded-xl bg-emerald-400 px-10 text-lg font-semibold text-[#062515] transition hover:bg-emerald-300"
+            <div className="mx-auto mt-14 grid max-w-3xl gap-4 sm:grid-cols-2 lg:grid-cols-4">
+              {stackCards.map((stack) => (
+                <div
+                  key={stack.id}
+                  className="group flex flex-col items-center rounded-2xl border border-white/[0.06] bg-[#0a1628]/50 px-5 py-8 text-center transition-all duration-300 hover:border-white/[0.12] hover:bg-[#0d1d35]/70 hover:shadow-[0_0_40px_rgba(0,0,0,0.3)]"
                 >
-                  Deploy for FREE
-                </Link>
-              </div>
-            </div>
-          </RevealOnScroll>
-        </section>
-
-        <section id="company" className="flex min-h-[82vh] items-center border-t border-slate-200/10 bg-[#010a1d] py-16 sm:py-20">
-          <RevealOnScroll className="mx-auto w-full max-w-[1320px] px-4 sm:px-6 lg:px-8">
-            <div className="mb-8 flex flex-wrap items-center justify-between gap-6">
-              <p className="text-3xl font-semibold tracking-tight text-cyan-200 sm:text-4xl">InnoDeploy</p>
-              <div className="flex items-center gap-3 text-slate-400">
-                <a href="#" aria-label="GitHub" className="transition hover:text-cyan-200"><Github className="h-4 w-4" /></a>
-                <a href="#" aria-label="LinkedIn" className="transition hover:text-cyan-200"><Linkedin className="h-4 w-4" /></a>
-                <a href="#" aria-label="Twitter" className="transition hover:text-cyan-200"><Twitter className="h-4 w-4" /></a>
-                <a href="#" aria-label="YouTube" className="transition hover:text-cyan-200"><Youtube className="h-4 w-4" /></a>
-                <a href="#" aria-label="Community" className="transition hover:text-cyan-200"><MessageCircle className="h-4 w-4" /></a>
-              </div>
-            </div>
-
-            <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-              {footerColumns.map((column) => (
-                <div key={column.title}>
-                  <h3 className="text-xl font-semibold text-slate-100">{column.title}</h3>
-                  <ul className="mt-3 space-y-2 text-lg text-slate-400">
-                    {column.links.map((item) => (
-                      <li key={item}>
-                        <Link href={resolveFooterHref(item)} className="transition hover:text-cyan-200">
-                          {item}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
+                  <div className="flex h-14 w-14 items-center justify-center rounded-xl border border-white/[0.06] bg-white/[0.03] transition group-hover:scale-110">
+                    <stack.icon className={`h-7 w-7 ${stack.iconClass}`} strokeWidth={1.5} />
+                  </div>
+                  <span className="mt-4 text-lg font-bold text-white">{stack.label}</span>
+                  <span className="mt-1 text-xs text-slate-500">{stack.desc}</span>
                 </div>
               ))}
             </div>
           </RevealOnScroll>
         </section>
 
-        <section id="contact" className="flex min-h-[78vh] items-center border-t border-slate-200/10 bg-[#010819] py-14 sm:py-16">
+        {/* ═══ CTA Section ═══ */}
+        <section className="relative py-24 sm:py-32">
           <RevealOnScroll className="mx-auto w-full max-w-[1320px] px-4 sm:px-6 lg:px-8">
-            <div className="mx-auto max-w-3xl rounded-2xl border border-slate-200/10 bg-[#07152c]/70 p-6 sm:p-8">
-              <h2 className="text-center text-2xl font-semibold text-slate-100 sm:text-3xl">Contact Us</h2>
-              <p className="mt-2 text-center text-sm text-slate-300">Leave your email and we will get back to you.</p>
+            <div className="relative mx-auto max-w-4xl overflow-hidden rounded-3xl border border-white/[0.08]">
+              {/* CTA Background */}
+              <div className="absolute inset-0 bg-gradient-to-br from-[#0c1e3d] via-[#0a1c38] to-[#071630]" />
+              <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(56,189,248,0.1),transparent_60%)]" />
+              <div className="absolute inset-0 grid-pattern-dense opacity-40" />
+
+              <div className="relative px-8 py-16 text-center sm:px-16 sm:py-20">
+                <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl border border-cyan-400/20 bg-cyan-400/[0.08]">
+                  <Rocket className="h-6 w-6 text-cyan-400" strokeWidth={1.5} />
+                </div>
+
+                <h2 className="mt-6 text-3xl font-bold tracking-tight text-white sm:text-4xl">
+                  Ready to ship software faster?
+                </h2>
+                <p className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-slate-400">
+                  Join thousands of teams deploying with InnoDeploy. Start free, scale infinitely — no credit card required.
+                </p>
+
+                <div className="mt-10 flex flex-col items-center gap-3 sm:flex-row sm:justify-center sm:gap-4">
+                  <Link
+                    href="/register"
+                    className="group inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-cyan-400 to-emerald-400 px-10 py-3.5 text-sm font-semibold text-[#030711] transition-all hover:shadow-[0_0_32px_rgba(34,211,238,0.25)]"
+                  >
+                    Deploy for free
+                    <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+                  </Link>
+                  <Link
+                    href="/#contact"
+                    className="inline-flex items-center gap-2 rounded-xl border border-white/10 px-8 py-3.5 text-sm font-semibold text-slate-300 transition hover:border-white/20 hover:bg-white/[0.04]"
+                  >
+                    <MessageCircle className="h-4 w-4" />
+                    Talk to sales
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </RevealOnScroll>
+        </section>
+
+        {/* ═══ Contact Section ═══ */}
+        <section id="contact" className="relative border-t border-white/[0.06] py-20 sm:py-24">
+          <RevealOnScroll className="mx-auto w-full max-w-[1320px] px-4 sm:px-6 lg:px-8">
+            <div className="mx-auto max-w-lg rounded-2xl border border-white/[0.06] bg-[#0a1628]/50 p-8 backdrop-blur-sm">
+              <div className="text-center">
+                <h2 className="text-2xl font-bold text-white">Get in touch</h2>
+                <p className="mt-2 text-sm text-slate-400">Leave your email and we&apos;ll get back to you within 24 hours.</p>
+              </div>
 
               <form className="mt-6 flex flex-col gap-3 sm:flex-row">
                 <input
                   type="email"
-                  placeholder="Enter your email"
-                  className="h-11 flex-1 rounded-lg border border-slate-200/15 bg-[#08142b] px-4 text-sm text-slate-100 outline-none placeholder:text-slate-400 focus:border-cyan-300"
+                  placeholder="you@company.com"
+                  className="h-11 flex-1 rounded-lg border border-white/[0.08] bg-white/[0.03] px-4 text-sm text-white outline-none placeholder:text-slate-500 focus:border-cyan-400/50 focus:ring-1 focus:ring-cyan-400/20 transition"
                 />
                 <button
                   type="submit"
-                  className="h-11 rounded-lg bg-cyan-300 px-6 text-sm font-semibold text-[#05203f] transition hover:bg-cyan-200"
+                  className="h-11 rounded-lg bg-gradient-to-r from-cyan-400 to-emerald-400 px-6 text-sm font-semibold text-[#030711] transition hover:shadow-[0_0_20px_rgba(34,211,238,0.2)]"
                 >
                   Send
                 </button>
@@ -524,6 +635,78 @@ export default function HomePage() {
             </div>
           </RevealOnScroll>
         </section>
+
+        {/* ═══ Footer ═══ */}
+        <footer id="company" className="border-t border-white/[0.06] bg-[#020509]">
+          <div className="mx-auto w-full max-w-[1320px] px-4 py-16 sm:px-6 lg:px-8">
+            {/* Footer top */}
+            <div className="flex flex-col gap-12 md:flex-row md:justify-between">
+              {/* Brand */}
+              <div className="max-w-xs">
+                <Link
+                  href="/"
+                  className="flex items-center gap-2.5 text-xl font-bold text-white"
+                >
+                  <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-cyan-400 to-emerald-400">
+                    <Rocket className="h-4 w-4 text-[#030711]" strokeWidth={2.5} />
+                  </div>
+                  InnoDeploy
+                </Link>
+                <p className="mt-4 text-sm leading-relaxed text-slate-500">
+                  The modern DevOps platform for teams who ship fast and sleep well.
+                </p>
+
+                <div className="mt-6 flex items-center gap-3">
+                  {[
+                    { icon: Github, label: "GitHub" },
+                    { icon: Linkedin, label: "LinkedIn" },
+                    { icon: Twitter, label: "Twitter" },
+                    { icon: Youtube, label: "YouTube" },
+                  ].map((social) => (
+                    <a
+                      key={social.label}
+                      href="#"
+                      aria-label={social.label}
+                      className="flex h-8 w-8 items-center justify-center rounded-lg border border-white/[0.06] bg-white/[0.02] text-slate-500 transition hover:border-white/[0.12] hover:text-white"
+                    >
+                      <social.icon className="h-3.5 w-3.5" />
+                    </a>
+                  ))}
+                </div>
+              </div>
+
+              {/* Footer links */}
+              <div className="grid grid-cols-2 gap-8 sm:grid-cols-4">
+                {footerColumns.map((column) => (
+                  <div key={column.title}>
+                    <h3 className="text-xs font-semibold uppercase tracking-[0.15em] text-slate-400">{column.title}</h3>
+                    <ul className="mt-4 space-y-3">
+                      {column.links.map((item) => (
+                        <li key={item.label}>
+                          <Link href={item.href} className="text-sm text-slate-500 transition hover:text-white">
+                            {item.label}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Footer bottom */}
+            <div className="mt-14 flex flex-col items-center justify-between gap-4 border-t border-white/[0.06] pt-8 sm:flex-row">
+              <p className="text-xs text-slate-600">© 2026 InnoDeploy. All rights reserved.</p>
+              <div className="flex items-center gap-1.5 text-xs text-slate-600">
+                <span className="relative flex h-1.5 w-1.5">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-500 opacity-75" />
+                  <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                </span>
+                All systems operational
+              </div>
+            </div>
+          </div>
+        </footer>
       </div>
     </main>
   );

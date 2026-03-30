@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Globe2, ShieldCheck, SlidersHorizontal } from "lucide-react";
+import { Globe2, ShieldCheck, SlidersHorizontal, Settings as SettingsIcon } from "lucide-react";
 import APIKeysSection from "@/components/settingspage/APIKeysSection";
 import DangerZone from "@/components/settingspage/DangerZone";
 import DockerRegistryConfig from "@/components/settingspage/DockerRegistryConfig";
@@ -242,29 +242,46 @@ export default function SettingsPage() {
   };
 
   return (
-    <div className="flex min-h-screen bg-background">
+    <div className="flex min-h-screen bg-[#030711]">
       <Sidebar />
       <div className="flex flex-1 flex-col">
         <Navbar />
-        <main className="flex-1 space-y-6 p-6">
-          <div className="flex flex-wrap items-center justify-between gap-4">
-            <div>
-              <h1 className="text-2xl font-semibold tracking-tight">{t(language, "settings.title")}</h1>
-              <p className="text-sm text-muted-foreground">{t(language, "settings.subtitle")}</p>
+        <main className="relative flex-1 space-y-6 p-6 overflow-hidden">
+          {/* Background */}
+          <div className="pointer-events-none absolute inset-0 grid-pattern" />
+          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,rgba(56,189,248,0.06),transparent)]" />
+
+          <div className="relative flex flex-wrap items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-slate-500/20 to-zinc-500/10 border border-slate-500/20">
+                <SettingsIcon className="h-5 w-5 text-slate-400" />
+              </div>
+              <div>
+                <h1 className="text-2xl font-bold tracking-tight text-white">{t(language, "settings.title")}</h1>
+                <p className="text-sm text-slate-500">{t(language, "settings.subtitle")}</p>
+              </div>
             </div>
-            <Button variant="outline" onClick={() => void loadSettings()} disabled={loading}>
+            <button
+              onClick={() => void loadSettings()}
+              disabled={loading}
+              className="inline-flex items-center gap-2 rounded-xl border border-white/[0.08] bg-white/[0.03] px-4 py-2 text-sm font-medium text-slate-300 transition-all hover:border-white/[0.15] hover:bg-white/[0.06] disabled:opacity-50"
+            >
               {t(language, "settings.refresh")}
-            </Button>
+            </button>
           </div>
 
-          {error && <div className="rounded-md border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">{error}</div>}
-          {success && <div className="rounded-md border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">{success}</div>}
+          {error && (
+            <div className="relative rounded-xl border border-rose-500/20 bg-rose-500/[0.06] px-4 py-3 text-sm text-rose-300 backdrop-blur-sm">{error}</div>
+          )}
+          {success && (
+            <div className="relative rounded-xl border border-emerald-500/20 bg-emerald-500/[0.06] px-4 py-3 text-sm text-emerald-300 backdrop-blur-sm">{success}</div>
+          )}
 
           {loading || !settings || !organisationForm || !notificationsForm || !registryForm || !providerForm || !preferencesForm ? (
-            <div className="rounded-xl border bg-card px-4 py-10 text-center text-sm text-muted-foreground">{t(language, "settings.loading")}</div>
+            <div className="relative rounded-2xl border border-white/[0.06] bg-[#0a1628]/60 px-4 py-10 text-center text-sm text-slate-500">{t(language, "settings.loading")}</div>
           ) : (
             <>
-              <div className="grid gap-4 xl:grid-cols-[1.35fr_0.9fr]">
+              <div className="relative grid gap-4 xl:grid-cols-[1.35fr_0.9fr]">
                 <OrgProfileForm
                   value={organisationForm}
                   onChange={setOrganisationForm}
@@ -308,7 +325,7 @@ export default function SettingsPage() {
                 </Card>
               </div>
 
-              <div id="members">
+              <div id="members" className="relative">
                 <MembersTable
                   members={settings.members}
                   invitations={settings.invitations}
@@ -323,7 +340,7 @@ export default function SettingsPage() {
                 />
               </div>
 
-              <div className="grid gap-4 xl:grid-cols-2">
+              <div className="relative grid gap-4 xl:grid-cols-2">
                 <NotificationChannels
                   value={notificationsForm}
                   onChange={setNotificationsForm}
@@ -342,7 +359,7 @@ export default function SettingsPage() {
                 />
               </div>
 
-              <div className="grid gap-4 xl:grid-cols-[1.1fr_0.9fr]">
+              <div className="relative grid gap-4 xl:grid-cols-[1.1fr_0.9fr]">
                 <GitProviderConfig
                   value={providerForm}
                   onChange={setProviderForm}
@@ -371,14 +388,16 @@ export default function SettingsPage() {
                 </Card>
               </div>
 
-              <APIKeysSection
-                apiKeys={settings.apiKeys}
-                canManage={canManage}
-                creating={Boolean(saving.apiKey)}
-                onCreate={handleCreateApiKey}
-                onRevoke={handleRevokeApiKey}
-                revealedSecret={revealedSecret}
-              />
+              <div className="relative">
+                <APIKeysSection
+                  apiKeys={settings.apiKeys}
+                  canManage={canManage}
+                  creating={Boolean(saving.apiKey)}
+                  onCreate={handleCreateApiKey}
+                  onRevoke={handleRevokeApiKey}
+                  revealedSecret={revealedSecret}
+                />
+              </div>
 
               {isOwner && <DangerZone slug={settings.organisation.slug} deleting={Boolean(saving.danger)} onDelete={handleDeleteOrganisation} />}
             </>

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft, Github, Rocket, Settings2, BarChart3 } from "lucide-react";
+import { ArrowLeft, Github, Rocket, Settings2, BarChart3, ArrowRight, Sparkles, Zap, Shield } from "lucide-react";
 import { authApi } from "@/lib/apiClient";
 import { useAuthStore } from "@/store/authStore";
 import { Button } from "@/components/ui/button";
@@ -23,6 +23,33 @@ function GoogleIcon() {
     </svg>
   );
 }
+
+const features = [
+  {
+    icon: Zap,
+    title: "Lightning fast deploys",
+    description: "Push code and get preview deployments in under 60 seconds.",
+    color: "text-cyan-400",
+    bg: "bg-cyan-500/10",
+    border: "border-cyan-500/20",
+  },
+  {
+    icon: Shield,
+    title: "Enterprise security",
+    description: "SOC2 compliant with encrypted secrets and role-based access.",
+    color: "text-emerald-400",
+    bg: "bg-emerald-500/10",
+    border: "border-emerald-500/20",
+  },
+  {
+    icon: BarChart3,
+    title: "Real-time analytics",
+    description: "Track health, alerts, and pipeline outcomes as your product scales.",
+    color: "text-violet-400",
+    bg: "bg-violet-500/10",
+    border: "border-violet-500/20",
+  },
+];
 
 export default function LoginPage() {
   const router = useRouter();
@@ -56,36 +83,44 @@ export default function LoginPage() {
   };
 
   return (
-    <main className="min-h-screen bg-[#030711] text-white">
-      <div className="grid min-h-screen lg:grid-cols-2">
-        <section className="flex items-center justify-center border-b border-slate-200/10 px-6 py-10 lg:border-b-0 lg:border-r">
-          <div className="w-full max-w-md space-y-8">
+    <main className="min-h-screen bg-[#030711] text-white relative overflow-hidden">
+      {/* Background decorations */}
+      <div className="pointer-events-none fixed inset-0 grid-pattern" />
+      <div className="pointer-events-none fixed inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,rgba(56,189,248,0.08),transparent)]" />
+      <div className="pointer-events-none fixed left-1/4 top-1/4 h-[500px] w-[500px] rounded-full bg-cyan-500/[0.03] blur-[100px] animate-orb-float" />
+      <div className="pointer-events-none fixed right-1/4 top-1/3 h-[400px] w-[400px] rounded-full bg-emerald-500/[0.02] blur-[80px] animate-orb-float-2" />
+
+      <div className="relative grid min-h-screen lg:grid-cols-2">
+        {/* ── Left: Form ── */}
+        <section className="flex items-center justify-center border-b border-white/[0.06] px-6 py-10 lg:border-b-0 lg:border-r">
+          <div className="w-full max-w-md space-y-8 animate-rise-fade">
             <Link
               href="/"
-              className="inline-flex items-center gap-2 text-sm font-medium text-slate-300 transition hover:text-cyan-200"
+              className="inline-flex items-center gap-2 text-sm font-medium text-slate-400 transition hover:text-white"
             >
               <ArrowLeft className="h-4 w-4" />
               Back to welcome page
             </Link>
 
             <div className="text-center lg:text-left">
-              <div className="mb-6 inline-flex h-10 w-10 items-center justify-center rounded-lg border border-cyan-300/40 bg-cyan-300/10 text-cyan-300">
-                <Rocket className="h-5 w-5" />
+              <div className="mb-6 inline-flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-cyan-400 to-emerald-400 shadow-[0_0_24px_rgba(34,211,238,0.15)]">
+                <Rocket className="h-5 w-5 text-[#030711]" strokeWidth={2.5} />
               </div>
-              <h1 className="text-4xl font-bold leading-tight text-slate-50">
+              <h1 className="text-4xl font-bold leading-tight text-white">
                 Welcome to
-                <span className="block text-cyan-300">InnoDeploy</span>
+                <span className="block text-gradient">InnoDeploy</span>
               </h1>
-              <p className="mt-3 text-sm text-slate-300/85">
+              <p className="mt-3 text-sm text-slate-400">
                 Continue with social login or sign in with your email and password.
               </p>
             </div>
 
+            {/* Social buttons */}
             <div className="space-y-3">
               <button
                 type="button"
                 onClick={() => handleOAuth("google")}
-                className="flex h-12 w-full items-center justify-center gap-2 rounded-lg border border-slate-200/20 bg-[#06132b]/75 text-sm font-semibold text-slate-50 transition hover:border-cyan-300/45 hover:bg-[#0c2145]"
+                className="flex h-12 w-full items-center justify-center gap-2 rounded-xl border border-white/[0.08] bg-white/[0.03] text-sm font-semibold text-slate-200 backdrop-blur-sm transition-all hover:border-white/[0.15] hover:bg-white/[0.06] hover:shadow-[0_0_20px_rgba(0,0,0,0.2)]"
               >
                 <GoogleIcon />
                 Continue with Google
@@ -93,31 +128,33 @@ export default function LoginPage() {
               <button
                 type="button"
                 onClick={() => handleOAuth("github")}
-                className="flex h-12 w-full items-center justify-center gap-2 rounded-lg border border-slate-200/20 bg-[#06132b]/75 text-sm font-semibold text-slate-50 transition hover:border-cyan-300/45 hover:bg-[#0c2145]"
+                className="flex h-12 w-full items-center justify-center gap-2 rounded-xl border border-white/[0.08] bg-white/[0.03] text-sm font-semibold text-slate-200 backdrop-blur-sm transition-all hover:border-white/[0.15] hover:bg-white/[0.06] hover:shadow-[0_0_20px_rgba(0,0,0,0.2)]"
               >
                 <Github className="h-4 w-4" />
                 Continue with GitHub
               </button>
             </div>
 
+            {/* Divider */}
             <div className="relative">
               <div className="absolute inset-0 flex items-center">
-                <span className="w-full border-t border-slate-200/15" />
+                <span className="w-full border-t border-white/[0.08]" />
               </div>
               <div className="relative flex justify-center text-xs uppercase">
-                <span className="bg-[#030711] px-2 text-slate-400">Or sign in with email</span>
+                <span className="bg-[#030711] px-3 text-slate-500 tracking-[0.1em]">Or sign in with email</span>
               </div>
             </div>
 
+            {/* Form */}
             <form onSubmit={handleLogin} className="space-y-4">
               {error && (
-                <div className="rounded-md border border-red-300/30 bg-red-400/10 p-3 text-sm text-red-200">
+                <div className="rounded-xl border border-rose-500/20 bg-rose-500/[0.06] p-3 text-sm text-rose-300 backdrop-blur-sm">
                   {error}
                 </div>
               )}
 
               <div className="space-y-2">
-                <Label htmlFor="email" className="text-slate-200">
+                <Label htmlFor="email" className="text-slate-300 text-sm">
                   Email
                 </Label>
                 <Input
@@ -127,12 +164,12 @@ export default function LoginPage() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
-                  className="border-slate-200/20 bg-[#06132b]/75 text-slate-50 placeholder:text-slate-300/70"
+                  className="h-11 rounded-xl border-white/[0.08] bg-white/[0.03] text-white placeholder:text-slate-500 focus:border-cyan-400/50 focus:ring-1 focus:ring-cyan-400/20 transition"
                 />
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="password" className="text-slate-200">
+                <Label htmlFor="password" className="text-slate-300 text-sm">
                   Password
                 </Label>
                 <Input
@@ -142,68 +179,71 @@ export default function LoginPage() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
-                  className="border-slate-200/20 bg-[#06132b]/75 text-slate-50 placeholder:text-slate-300/70"
+                  className="h-11 rounded-xl border-white/[0.08] bg-white/[0.03] text-white placeholder:text-slate-500 focus:border-cyan-400/50 focus:ring-1 focus:ring-cyan-400/20 transition"
                 />
               </div>
 
-              <Button
+              <button
                 type="submit"
-                className="h-12 w-full border border-cyan-300/45 bg-cyan-300/15 text-cyan-100 transition hover:bg-cyan-300/25"
                 disabled={loading}
+                className="group relative h-12 w-full overflow-hidden rounded-xl bg-gradient-to-r from-cyan-400 to-emerald-400 text-sm font-semibold text-[#030711] transition-all hover:shadow-[0_0_32px_rgba(34,211,238,0.25)] disabled:opacity-60"
               >
-                {loading ? "Signing in..." : "Sign in"}
-              </Button>
+                <span className="relative z-10 flex items-center justify-center gap-2">
+                  {loading ? "Signing in..." : "Sign in"}
+                  {!loading && <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />}
+                </span>
+              </button>
             </form>
 
             <div className="space-y-2 text-center lg:text-left">
-              <p className="text-sm text-slate-300/85">
+              <p className="text-sm text-slate-400">
                 Don&apos;t have an account?{" "}
-                <Link href="/register" className="font-semibold text-cyan-300 hover:text-cyan-200">
+                <Link href="/register" className="font-semibold text-cyan-400 hover:text-cyan-300 transition">
                   Create one
                 </Link>
               </p>
-              <p className="text-xs text-slate-400/80">
+              <p className="text-xs text-slate-600">
                 By continuing, you agree to InnoDeploy terms and privacy policy.
               </p>
             </div>
           </div>
         </section>
 
-        <section className="relative hidden overflow-hidden lg:block">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_60%_50%,rgba(45,212,191,0.2),rgba(3,7,17,0)_55%)]" />
-          <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(148,163,184,0.07)_1px,transparent_1px),linear-gradient(to_right,rgba(148,163,184,0.07)_1px,transparent_1px)] bg-[size:56px_56px]" />
+        {/* ── Right: Features ── */}
+        <section className="relative hidden overflow-hidden lg:flex lg:items-center">
+          {/* Background decorations */}
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_60%_50%,rgba(45,212,191,0.1),rgba(3,7,17,0)_55%)]" />
+          <div className="absolute inset-0 grid-pattern-dense opacity-40" />
 
-          <div className="relative flex h-full items-center px-16">
+          <div className="relative px-16 w-full">
             <div className="max-w-lg space-y-10">
               <div className="space-y-3">
-                <h2 className="text-4xl font-bold leading-tight text-slate-50">Publish on the web instantly</h2>
-                <p className="text-lg text-slate-300/85">
+                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-cyan-400">Why InnoDeploy</p>
+                <h2 className="text-4xl font-bold leading-tight text-white">
+                  Publish on the web
+                  <span className="text-gradient"> instantly</span>
+                </h2>
+                <p className="text-base text-slate-400 leading-relaxed">
                   Connect your account and ship from commit to production without extra setup.
                 </p>
               </div>
 
-              <div className="space-y-6 text-slate-300/85">
-                <div className="flex items-start gap-3">
-                  <Rocket className="mt-0.5 h-4 w-4 text-cyan-300" />
-                  <div>
-                    <p className="font-semibold text-slate-50">Deploy quickly</p>
-                    <p className="text-sm">Push code and get preview deployments in minutes.</p>
+              <div className="space-y-4">
+                {features.map((feature, index) => (
+                  <div
+                    key={feature.title}
+                    className={`group flex items-start gap-4 rounded-2xl border border-white/[0.06] bg-[#0a1628]/50 p-5 transition-all duration-300 hover:border-white/[0.12] hover:bg-[#0d1d35]/70 animate-rise-fade`}
+                    style={{ animationDelay: `${(index + 1) * 150}ms` }}
+                  >
+                    <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border ${feature.border} ${feature.bg}`}>
+                      <feature.icon className={`h-5 w-5 ${feature.color}`} />
+                    </div>
+                    <div>
+                      <p className="font-semibold text-white">{feature.title}</p>
+                      <p className="mt-1 text-sm text-slate-400 leading-relaxed">{feature.description}</p>
+                    </div>
                   </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <Settings2 className="mt-0.5 h-4 w-4 text-cyan-300" />
-                  <div>
-                    <p className="font-semibold text-slate-50">Make it yours</p>
-                    <p className="text-sm">Connect domains, secrets, and runtime settings from one place.</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <BarChart3 className="mt-0.5 h-4 w-4 text-cyan-300" />
-                  <div>
-                    <p className="font-semibold text-slate-50">Iterate and grow</p>
-                    <p className="text-sm">Track health, alerts, and pipeline outcomes as your product scales.</p>
-                  </div>
-                </div>
+                ))}
               </div>
             </div>
           </div>

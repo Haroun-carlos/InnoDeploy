@@ -3,7 +3,6 @@ import axios from "axios";
 export const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
 
 // ── Axios instance with base URL from env ─────────────────
-export const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
 
 const apiClient = axios.create({
   baseURL: apiBaseUrl,
@@ -34,14 +33,7 @@ apiClient.interceptors.response.use(
       const refreshToken = localStorage.getItem("refreshToken");
       if (refreshToken) {
         try {
-<<<<<<< HEAD
-          const { data } = await axios.post(
-            `${apiBaseUrl}/auth/refresh`,
-            { refreshToken }
-          );
-=======
           const { data } = await axios.post(`${apiBaseUrl}/auth/refresh`, { refreshToken });
->>>>>>> feat/auth-session-flow
 
           localStorage.setItem("accessToken", data.accessToken);
           localStorage.setItem("refreshToken", data.refreshToken);
@@ -126,7 +118,7 @@ export const hostApi = {
 };
 
 export const pipelineApi = {
-  triggerRun: (projectId: string, payload: { branch: string; config?: string }) =>
+  triggerRun: (projectId: string, payload: { branch?: string; config?: string }) =>
     apiClient.post(`/projects/${projectId}/pipelines`, payload),
 
   listProjectRuns: (projectId: string) => apiClient.get(`/projects/${projectId}/pipelines`),
@@ -236,23 +228,8 @@ export const settingsApi = {
     apiClient.delete("/settings/organisation", { data: payload }),
 };
 
-<<<<<<< HEAD
 export const githubApi = {
   listRepositories: () => apiClient.get("/github/repositories"),
-=======
-export const pipelineApi = {
-  triggerRun: (projectId: string, payload: { branch?: string; config?: string }) =>
-    apiClient.post(`/projects/${projectId}/pipelines`, payload),
-
-  listProjectRuns: (projectId: string) =>
-    apiClient.get(`/projects/${projectId}/pipelines`),
-
-  getRun: (runId: string) =>
-    apiClient.get(`/pipelines/${runId}`),
-
-  cancelRun: (runId: string) =>
-    apiClient.post(`/pipelines/${runId}/cancel`),
->>>>>>> feat/auth-session-flow
 };
 
 export default apiClient;

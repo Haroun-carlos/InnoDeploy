@@ -1,13 +1,8 @@
 "use client";
 
-<<<<<<< HEAD
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-=======
-import { Suspense, useEffect, useMemo, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
->>>>>>> feat/auth-session-flow
-import { Loader2 } from "lucide-react";
+import { Loader2, AlertTriangle } from "lucide-react";
 import { useAuthStore } from "@/store/authStore";
 import type { User } from "@/types";
 
@@ -50,7 +45,6 @@ function OAuthCallbackContent() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-<<<<<<< HEAD
     const params = new URLSearchParams(window.location.search);
     const accessToken = params.get("accessToken");
     const refreshToken = params.get("refreshToken");
@@ -61,12 +55,7 @@ function OAuthCallbackContent() {
     const nextPath = params.get("next");
 
     if (callbackError) {
-      const reason = callbackReason ? ` (${callbackReason})` : "";
-      setError(`Social login failed${reason}. Please try again.`);
-=======
-    if (payload.callbackError) {
-      setError(formatOAuthError(payload.callbackError, payload.callbackReason));
->>>>>>> feat/auth-session-flow
+      setError(formatOAuthError(callbackError, callbackReason));
       return;
     }
 
@@ -90,27 +79,49 @@ function OAuthCallbackContent() {
   }, [router, setAuth]);
 
   return (
-    <main className="flex min-h-screen items-center justify-center bg-[#030711] px-4 text-slate-50">
-      <div className="w-full max-w-md rounded-xl border border-slate-200/15 bg-[#06132b]/75 p-6 text-center">
-        {error ? (
-          <>
-            <h1 className="text-xl font-semibold">Authentication Error</h1>
-            <p className="mt-3 text-sm text-slate-300/85">{error}</p>
-            <button
-              type="button"
-              onClick={() => router.replace("/login")}
-              className="mt-6 rounded-full bg-cyan-300 px-5 py-2 text-sm font-semibold text-[#05203f] transition hover:bg-cyan-200"
-            >
-              Back to Login
-            </button>
-          </>
-        ) : (
-          <>
-            <Loader2 className="mx-auto h-6 w-6 animate-spin text-cyan-300" />
-            <h1 className="mt-4 text-xl font-semibold">Completing sign in...</h1>
-            <p className="mt-2 text-sm text-slate-300/85">Please wait while we prepare your workspace.</p>
-          </>
-        )}
+    <main className="min-h-screen bg-[#030711] text-white relative overflow-hidden flex items-center justify-center px-4">
+      {/* Background decorations */}
+      <div className="pointer-events-none fixed inset-0 grid-pattern" />
+      <div className="pointer-events-none fixed inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,rgba(56,189,248,0.08),transparent)]" />
+      <div className="pointer-events-none fixed left-1/3 top-1/4 h-[400px] w-[400px] rounded-full bg-cyan-500/[0.03] blur-[100px] animate-orb-float" />
+
+      <div className="relative w-full max-w-md animate-rise-fade">
+        <div className="overflow-hidden rounded-2xl border border-white/[0.06] bg-[#0a1628]/60 backdrop-blur-xl shadow-[0_24px_80px_rgba(0,0,0,0.4)]">
+          {/* Top gradient bar */}
+          <div className="h-1 bg-gradient-to-r from-cyan-400 via-emerald-400 to-cyan-400" />
+
+          <div className="p-8 text-center space-y-4">
+            {error ? (
+              <>
+                <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-rose-500/10 border border-rose-500/20">
+                  <AlertTriangle className="h-7 w-7 text-rose-400" />
+                </div>
+                <h1 className="text-xl font-bold text-white">Authentication Error</h1>
+                <p className="text-sm text-slate-400 leading-relaxed">{error}</p>
+                <button
+                  type="button"
+                  onClick={() => router.replace("/login")}
+                  className="group inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-cyan-400 to-emerald-400 px-6 py-2.5 text-sm font-semibold text-[#030711] transition-all hover:shadow-[0_0_24px_rgba(34,211,238,0.2)]"
+                >
+                  Back to Login
+                </button>
+              </>
+            ) : (
+              <>
+                <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-cyan-500/10 border border-cyan-500/20">
+                  <Loader2 className="h-7 w-7 animate-spin text-cyan-400" />
+                </div>
+                <h1 className="text-xl font-bold text-white">Completing sign in...</h1>
+                <p className="text-sm text-slate-400">Please wait while we prepare your workspace.</p>
+
+                {/* Progress bar animation */}
+                <div className="mt-2 h-1 w-full overflow-hidden rounded-full bg-white/[0.06]">
+                  <div className="h-full w-2/3 rounded-full bg-gradient-to-r from-cyan-400 to-emerald-400 animate-shimmer" />
+                </div>
+              </>
+            )}
+          </div>
+        </div>
       </div>
     </main>
   );
@@ -120,11 +131,19 @@ export default function OAuthCallbackPage() {
   return (
     <Suspense
       fallback={
-        <main className="flex min-h-screen items-center justify-center bg-[#061634] px-4 text-blue-50">
-          <div className="w-full max-w-md rounded-xl border border-blue-100/20 bg-[#0b234a]/60 p-6 text-center">
-            <Loader2 className="mx-auto h-6 w-6 animate-spin text-cyan-300" />
-            <h1 className="mt-4 text-xl font-semibold">Completing sign in...</h1>
-            <p className="mt-2 text-sm text-blue-100/75">Please wait while we prepare your workspace.</p>
+        <main className="min-h-screen bg-[#030711] text-white relative overflow-hidden flex items-center justify-center px-4">
+          <div className="pointer-events-none fixed inset-0 grid-pattern" />
+          <div className="relative w-full max-w-md">
+            <div className="overflow-hidden rounded-2xl border border-white/[0.06] bg-[#0a1628]/60 backdrop-blur-xl shadow-[0_24px_80px_rgba(0,0,0,0.4)]">
+              <div className="h-1 bg-gradient-to-r from-cyan-400 via-emerald-400 to-cyan-400" />
+              <div className="p-8 text-center space-y-4">
+                <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-cyan-500/10 border border-cyan-500/20">
+                  <Loader2 className="h-7 w-7 animate-spin text-cyan-400" />
+                </div>
+                <h1 className="text-xl font-bold text-white">Completing sign in...</h1>
+                <p className="text-sm text-slate-400">Please wait while we prepare your workspace.</p>
+              </div>
+            </div>
           </div>
         </main>
       }

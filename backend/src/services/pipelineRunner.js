@@ -1,4 +1,7 @@
-<<<<<<< HEAD
+const fs = require("fs/promises");
+const os = require("os");
+const path = require("path");
+const { spawn } = require("child_process");
 const { PassThrough } = require("stream");
 
 const Docker = require("dockerode");
@@ -12,7 +15,10 @@ const { enqueueDeployJob } = require("./jobQueue");
 const { dispatchProjectNotification } = require("./notificationDispatcher");
 const Log = require("../models/Log");
 const Pipeline = require("../models/Pipeline");
+const Project = require("../models/Project");
 const { uploadJsonArtifact } = require("./objectStore");
+const { dequeuePipelineRun, bootstrapPendingRuns } = require("./pipelineQueue");
+const { emitPipelineUpdate } = require("./pipelineEvents");
 
 const TRUE_VALUES = new Set(["1", "true", "yes", "on"]);
 const PIPELINE_RUNNER_ENABLED = TRUE_VALUES.has(
@@ -25,11 +31,16 @@ const PIPELINE_LOGS_CHANNEL = String(process.env.PIPELINE_LOGS_CHANNEL || "pipel
 const PIPELINE_LOGS_CHANNEL_PREFIX = String(process.env.PIPELINE_LOGS_CHANNEL_PREFIX || "pipeline:logs:");
 const PIPELINE_STAGE_IMAGE = String(process.env.PIPELINE_STAGE_IMAGE || "node:20-alpine");
 const REDIS_URL = process.env.REDIS_URL || "redis://localhost:6379";
+const MAX_STEP_OUTPUT_LENGTH = 60_000;
+const RUNNER_DEFAULT_CONCURRENCY = Math.max(1, Number(process.env.PIPELINE_RUNNER_CONCURRENCY || 1));
+const RUNNER_DEFAULT_STEP_TIMEOUT_MS = Math.max(1000, Number(process.env.PIPELINE_STEP_TIMEOUT_MS || 10 * 60 * 1000));
+const RUNNER_DEFAULT_STEP_RETRIES = Math.max(0, Number(process.env.PIPELINE_STEP_RETRIES || 0));
 
 let bullConnection = null;
 let dockerClient = null;
 let runnerWorker = null;
 let runnerStarted = false;
+let dockerAvailable = null;
 
 const isValidObjectId = (value) => mongoose.Types.ObjectId.isValid(value);
 
@@ -468,51 +479,8 @@ const runPipelineJob = async (job) => {
   });
 };
 
-const startPipelineRunner = async () => {
-  if (!PIPELINE_RUNNER_ENABLED || runnerStarted) {
-    return;
-  }
 
-  bullConnection = new IORedis(REDIS_URL, { maxRetriesPerRequest: null });
-  runnerWorker = new Worker(
-    PIPELINE_QUEUE_NAME,
-    async (job) => {
-      await runPipelineJob(job.data || {});
-    },
-    {
-      connection: bullConnection,
-      concurrency: PIPELINE_RUNNER_CONCURRENCY,
-    }
-  );
 
-  runnerWorker.on("failed", (job, error) => {
-    console.warn(`[pipeline-runner] job failed (${job?.id || "unknown"})`, error.message);
-  });
-
-  runnerWorker.on("completed", (job) => {
-    console.log(`[pipeline-runner] job completed (${job.id})`);
-  });
-
-  runnerStarted = true;
-  console.log(`[pipeline-runner] started (queue=${PIPELINE_QUEUE_NAME}, concurrency=${PIPELINE_RUNNER_CONCURRENCY})`);
-=======
-const fs = require("fs/promises");
-const os = require("os");
-const path = require("path");
-const { spawn } = require("child_process");
-
-const Pipeline = require("../models/Pipeline");
-const Project = require("../models/Project");
-const { dequeuePipelineRun, bootstrapPendingRuns } = require("./pipelineQueue");
-const { emitPipelineUpdate } = require("./pipelineEvents");
-
-const MAX_STEP_OUTPUT_LENGTH = 60_000;
-const RUNNER_DEFAULT_CONCURRENCY = Math.max(1, Number(process.env.PIPELINE_RUNNER_CONCURRENCY || 1));
-const RUNNER_DEFAULT_STEP_TIMEOUT_MS = Math.max(1000, Number(process.env.PIPELINE_STEP_TIMEOUT_MS || 10 * 60 * 1000));
-const RUNNER_DEFAULT_STEP_RETRIES = Math.max(0, Number(process.env.PIPELINE_STEP_RETRIES || 0));
-
-let runnerStarted = false;
-let dockerAvailable = null;
 
 const clampOutput = (output) => {
   const normalized = String(output || "");
@@ -848,7 +816,7 @@ const startPipelineRunner = async () => {
   }
 
   console.log(`Pipeline Runner started with concurrency=${RUNNER_DEFAULT_CONCURRENCY}`);
->>>>>>> feat/backend-deployment-engine
+// ...existing code...
 };
 
 module.exports = {

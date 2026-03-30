@@ -1,11 +1,11 @@
-<<<<<<< HEAD
-const IORedis = require("ioredis");
-const { Worker } = require("bullmq");
 const mongoose = require("mongoose");
 
 const { redisClient } = require("../config/redis");
 const Log = require("../models/Log");
 const Pipeline = require("../models/Pipeline");
+const Project = require("../models/Project");
+const { emitPipelineUpdate } = require("./pipelineEvents");
+const { dequeueDeploymentRun, bootstrapPendingDeploymentRuns } = require("./deploymentQueue");
 
 const TRUE_VALUES = new Set(["1", "true", "yes", "on"]);
 const DEPLOY_WORKER_ENABLED = TRUE_VALUES.has(
@@ -26,9 +26,62 @@ const DEPLOY_HEALTHCHECK_ATTEMPTS = Math.max(1, Number(process.env.DEPLOY_HEALTH
 const TRAEFIK_ROUTE_EVENTS_CHANNEL = String(process.env.TRAEFIK_ROUTE_EVENTS_CHANNEL || "traefik:route-events");
 const REDIS_URL = process.env.REDIS_URL || "redis://localhost:6379";
 
-let bullConnection = null;
-let deployWorker = null;
 let workerStarted = false;
+let deployWorkerStarted = false;
+const DEPLOY_STEP_TIMEOUT_MS = Math.max(1000, Number(process.env.DEPLOY_STEP_TIMEOUT_MS) || 300000);
+const MAX_STEP_OUTPUT_LENGTH = 60_000;
+
+const clampOutput = (output) => {
+  const normalized = String(output || "");
+  if (normalized.length <= MAX_STEP_OUTPUT_LENGTH) {
+    return normalized;
+  }
+  return `${normalized.slice(0, MAX_STEP_OUTPUT_LENGTH)}\n...output truncated...`;
+};
+
+const runProcess = ({ command, args = [], cwd, shell = false, timeoutMs = DEPLOY_STEP_TIMEOUT_MS }) =>
+  new Promise((resolve) => {
+    const { spawn } = require("child_process");
+    const startedAt = Date.now();
+    const child = spawn(command, args, {
+      cwd,
+      shell,
+      stdio: ["ignore", "pipe", "pipe"],
+    });
+
+    let output = "";
+    let timeoutReached = false;
+
+    const timeoutHandle = setTimeout(() => {
+      timeoutReached = true;
+      output += `\nProcess exceeded timeout (${timeoutMs}ms)`;
+      child.kill("SIGTERM");
+      setTimeout(() => child.kill("SIGKILL"), 1000).unref();
+    }, timeoutMs);
+
+    child.stdout.on("data", (chunk) => {
+      output += chunk.toString();
+    });
+
+    child.stderr.on("data", (chunk) => {
+      output += chunk.toString();
+    });
+
+    child.on("error", (error) => {
+      output += `\nProcess error: ${error.message}`;
+    });
+
+    child.on("close", (code) => {
+      clearTimeout(timeoutHandle);
+      resolve({
+        success: !timeoutReached && code === 0,
+        code,
+        timedOut: timeoutReached,
+        durationMs: Date.now() - startedAt,
+        output: clampOutput(output),
+      });
+    });
+  });
 
 const isValidObjectId = (value) => mongoose.Types.ObjectId.isValid(value);
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -337,96 +390,7 @@ const processDeployJob = async (job) => {
   }
 };
 
-const startDeployWorker = async () => {
-  if (!DEPLOY_WORKER_ENABLED || workerStarted) {
-    return;
-  }
 
-  bullConnection = new IORedis(REDIS_URL, { maxRetriesPerRequest: null });
-  deployWorker = new Worker(
-    DEPLOY_QUEUE_NAME,
-    async (job) => {
-      await processDeployJob(job.data || {});
-    },
-    {
-      connection: bullConnection,
-      concurrency: DEPLOY_WORKER_CONCURRENCY,
-    }
-  );
-
-  deployWorker.on("failed", (job, error) => {
-    console.warn(`[deploy-worker] job failed (${job?.id || "unknown"})`, error.message);
-  });
-
-  deployWorker.on("completed", (job) => {
-    console.log(`[deploy-worker] job completed (${job.id})`);
-  });
-
-  workerStarted = true;
-  console.log(`[deploy-worker] started (queue=${DEPLOY_QUEUE_NAME}, concurrency=${DEPLOY_WORKER_CONCURRENCY})`);
-=======
-const { spawn } = require("child_process");
-
-const Pipeline = require("../models/Pipeline");
-const Project = require("../models/Project");
-const Log = require("../models/Log");
-const { emitPipelineUpdate } = require("./pipelineEvents");
-const { dequeueDeploymentRun, bootstrapPendingDeploymentRuns } = require("./deploymentQueue");
-
-const DEPLOY_WORKER_CONCURRENCY = Math.max(1, Number(process.env.DEPLOY_WORKER_CONCURRENCY || 1));
-const DEPLOY_STEP_TIMEOUT_MS = Math.max(1000, Number(process.env.DEPLOY_STEP_TIMEOUT_MS || 8 * 60 * 1000));
-
-let deployWorkerStarted = false;
-
-const clampOutput = (output) => {
-  const normalized = String(output || "");
-  if (normalized.length <= 60_000) {
-    return normalized;
-  }
-  return `${normalized.slice(0, 60_000)}\n...output truncated...`;
-};
-
-const runProcess = ({ command, timeoutMs }) =>
-  new Promise((resolve) => {
-    const startedAt = Date.now();
-    const child = spawn(command, {
-      shell: true,
-      stdio: ["ignore", "pipe", "pipe"],
-    });
-
-    let output = "";
-    let timedOut = false;
-
-    const timeoutHandle = setTimeout(() => {
-      timedOut = true;
-      output += `\nCommand exceeded timeout (${timeoutMs}ms)`;
-      child.kill("SIGTERM");
-      setTimeout(() => child.kill("SIGKILL"), 1000).unref();
-    }, timeoutMs);
-
-    child.stdout.on("data", (chunk) => {
-      output += chunk.toString();
-    });
-
-    child.stderr.on("data", (chunk) => {
-      output += chunk.toString();
-    });
-
-    child.on("error", (error) => {
-      output += `\nProcess error: ${error.message}`;
-    });
-
-    child.on("close", (code) => {
-      clearTimeout(timeoutHandle);
-      resolve({
-        success: !timedOut && code === 0,
-        timedOut,
-        code,
-        durationMs: Date.now() - startedAt,
-        output: clampOutput(output),
-      });
-    });
-  });
 
 const markRemainingStepsSkipped = (run, fromIndex) => {
   for (let i = fromIndex; i < run.steps.length; i += 1) {
@@ -629,7 +593,7 @@ const startDeployWorker = async () => {
   }
 
   console.log(`Deploy Worker started with concurrency=${DEPLOY_WORKER_CONCURRENCY}`);
->>>>>>> feat/backend-deployment-engine
+// ...existing code...
 };
 
 module.exports = {

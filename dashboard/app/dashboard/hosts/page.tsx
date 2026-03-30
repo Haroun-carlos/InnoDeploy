@@ -12,6 +12,7 @@ import HostsList from "@/components/hostspage/HostsList";
 import { useLanguagePreference } from "@/hooks/useLanguagePreference";
 import { hostApi } from "@/lib/apiClient";
 import { t } from "@/lib/settingsI18n";
+import { Server } from "lucide-react";
 import type { Host, HostFormData } from "@/types";
 
 export default function HostsPage() {
@@ -117,35 +118,49 @@ export default function HostsPage() {
   };
 
   return (
-    <div className="flex min-h-screen bg-background">
+    <div className="flex min-h-screen bg-[#030711]">
       <Sidebar />
       <div className="flex flex-1 flex-col">
         <Navbar />
-        <main className="flex-1 space-y-6 p-6">
-          <div className="flex flex-wrap items-center justify-between gap-4">
-            <div>
-              <h1 className="text-2xl font-semibold tracking-tight">{t(language, "hosts.pageTitle")}</h1>
-              <p className="text-sm text-muted-foreground">{t(language, "hosts.pageSubtitle")}</p>
+        <main className="relative flex-1 space-y-6 p-6 overflow-hidden">
+          {/* Background */}
+          <div className="pointer-events-none absolute inset-0 grid-pattern" />
+          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,rgba(56,189,248,0.06),transparent)]" />
+
+          <div className="relative flex flex-wrap items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-500/20 to-teal-500/10 border border-emerald-500/20">
+                <Server className="h-5 w-5 text-emerald-400" />
+              </div>
+              <div>
+                <h1 className="text-2xl font-bold tracking-tight text-white">{t(language, "hosts.pageTitle")}</h1>
+                <p className="text-sm text-slate-500">{t(language, "hosts.pageSubtitle")}</p>
+              </div>
             </div>
             <AddHostButton onClick={() => setModalOpen(true)} />
           </div>
 
           {error && (
-            <div className="rounded-md border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
-              {error}
-            </div>
+            <div className="relative rounded-xl border border-rose-500/20 bg-rose-500/[0.06] px-4 py-3 text-sm text-rose-300 backdrop-blur-sm">{error}</div>
           )}
 
           {loading ? (
-            <div className="rounded-xl border bg-card px-4 py-10 text-center text-sm text-muted-foreground">{t(language, "hosts.loading")}</div>
+            <div className="relative rounded-2xl border border-white/[0.06] bg-[#0a1628]/60 px-4 py-10 text-center text-sm text-slate-500">{t(language, "hosts.loading")}</div>
           ) : hosts.length === 0 ? (
-            <div className="rounded-xl border bg-card px-4 py-10 text-center text-sm text-muted-foreground">{t(language, "hosts.empty")}</div>
+            <div className="relative rounded-2xl border border-white/[0.06] bg-[#0a1628]/40 px-4 py-16 text-center">
+              <Server className="mx-auto h-10 w-10 text-slate-600 mb-3" />
+              <p className="text-sm text-slate-500">{t(language, "hosts.empty")}</p>
+            </div>
           ) : (
-            <HostsList hosts={hosts} selectedHostId={selectedHost?.id ?? null} onSelect={(host) => setSelectedHostId(host.id)} />
+            <div className="relative">
+              <HostsList hosts={hosts} selectedHostId={selectedHost?.id ?? null} onSelect={(host) => setSelectedHostId(host.id)} />
+            </div>
           )}
 
           {selectedHost && (
-            <HostDetailPanel host={selectedHost} onTest={handleTestConnection} onRemove={handleRemoveHost} />
+            <div className="relative">
+              <HostDetailPanel host={selectedHost} onTest={handleTestConnection} onRemove={handleRemoveHost} />
+            </div>
           )}
         </main>
       </div>
