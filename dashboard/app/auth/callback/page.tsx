@@ -1,7 +1,12 @@
 "use client";
 
+<<<<<<< HEAD
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+=======
+import { Suspense, useEffect, useMemo, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+>>>>>>> feat/auth-session-flow
 import { Loader2 } from "lucide-react";
 import { useAuthStore } from "@/store/authStore";
 import type { User } from "@/types";
@@ -17,12 +22,35 @@ const decodeUserParam = (raw: string): User | null => {
   }
 };
 
-export default function OAuthCallbackPage() {
+const formatOAuthError = (errorCode: string, reason: string | null) => {
+  const normalizedReason = (reason || "").toLowerCase();
+
+  if (errorCode.includes("not_configured")) {
+    return "Social login is not configured on the server. Please contact the admin.";
+  }
+
+  if (normalizedReason.includes("invalid_client")) {
+    return "OAuth app credentials are invalid or no longer active. Please verify Google/GitHub app Client ID and Client Secret.";
+  }
+
+  if (errorCode.includes("provider_error")) {
+    return `The provider returned an error${reason ? `: ${reason}` : ""}.`;
+  }
+
+  if (reason) {
+    return `Social login failed: ${reason}.`;
+  }
+
+  return "Social login failed. Please try again.";
+};
+
+function OAuthCallbackContent() {
   const router = useRouter();
   const { setAuth } = useAuthStore();
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+<<<<<<< HEAD
     const params = new URLSearchParams(window.location.search);
     const accessToken = params.get("accessToken");
     const refreshToken = params.get("refreshToken");
@@ -35,6 +63,10 @@ export default function OAuthCallbackPage() {
     if (callbackError) {
       const reason = callbackReason ? ` (${callbackReason})` : "";
       setError(`Social login failed${reason}. Please try again.`);
+=======
+    if (payload.callbackError) {
+      setError(formatOAuthError(payload.callbackError, payload.callbackReason));
+>>>>>>> feat/auth-session-flow
       return;
     }
 
@@ -81,5 +113,23 @@ export default function OAuthCallbackPage() {
         )}
       </div>
     </main>
+  );
+}
+
+export default function OAuthCallbackPage() {
+  return (
+    <Suspense
+      fallback={
+        <main className="flex min-h-screen items-center justify-center bg-[#061634] px-4 text-blue-50">
+          <div className="w-full max-w-md rounded-xl border border-blue-100/20 bg-[#0b234a]/60 p-6 text-center">
+            <Loader2 className="mx-auto h-6 w-6 animate-spin text-cyan-300" />
+            <h1 className="mt-4 text-xl font-semibold">Completing sign in...</h1>
+            <p className="mt-2 text-sm text-blue-100/75">Please wait while we prepare your workspace.</p>
+          </div>
+        </main>
+      }
+    >
+      <OAuthCallbackContent />
+    </Suspense>
   );
 }
