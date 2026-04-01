@@ -41,7 +41,7 @@ import {
   Server,
 } from "lucide-react";
 import RevealOnScroll from "@/components/homepage/RevealOnScroll";
-import TerminalMockup from "@/components/homepage/TerminalMockup";
+import LandingTerminalPanel from "@/components/homepage/LandingTerminalPanel";
 
 const spaceGrotesk = Space_Grotesk({ subsets: ["latin"], weight: ["400", "500", "700"] });
 
@@ -428,9 +428,9 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* Terminal Mockup */}
+            {/* Terminal Preview */}
             <div className="mt-16 sm:mt-20">
-              <TerminalMockup />
+              <LandingTerminalPanel />
             </div>
           </RevealOnScroll>
         </section>

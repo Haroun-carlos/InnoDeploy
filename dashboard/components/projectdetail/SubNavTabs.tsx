@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import { useLanguagePreference } from "@/hooks/useLanguagePreference";
 import { t } from "@/lib/settingsI18n";
 
-const tabs = ["Overview", "Pipelines", "Monitoring", "Logs", "Settings"] as const;
+const tabs = ["Overview", "Pipelines", "Monitoring", "Logs", "Terminal", "Settings"] as const;
 export type SubNavTab = (typeof tabs)[number];
 
 interface SubNavTabsProps {
@@ -20,6 +20,7 @@ export default function SubNavTabs({ active, onChange }: SubNavTabsProps) {
     Pipelines: t(language, "nav.pipelines"),
     Monitoring: t(language, "nav.monitoring"),
     Logs: t(language, "nav.logs"),
+    Terminal: "Terminal",
     Settings: t(language, "nav.settings"),
   };
 

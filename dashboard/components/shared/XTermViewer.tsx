@@ -26,15 +26,6 @@ export default function XTermViewer({ lines, height = 400 }: XTermViewerProps) {
       const { Terminal } = await import("xterm");
       const { FitAddon } = await import("@xterm/addon-fit");
 
-      // dynamically add xterm CSS
-      if (!document.getElementById("xterm-css")) {
-        const link = document.createElement("link");
-        link.id = "xterm-css";
-        link.rel = "stylesheet";
-        link.href = "https://cdn.jsdelivr.net/npm/xterm@5.5.0/css/xterm.min.css";
-        document.head.appendChild(link);
-      }
-
       if (disposed || !containerRef.current) return;
 
       const term = new Terminal({
