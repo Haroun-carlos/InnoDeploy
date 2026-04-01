@@ -10,6 +10,7 @@ import ServiceHealthMap from "@/components/homepage/ServiceHealthMap";
 import DeployActivityChart from "@/components/homepage/DeployActivityChart";
 import AlertsFeed from "@/components/homepage/AlertsFeed";
 import QuickActions from "@/components/homepage/QuickActions";
+import HomeTerminalPanel from "@/components/homepage/HomeTerminalPanel";
 
 export default function DashboardPage() {
   const isReady = useRequireAuth();
@@ -36,6 +37,10 @@ export default function DashboardPage() {
           </div>
           <div className="relative">
             <QuickActions />
+          </div>
+
+          <div className="relative">
+            <HomeTerminalPanel />
           </div>
 
           <div className="relative grid gap-6 lg:grid-cols-2">

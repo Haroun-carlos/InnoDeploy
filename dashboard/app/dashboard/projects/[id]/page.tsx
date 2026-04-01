@@ -18,6 +18,7 @@ import MetricsSummaryCards from "@/components/projectdetail/MetricsSummaryCards"
 import TriggerPipelineButton from "@/components/pipelinedetail/TriggerPipelineButton";
 import PipelineRunsTable from "@/components/pipelinedetail/PipelineRunsTable";
 import PipelineDetailPanel from "@/components/pipelinedetail/PipelineDetailPanel";
+import XTermViewer from "@/components/shared/XTermViewer";
 import TimeRangeSelector from "@/components/monitoring/TimeRangeSelector";
 import CPUChart from "@/components/monitoring/CPUChart";
 import MemoryChart from "@/components/monitoring/MemoryChart";
@@ -59,6 +60,17 @@ type BackendPipelineRun = {
 };
 
 type PipelineStreamState = "idle" | "connecting" | "live" | "reconnecting" | "offline";
+type LogStreamState = "idle" | "connecting" | "live" | "reconnecting" | "offline";
+
+type GatewayLogLine = {
+  type?: string;
+  projectId?: string;
+  timestamp?: string;
+  level?: string;
+  message?: string;
+  containerName?: string;
+  id?: string;
+};
 
 const asDurationLabel = (durationMs: number | undefined) => {
   if (!durationMs || durationMs <= 0) return null;
@@ -128,6 +140,7 @@ export default function ProjectDetailPage() {
   const [logMode, setLogMode] = useState<LogMode>("historical");
   const [logAutoScroll, setLogAutoScroll] = useState(true);
   const [logEntries, setLogEntries] = useState<LogEntry[]>([]);
+  const [logStreamState, setLogStreamState] = useState<LogStreamState>("idle");
   const [monitoringAlerts, setMonitoringAlerts] = useState<AlertHistoryEntry[]>([]);
   const [serviceStatus, setServiceStatus] = useState<{ status: "healthy" | "degraded" | "down"; lastCheckedAt: string }>({
     status: "healthy",
@@ -142,7 +155,7 @@ export default function ProjectDetailPage() {
   useEffect(() => {
     const requestedTab = String(searchParams.get("tab") || "");
     const requestedMode = String(searchParams.get("mode") || "");
-    const allowedTabs: SubNavTab[] = ["Overview", "Pipelines", "Monitoring", "Logs", "Settings"];
+    const allowedTabs: SubNavTab[] = ["Overview", "Pipelines", "Monitoring", "Logs", "Terminal", "Settings"];
 
     if (allowedTabs.includes(requestedTab as SubNavTab)) {
       setActiveTab(requestedTab as SubNavTab);
@@ -336,6 +349,28 @@ export default function ProjectDetailPage() {
     return Array.from(unique);
   }, [logEntries]);
 
+  const selectedRunTerminalLines = useMemo(() => {
+    if (!selectedRun) return [];
+
+    return selectedRun.stages.flatMap((stage) => {
+      const header = `\x1b[36m# ${stage.name} [${stage.status}]\x1b[0m`;
+      const body = stage.logs.length ? stage.logs : ["(no output)"];
+      return [header, ...body, ""];
+    });
+  }, [selectedRun]);
+
+  const projectTerminalLines = useMemo(() => {
+    return logEntries.slice(-1200).map((entry) => {
+      const time = new Date(entry.timestamp).toLocaleTimeString(locale, {
+        hour12: false,
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+      });
+      return `[${time}] [${entry.level.toUpperCase()}] [${entry.container}] ${entry.message}`;
+    });
+  }, [logEntries, locale]);
+
   const mergeRun = (incoming: PipelineRun) => {
     setPipelineRuns((prev) => {
       const idx = prev.findIndex((run) => run.id === incoming.id);
@@ -465,6 +500,112 @@ export default function ProjectDetailPage() {
       setPipelineStreamState("idle");
     };
   }, [isReady, selectedRun?.id, selectedRun?.status]);
+
+  useEffect(() => {
+    const shouldConnect =
+      isReady &&
+      ((activeTab === "Logs" && logMode === "live") || activeTab === "Terminal");
+
+    if (!shouldConnect) {
+      setLogStreamState("idle");
+      return;
+    }
+
+    const accessToken = localStorage.getItem("accessToken");
+    if (!accessToken) {
+      setLogStreamState("offline");
+      return;
+    }
+
+    const configuredBase = process.env.NEXT_PUBLIC_WS_URL || "http://localhost:7070";
+    const wsHttpBase = configuredBase.replace(/^ws/i, "http").replace(/\/+$/, "");
+    const wsUrl = `${wsHttpBase}/ws?token=${encodeURIComponent(accessToken)}`.replace(/^http/i, "ws");
+
+    let reconnectAttempts = 0;
+    let reconnectTimer: ReturnType<typeof setTimeout> | null = null;
+    let activeSocket: WebSocket | null = null;
+    let isUnmounted = false;
+
+    const appendLogEntry = (payload: GatewayLogLine) => {
+      const nextEntry: LogEntry = {
+        id: payload.id || `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+        timestamp: payload.timestamp || new Date().toISOString(),
+        level: (payload.level || "info") as LogLevel,
+        container: payload.containerName || "app",
+        message: payload.message || "",
+      };
+
+      setLogEntries((prev) => {
+        const next = [...prev, nextEntry];
+        if (next.length > 1500) {
+          return next.slice(next.length - 1500);
+        }
+        return next;
+      });
+    };
+
+    const connect = () => {
+      if (isUnmounted) return;
+
+      setLogStreamState(reconnectAttempts === 0 ? "connecting" : "reconnecting");
+      const ws = new WebSocket(wsUrl);
+      activeSocket = ws;
+
+      ws.onopen = () => {
+        reconnectAttempts = 0;
+        setLogStreamState("live");
+        ws.send(JSON.stringify({ type: "subscribe", projectId: _projectId }));
+      };
+
+      ws.onmessage = (event: MessageEvent<string>) => {
+        try {
+          const payload = JSON.parse(event.data) as GatewayLogLine;
+          if (payload.type !== "log.line") return;
+          if (payload.projectId && payload.projectId !== _projectId) return;
+          appendLogEntry(payload);
+        } catch {
+          // Ignore non-JSON or unexpected websocket messages.
+        }
+      };
+
+      ws.onerror = () => {
+        // Keep state transitions in onclose to centralize reconnect behavior.
+      };
+
+      ws.onclose = () => {
+        if (isUnmounted) {
+          setLogStreamState("idle");
+          return;
+        }
+
+        reconnectAttempts += 1;
+        const cappedAttempt = Math.min(reconnectAttempts, 6);
+        const baseDelay = 500 * 2 ** cappedAttempt;
+        const jitter = Math.floor(Math.random() * 300);
+        const nextDelayMs = Math.min(baseDelay + jitter, 15000);
+
+        setLogStreamState("reconnecting");
+        reconnectTimer = setTimeout(connect, nextDelayMs);
+      };
+    };
+
+    connect();
+
+    return () => {
+      isUnmounted = true;
+
+      if (reconnectTimer) {
+        clearTimeout(reconnectTimer);
+      }
+
+      if (activeSocket?.readyState === WebSocket.OPEN) {
+        activeSocket.send(JSON.stringify({ type: "unsubscribe", projectId: _projectId }));
+      }
+
+      activeSocket?.close();
+      setLogStreamState("idle");
+    };
+  }, [isReady, activeTab, logMode, _projectId]);
 
   if (!isReady) return null;
 
@@ -617,13 +758,22 @@ export default function ProjectDetailPage() {
               />
 
               {selectedRun && (
-                <PipelineDetailPanel
-                  key={selectedRun.id}
-                  run={selectedRun}
-                  onCancel={handleCancelRun}
-                  onRetry={handleRetryRun}
-                  streamState={pipelineStreamState}
-                />
+                <div className="grid gap-4 xl:grid-cols-2">
+                  <PipelineDetailPanel
+                    key={selectedRun.id}
+                    run={selectedRun}
+                    onCancel={handleCancelRun}
+                    onRetry={handleRetryRun}
+                    streamState={pipelineStreamState}
+                  />
+                  <div className="rounded-lg border bg-card p-4 space-y-3">
+                    <div className="flex items-center justify-between">
+                      <h3 className="text-sm font-medium">Run Terminal</h3>
+                      <span className="text-xs text-muted-foreground">{selectedRun.id}</span>
+                    </div>
+                    <XTermViewer lines={selectedRunTerminalLines} height={360} />
+                  </div>
+                </div>
               )}
             </div>
           )}
@@ -704,6 +854,11 @@ export default function ProjectDetailPage() {
                     {t(language, "projectDetail.liveStreamActive")}
                   </span>
                 )}
+                {logMode === "live" && (
+                  <span className="ml-3 text-[11px] text-muted-foreground">
+                    stream: {logStreamState}
+                  </span>
+                )}
               </p>
 
               {/* Terminal view (Live) */}
@@ -737,6 +892,24 @@ export default function ProjectDetailPage() {
                   isRegex={logRegex}
                 />
               )}
+            </div>
+          )}
+
+          {activeTab === "Terminal" && (
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h2 className="text-base font-semibold">Project Terminal</h2>
+                  <p className="text-xs text-muted-foreground">
+                    Live stream of project logs with automatic reconnect.
+                  </p>
+                </div>
+                <div className="text-xs text-muted-foreground">
+                  stream: {logStreamState}
+                </div>
+              </div>
+
+              <XTermViewer lines={projectTerminalLines} height={520} />
             </div>
           )}
 

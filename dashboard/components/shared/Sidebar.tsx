@@ -7,6 +7,7 @@ import {
   FolderKanban,
   GitBranch,
   Activity,
+  Terminal,
   ShieldAlert,
   Server,
   Settings,
@@ -23,6 +24,7 @@ const navItems = [
   { labelKey: "nav.projects", href: "/dashboard/projects", icon: FolderKanban },
   { labelKey: "nav.hosts", href: "/dashboard/hosts", icon: Server },
   { labelKey: "nav.pipelines", href: "/dashboard/pipelines", icon: GitBranch },
+  { labelKey: "Terminal", href: "/dashboard/terminal", icon: Terminal },
   { labelKey: "nav.deployments", href: "/dashboard/deployments", icon: Activity },
   { labelKey: "nav.alerts", href: "/dashboard/alerts", icon: ShieldAlert },
   { labelKey: "nav.settings", href: "/dashboard/settings", icon: Settings },
@@ -72,7 +74,7 @@ export default function Sidebar() {
                 <div className="absolute left-0 top-1/2 -translate-y-1/2 h-5 w-[3px] rounded-r-full bg-gradient-to-b from-cyan-400 to-emerald-400" />
               )}
               <Icon className={cn("h-4 w-4 transition-colors", isActive ? "text-cyan-400" : "text-slate-500 group-hover:text-slate-300")} />
-              {labelKey === "Admin" ? "Admin" : t(language, labelKey)}
+              {labelKey === "Admin" ? "Admin" : labelKey === "Terminal" ? "Terminal" : t(language, labelKey)}
             </Link>
           );
         })}
