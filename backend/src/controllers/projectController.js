@@ -8,6 +8,8 @@ const Organisation = require("../models/Organisation");
 const mongoose = require("mongoose");
 const { buildDeploymentSteps } = require("../utils/deploymentStrategy");
 const { enqueueDeploymentRun } = require("../services/deploymentQueue");
+const { encrypt, decrypt, encryptMap, decryptMap } = require("../utils/crypto");
+const { checkProjectLimit } = require("../utils/planLimits");
 
 const getOrganisationId = async (userId) => {
   const user = await User.findById(userId).select("organisationId");
@@ -113,6 +115,11 @@ const createProject = async (req, res, next) => {
     }
     if (!organisationId) {
       return res.status(400).json({ message: "User is not attached to an organisation" });
+    }
+
+    const limitCheck = await checkProjectLimit(organisationId);
+    if (!limitCheck.allowed) {
+      return res.status(403).json({ message: limitCheck.message });
     }
 
     const { name, repoUrl, branch = "main", description = "", envCount = 0 } = req.body;
@@ -272,7 +279,7 @@ const createEnvironment = async (req, res, next) => {
     project.environments.push({
       name: envName,
       config: req.body.config ?? {},
-      secrets: req.body.secrets ?? {},
+      secrets: encryptMap(req.body.secrets ?? {}),
     });
     project.envCount = project.environments.length;
     await project.save();
@@ -306,9 +313,12 @@ const updateEnvironment = async (req, res, next) => {
       environment.config = req.body.config;
     }
     if (req.body.secrets !== undefined && typeof req.body.secrets === "object") {
+      const currentSecrets = environment.secrets instanceof Map
+        ? Object.fromEntries(environment.secrets.entries())
+        : { ...(environment.secrets || {}) };
       environment.secrets = {
-        ...(environment.secrets || {}),
-        ...req.body.secrets,
+        ...currentSecrets,
+        ...encryptMap(req.body.secrets),
       };
     }
 
@@ -374,7 +384,7 @@ const upsertEnvironmentSecret = async (req, res, next) => {
     const secrets = environment.secrets instanceof Map
       ? Object.fromEntries(environment.secrets.entries())
       : { ...(environment.secrets || {}) };
-    secrets[key] = value;
+    secrets[key] = encrypt(value);
     environment.secrets = secrets;
 
     await project.save();

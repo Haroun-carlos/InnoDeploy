@@ -6,9 +6,25 @@ const { createClient } = require("redis");
  */
 const redisClient = createClient({
   url: process.env.REDIS_URL || "redis://localhost:6379",
+  socket: {
+    reconnectStrategy(retries) {
+      if (retries > 10) {
+        console.error("❌ Redis: max reconnect attempts reached, giving up");
+        return new Error("Redis max reconnect attempts reached");
+      }
+      return Math.min(retries * 500, 5000);
+    },
+  },
 });
 
-redisClient.on("error", (err) => console.error("❌ Redis error:", err));
+let lastErrorLogged = 0;
+redisClient.on("error", (err) => {
+  const now = Date.now();
+  if (now - lastErrorLogged > 30000) {
+    console.error("❌ Redis error:", err.message || err.code || "connection failed");
+    lastErrorLogged = now;
+  }
+});
 redisClient.on("connect", () => console.log("✅ Redis connected"));
 
 const connectRedis = async () => {

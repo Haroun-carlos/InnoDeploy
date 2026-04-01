@@ -21,6 +21,12 @@ const organisationSchema = new mongoose.Schema(
       enum: ["free", "pro", "enterprise"],
       default: "free",
     },
+    limits: {
+      maxProjects: { type: Number, default: 0 },       // 0 = unlimited
+      maxDeploysPerMonth: { type: Number, default: 0 },
+      maxMembers: { type: Number, default: 0 },
+      logRetentionDays: { type: Number, default: 30 },
+    },
     members: [
       {
         userId: {

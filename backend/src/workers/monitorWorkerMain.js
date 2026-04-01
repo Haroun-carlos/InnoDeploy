@@ -1,5 +1,6 @@
-require("dotenv").config();
-require("dotenv").config({ path: ".env.local", override: true });
+const path = require("path");
+require("dotenv").config({ path: path.resolve(__dirname, "..", "..", ".env") });
+require("dotenv").config({ path: path.resolve(__dirname, "..", "..", ".env.local"), override: true });
 
 const connectDB = require("../config/db");
 const { connectRedis } = require("../config/redis");

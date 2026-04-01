@@ -451,4 +451,96 @@ program
     }
   });
 
+// ── Logout ──────────────────────────────────────────────────
+program
+  .command("logout")
+  .description("Clear stored credentials")
+  .action(() => {
+    saveConfig({ accessToken: null, refreshToken: null });
+    console.log("Logged out. Credentials cleared.");
+  });
+
+// ── Projects delete ─────────────────────────────────────────
+program
+  .command("projects:delete <projectId>")
+  .description("Delete (archive) a project")
+  .option("--api <url>", "API base URL")
+  .action(async (projectId, opts) => {
+    try {
+      const api = createApiClient(parseApiBaseUrl(opts.api));
+      const res = await api.delete(`/projects/${projectId}`);
+      console.log(res.data.message || "Project deleted");
+    } catch (error) {
+      handleError(error);
+    }
+  });
+
+// ── Hosts remove ────────────────────────────────────────────
+program
+  .command("hosts:remove <hostId>")
+  .description("Remove a registered host")
+  .option("--api <url>", "API base URL")
+  .action(async (hostId, opts) => {
+    try {
+      const api = createApiClient(parseApiBaseUrl(opts.api));
+      const res = await api.delete(`/hosts/${hostId}`);
+      console.log(res.data.message || "Host removed");
+    } catch (error) {
+      handleError(error);
+    }
+  });
+
+// ── Alerts list ─────────────────────────────────────────────
+program
+  .command("alerts:list")
+  .description("List alerts for the organisation")
+  .option("--api <url>", "API base URL")
+  .option("--severity <level>", "Filter by severity (info, warning, critical)")
+  .option("--status <status>", "Filter by status (open, acknowledged, resolved)")
+  .action(async (opts) => {
+    try {
+      const api = createApiClient(parseApiBaseUrl(opts.api));
+      const params = {};
+      if (opts.severity) params.severity = opts.severity;
+      if (opts.status) params.status = opts.status;
+      const res = await api.get("/alerts", { params });
+      const alerts = res.data.alerts || res.data || [];
+      if (alerts.length === 0) {
+        console.log("No alerts found.");
+        return;
+      }
+      for (const alert of alerts) {
+        const sev = (alert.severity || "").toUpperCase().padEnd(8);
+        const rule = (alert.ruleType || alert.rule || "").padEnd(16);
+        const msg = alert.message || "";
+        const ts = alert.createdAt ? new Date(alert.createdAt).toLocaleString() : "";
+        console.log(`[${sev}] ${rule} ${msg}  (${ts})`);
+      }
+    } catch (error) {
+      handleError(error);
+    }
+  });
+
+// ── Environment list ────────────────────────────────────────
+program
+  .command("env:list <projectId>")
+  .description("List environments for a project")
+  .option("--api <url>", "API base URL")
+  .action(async (projectId, opts) => {
+    try {
+      const api = createApiClient(parseApiBaseUrl(opts.api));
+      const res = await api.get(`/projects/${projectId}`);
+      const envs = res.data.project?.environments || res.data.environments || [];
+      if (envs.length === 0) {
+        console.log("No environments configured.");
+        return;
+      }
+      for (const env of envs) {
+        console.log(`  ${env.name}`);
+      }
+    } catch (error) {
+      handleError(error);
+    }
+  });
+
 program.parseAsync(process.argv);

@@ -1,6 +1,9 @@
 const Host = require("../models/Host");
 const User = require("../models/User");
 const mongoose = require("mongoose");
+const { Client: SSHClient } = require("ssh2");
+
+const SSH_CONNECT_TIMEOUT = Math.max(5000, Number(process.env.SSH_CONNECT_TIMEOUT) || 10000);
 
 const getOrganisationId = async (userId) => {
   const user = await User.findById(userId).select("organisationId");
@@ -21,8 +24,20 @@ const listHosts = async (req, res, next) => {
       return res.status(400).json({ message: "User is not attached to an organisation" });
     }
 
-    const hosts = await Host.find({ organisationId }).sort({ createdAt: -1 });
-    res.json({ hosts });
+    const page = Math.max(1, Number(req.query.page) || 1);
+    const limit = Math.min(100, Math.max(1, Number(req.query.limit) || 50));
+    const skip = (page - 1) * limit;
+    const filter = { organisationId };
+
+    const [hosts, total] = await Promise.all([
+      Host.find(filter).sort({ createdAt: -1 }).skip(skip).limit(limit),
+      Host.countDocuments(filter),
+    ]);
+
+    res.json({
+      hosts,
+      pagination: { page, limit, total, totalPages: Math.ceil(total / limit) },
+    });
   } catch (error) {
     next(error);
   }
@@ -200,23 +215,67 @@ const updateHost = async (req, res, next) => {
   }
 };
 
+const sshExec = (conn, command) =>
+  new Promise((resolve, reject) => {
+    conn.exec(command, (err, stream) => {
+      if (err) return reject(err);
+      let stdout = "";
+      let stderr = "";
+      stream.on("data", (data) => { stdout += data.toString(); });
+      stream.stderr.on("data", (data) => { stderr += data.toString(); });
+      stream.on("close", (code) => resolve({ stdout: stdout.trim(), stderr: stderr.trim(), code }));
+    });
+  });
+
+const sshConnect = ({ ip, sshUser, sshPrivateKey }) =>
+  new Promise((resolve, reject) => {
+    const conn = new SSHClient();
+    const config = {
+      host: ip,
+      port: 22,
+      username: sshUser,
+      readyTimeout: SSH_CONNECT_TIMEOUT,
+    };
+
+    if (sshPrivateKey) {
+      config.privateKey = sshPrivateKey;
+    } else {
+      // Fallback: agent-based auth
+      config.agent = process.env.SSH_AUTH_SOCK;
+    }
+
+    conn.on("ready", () => resolve(conn));
+    conn.on("error", (err) => reject(err));
+    conn.connect(config);
+  });
+
 const testDraftConnection = async (req, res, next) => {
   try {
-    const { ip, sshUser } = req.body;
+    const { ip, sshUser, sshPrivateKey } = req.body;
     if (!ip || !sshUser) {
       return res.status(400).json({ message: "ip and sshUser are required" });
     }
 
-    const output = [
-      `Connecting to ${sshUser}@${ip}...`,
-      "Negotiating SSH handshake...",
-      "Authenticating with provided private key metadata...",
-      "Connection established.",
-      "Remote OS probe completed.",
-      "Docker daemon reachable.",
-    ];
+    const output = [`Connecting to ${sshUser}@${ip}...`];
+    let conn;
 
-    res.json({ message: "Connection test succeeded", output });
+    try {
+      conn = await sshConnect({ ip, sshUser, sshPrivateKey });
+      output.push("SSH handshake successful.");
+      output.push("Connection established.");
+
+      const osResult = await sshExec(conn, "uname -a || ver");
+      output.push(`Remote OS: ${osResult.stdout || "Unknown"}`);
+
+      const dockerResult = await sshExec(conn, "docker version --format '{{.Server.Version}}' 2>/dev/null || echo 'not installed'");
+      output.push(`Docker version: ${dockerResult.stdout || "not installed"}`);
+
+      conn.end();
+      res.json({ message: "Connection test succeeded", output });
+    } catch (sshError) {
+      output.push(`Connection failed: ${sshError.message}`);
+      res.status(422).json({ message: "Connection test failed", output });
+    }
   } catch (error) {
     next(error);
   }
@@ -230,19 +289,42 @@ const testConnection = async (req, res, next) => {
       return res.status(404).json({ message: "Host not found" });
     }
 
-    const output = [
-      `Connecting to ${host.sshUser}@${host.ip}...`,
-      "Negotiating SSH handshake...",
-      "Authenticating with uploaded private key...",
-      "Connection established.",
-      `Remote OS: ${host.os}`,
-      `Docker version: ${host.dockerVersion}`,
-    ];
+    const output = [`Connecting to ${host.sshUser}@${host.ip}...`];
+    let conn;
 
-    host.lastConnectionTestAt = new Date();
-    await host.save();
+    try {
+      conn = await sshConnect({
+        ip: host.ip,
+        sshUser: host.sshUser,
+        sshPrivateKey: req.body.sshPrivateKey || null,
+      });
+      output.push("SSH handshake successful.");
+      output.push("Connection established.");
 
-    res.json({ message: "Connection test succeeded", output });
+      const osResult = await sshExec(conn, "uname -a || ver");
+      const detectedOs = osResult.stdout || host.os;
+      output.push(`Remote OS: ${detectedOs}`);
+
+      const dockerResult = await sshExec(conn, "docker version --format '{{.Server.Version}}' 2>/dev/null || echo 'not installed'");
+      const detectedDocker = dockerResult.stdout || host.dockerVersion;
+      output.push(`Docker version: ${detectedDocker}`);
+
+      conn.end();
+
+      host.status = "online";
+      host.os = detectedOs.length < 200 ? detectedOs : host.os;
+      host.dockerVersion = detectedDocker.length < 50 ? detectedDocker : host.dockerVersion;
+      host.lastConnectionTestAt = new Date();
+      await host.save();
+
+      res.json({ message: "Connection test succeeded", output });
+    } catch (sshError) {
+      output.push(`Connection failed: ${sshError.message}`);
+      host.status = "offline";
+      host.lastConnectionTestAt = new Date();
+      await host.save();
+      res.status(422).json({ message: "Connection test failed", output });
+    }
   } catch (error) {
     next(error);
   }

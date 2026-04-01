@@ -20,6 +20,11 @@ const enqueuePipelineRun = async (runId) => {
 };
 
 const dequeuePipelineRun = async () => {
+  if (!redisClient?.isOpen) {
+    await new Promise(r => setTimeout(r, 3000));
+    return null;
+  }
+
   const item = await redisClient.lPop(PIPELINE_QUEUE_KEY);
   if (!item) {
     await new Promise(r => setTimeout(r, 1000));

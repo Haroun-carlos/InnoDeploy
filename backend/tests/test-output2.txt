@@ -1,0 +1,164 @@
+﻿════════════════════════════════════════════════════════════
+  InnoDeploy — CI/CD Pipeline E2E Test Suite
+  2026-04-01T01:26:50.640Z
+════════════════════════════════════════════════════════════
+
+════════════════════════════════════════════════════════════
+  PHASE 1 — SETUP (User + Organisation + Project)
+════════════════════════════════════════════════════════════
+
+── 1a. Register test user ──
+  ✅ Registered: pipetest1775006810636@example.com (id: 69cc745af5748866272f28ff)
+
+── 1b. Login ──
+  ✅ Login OK — token: eyJhbGciOiJIUzI1NiIsInR5c…
+
+── 1c. Create test project ──
+  ✅ Project created: 69cc745bf5748866272f290a
+
+── 1d. Verify organisation ──
+  ✅ Org auto-created: 69cc745bf5748866272f2905
+
+════════════════════════════════════════════════════════════
+  PHASE 2 — PIPELINE TRIGGER (API)
+════════════════════════════════════════════════════════════
+
+── 2a. Trigger pipeline with inline steps ──
+  ✅ Pipeline triggered: 69cc745cf5748866272f290e
+  ✅ Status: pending (expected: pending)
+  ✅ Steps: 2 (expected: 2)
+
+── 2b. Verify pipeline record in MongoDB ──
+  ✅ DB record found — status: pending, runType: pipeline
+  ✅ Steps: echo-test[pending], env-check[pending]
+
+── 2c. Trigger with invalid YAML config ──
+  ✅ Invalid YAML response: 400 — Invalid .innodeploy.yml content
+
+── 2d. Trigger without authentication ──
+  ✅ Correctly rejected: 401 Authentication required
+
+── 2e. Trigger for non-existent project ──
+  ✅ Correctly rejected: 404 Project not found
+
+════════════════════════════════════════════════════════════
+  PHASE 3 — REDIS QUEUE VALIDATION
+════════════════════════════════════════════════════════════
+
+── 3a. Check pipeline:queue list ──
+  ✅ Queue length: 0
+
+── 3b. Check pipeline:queued set ──
+  ✅ Queued set members: []
+
+── 3c. Check if run was dequeued (may be processing already) ──
+  ✅ Run has been dequeued from the set (worker picked it up)
+
+════════════════════════════════════════════════════════════
+  PHASE 4 — WORKER EXECUTION VALIDATION
+════════════════════════════════════════════════════════════
+
+── 4a. Wait for pipeline to leave 'pending' status ──
+  ✅ Status changed to: in-progress after 1s
+
+── 4b. Wait for pipeline to reach terminal status ──
+  ✅ Pipeline finished — status: success, duration: 4202ms
+
+── 4c. Validate step results ──
+  ✅ Step "echo-test" — status: success, duration: 1003ms, attempt: 1
+     output (2 lines): $ echo PIPELINE_WORKS | PIPELINE_WORKS
+  ✅ Step "env-check" — status: success, duration: 1212ms, attempt: 1
+     output (2 lines): $ node --version | v20.19.6
+  ✅ Echo step output contains 'PIPELINE_WORKS' — command executed correctly
+
+── 4d. Verify via API — GET pipeline run ──
+  ✅ API returns run — status: success, steps: 2
+
+── 4e. Verify pipeline listing ──
+  ✅ Pipeline listing OK — 1 run(s)
+
+════════════════════════════════════════════════════════════
+  PHASE 5 — FAILURE SCENARIO TESTS
+════════════════════════════════════════════════════════════
+
+── 5a. Trigger pipeline with a FAILING step (exit 1) ──
+  ✅ Failing pipeline triggered: 69cc7461f5748866272f2930
+  ✅ Pipeline correctly failed — status: failed
+  ✅ Step 1 (should-pass): success ✅
+  ✅ Step 2 (should-fail): failed ✅ (expected)
+  ✅ Step 3 (should-skip): skipped ✅ (expected)
+
+── 5b. Trigger with valid YAML config ──
+  ✅ YAML pipeline triggered: 69cc7465f5748866272f2944
+  ✅ Steps: greet, check
+  ✅ YAML pipeline finished — status: success
+     ✅ greet: success
+     ✅ check: success
+
+── 5c. Trigger and cancel a pipeline ──
+  ✅ Long pipeline triggered: 69cc746af5748866272f295b
+  ✅ Cancel response: 200 — Pipeline run cancelled
+  ✅ After cancel — status: cancelled
+  ✅ Pipeline correctly cancelled
+
+── 5d. Queue deduplication test ──
+  ✅ Redis SADD deduplication works (second add returns 0)
+
+════════════════════════════════════════════════════════════
+  PHASE 6 — SSE STREAMING TEST
+════════════════════════════════════════════════════════════
+
+── 6a. Trigger pipeline and listen to SSE stream ──
+  ✅ SSE pipeline triggered: 69cc7470f5748866272f296a
+  ✅ Received 3 SSE events: snapshot, update, update
+
+════════════════════════════════════════════════════════════
+  PHASE 7 — STEP RETRY & TIMEOUT TESTS
+════════════════════════════════════════════════════════════
+
+── 7a. Step with retries=2 that always fails ──
+  ✅ Retry pipeline triggered: 69cc748ff5748866272f2985
+  ✅ Retry step — status: failed, attempts: 3
+  ✅ Step was retried as expected
+  ✅ Retry logged in output
+
+── 7b. Step with short timeout (3s, but runs 30s) ──
+  ✅ Timeout pipeline triggered: 69cc7494f5748866272f2999
+  ✅ Timeout step — status: failed, duration: 3243ms
+  ✅ Step correctly failed on timeout
+  ✅ Timeout mentioned in output
+
+════════════════════════════════════════════════════════════
+  PHASE 8 — STAGE LOG ENDPOINT
+════════════════════════════════════════════════════════════
+
+── 8a. Get stage log for completed run ──
+  ✅ Stage 0 log — status: success
+  ✅ Output preview: $ echo PIPELINE_WORKS
+PIPELINE_WORKS
+
+── 8b. Get non-existent stage log ──
+  ✅ Correctly returns 404 for non-existent stage index
+
+════════════════════════════════════════════════════════════
+  PHASE 9 — RATE LIMITING
+════════════════════════════════════════════════════════════
+
+── 9a. Check rate limit headers on webhook endpoint ──
+  ✅ Rate limit header present — remaining: 29
+
+════════════════════════════════════════════════════════════
+  PHASE 10 — FINAL STATUS SUMMARY
+════════════════════════════════════════════════════════════
+
+  Total pipeline runs created: 7
+    success: 3
+    failed: 3
+    cancelled: 1
+
+  Redis queue length: 0
+  Redis queued set size: 0
+
+════════════════════════════════════════════════════════════
+  TEST SUITE COMPLETE
+════════════════════════════════════════════════════════════

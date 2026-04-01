@@ -1,4 +1,5 @@
 const crypto = require("crypto");
+const bcrypt = require("bcrypt");
 
 const Alert = require("../models/Alert");
 const Host = require("../models/Host");
@@ -563,7 +564,7 @@ const createApiKey = async (req, res, next) => {
 
     const token = crypto.randomBytes(24).toString("hex");
     const prefix = `idp_${token.slice(0, 8)}`;
-    const secretHash = crypto.createHash("sha256").update(token).digest("hex");
+    const secretHash = await bcrypt.hash(token, 10);
 
     context.organisation.apiKeys.push({
       name,

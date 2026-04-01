@@ -1,5 +1,7 @@
 const express = require("express");
 const { authMiddleware, requireRole } = require("../middleware/authMiddleware");
+const { validate } = require("../middleware/validate");
+const { createAlertSchema } = require("../middleware/schemas");
 const {
 	listAlerts,
 	createAlert,
@@ -14,7 +16,7 @@ const {
 const router = express.Router();
 
 router.get("/", authMiddleware, listAlerts);
-router.post("/", authMiddleware, requireRole("owner", "admin", "developer"), createAlert);
+router.post("/", authMiddleware, requireRole("owner", "admin", "developer"), validate(createAlertSchema), createAlert);
 router.patch("/:id/acknowledge", authMiddleware, acknowledgeAlert);
 router.patch("/:id/ack", authMiddleware, acknowledgeAlert);
 router.patch("/:id/resolve", authMiddleware, resolveAlert);

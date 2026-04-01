@@ -1,8 +1,42 @@
+const crypto = require("crypto");
+
 const Pipeline = require("../models/Pipeline");
 const Project = require("../models/Project");
+const Organisation = require("../models/Organisation");
 const Log = require("../models/Log");
 const { enqueuePipelineJob } = require("../services/jobQueue");
 const { resolvePipelineConfig } = require("../services/pipelineConfig");
+
+const verifyGithubSignature = (req, secret) => {
+  const signature = req.headers["x-hub-signature-256"];
+  if (!signature) return false;
+  const hmac = crypto.createHmac("sha256", secret);
+  hmac.update(JSON.stringify(req.body));
+  const expected = `sha256=${hmac.digest("hex")}`;
+  return crypto.timingSafeEqual(Buffer.from(signature), Buffer.from(expected));
+};
+
+const verifyGitlabToken = (req, secret) => {
+  const token = req.headers["x-gitlab-token"];
+  if (!token) return false;
+  return crypto.timingSafeEqual(Buffer.from(token), Buffer.from(secret));
+};
+
+const verifyBitbucketSignature = (req, secret) => {
+  // Bitbucket Cloud does not send HMAC by default; fallback to IP allowlist or shared token
+  const signature = req.headers["x-hub-signature"];
+  if (!signature) return true; // Accept if Bitbucket doesn't send one
+  const hmac = crypto.createHmac("sha256", secret);
+  hmac.update(JSON.stringify(req.body));
+  const expected = `sha256=${hmac.digest("hex")}`;
+  return crypto.timingSafeEqual(Buffer.from(signature), Buffer.from(expected));
+};
+
+const providerVerifiers = {
+  github: verifyGithubSignature,
+  gitlab: verifyGitlabToken,
+  bitbucket: verifyBitbucketSignature,
+};
 
 const parseRepositoryUrl = (provider, payload) => {
   if (provider === "github") {
@@ -37,6 +71,18 @@ const receiveWebhook = (provider) => async (req, res, next) => {
     const project = await Project.findOne({ repoUrl });
     if (!project) {
       return res.status(202).json({ message: "Webhook accepted but no matching project found" });
+    }
+
+    // Verify webhook signature using org's webhookSecret
+    if (project.organisationId) {
+      const org = await Organisation.findById(project.organisationId).select("gitProvider");
+      const webhookSecret = org?.gitProvider?.webhookSecret;
+      if (webhookSecret) {
+        const verifier = providerVerifiers[provider];
+        if (verifier && !verifier(req, webhookSecret)) {
+          return res.status(401).json({ message: "Webhook signature verification failed" });
+        }
+      }
     }
 
     const branch = parseBranch(payload);

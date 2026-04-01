@@ -3,6 +3,7 @@ const Project = require("../models/Project");
 const User = require("../models/User");
 const Organisation = require("../models/Organisation");
 const mongoose = require("mongoose");
+const { dispatchOrganisationNotification } = require("../services/notificationDispatcher");
 
 const getOrganisation = async (userId) => {
   const user = await User.findById(userId).select("organisationId");
@@ -42,12 +43,27 @@ const listAlerts = async (req, res, next) => {
       return res.status(400).json({ message: "User is not attached to an organisation" });
     }
 
-    const projectIds = await getProjectIdsForOrganisation(organisation._id);
-    const alerts = await Alert.find({ projectId: { $in: projectIds } })
-      .populate("projectId", "name")
-      .sort({ createdAt: -1 });
+    const page = Math.max(1, Number(req.query.page) || 1);
+    const limit = Math.min(100, Math.max(1, Number(req.query.limit) || 50));
+    const skip = (page - 1) * limit;
 
-    res.json({ alerts: alerts.map(mapAlert), rules: organisation.alertRules });
+    const projectIds = await getProjectIdsForOrganisation(organisation._id);
+    const filter = { projectId: { $in: projectIds } };
+
+    const [alerts, total] = await Promise.all([
+      Alert.find(filter)
+        .populate("projectId", "name")
+        .sort({ createdAt: -1 })
+        .skip(skip)
+        .limit(limit),
+      Alert.countDocuments(filter),
+    ]);
+
+    res.json({
+      alerts: alerts.map(mapAlert),
+      rules: organisation.alertRules,
+      pagination: { page, limit, total, totalPages: Math.ceil(total / limit) },
+    });
   } catch (error) {
     next(error);
   }
@@ -198,12 +214,21 @@ const testNotification = async (req, res, next) => {
       return res.status(400).json({ message: "User is not attached to an organisation" });
     }
 
+    const result = await dispatchOrganisationNotification({
+      organisation,
+      event: {
+        severity: "info",
+        title: "InnoDeploy Test Notification",
+        message: "This is a test notification from InnoDeploy alert rules configuration.",
+        serviceName: "alert-test",
+        metricAtTrigger: [],
+        metadata: { source: "alert.testNotification", requestedBy: req.user.id },
+      },
+    });
+
     res.json({
       message: "Test notification sent",
-      channels: {
-        email: organisation.alertRules.emailNotifications,
-        slack: organisation.alertRules.slackNotifications,
-      },
+      result,
       sentAt: new Date().toISOString(),
     });
   } catch (error) {

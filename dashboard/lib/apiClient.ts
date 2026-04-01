@@ -65,6 +65,12 @@ export const authApi = {
     apiClient.post("/auth/register", { name, email, password, organisationName }),
 
   logout: () => apiClient.post("/auth/logout"),
+
+  forgotPassword: (email: string) =>
+    apiClient.post("/auth/forgot-password", { email }),
+
+  resetPassword: (token: string, newPassword: string) =>
+    apiClient.post("/auth/reset-password", { token, newPassword }),
 };
 
 export const projectApi = {
@@ -230,6 +236,28 @@ export const settingsApi = {
 
 export const githubApi = {
   listRepositories: () => apiClient.get("/github/repositories"),
+};
+
+export const adminApi = {
+  getOverview: (params?: { recentDays?: number }) =>
+    apiClient.get("/admin/overview", { params }),
+
+  getUsers: (params?: {
+    page?: number;
+    limit?: number;
+    search?: string;
+    recentDays?: number;
+  }) => apiClient.get("/admin/users", { params }),
+
+  updateUserRole: (userId: string, role: "owner" | "admin" | "developer" | "viewer") =>
+    apiClient.patch(`/admin/users/${userId}/role`, { role }),
+
+  deactivateUser: (userId: string, reason?: string) =>
+    apiClient.patch(`/admin/users/${userId}/deactivate`, { reason }),
+
+  activateUser: (userId: string) => apiClient.patch(`/admin/users/${userId}/activate`),
+
+  deleteUser: (userId: string) => apiClient.delete(`/admin/users/${userId}`),
 };
 
 export default apiClient;
