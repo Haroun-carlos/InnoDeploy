@@ -13,13 +13,34 @@ const pipelineRoutes = require("./routes/pipelineRoutes");
 const monitoringRoutes = require("./routes/monitoringRoutes");
 const webhookRoutes = require("./routes/webhookRoutes");
 const githubRoutes = require("./routes/githubRoutes");
+const auditRoutes = require("./routes/auditRoutes");
+const adminRoutes = require("./routes/adminRoutes");
 const errorMiddleware = require("./middleware/errorMiddleware");
 
 const app = express();
 
+const normalizeOrigin = (value) => String(value || "").trim().replace(/\/+$/, "");
+const configuredOrigins = [
+  ...(process.env.CLIENT_URL || "http://localhost:3000").split(","),
+  "http://localhost:3000",
+  "http://127.0.0.1:3000",
+]
+  .map(normalizeOrigin)
+  .filter(Boolean);
+const allowedOrigins = Array.from(new Set(configuredOrigins));
+
 // ── Global middleware ─────────────────────────────────────
 app.use(helmet()); // security headers
-app.use(cors({ origin: process.env.CLIENT_URL || "http://localhost:3000", credentials: true }));
+app.use(cors({
+  origin(origin, callback) {
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(normalizeOrigin(origin))) {
+      return callback(null, true);
+    }
+    return callback(new Error("Not allowed by CORS"));
+  },
+  credentials: true,
+}));
 app.use(morgan("dev")); // HTTP request logging
 app.use(express.json()); // parse JSON bodies
 
@@ -39,6 +60,8 @@ app.use("/api", orgRoutes);
 app.use("/api", pipelineRoutes);
 app.use("/api", monitoringRoutes);
 app.use("/api/webhooks", webhookRoutes);
+app.use("/api/audit", auditRoutes);
+app.use("/api/admin", adminRoutes);
 
 // ── 404 catch-all ─────────────────────────────────────────
 app.use((_req, res) => {

@@ -33,6 +33,23 @@ const userSchema = new mongoose.Schema(
       default: "developer",
     },
 
+    isActive: {
+      type: Boolean,
+      default: true,
+    },
+
+    deactivatedAt: {
+      type: Date,
+      default: null,
+    },
+
+    deactivatedReason: {
+      type: String,
+      default: "",
+      trim: true,
+      maxlength: 500,
+    },
+
     organisationId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Organisation",

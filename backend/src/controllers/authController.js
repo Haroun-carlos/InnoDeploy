@@ -11,6 +11,7 @@ const {
 // Refresh token TTL in Redis (7 days in seconds)
 const REFRESH_TOKEN_TTL = 7 * 24 * 60 * 60;
 const OAUTH_STATE_TTL = 10 * 60;
+const PASSWORD_RESET_TTL = 60 * 60; // 1 hour
 
 const getTrimmedEnv = (key) => String(process.env[key] || "").trim();
 
@@ -312,6 +313,10 @@ const login = async (req, res, next) => {
       return res.status(401).json({ message: "Invalid credentials" });
     }
 
+    if (user.isActive === false) {
+      return res.status(403).json({ message: "This account has been deactivated" });
+    }
+
     const tokenPayload = { id: user._id, email: user.email, role: user.role };
     const accessToken = generateAccessToken(tokenPayload);
     const refreshToken = generateRefreshToken(tokenPayload);
@@ -518,11 +523,111 @@ const githubOAuthCallback = async (req, res, next) => {
   }
 };
 
+// ── Forgot Password ───────────────────────────────────────
+const forgotPassword = async (req, res, next) => {
+  try {
+    const email = String(req.body.email || "").trim().toLowerCase();
+    if (!email) {
+      return res.status(400).json({ message: "Email is required" });
+    }
+
+    // Always respond with success to prevent email enumeration
+    const successMessage = "If an account with that email exists, a password reset link has been sent.";
+
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.json({ message: successMessage });
+    }
+
+    const resetToken = crypto.randomBytes(32).toString("hex");
+    const hashedToken = crypto.createHash("sha256").update(resetToken).digest("hex");
+    await redisClient.set(`password_reset:${hashedToken}`, String(user._id), { EX: PASSWORD_RESET_TTL });
+
+    const clientUrl = process.env.CLIENT_URL || "http://localhost:3000";
+    const resetUrl = `${clientUrl}/forgot-password?token=${resetToken}&email=${encodeURIComponent(email)}`;
+
+    // Attempt to send email via the notification dispatcher
+    try {
+      const Organisation = require("../models/Organisation");
+      if (user.organisationId) {
+        const org = await Organisation.findById(user.organisationId);
+        const channels = org?.notificationChannels || {};
+        if (channels.smtpHost && channels.smtpFromEmail) {
+          const nodemailer = require("nodemailer");
+          const transport = nodemailer.createTransport({
+            host: channels.smtpHost,
+            port: Number(channels.smtpPort) || 587,
+            secure: Number(channels.smtpPort) === 465,
+            auth: channels.smtpUsername && channels.smtpPassword
+              ? { user: channels.smtpUsername, pass: channels.smtpPassword }
+              : undefined,
+          });
+          await transport.sendMail({
+            from: channels.smtpFromEmail,
+            to: email,
+            subject: "InnoDeploy Password Reset",
+            text: `You requested a password reset.\n\nClick the link to reset your password:\n${resetUrl}\n\nThis link expires in 1 hour.\n\nIf you didn't request this, ignore this email.`,
+          });
+        }
+      }
+    } catch (_emailErr) {
+      // Email delivery is best-effort; log for debugging
+      console.warn("Password reset email delivery failed:", _emailErr?.message);
+    }
+
+    // Always log the reset URL for development/debugging
+    console.log(`[auth] Password reset requested for ${email} — token: ${resetToken}`);
+
+    res.json({ message: successMessage });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// ── Reset Password ────────────────────────────────────────
+const resetPassword = async (req, res, next) => {
+  try {
+    const { token, password } = req.body;
+    if (!token || !password) {
+      return res.status(400).json({ message: "Token and new password are required" });
+    }
+
+    if (password.length < 6) {
+      return res.status(400).json({ message: "Password must be at least 6 characters" });
+    }
+
+    const hashedToken = crypto.createHash("sha256").update(String(token)).digest("hex");
+    const userId = await redisClient.get(`password_reset:${hashedToken}`);
+    if (!userId) {
+      return res.status(400).json({ message: "Invalid or expired reset token" });
+    }
+
+    const user = await User.findById(userId).select("+passwordHash");
+    if (!user) {
+      return res.status(400).json({ message: "Invalid or expired reset token" });
+    }
+
+    user.passwordHash = password; // pre-save hook will hash it
+    await user.save();
+
+    // Invalidate the reset token
+    await redisClient.del(`password_reset:${hashedToken}`);
+    // Revoke existing refresh token
+    await redisClient.del(`refresh:${userId}`);
+
+    res.json({ message: "Password has been reset successfully" });
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   register,
   login,
   refresh,
   logout,
+  forgotPassword,
+  resetPassword,
   startGoogleOAuth,
   googleOAuthCallback,
   startGithubOAuth,

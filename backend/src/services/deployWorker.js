@@ -5,7 +5,8 @@ const Log = require("../models/Log");
 const Pipeline = require("../models/Pipeline");
 const Project = require("../models/Project");
 const { emitPipelineUpdate } = require("./pipelineEvents");
-const { dequeueDeploymentRun, bootstrapPendingDeploymentRuns } = require("./deploymentQueue");
+const { dequeueDeploymentRun, enqueueDeploymentRun, bootstrapPendingDeploymentRuns } = require("./deploymentQueue");
+const { buildDeploymentSteps } = require("../utils/deploymentStrategy");
 
 const TRUE_VALUES = new Set(["1", "true", "yes", "on"]);
 const DEPLOY_WORKER_ENABLED = TRUE_VALUES.has(
@@ -25,6 +26,9 @@ const DEPLOY_HEALTHCHECK_INTERVAL_MS = Math.max(1000, Number(process.env.DEPLOY_
 const DEPLOY_HEALTHCHECK_ATTEMPTS = Math.max(1, Number(process.env.DEPLOY_HEALTHCHECK_ATTEMPTS) || 5);
 const TRAEFIK_ROUTE_EVENTS_CHANNEL = String(process.env.TRAEFIK_ROUTE_EVENTS_CHANNEL || "traefik:route-events");
 const REDIS_URL = process.env.REDIS_URL || "redis://localhost:6379";
+const DEPLOY_AUTO_ROLLBACK = TRUE_VALUES.has(
+  String(process.env.DEPLOY_AUTO_ROLLBACK || "true").toLowerCase()
+);
 
 let workerStarted = false;
 let deployWorkerStarted = false;
@@ -427,6 +431,52 @@ const appendDeploymentLog = async ({ run, projectId, level, message }) => {
   });
 };
 
+const triggerAutoRollback = async (failedRun) => {
+  if (!DEPLOY_AUTO_ROLLBACK) return;
+  if (failedRun.runType === "rollback") return; // don't rollback a rollback
+
+  const lastSuccess = await Pipeline.findOne({
+    projectId: failedRun.projectId,
+    runType: { $in: ["deployment", "rollback"] },
+    status: "success",
+    _id: { $ne: failedRun._id },
+  }).sort({ createdAt: -1 }).lean();
+
+  if (!lastSuccess) {
+    console.log(`Auto-rollback: no previous successful deployment found for project ${failedRun.projectId}`);
+    return;
+  }
+
+  const steps = buildDeploymentSteps({ strategy: "recreate", runType: "rollback" });
+  const rollbackRun = await Pipeline.create({
+    projectId: failedRun.projectId,
+    version: lastSuccess.version,
+    strategy: "recreate",
+    runType: "rollback",
+    status: "pending",
+    branch: lastSuccess.branch || "main",
+    triggeredBy: "auto-rollback",
+    environment: failedRun.environment || "production",
+    duration: 0,
+    steps,
+    config: lastSuccess.config || "",
+  });
+
+  await enqueueDeploymentRun(rollbackRun._id);
+
+  await Log.create({
+    projectId: failedRun.projectId,
+    pipelineId: rollbackRun._id,
+    level: "warn",
+    message: `Auto-rollback triggered to version ${lastSuccess.version} after deployment ${failedRun._id} failed`,
+    environment: failedRun.environment,
+    source: "deploy-worker",
+    stream: "system",
+  });
+
+  console.log(`Auto-rollback: enqueued rollback to ${lastSuccess.version} for project ${failedRun.projectId}`);
+};
+
 const processDeploymentRun = async (runId) => {
   const startedAt = Date.now();
   let run = await Pipeline.findById(runId);
@@ -534,6 +584,8 @@ const processDeploymentRun = async (runId) => {
       level: "error",
       message: `${run.runType} failed at step '${currentStep.name}'`,
     });
+
+    await triggerAutoRollback(run);
     return;
   }
 

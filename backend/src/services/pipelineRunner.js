@@ -505,8 +505,12 @@ const runProcess = ({ command, args = [], cwd, shell = false, timeoutMs = RUNNER
     const timeoutHandle = setTimeout(() => {
       timeoutReached = true;
       output += `\nProcess exceeded timeout (${timeoutMs}ms)`;
-      child.kill("SIGTERM");
-      setTimeout(() => child.kill("SIGKILL"), 1000).unref();
+      if (process.platform === "win32") {
+        spawn("taskkill", ["/pid", String(child.pid), "/T", "/F"], { stdio: "ignore" }).on("error", () => {});
+      } else {
+        child.kill("SIGTERM");
+        setTimeout(() => child.kill("SIGKILL"), 1000).unref();
+      }
     }, timeoutMs);
 
     child.stdout.on("data", (chunk) => {

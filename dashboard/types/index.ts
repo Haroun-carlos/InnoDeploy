@@ -305,3 +305,63 @@ export interface SettingsPayload {
   apiKeys: OrganisationApiKey[];
   preferences: UserSettingsPreferences;
 }
+
+// ─── Admin dashboard types ───────────────────────────────────────────────────
+
+export interface AdminUser {
+  id: string;
+  name: string;
+  email: string;
+  role: MemberRole;
+  isActive: boolean;
+  deactivatedAt: string | null;
+  deactivatedReason: string;
+  organisation: { id: string; name: string; slug: string } | null;
+  createdAt: string;
+}
+
+export interface AdminTrendPoint {
+  date: string;
+  count: number;
+}
+
+export interface AdminOverviewStats {
+  users: number;
+  newUsers: number;
+  projects: number;
+  pipelines: number;
+  hosts: number;
+  alerts: number;
+  logs: number;
+  openAlerts: number;
+  runningPipelines: number;
+  onlineHosts: number;
+  recentWindowDays: number;
+}
+
+export interface AdminOverviewPayload {
+  stats: AdminOverviewStats;
+  trends: {
+    users: AdminTrendPoint[];
+    pipelines: AdminTrendPoint[];
+    alerts: AdminTrendPoint[];
+  };
+  recent: {
+    users: AdminUser[];
+    projects: Array<{ id: string; name: string; status: string; branch: string; createdAt: string }>;
+    pipelines: Array<{ id: string; projectId: string; status: string; branch: string; triggeredBy: string; createdAt: string }>;
+    hosts: Array<{ id: string; hostname: string; ip: string; status: string; createdAt: string }>;
+    alerts: Array<{ id: string; severity: string; status: string; message: string; createdAt: string }>;
+    logs: Array<{ id: string; level: string; message: string; source: string; createdAt: string }>;
+  };
+}
+
+export interface AdminUsersPayload {
+  users: AdminUser[];
+  pagination: {
+    page: number;
+    limit: number;
+    total: number;
+    totalPages: number;
+  };
+}

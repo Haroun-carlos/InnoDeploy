@@ -1,10 +1,11 @@
 const { verifyAccessToken } = require("../utils/jwt");
+const User = require("../models/User");
 
 /**
  * Middleware: verify JWT access token from Authorization header.
  * Attaches decoded user payload to `req.user`.
  */
-const authMiddleware = (req, res, next) => {
+const authMiddleware = async (req, res, next) => {
   const authHeader = req.headers.authorization;
 
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
@@ -15,6 +16,10 @@ const authMiddleware = (req, res, next) => {
 
   try {
     const decoded = verifyAccessToken(token);
+    const isActiveUser = await User.exists({ _id: decoded.id, isActive: true });
+    if (!isActiveUser) {
+      return res.status(403).json({ message: "Account is deactivated or unavailable" });
+    }
     req.user = decoded;
     next();
   } catch (error) {

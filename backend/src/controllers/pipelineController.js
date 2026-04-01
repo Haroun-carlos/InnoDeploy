@@ -1,9 +1,27 @@
 const mongoose = require("mongoose");
 
-const { enqueuePipelineJob } = require("../services/jobQueue");
+const { enqueuePipelineRun } = require("../services/pipelineQueue");
+const { parseInnoDeployConfig, validateInnoDeployConfig, buildStepsFromConfig } = require("../utils/pipelineConfig");
+const { onPipelineUpdate } = require("../services/pipelineEvents");
 const Pipeline = require("../models/Pipeline");
 const Project = require("../models/Project");
 const User = require("../models/User");
+
+const normalizeStep = (step) => {
+  if (!step || typeof step !== "object") {
+    return { name: "step", command: "", status: "pending", duration: 0, output: "" };
+  }
+  return {
+    name: String(step.name || "step").trim(),
+    command: String(step.command || step.run || "").trim(),
+    image: step.image ? String(step.image).trim() : "node:20-alpine",
+    retries: Number.isInteger(step.retries) ? step.retries : 0,
+    timeoutMs: Number.isInteger(step.timeoutMs) ? step.timeoutMs : 10 * 60 * 1000,
+    status: "pending",
+    duration: 0,
+    output: "",
+  };
+};
 
 const getOrganisationId = async (userId) => {
   const user = await User.findById(userId).select("organisationId");
@@ -117,8 +135,20 @@ const listProjectPipelineRuns = async (req, res, next) => {
       return res.status(404).json({ message: "Project not found" });
     }
 
-    const runs = await Pipeline.find({ projectId: project._id }).sort({ createdAt: -1 });
-    res.json({ runs: runs.map(mapRun) });
+    const page = Math.max(1, Number(req.query.page) || 1);
+    const limit = Math.min(100, Math.max(1, Number(req.query.limit) || 20));
+    const skip = (page - 1) * limit;
+    const filter = { projectId: project._id };
+
+    const [runs, total] = await Promise.all([
+      Pipeline.find(filter).sort({ createdAt: -1 }).skip(skip).limit(limit),
+      Pipeline.countDocuments(filter),
+    ]);
+
+    res.json({
+      runs: runs.map(mapRun),
+      pagination: { page, limit, total, totalPages: Math.ceil(total / limit) },
+    });
   } catch (error) {
     next(error);
   }
@@ -189,8 +219,11 @@ const getStageLog = async (req, res, next) => {
       return res.status(403).json({ message: "Insufficient permissions" });
     }
 
-    const stageName = String(req.params.stage || "").trim().toLowerCase();
-    const stage = run.steps.find((step) => String(step.name).trim().toLowerCase() === stageName);
+    const stageParam = String(req.params.stage || "").trim();
+    const stageIndex = /^\d+$/.test(stageParam) ? Number(stageParam) : -1;
+    const stage = stageIndex >= 0
+      ? run.steps[stageIndex]
+      : run.steps.find((step) => String(step.name).trim().toLowerCase() === stageParam.toLowerCase());
 
     if (!stage) {
       return res.status(404).json({ message: "Pipeline stage not found" });
@@ -204,7 +237,7 @@ const getStageLog = async (req, res, next) => {
 
     res.json({
       runId: String(run._id),
-      stage: {
+      step: {
         name: stage.name,
         status: stage.status,
         command: stage.command,

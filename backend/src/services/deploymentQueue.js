@@ -20,6 +20,11 @@ const enqueueDeploymentRun = async (runId) => {
 };
 
 const dequeueDeploymentRun = async () => {
+  if (!redisClient?.isOpen) {
+    await new Promise(r => setTimeout(r, 3000));
+    return null;
+  }
+
   const item = await redisClient.lPop(DEPLOYMENT_QUEUE_KEY);
   if (!item) {
     await new Promise(r => setTimeout(r, 1000));

@@ -11,10 +11,12 @@ import {
   Server,
   Settings,
   Rocket,
+  UserCog,
 } from "lucide-react";
 import { useLanguagePreference } from "@/hooks/useLanguagePreference";
 import { t } from "@/lib/settingsI18n";
 import { cn } from "@/lib/utils";
+import { useAuthStore } from "@/store/authStore";
 
 const navItems = [
   { labelKey: "nav.overview", href: "/dashboard", icon: LayoutDashboard },
@@ -29,6 +31,11 @@ const navItems = [
 export default function Sidebar() {
   const language = useLanguagePreference();
   const pathname = usePathname();
+  const user = useAuthStore((state) => state.user);
+  const showAdmin = user?.role === "owner" || user?.role === "admin";
+  const items = showAdmin
+    ? [...navItems, { labelKey: "Admin", href: "/dashboard/admin", icon: UserCog }]
+    : navItems;
 
   return (
     <aside className="hidden md:flex md:flex-col w-64 border-r border-white/[0.06] bg-[#040c1b]/90 backdrop-blur-2xl min-h-screen relative overflow-hidden">
@@ -45,7 +52,7 @@ export default function Sidebar() {
 
       {/* ── Navigation ─────────────────────────── */}
       <nav className="relative flex-1 px-3 py-4 space-y-1">
-        {navItems.map(({ labelKey, href, icon: Icon }) => {
+        {items.map(({ labelKey, href, icon: Icon }) => {
           const isActive = href === "/dashboard"
             ? pathname === href
             : pathname === href || pathname.startsWith(`${href}/`);
@@ -65,7 +72,7 @@ export default function Sidebar() {
                 <div className="absolute left-0 top-1/2 -translate-y-1/2 h-5 w-[3px] rounded-r-full bg-gradient-to-b from-cyan-400 to-emerald-400" />
               )}
               <Icon className={cn("h-4 w-4 transition-colors", isActive ? "text-cyan-400" : "text-slate-500 group-hover:text-slate-300")} />
-              {t(language, labelKey)}
+              {labelKey === "Admin" ? "Admin" : t(language, labelKey)}
             </Link>
           );
         })}

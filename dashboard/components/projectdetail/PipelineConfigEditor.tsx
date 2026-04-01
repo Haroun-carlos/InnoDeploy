@@ -1,8 +1,11 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useLanguagePreference } from "@/hooks/useLanguagePreference";
 import { t } from "@/lib/settingsI18n";
+
+const MonacoEditor = dynamic(() => import("@monaco-editor/react"), { ssr: false });
 
 interface PipelineConfigEditorProps {
   config: string;
@@ -28,14 +31,25 @@ export default function PipelineConfigEditor({
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <textarea
-          value={config}
-          onChange={(e) => onChange?.(e.target.value)}
-          readOnly={readOnly}
-          spellCheck={false}
-          className="w-full min-h-[300px] rounded-md border bg-muted/50 p-4 font-mono text-xs leading-relaxed resize-y focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed"
-          disabled={readOnly}
-        />
+        <div className="rounded-md border overflow-hidden" style={{ minHeight: 300 }}>
+          <MonacoEditor
+            height="300px"
+            language="yaml"
+            theme="vs-dark"
+            value={config}
+            onChange={(val) => onChange?.(val ?? "")}
+            options={{
+              readOnly,
+              minimap: { enabled: false },
+              fontSize: 13,
+              lineNumbers: "on",
+              scrollBeyondLastLine: false,
+              wordWrap: "on",
+              tabSize: 2,
+              automaticLayout: true,
+            }}
+          />
+        </div>
       </CardContent>
     </Card>
   );

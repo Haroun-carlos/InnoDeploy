@@ -1,5 +1,6 @@
-require("dotenv").config();
-require("dotenv").config({ path: ".env.local", override: true });
+const path = require("path");
+require("dotenv").config({ path: path.resolve(__dirname, "..", "..", ".env") });
+require("dotenv").config({ path: path.resolve(__dirname, "..", "..", ".env.local"), override: true });
 
 const http = require("http");
 const express = require("express");
@@ -7,6 +8,9 @@ const { WebSocketServer } = require("ws");
 const { createClient } = require("redis");
 const { promises: dns } = require("dns");
 const { URL } = require("url");
+const jwt = require("jsonwebtoken");
+
+const JWT_SECRET = process.env.JWT_SECRET || "change_me_access_secret_32chars";
 
 const WS_PORT = Number(process.env.WS_PORT || 7070);
 const WS_PATH = String(process.env.WS_PATH || "/ws");
@@ -28,7 +32,28 @@ app.get("/health", (_req, res) => {
 });
 
 const server = http.createServer(app);
-const wss = new WebSocketServer({ server, path: WS_PATH });
+const wss = new WebSocketServer({
+  server,
+  path: WS_PATH,
+  verifyClient: ({ req }, done) => {
+    // Extract token from query string ?token=xxx or Authorization header
+    const url = new URL(req.url, `http://${req.headers.host}`);
+    const token = url.searchParams.get("token") || (req.headers.authorization || "").replace("Bearer ", "");
+
+    if (!token) {
+      done(false, 401, "Authentication required");
+      return;
+    }
+
+    try {
+      const decoded = jwt.verify(token, JWT_SECRET);
+      req.user = decoded;
+      done(true);
+    } catch (_err) {
+      done(false, 401, "Invalid or expired token");
+    }
+  },
+});
 
 const subscriptions = new Map();
 
