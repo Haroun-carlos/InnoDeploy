@@ -15,6 +15,7 @@ const webhookRoutes = require("./routes/webhookRoutes");
 const githubRoutes = require("./routes/githubRoutes");
 const auditRoutes = require("./routes/auditRoutes");
 const adminRoutes = require("./routes/adminRoutes");
+const aiopsRoutes = require("./routes/aiopsRoutes");
 const errorMiddleware = require("./middleware/errorMiddleware");
 
 const app = express();
@@ -62,6 +63,7 @@ app.use("/api", monitoringRoutes);
 app.use("/api/webhooks", webhookRoutes);
 app.use("/api/audit", auditRoutes);
 app.use("/api/admin", adminRoutes);
+app.use("/api/aiops", aiopsRoutes);
 
 // ── 404 catch-all ─────────────────────────────────────────
 app.use((_req, res) => {

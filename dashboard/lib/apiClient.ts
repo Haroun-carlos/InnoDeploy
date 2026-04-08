@@ -268,4 +268,19 @@ export const adminApi = {
   deleteUser: (userId: string) => apiClient.delete(`/admin/users/${userId}`),
 };
 
+export const aiopsApi = {
+  analyseProject: (projectId: string, payload?: { environment?: string; timeRange?: string }) =>
+    apiClient.post(`/aiops/analyse/${projectId}`, payload || {}),
+
+  analysePipeline: (pipelineId: string) =>
+    apiClient.post(`/aiops/analyse-pipeline/${pipelineId}`),
+
+  askAboutProject: (projectId: string, question: string) =>
+    apiClient.post(`/aiops/ask/${projectId}`, { question }),
+
+  getOverview: () => apiClient.get("/aiops/overview"),
+
+  getStatus: () => apiClient.get("/aiops/status"),
+};
+
 export default apiClient;

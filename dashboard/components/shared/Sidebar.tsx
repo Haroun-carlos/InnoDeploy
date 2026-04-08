@@ -13,6 +13,7 @@ import {
   Settings,
   Rocket,
   UserCog,
+  Brain,
 } from "lucide-react";
 import { useLanguagePreference } from "@/hooks/useLanguagePreference";
 import { t } from "@/lib/settingsI18n";
@@ -27,6 +28,7 @@ const navItems = [
   { labelKey: "Terminal", href: "/dashboard/terminal", icon: Terminal },
   { labelKey: "nav.deployments", href: "/dashboard/deployments", icon: Activity },
   { labelKey: "nav.alerts", href: "/dashboard/alerts", icon: ShieldAlert },
+  { labelKey: "AI Monitoring", href: "/dashboard/aiops", icon: Brain },
   { labelKey: "nav.settings", href: "/dashboard/settings", icon: Settings },
 ];
 

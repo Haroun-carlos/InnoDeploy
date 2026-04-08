@@ -3,12 +3,20 @@ require("dotenv").config({ path: path.resolve(__dirname, "..", "..", ".env") });
 require("dotenv").config({ path: path.resolve(__dirname, "..", "..", ".env.local"), override: true });
 
 const http = require("http");
+const os = require("os");
+const fs = require("fs");
 const express = require("express");
 const { WebSocketServer } = require("ws");
 const { createClient } = require("redis");
 const { promises: dns } = require("dns");
 const { URL } = require("url");
 const jwt = require("jsonwebtoken");
+const pty = require("node-pty");
+
+const CLI_BIN = path.resolve(__dirname, "..", "..", "..", "cli", "bin", "innodeploy.js");
+const CLI_CONFIG_DIR = path.join(os.homedir(), ".innodeploy-cli");
+const CLI_CONFIG_FILE = path.join(CLI_CONFIG_DIR, "config.json");
+const API_BASE_URL = process.env.API_BASE_URL || "http://localhost:5000/api";
 
 const JWT_SECRET = process.env.JWT_SECRET || "change_me_access_secret_32chars";
 
@@ -56,6 +64,7 @@ const wss = new WebSocketServer({
 });
 
 const subscriptions = new Map();
+const terminals = new Map(); // ws → pty process
 
 const safeSend = (ws, payload) => {
   if (ws.readyState !== ws.OPEN) {
@@ -152,9 +161,101 @@ wss.on("connection", (ws) => {
     if (parsed.type === "ping") {
       safeSend(ws, { type: "pong", createdAt: new Date().toISOString() });
     }
+
+    // ── Interactive terminal ──────────────────────────────────────
+    if (parsed.type === "terminal.start") {
+      // Kill any existing terminal for this connection
+      const existing = terminals.get(ws);
+      if (existing) {
+        existing.kill();
+        terminals.delete(ws);
+      }
+
+      // Pre-configure InnoDeploy CLI with the user's auth token
+      const token = new URL(ws._socket?.remoteAddress || "", "http://localhost").searchParams.get("token") || "";
+      const userToken = ws._req?.user ? parsed.accessToken : "";
+      try {
+        if (!fs.existsSync(CLI_CONFIG_DIR)) {
+          fs.mkdirSync(CLI_CONFIG_DIR, { recursive: true });
+        }
+        const cliConfig = {
+          apiBaseUrl: API_BASE_URL,
+          accessToken: parsed.accessToken || "",
+          refreshToken: parsed.refreshToken || "",
+          user: ws._req?.user || null,
+        };
+        fs.writeFileSync(CLI_CONFIG_FILE, JSON.stringify(cliConfig, null, 2), "utf8");
+      } catch (_err) {
+        // Non-fatal: CLI will just need manual login
+      }
+
+      const shell = os.platform() === "win32" ? "powershell.exe" : (process.env.SHELL || "bash");
+      const cols = Number(parsed.cols) || 80;
+      const rows = Number(parsed.rows) || 24;
+
+      // Add CLI bin directory to PATH so `innodeploy` is available
+      const cliBinDir = path.dirname(CLI_BIN);
+      const cliNodeModulesBin = path.resolve(cliBinDir, "..", "node_modules", ".bin");
+      const envPath = process.env.PATH || "";
+      const sep = os.platform() === "win32" ? ";" : ":";
+
+      const termEnv = {
+        ...process.env,
+        INNODEPLOY_API_URL: API_BASE_URL,
+        PATH: `${cliBinDir}${sep}${cliNodeModulesBin}${sep}${envPath}`,
+      };
+
+      const ptyProcess = pty.spawn(shell, [], {
+        name: "xterm-256color",
+        cols,
+        rows,
+        cwd: process.env.TERMINAL_CWD || os.homedir(),
+        env: termEnv,
+      });
+
+      terminals.set(ws, ptyProcess);
+
+      ptyProcess.onData((data) => {
+        if (ws.readyState === ws.OPEN) {
+          ws.send(JSON.stringify({ type: "terminal.output", data }));
+        }
+      });
+
+      ptyProcess.onExit(({ exitCode }) => {
+        terminals.delete(ws);
+        safeSend(ws, { type: "terminal.exit", code: exitCode });
+      });
+
+      safeSend(ws, { type: "terminal.started" });
+      return;
+    }
+
+    if (parsed.type === "terminal.data") {
+      const ptyProcess = terminals.get(ws);
+      if (ptyProcess && typeof parsed.data === "string") {
+        ptyProcess.write(parsed.data);
+      }
+      return;
+    }
+
+    if (parsed.type === "terminal.resize") {
+      const ptyProcess = terminals.get(ws);
+      if (ptyProcess) {
+        const cols = Number(parsed.cols) || 80;
+        const rows = Number(parsed.rows) || 24;
+        ptyProcess.resize(cols, rows);
+      }
+      return;
+    }
   });
 
   ws.on("close", () => {
+    // Kill any spawned terminal
+    const ptyProcess = terminals.get(ws);
+    if (ptyProcess) {
+      ptyProcess.kill();
+      terminals.delete(ws);
+    }
     subscriptions.delete(ws);
   });
 });

@@ -316,6 +316,77 @@ export interface SettingsPayload {
   preferences: UserSettingsPreferences;
 }
 
+// ─── AIOps types ─────────────────────────────────────────────────────────────
+
+export type AiOpsSeverity = "info" | "warning" | "critical";
+
+export interface AiOpsPreScreenFlag {
+  metric: string;
+  value: number | string;
+  level: "warning" | "critical";
+}
+
+export interface AiOpsAnalysis {
+  projectId: string;
+  projectName: string;
+  environment: string;
+  timeRange: string;
+  preScreenFlags: AiOpsPreScreenFlag[];
+  metricsCount: number;
+  logsCount: number;
+  raw: string | null;
+  analysis: string;
+  problem: string;
+  rootCause: string;
+  solution: string;
+  optimization: string;
+  severity: AiOpsSeverity;
+  hasAnomaly: boolean;
+}
+
+export interface AiOpsPipelineAnalysis {
+  pipelineId: string;
+  projectId: string;
+  status: string;
+  raw: string | null;
+  analysis: string;
+  problem: string;
+  rootCause: string;
+  solution: string;
+  optimization: string;
+  severity: AiOpsSeverity;
+  hasAnomaly: boolean;
+}
+
+export interface AiOpsOverview {
+  total: number;
+  anomalies: number;
+  healthy: number;
+  errors: number;
+  projects: (AiOpsAnalysis & { error?: string })[];
+}
+
+export interface AiOpsStatus {
+  enabled: boolean;
+  openclawUrl: string;
+  model: string;
+  anomalyCheckInterval: number;
+  anomalyLookback: number;
+}
+
+export interface AiOpsAskResult {
+  projectId: string;
+  projectName: string;
+  question: string;
+  analysis: string;
+  problem: string;
+  rootCause: string;
+  solution: string;
+  optimization: string;
+  severity: AiOpsSeverity;
+  hasAnomaly: boolean;
+}
+
 // ─── Admin dashboard types ───────────────────────────────────────────────────
 
 export interface AdminUser {

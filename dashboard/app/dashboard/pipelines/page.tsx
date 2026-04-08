@@ -5,7 +5,9 @@ import { useLanguagePreference } from "@/hooks/useLanguagePreference";
 import { t } from "@/lib/settingsI18n";
 import Sidebar from "@/components/shared/Sidebar";
 import Navbar from "@/components/shared/Navbar";
-import RecentPipelinesTable from "@/components/homepage/RecentPipelinesTable";
+import PipelineStats from "@/components/pipelinedetail/PipelineStats";
+import PipelineSuccessChart from "@/components/pipelinedetail/PipelineSuccessChart";
+import PipelinesFullTable from "@/components/pipelinedetail/PipelinesFullTable";
 import { GitBranch } from "lucide-react";
 
 export default function PipelinesPage() {
@@ -34,8 +36,19 @@ export default function PipelinesPage() {
             </div>
           </div>
 
+          {/* Stats KPIs */}
           <div className="relative">
-            <RecentPipelinesTable />
+            <PipelineStats />
+          </div>
+
+          {/* Chart */}
+          <div className="relative">
+            <PipelineSuccessChart />
+          </div>
+
+          {/* Full table with trigger, filters, search */}
+          <div className="relative">
+            <PipelinesFullTable />
           </div>
         </main>
       </div>
