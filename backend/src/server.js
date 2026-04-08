@@ -9,6 +9,7 @@ const { startDeployWorker } = require("./services/deployWorker");
 const { startLogCollector } = require("./services/logCollector");
 const { startMonitorWorker } = require("./services/monitorWorker");
 const { startPipelineRunner } = require("./services/pipelineRunner");
+const { start: startAnomalyDetector } = require("./services/anomalyDetector");
 const mongoose = require("mongoose");
 
 const PORT = process.env.PORT || 5000;
@@ -23,6 +24,7 @@ const startServer = async () => {
   await startDeployWorker();
   await startLogCollector();
   await startMonitorWorker();
+  startAnomalyDetector();
 
   const server = app.listen(PORT, () => {
     console.log(`🚀 InnoDeploy API running on port ${PORT}`);

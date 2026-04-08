@@ -11,6 +11,10 @@ import DeployActivityChart from "@/components/homepage/DeployActivityChart";
 import AlertsFeed from "@/components/homepage/AlertsFeed";
 import QuickActions from "@/components/homepage/QuickActions";
 import HomeTerminalPanel from "@/components/homepage/HomeTerminalPanel";
+import GettingStartedCard from "@/components/homepage/GettingStartedCard";
+import RecentDeployments from "@/components/homepage/RecentDeployments";
+import SystemResources from "@/components/homepage/SystemResources";
+import ActivityTimeline from "@/components/homepage/ActivityTimeline";
 
 export default function DashboardPage() {
   const isReady = useRequireAuth();
@@ -32,6 +36,12 @@ export default function DashboardPage() {
           <div className="relative">
             <GreetingHeader />
           </div>
+
+          {/* Getting Started — auto-hides once all steps are complete */}
+          <div className="relative">
+            <GettingStartedCard />
+          </div>
+
           <div className="relative">
             <StatsGrid />
           </div>
@@ -43,9 +53,20 @@ export default function DashboardPage() {
             <HomeTerminalPanel />
           </div>
 
+          {/* Recent Deployments */}
+          <div className="relative">
+            <RecentDeployments />
+          </div>
+
           <div className="relative grid gap-6 lg:grid-cols-2">
             <DeployActivityChart />
             <ServiceHealthMap />
+          </div>
+
+          {/* System Resources & Activity Timeline side by side */}
+          <div className="relative grid gap-6 lg:grid-cols-2">
+            <SystemResources />
+            <ActivityTimeline />
           </div>
 
           <div className="relative">
