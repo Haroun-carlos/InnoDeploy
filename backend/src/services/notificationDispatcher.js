@@ -85,6 +85,7 @@ const resolveEnabledChannels = ({ channels, overrides }) => {
   const discordEnabled = toBoolean(overrides?.discord, toBoolean(channels.discordEnabled, false));
   const expoEnabled = toBoolean(overrides?.expo, toBoolean(channels.expoEnabled, false));
   const webhookEnabled = toBoolean(overrides?.webhook, toBoolean(channels.webhookEnabled, false));
+  const telegramEnabled = toBoolean(overrides?.telegram, toBoolean(channels.telegramEnabled, false));
 
   return {
     email: emailEnabled,
@@ -92,6 +93,7 @@ const resolveEnabledChannels = ({ channels, overrides }) => {
     discord: discordEnabled,
     expo: expoEnabled,
     webhook: webhookEnabled,
+    telegram: telegramEnabled,
   };
 };
 
@@ -274,6 +276,37 @@ const sendGenericWebhook = async ({ channels, payload }) => {
   return { status: "sent" };
 };
 
+const sendTelegram = async ({ channels, payload }) => {
+  const botToken = String(channels.telegramBotToken || "").trim();
+  const chatId = String(channels.telegramChatId || "").trim();
+  if (!botToken || !chatId) {
+    return { status: "skipped", reason: "missing-telegram-credentials" };
+  }
+
+  const metricLines = payload.metricAtTrigger
+    .map((metric) => `${metric.label}: ${metric.value}${metric.unit || ""}`)
+    .join("\n");
+
+  const message = [
+    `<b>${payload.title}</b>`,
+    `<i>${payload.message}</i>`,
+    `Service: ${payload.projectName}`,
+    `Severity: <b>${payload.severity.toUpperCase()}</b>`,
+    metricLines ? `Metrics:\n${metricLines}` : "",
+  ]
+    .filter(Boolean)
+    .join("\n");
+
+  const telegramUrl = `https://api.telegram.org/bot${botToken}/sendMessage`;
+  await postJson(telegramUrl, {
+    chat_id: chatId,
+    text: message,
+    parse_mode: "HTML",
+  });
+
+  return { status: "sent" };
+};
+
 const dispatchOrganisationNotification = async ({ organisation, project = null, event, requestedChannels = null }) => {
   const channels = toPlainObject(organisation.notificationChannels);
   const enabled = resolveEnabledChannels({ channels, overrides: requestedChannels });
@@ -291,6 +324,7 @@ const dispatchOrganisationNotification = async ({ organisation, project = null, 
     discord: () => sendDiscord({ channels, payload }),
     expo: () => sendExpoPush({ channels, payload }),
     webhook: () => sendGenericWebhook({ channels, payload }),
+    telegram: () => sendTelegram({ channels, payload }),
   };
 
   for (const [channel, sender] of Object.entries(senders)) {

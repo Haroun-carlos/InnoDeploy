@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { FolderKanban, Rocket, HeartPulse, AlertTriangle } from "lucide-react";
 import { alertApi, projectApi } from "@/lib/apiClient";
 import { useLanguagePreference } from "@/hooks/useLanguagePreference";
@@ -14,15 +15,17 @@ type KpiItem = {
   color: string;
   gradient: string;
   borderColor: string;
+  href: string;
 };
 
 export default function StatsGrid() {
   const language = useLanguagePreference();
+  const router = useRouter();
   const [kpis, setKpis] = useState<KpiItem[]>([
-    { label: t(language, "stats.totalProjects"), value: "0", icon: FolderKanban, color: "text-blue-400", gradient: "from-blue-500/20 to-blue-500/5", borderColor: "border-blue-500/20" },
-    { label: t(language, "stats.runningProjects"), value: "0", icon: Rocket, color: "text-violet-400", gradient: "from-violet-500/20 to-violet-500/5", borderColor: "border-violet-500/20" },
-    { label: t(language, "stats.healthyProjects"), value: "0", icon: HeartPulse, color: "text-emerald-400", gradient: "from-emerald-500/20 to-emerald-500/5", borderColor: "border-emerald-500/20" },
-    { label: t(language, "stats.openAlerts"), value: "0", icon: AlertTriangle, color: "text-amber-400", gradient: "from-amber-500/20 to-amber-500/5", borderColor: "border-amber-500/20" },
+    { label: t(language, "stats.totalProjects"), value: "0", icon: FolderKanban, color: "text-blue-400", gradient: "from-blue-500/20 to-blue-500/5", borderColor: "border-blue-500/20", href: "/dashboard/projects" },
+    { label: t(language, "stats.runningProjects"), value: "0", icon: Rocket, color: "text-violet-400", gradient: "from-violet-500/20 to-violet-500/5", borderColor: "border-violet-500/20", href: "/dashboard/projects" },
+    { label: t(language, "stats.healthyProjects"), value: "0", icon: HeartPulse, color: "text-emerald-400", gradient: "from-emerald-500/20 to-emerald-500/5", borderColor: "border-emerald-500/20", href: "/dashboard/projects" },
+    { label: t(language, "stats.openAlerts"), value: "0", icon: AlertTriangle, color: "text-amber-400", gradient: "from-amber-500/20 to-amber-500/5", borderColor: "border-amber-500/20", href: "/dashboard/alerts" },
   ]);
 
   useEffect(() => {
@@ -41,17 +44,17 @@ export default function StatsGrid() {
         const openAlerts = alerts.filter((alert) => alert.status === "open").length;
 
         setKpis([
-          { label: t(language, "stats.totalProjects"), value: String(projects.length), icon: FolderKanban, color: "text-blue-400", gradient: "from-blue-500/20 to-blue-500/5", borderColor: "border-blue-500/20" },
-          { label: t(language, "stats.runningProjects"), value: String(runningProjects), icon: Rocket, color: "text-violet-400", gradient: "from-violet-500/20 to-violet-500/5", borderColor: "border-violet-500/20" },
-          { label: t(language, "stats.healthyProjects"), value: String(healthyProjects), icon: HeartPulse, color: "text-emerald-400", gradient: "from-emerald-500/20 to-emerald-500/5", borderColor: "border-emerald-500/20" },
-          { label: t(language, "stats.openAlerts"), value: String(openAlerts), icon: AlertTriangle, color: "text-amber-400", gradient: "from-amber-500/20 to-amber-500/5", borderColor: "border-amber-500/20" },
+          { label: t(language, "stats.totalProjects"), value: String(projects.length), icon: FolderKanban, color: "text-blue-400", gradient: "from-blue-500/20 to-blue-500/5", borderColor: "border-blue-500/20", href: "/dashboard/projects" },
+          { label: t(language, "stats.runningProjects"), value: String(runningProjects), icon: Rocket, color: "text-violet-400", gradient: "from-violet-500/20 to-violet-500/5", borderColor: "border-violet-500/20", href: "/dashboard/projects" },
+          { label: t(language, "stats.healthyProjects"), value: String(healthyProjects), icon: HeartPulse, color: "text-emerald-400", gradient: "from-emerald-500/20 to-emerald-500/5", borderColor: "border-emerald-500/20", href: "/dashboard/projects" },
+          { label: t(language, "stats.openAlerts"), value: String(openAlerts), icon: AlertTriangle, color: "text-amber-400", gradient: "from-amber-500/20 to-amber-500/5", borderColor: "border-amber-500/20", href: "/dashboard/alerts" },
         ]);
       } catch {
         setKpis([
-          { label: t(language, "stats.totalProjects"), value: "0", icon: FolderKanban, color: "text-blue-400", gradient: "from-blue-500/20 to-blue-500/5", borderColor: "border-blue-500/20" },
-          { label: t(language, "stats.runningProjects"), value: "0", icon: Rocket, color: "text-violet-400", gradient: "from-violet-500/20 to-violet-500/5", borderColor: "border-violet-500/20" },
-          { label: t(language, "stats.healthyProjects"), value: "0", icon: HeartPulse, color: "text-emerald-400", gradient: "from-emerald-500/20 to-emerald-500/5", borderColor: "border-emerald-500/20" },
-          { label: t(language, "stats.openAlerts"), value: "0", icon: AlertTriangle, color: "text-amber-400", gradient: "from-amber-500/20 to-amber-500/5", borderColor: "border-amber-500/20" },
+          { label: t(language, "stats.totalProjects"), value: "0", icon: FolderKanban, color: "text-blue-400", gradient: "from-blue-500/20 to-blue-500/5", borderColor: "border-blue-500/20", href: "/dashboard/projects" },
+          { label: t(language, "stats.runningProjects"), value: "0", icon: Rocket, color: "text-violet-400", gradient: "from-violet-500/20 to-violet-500/5", borderColor: "border-violet-500/20", href: "/dashboard/projects" },
+          { label: t(language, "stats.healthyProjects"), value: "0", icon: HeartPulse, color: "text-emerald-400", gradient: "from-emerald-500/20 to-emerald-500/5", borderColor: "border-emerald-500/20", href: "/dashboard/projects" },
+          { label: t(language, "stats.openAlerts"), value: "0", icon: AlertTriangle, color: "text-amber-400", gradient: "from-amber-500/20 to-amber-500/5", borderColor: "border-amber-500/20", href: "/dashboard/alerts" },
         ]);
       }
     };
@@ -61,10 +64,13 @@ export default function StatsGrid() {
 
   return (
     <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-      {kpis.map(({ label, value, icon: Icon, color, gradient, borderColor }, index) => (
+      {kpis.map(({ label, value, icon: Icon, color, gradient, borderColor, href }, index) => (
         <div
           key={label}
-          className={`group relative overflow-hidden rounded-2xl border border-white/[0.06] bg-[#0a1628]/60 p-5 transition-all duration-300 hover:border-white/[0.12] hover:shadow-[0_0_40px_rgba(0,0,0,0.3)] animate-rise-fade`}
+          onClick={() => {
+            if (href) router.push(href);
+          }}
+          className={`group relative overflow-hidden rounded-2xl border border-white/[0.06] bg-[#0a1628]/60 p-5 transition-all duration-300 hover:border-white/[0.12] hover:shadow-[0_0_40px_rgba(0,0,0,0.3)] animate-rise-fade cursor-pointer`}
           style={{ animationDelay: `${index * 100}ms` }}
         >
           {/* Gradient background */}

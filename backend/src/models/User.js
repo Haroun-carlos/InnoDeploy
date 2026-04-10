@@ -21,6 +21,23 @@ const userSchema = new mongoose.Schema(
       match: [/^\S+@\S+\.\S+$/, "Please provide a valid email"],
     },
 
+    emailVerified: {
+      type: Boolean,
+      default: false,
+    },
+
+    emailVerificationToken: {
+      type: String,
+      default: null,
+      select: false,
+    },
+
+    emailVerificationExpiresAt: {
+      type: Date,
+      default: null,
+      select: false,
+    },
+
     passwordHash: {
       type: String,
       required: [true, "Password is required"],
@@ -54,6 +71,53 @@ const userSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Organisation",
       default: null,
+    },
+
+    recoveryEmail: {
+      type: String,
+      default: null,
+      lowercase: true,
+      trim: true,
+      match: [/^\S+@\S+\.\S+$|^$/, "Please provide a valid recovery email"],
+    },
+
+    recoveryPhone: {
+      type: String,
+      default: null,
+    },
+
+    companySize: {
+      type: String,
+      enum: ["1-10", "11-50", "51-200", "201-1000", "1000+", ""],
+      default: "",
+    },
+
+    useCase: {
+      type: String,
+      enum: ["startups", "enterprise", "agencies", "freelance", ""],
+      default: "",
+    },
+
+    referralSource: {
+      type: String,
+      enum: ["search", "social-media", "friend-referral", "conference", "content", "other", ""],
+      default: "",
+    },
+
+    twoFactorEnabled: {
+      type: Boolean,
+      default: false,
+    },
+
+    twoFactorSecret: {
+      type: String,
+      default: null,
+      select: false,
+    },
+
+    newsletter: {
+      type: Boolean,
+      default: true,
     },
 
     avatar: {

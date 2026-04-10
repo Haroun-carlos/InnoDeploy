@@ -7,6 +7,8 @@ const {
 	logout,
 	forgotPassword,
 	resetPassword,
+	verifyEmail,
+	resendVerificationEmail,
 	startGoogleOAuth,
 	googleOAuthCallback,
 	startGithubOAuth,
@@ -41,6 +43,8 @@ router.post("/login", authLimiter, validate(loginSchema), login);
 router.post("/refresh", authLimiter, refresh);
 router.post("/forgot-password", strictLimiter, validate(forgotPasswordSchema), forgotPassword);
 router.post("/reset-password", strictLimiter, validate(resetPasswordSchema), resetPassword);
+router.post("/verify-email", authLimiter, verifyEmail);
+router.post("/resend-verification-email", authLimiter, resendVerificationEmail);
 router.get("/google", startGoogleOAuth);
 router.get("/google/callback", googleOAuthCallback);
 router.get("/github", startGithubOAuth);

@@ -16,6 +16,19 @@ const organisationSchema = new mongoose.Schema(
       trim: true,
       match: [/^[a-z0-9-]+$/, "Slug must be lowercase alphanumeric with dashes"],
     },
+
+    industry: {
+      type: String,
+      enum: ["tech", "finance", "healthcare", "retail", "manufacturing", "education", "other", ""],
+      default: "",
+    },
+
+    workspaceType: {
+      type: String,
+      enum: ["startup", "enterprise", "agency", "freelance", ""],
+      default: "",
+    },
+
     plan: {
       type: String,
       enum: ["free", "pro", "enterprise"],

@@ -10,6 +10,7 @@ const { startLogCollector } = require("./services/logCollector");
 const { startMonitorWorker } = require("./services/monitorWorker");
 const { startPipelineRunner } = require("./services/pipelineRunner");
 const { start: startAnomalyDetector } = require("./services/anomalyDetector");
+const { initializeDefaultTransporter } = require("./services/emailService");
 const mongoose = require("mongoose");
 
 const PORT = process.env.PORT || 5000;
@@ -20,6 +21,7 @@ const PORT = process.env.PORT || 5000;
 const startServer = async () => {
   await connectDB();
   await connectRedis();
+  await initializeDefaultTransporter();
   await startPipelineRunner();
   await startDeployWorker();
   await startLogCollector();

@@ -61,8 +61,34 @@ export const authApi = {
   login: (email: string, password: string) =>
     apiClient.post("/auth/login", { email, password }),
 
-  register: (name: string, email: string, password: string, organisationName?: string) =>
-    apiClient.post("/auth/register", { name, email, password, organisationName }),
+  register: (
+    name: string,
+    email: string,
+    password: string,
+    organisationName?: string,
+    recoveryEmail?: string,
+    recoveryPhone?: string,
+    companySize?: string,
+    useCase?: string,
+    referralSource?: string,
+    industry?: string,
+    workspaceType?: string,
+    newsletter?: boolean
+  ) =>
+    apiClient.post("/auth/register", {
+      name,
+      email,
+      password,
+      organisationName,
+      recoveryEmail,
+      recoveryPhone,
+      companySize,
+      useCase,
+      referralSource,
+      industry,
+      workspaceType,
+      newsletter,
+    }),
 
   logout: () => apiClient.post("/auth/logout"),
 
@@ -71,6 +97,12 @@ export const authApi = {
 
   resetPassword: (token: string, newPassword: string) =>
     apiClient.post("/auth/reset-password", { token, newPassword }),
+
+  verifyEmail: (token: string) =>
+    apiClient.post("/auth/verify-email", { token }),
+
+  resendVerificationEmail: (email: string) =>
+    apiClient.post("/auth/resend-verification-email", { email }),
 };
 
 export const projectApi = {

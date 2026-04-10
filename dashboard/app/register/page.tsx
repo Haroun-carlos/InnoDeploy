@@ -58,12 +58,52 @@ export default function RegisterPage() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [passwordConfirm, setPasswordConfirm] = useState("");
   const [organisationName, setOrganisationName] = useState("");
+  const [recoveryEmail, setRecoveryEmail] = useState("");
+  const [recoveryPhone, setRecoveryPhone] = useState("");
+  const [companySize, setCompanySize] = useState("");
+  const [useCase, setUseCase] = useState("");
+  const [referralSource, setReferralSource] = useState("");
+  const [industry, setIndustry] = useState("");
+  const [workspaceType, setWorkspaceType] = useState("");
+  const [newsletter, setNewsletter] = useState(true);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [passwordStrength, setPasswordStrength] = useState(0);
 
   const handleOAuth = (provider: "google" | "github") => {
     window.location.href = `${apiBase}/auth/${provider}`;
+  };
+
+  const calculatePasswordStrength = (pwd: string) => {
+    let strength = 0;
+    if (pwd.length >= 8) strength += 20;
+    if (pwd.length >= 12) strength += 20;
+    if (/[a-z]/.test(pwd)) strength += 10;
+    if (/[A-Z]/.test(pwd)) strength += 10;
+    if (/[0-9]/.test(pwd)) strength += 20;
+    if (/[!@#$%^&*]/.test(pwd)) strength += 20;
+    return Math.min(strength, 100);
+  };
+
+  const handlePasswordChange = (value: string) => {
+    setPassword(value);
+    setPasswordStrength(calculatePasswordStrength(value));
+  };
+
+  const getPasswordStrengthColor = () => {
+    if (passwordStrength < 30) return "bg-red-500";
+    if (passwordStrength < 60) return "bg-orange-500";
+    if (passwordStrength < 80) return "bg-yellow-500";
+    return "bg-green-500";
+  };
+
+  const getPasswordStrengthText = () => {
+    if (passwordStrength < 30) return "Weak";
+    if (passwordStrength < 60) return "Fair";
+    if (passwordStrength < 80) return "Good";
+    return "Strong";
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -71,8 +111,30 @@ export default function RegisterPage() {
     setError("");
 
     const trimmedName = name.trim();
+    const trimmedOrg = organisationName.trim();
+    
     if (!trimmedName) {
       setError("Full name is required");
+      return;
+    }
+    
+    if (!trimmedOrg) {
+      setError("Organisation name is required to create your workspace");
+      return;
+    }
+
+    if (password.length < 8) {
+      setError("Password must be at least 8 characters");
+      return;
+    }
+
+    if (password !== passwordConfirm) {
+      setError("Passwords do not match");
+      return;
+    }
+
+    if (passwordStrength < 30) {
+      setError("Password is too weak. Please use a stronger password.");
       return;
     }
 
@@ -83,14 +145,44 @@ export default function RegisterPage() {
         trimmedName,
         email,
         password,
-        organisationName || undefined
+        trimmedOrg,
+        recoveryEmail || undefined,
+        recoveryPhone || undefined,
+        companySize || undefined,
+        useCase || undefined,
+        referralSource || undefined,
+        industry || undefined,
+        workspaceType || undefined,
+        newsletter
       );
       const res = data as AuthResponse;
       setAuth(res.user, res.accessToken, res.refreshToken);
       router.push("/auth/terms");
     } catch (err: unknown) {
-      const axiosErr = err as { response?: { data?: { message?: string } } };
-      setError(axiosErr.response?.data?.message || "Registration failed");
+      console.error("Registration error:", err);
+      
+      // Handle axios error
+      const axiosErr = err as { 
+        response?: { 
+          status?: number;
+          data?: { message?: string; error?: string } 
+        },
+        message?: string;
+      };
+      
+      if (axiosErr.response?.data?.message) {
+        setError(axiosErr.response.data.message);
+      } else if (axiosErr.response?.data?.error) {
+        setError(axiosErr.response.data.error);
+      } else if (axiosErr.response?.status === 409) {
+        setError("Email already registered");
+      } else if (axiosErr.response?.status === 500) {
+        setError("Server error. Please try again later.");
+      } else if (axiosErr.message) {
+        setError(axiosErr.message);
+      } else {
+        setError("Registration failed. Please try again.");
+      }
     } finally {
       setLoading(false);
     }
@@ -162,7 +254,7 @@ export default function RegisterPage() {
             </div>
 
             {/* Form */}
-            <form onSubmit={handleSubmit} className="space-y-3">
+            <form onSubmit={handleSubmit} className="space-y-3 max-h-[60vh] overflow-y-auto pr-2">
               {error && (
                 <div className="rounded-xl border border-rose-500/20 bg-rose-500/[0.06] p-3 text-sm text-rose-300 backdrop-blur-sm">
                   {error}
@@ -170,7 +262,7 @@ export default function RegisterPage() {
               )}
 
               <div className="space-y-2">
-                <Label htmlFor="name" className="text-slate-300 text-sm">Full name</Label>
+                <Label htmlFor="name" className="text-slate-300 text-sm">Full name<span className="text-rose-400 ml-1">*</span></Label>
                 <Input
                   id="name"
                   type="text"
@@ -183,7 +275,7 @@ export default function RegisterPage() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="email" className="text-slate-300 text-sm">Email</Label>
+                <Label htmlFor="email" className="text-slate-300 text-sm">Email<span className="text-rose-400 ml-1">*</span></Label>
                 <Input
                   id="email"
                   type="email"
@@ -196,30 +288,196 @@ export default function RegisterPage() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="password" className="text-slate-300 text-sm">Password</Label>
+                <Label htmlFor="password" className="text-slate-300 text-sm">
+                  Password <span className="text-rose-400 ml-1">*</span>
+                </Label>
                 <Input
                   id="password"
                   type="password"
                   placeholder="••••••••"
                   value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  onChange={(e) => handlePasswordChange(e.target.value)}
                   required
                   minLength={8}
+                  className="h-11 rounded-xl border-white/[0.08] bg-white/[0.03] text-white placeholder:text-slate-500 placeholder:italic focus:border-cyan-400/50 focus:ring-1 focus:ring-cyan-400/20 transition"
+                />
+                {password && (
+                  <div className="space-y-1">
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="text-slate-400">Strength:</span>
+                      <span className={`font-medium ${passwordStrength < 30 ? 'text-red-400' : passwordStrength < 60 ? 'text-orange-400' : passwordStrength < 80 ? 'text-yellow-400' : 'text-green-400'}`}>
+                        {getPasswordStrengthText()}
+                      </span>
+                    </div>
+                    <div className="w-full bg-slate-700 rounded-full h-1.5 overflow-hidden">
+                      <div
+                        className={`h-full transition-all ${getPasswordStrengthColor()}`}
+                        style={{ width: `${passwordStrength}%` }}
+                      />
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="passwordConfirm" className="text-slate-300 text-sm">
+                  Confirm Password <span className="text-rose-400 ml-1">*</span>
+                </Label>
+                <Input
+                  id="passwordConfirm"
+                  type="password"
+                  placeholder="••••••••"
+                  value={passwordConfirm}
+                  onChange={(e) => setPasswordConfirm(e.target.value)}
+                  required
+                  minLength={8}
+                  className="h-11 rounded-xl border-white/[0.08] bg-white/[0.03] text-white placeholder:text-slate-500 placeholder:italic focus:border-cyan-400/50 focus:ring-1 focus:ring-cyan-400/20 transition"
+                />
+                {passwordConfirm && password !== passwordConfirm && (
+                  <p className="text-xs text-rose-400">Passwords do not match</p>
+                )}
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="recoveryEmail" className="text-slate-300 text-sm">Recovery Email (for account recovery)</Label>
+                <Input
+                  id="recoveryEmail"
+                  type="email"
+                  placeholder="recovery@example.com"
+                  value={recoveryEmail}
+                  onChange={(e) => setRecoveryEmail(e.target.value)}
+                  className="h-11 rounded-xl border-white/[0.08] bg-white/[0.03] text-white placeholder:text-slate-500 placeholder:italic focus:border-cyan-400/50 focus:ring-1 focus:ring-cyan-400/20 transition"
+                />
+                <p className="text-xs text-slate-500">Used to recover your account if primary email is compromised</p>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="recoveryPhone" className="text-slate-300 text-sm">Recovery Phone</Label>
+                <Input
+                  id="recoveryPhone"
+                  type="tel"
+                  placeholder="+1 (555) 000-0000"
+                  value={recoveryPhone}
+                  onChange={(e) => setRecoveryPhone(e.target.value)}
                   className="h-11 rounded-xl border-white/[0.08] bg-white/[0.03] text-white placeholder:text-slate-500 placeholder:italic focus:border-cyan-400/50 focus:ring-1 focus:ring-cyan-400/20 transition"
                 />
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="org" className="text-slate-300 text-sm">Organisation name (optional)</Label>
+                <Label htmlFor="org" className="text-slate-300 text-sm">
+                  Organisation name <span className="text-rose-400 ml-1">*</span>
+                </Label>
                 <Input
                   id="org"
                   type="text"
                   placeholder="My Company"
                   value={organisationName}
                   onChange={(e) => setOrganisationName(e.target.value)}
+                  required
                   className="h-11 rounded-xl border-white/[0.08] bg-white/[0.03] text-white placeholder:text-slate-500 placeholder:italic focus:border-cyan-400/50 focus:ring-1 focus:ring-cyan-400/20 transition"
                 />
+                <p className="text-xs text-slate-500">Your workspace is created within an organisation</p>
               </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div className="space-y-2">
+                  <Label htmlFor="workspaceType" className="text-slate-300 text-sm">Workspace Type</Label>
+                  <select
+                    id="workspaceType"
+                    value={workspaceType}
+                    onChange={(e) => setWorkspaceType(e.target.value)}
+                    className="h-11 w-full rounded-xl border border-white/[0.08] bg-slate-900 text-white placeholder:text-slate-500 focus:border-cyan-400/50 focus:ring-1 focus:ring-cyan-400/20 transition px-3"
+                  >
+                    <option value="" className="bg-slate-900 text-white">Select...</option>
+                    <option value="startup" className="bg-slate-900 text-white">Startup</option>
+                    <option value="enterprise" className="bg-slate-900 text-white">Enterprise</option>
+                    <option value="agency" className="bg-slate-900 text-white">Agency</option>
+                    <option value="freelance" className="bg-slate-900 text-white">Freelance</option>
+                  </select>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="industry" className="text-slate-300 text-sm">Industry</Label>
+                  <select
+                    id="industry"
+                    value={industry}
+                    onChange={(e) => setIndustry(e.target.value)}
+                    className="h-11 w-full rounded-xl border border-white/[0.08] bg-slate-900 text-white placeholder:text-slate-500 focus:border-cyan-400/50 focus:ring-1 focus:ring-cyan-400/20 transition px-3"
+                  >
+                    <option value="" className="bg-slate-900 text-white">Select...</option>
+                    <option value="tech" className="bg-slate-900 text-white">Tech</option>
+                    <option value="finance" className="bg-slate-900 text-white">Finance</option>
+                    <option value="healthcare" className="bg-slate-900 text-white">Healthcare</option>
+                    <option value="retail" className="bg-slate-900 text-white">Retail</option>
+                    <option value="manufacturing" className="bg-slate-900 text-white">Manufacturing</option>
+                    <option value="education" className="bg-slate-900 text-white">Education</option>
+                    <option value="other" className="bg-slate-900 text-white">Other</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div className="space-y-2">
+                  <Label htmlFor="companySize" className="text-slate-300 text-sm">Company Size</Label>
+                  <select
+                    id="companySize"
+                    value={companySize}
+                    onChange={(e) => setCompanySize(e.target.value)}
+                    className="h-11 w-full rounded-xl border border-white/[0.08] bg-slate-900 text-white placeholder:text-slate-500 focus:border-cyan-400/50 focus:ring-1 focus:ring-cyan-400/20 transition px-3"
+                  >
+                    <option value="" className="bg-slate-900 text-white">Select...</option>
+                    <option value="1-10" className="bg-slate-900 text-white">1-10 people</option>
+                    <option value="11-50" className="bg-slate-900 text-white">11-50 people</option>
+                    <option value="51-200" className="bg-slate-900 text-white">51-200 people</option>
+                    <option value="201-1000" className="bg-slate-900 text-white">201-1000 people</option>
+                    <option value="1000+" className="bg-slate-900 text-white">1000+ people</option>
+                  </select>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="useCase" className="text-slate-300 text-sm">Use Case</Label>
+                  <select
+                    id="useCase"
+                    value={useCase}
+                    onChange={(e) => setUseCase(e.target.value)}
+                    className="h-11 w-full rounded-xl border border-white/[0.08] bg-slate-900 text-white placeholder:text-slate-500 focus:border-cyan-400/50 focus:ring-1 focus:ring-cyan-400/20 transition px-3"
+                  >
+                    <option value="" className="bg-slate-900 text-white">Select...</option>
+                    <option value="startups" className="bg-slate-900 text-white">Startups</option>
+                    <option value="enterprise" className="bg-slate-900 text-white">Enterprise</option>
+                    <option value="agencies" className="bg-slate-900 text-white">Agencies</option>
+                    <option value="freelance" className="bg-slate-900 text-white">Freelance</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="referralSource" className="text-slate-300 text-sm">How did you find us?</Label>
+                <select
+                  id="referralSource"
+                  value={referralSource}
+                  onChange={(e) => setReferralSource(e.target.value)}
+                  className="h-11 w-full rounded-xl border border-white/[0.08] bg-slate-900 text-white placeholder:text-slate-500 focus:border-cyan-400/50 focus:ring-1 focus:ring-cyan-400/20 transition px-3"
+                >
+                  <option value="" className="bg-slate-900 text-white">Select...</option>
+                  <option value="search" className="bg-slate-900 text-white">Search Engine</option>
+                  <option value="social-media" className="bg-slate-900 text-white">Social Media</option>
+                  <option value="friend-referral" className="bg-slate-900 text-white">Friend Referral</option>
+                  <option value="conference" className="bg-slate-900 text-white">Conference/Event</option>
+                  <option value="content" className="bg-slate-900 text-white">Blog/Content</option>
+                  <option value="other" className="bg-slate-900 text-white">Other</option>
+                </select>
+              </div>
+
+              <label className="flex items-center gap-3 text-sm text-slate-300 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={newsletter}
+                  onChange={(e) => setNewsletter(e.target.checked)}
+                  className="h-4 w-4 rounded border-slate-500/50 bg-transparent accent-cyan-400 cursor-pointer"
+                />
+                <span>Subscribe to product updates and announcements</span>
+              </label>
 
               <button
                 type="submit"

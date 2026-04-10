@@ -122,6 +122,7 @@ export default function ProjectDetailPage() {
   const [project, setProject] = useState<ProjectDetail | null>(null);
   const [projectLoading, setProjectLoading] = useState(false);
   const [projectError, setProjectError] = useState<string | null>(null);
+  const [projectSuccess, setProjectSuccess] = useState<string | null>(null);
   const [activeEnvId, setActiveEnvId] = useState("");
   const [secrets, setSecrets] = useState<Secret[]>([]);
   const [pipelineConfig, setPipelineConfig] = useState("");
@@ -355,7 +356,7 @@ export default function ProjectDetailPage() {
   }, [logEntries, logSearch, logRegex, logLevels, logContainer]);
 
   const activeEnv = useMemo(
-    () => project?.environments.find((e) => e.id === activeEnvId) || null,
+    () => project?.environments?.find((e) => e.id === activeEnvId) || null,
     [project, activeEnvId]
   );
 
@@ -653,16 +654,40 @@ export default function ProjectDetailPage() {
   }
 
   const handleDeploy = async () => {
-    await projectApi.triggerDeploy(_projectId, {
-      environment: activeEnv?.name?.toLowerCase() || t(language, "projectDetail.defaultEnv"),
-    });
+    try {
+      setProjectError(null);
+      setProjectSuccess(null);
+      await projectApi.triggerDeploy(_projectId, {
+        environment: activeEnv?.name?.toLowerCase() || t(language, "projectDetail.defaultEnv"),
+      });
+      // Refresh project data to show updated status
+      const { data } = await projectApi.getProject(_projectId);
+      setProject(data.project);
+      setProjectSuccess("✅ Deployment triggered successfully! Project is now running.");
+      setTimeout(() => setProjectSuccess(null), 5000);
+    } catch (error: unknown) {
+      const axiosErr = error as { response?: { data?: { message?: string } } };
+      setProjectError(axiosErr.response?.data?.message || "Failed to trigger deployment");
+    }
   };
 
   const handleRollback = async () => {
-    await projectApi.triggerRollback(_projectId, {
-      environment: activeEnv?.name?.toLowerCase() || t(language, "projectDetail.defaultEnv"),
-      version: project.deployments[0]?.version,
-    });
+    try {
+      setProjectError(null);
+      setProjectSuccess(null);
+      await projectApi.triggerRollback(_projectId, {
+        environment: activeEnv?.name?.toLowerCase() || t(language, "projectDetail.defaultEnv"),
+        version: project.deployments[0]?.version,
+      });
+      // Refresh project data to show updated status
+      const { data } = await projectApi.getProject(_projectId);
+      setProject(data.project);
+      setProjectSuccess("✅ Rollback triggered successfully! Project is rolling back.");
+      setTimeout(() => setProjectSuccess(null), 5000);
+    } catch (error: unknown) {
+      const axiosErr = error as { response?: { data?: { message?: string } } };
+      setProjectError(axiosErr.response?.data?.message || "Failed to trigger rollback");
+    }
   };
 
   const handleTriggerPipeline = async (branch: string) => {
@@ -745,8 +770,20 @@ export default function ProjectDetailPage() {
 
           {activeTab === "Overview" && (
             <div className="space-y-6">
+              {projectError && (
+                <div className="p-4 bg-red-50/10 border border-red-500/20 rounded-lg text-red-400 text-sm">
+                  {projectError}
+                </div>
+              )}
+
+              {projectSuccess && (
+                <div className="p-4 bg-green-50/10 border border-green-500/20 rounded-lg text-green-400 text-sm">
+                  {projectSuccess}
+                </div>
+              )}
+              
               <EnvironmentTabs
-                environments={project.environments}
+                environments={project?.environments || []}
                 activeId={activeEnvId}
                 onChange={setActiveEnvId}
               />
@@ -762,8 +799,8 @@ export default function ProjectDetailPage() {
                 </div>
               </div>
 
-              <MetricsSummaryCards metrics={project.metrics} />
-              <RecentDeploysTable deployments={project.deployments} />
+              <MetricsSummaryCards metrics={project?.metrics || []} />
+              <RecentDeploysTable deployments={project?.deployments || []} />
             </div>
           )}
 
@@ -940,12 +977,33 @@ export default function ProjectDetailPage() {
                     Live stream of project logs with automatic reconnect.
                   </p>
                 </div>
-                <div className="text-xs text-muted-foreground">
-                  stream: {logStreamState}
+                <div className="flex items-center gap-2">
+                  {logStreamState === "live" && (
+                    <span className="inline-flex items-center gap-1 text-xs text-green-400">
+                      <span className="inline-block w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
+                      Live
+                    </span>
+                  )}
+                  <div className="text-xs text-muted-foreground">
+                    {logStreamState}
+                  </div>
                 </div>
               </div>
 
-              <XTermViewer lines={projectTerminalLines} height={520} />
+              {projectTerminalLines.length === 0 ? (
+                <div className="rounded-lg border border-dashed border-muted-foreground/30 bg-card/50 p-8 text-center space-y-2">
+                  <p className="text-sm text-muted-foreground">
+                    {project?.status === "stopped"
+                      ? "📦 Project is stopped. Start your project to see live logs."
+                      : "⏳ Waiting for logs... Connect will start when logs are available."}
+                  </p>
+                  <p className="text-xs text-muted-foreground">
+                    {`Stream status: ${logStreamState}`}
+                  </p>
+                </div>
+              ) : (
+                <XTermViewer lines={projectTerminalLines} height={520} />
+              )}
             </div>
           )}
 

@@ -7,6 +7,7 @@ const {
   generateRefreshToken,
   verifyRefreshToken,
 } = require("../utils/jwt");
+const { sendEmailVerification, sendPasswordResetEmail } = require("../services/emailService");
 
 // Refresh token TTL in Redis (7 days in seconds)
 const REFRESH_TOKEN_TTL = 7 * 24 * 60 * 60;
@@ -14,6 +15,32 @@ const OAUTH_STATE_TTL = 10 * 60;
 const PASSWORD_RESET_TTL = 60 * 60; // 1 hour
 
 const getTrimmedEnv = (key) => String(process.env[key] || "").trim();
+
+// Initialize notification channels with defaults
+const initializeNotificationChannels = () => {
+  return {
+    emailEnabled: true,
+    slackEnabled: Boolean(process.env.SLACK_WEBHOOK_URL),
+    discordEnabled: Boolean(process.env.DISCORD_WEBHOOK_URL),
+    telegramEnabled: Boolean(process.env.TELEGRAM_BOT_TOKEN && process.env.TELEGRAM_CHAT_ID),
+    expoEnabled: false,
+    webhookEnabled: false,
+    slackWebhook: process.env.SLACK_WEBHOOK_URL || "",
+    discordWebhook: process.env.DISCORD_WEBHOOK_URL || "",
+    telegramBotToken: process.env.TELEGRAM_BOT_TOKEN || "",
+    telegramChatId: process.env.TELEGRAM_CHAT_ID || "",
+    smtpHost: process.env.SMTP_HOST || "",
+    smtpPort: Number(process.env.SMTP_PORT) || 587,
+    smtpUsername: process.env.SMTP_USER || "",
+    smtpPassword: process.env.SMTP_PASS || "",
+    smtpFromEmail: process.env.SMTP_FROM || process.env.SMTP_USER || "",
+    emailRecipients: [],
+    expoAccessToken: "",
+    expoPushTokens: [],
+    webhookUrl: "",
+    webhookHeaders: {},
+  };
+};
 
 const getApiBaseUrl = () => getTrimmedEnv("API_BASE_URL") || `http://localhost:${process.env.PORT || 5000}/api`;
 const getOAuthRedirectUrl = () => process.env.OAUTH_REDIRECT_URL || `${process.env.CLIENT_URL || "http://localhost:3000"}/auth/callback`;
@@ -231,7 +258,20 @@ const exchangeGithubCodeForProfile = async (code) => {
 // ── Register ──────────────────────────────────────────────
 const register = async (req, res, next) => {
   try {
-    const { name, email, password, organisationName } = req.body;
+    const { 
+      name, 
+      email, 
+      password, 
+      organisationName,
+      recoveryEmail,
+      recoveryPhone,
+      companySize,
+      useCase,
+      referralSource,
+      industry,
+      workspaceType,
+      newsletter
+    } = req.body;
 
     if (!name || !email || !password) {
       return res.status(400).json({ message: "Name, email and password are required" });
@@ -243,37 +283,61 @@ const register = async (req, res, next) => {
       return res.status(409).json({ message: "Email already registered" });
     }
 
-    // Create organisation if name provided
-    let organisation = null;
-    if (organisationName) {
-      const slug = organisationName
-        .toLowerCase()
-        .replace(/[^a-z0-9]+/g, "-")
-        .replace(/(^-|-$)/g, "");
-
-      organisation = await Organisation.create({
-        name: organisationName,
-        slug,
-        plan: "free",
-        members: [],
-      });
+    // Validate organisation name is provided (required)
+    const trimmedOrgName = organisationName?.trim();
+    if (!trimmedOrgName) {
+      return res.status(400).json({ message: "Organisation name is required to create your workspace" });
     }
 
-    // Create user (password is hashed via pre-save hook)
+    // Generate email verification token
+    const emailVerificationToken = crypto.randomBytes(32).toString("hex");
+    const emailVerificationExpiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24 hours
+
+    // Create organisation with additional fields
+    const slug = trimmedOrgName
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/(^-|-$)/g, "");
+
+    const organisation = await Organisation.create({
+      name: trimmedOrgName,
+      slug,
+      plan: "free",
+      members: [],
+      industry: industry || "",
+      workspaceType: workspaceType || "",
+      notificationChannels: initializeNotificationChannels(),
+    });
+
+    // Create user with all additional fields
     const user = await User.create({
       name,
       email,
       passwordHash: password,
-      role: organisation ? "owner" : "developer",
-      organisationId: organisation ? organisation._id : null,
+      role: "owner",
+      organisationId: organisation._id,
+      recoveryEmail: recoveryEmail || null,
+      recoveryPhone: recoveryPhone || null,
+      companySize: companySize || "",
+      useCase: useCase || "",
+      referralSource: referralSource || "",
+      newsletter: newsletter !== false, // default true
+      emailVerified: false,
+      emailVerificationToken,
+      emailVerificationExpiresAt,
     });
 
     // Add user as owner member of the organisation
-    if (organisation) {
-      organisation.members.push({ userId: user._id, role: "owner" });
-      await organisation.save();
-    }
+    organisation.members.push({ userId: user._id, role: "owner" });
+    await organisation.save();
 
+    // Send verification email (async, don't wait)
+    sendEmailVerification({
+      email,
+      name,
+      verificationToken: emailVerificationToken,
+    }).catch((err) => console.error("Failed to send verification email:", err));
+    
     // Generate tokens
     const tokenPayload = { id: user._id, email: user.email, role: user.role };
     const accessToken = generateAccessToken(tokenPayload);
@@ -283,13 +347,22 @@ const register = async (req, res, next) => {
     await redisClient.set(`refresh:${user._id}`, refreshToken, { EX: REFRESH_TOKEN_TTL });
 
     res.status(201).json({
-      message: "User registered successfully",
-      user: { id: user._id, name: user.name, email: user.email, role: user.role },
+      message: "User registered successfully. Please check your email to verify your account.",
+      user: { 
+        id: user._id, 
+        name: user.name, 
+        email: user.email, 
+        role: user.role,
+        emailVerified: user.emailVerified
+      },
       accessToken,
       refreshToken,
     });
   } catch (error) {
-    next(error);
+    console.error("Register error:", error);
+    const statusCode = error.statusCode || 500;
+    const message = error.message || "Registration failed";
+    res.status(statusCode).json({ message });
   }
 };
 
@@ -543,40 +616,15 @@ const forgotPassword = async (req, res, next) => {
     const hashedToken = crypto.createHash("sha256").update(resetToken).digest("hex");
     await redisClient.set(`password_reset:${hashedToken}`, String(user._id), { EX: PASSWORD_RESET_TTL });
 
-    const clientUrl = process.env.CLIENT_URL || "http://localhost:3000";
-    const resetUrl = `${clientUrl}/forgot-password?token=${resetToken}&email=${encodeURIComponent(email)}`;
-
-    // Attempt to send email via the notification dispatcher
-    try {
-      const Organisation = require("../models/Organisation");
-      if (user.organisationId) {
-        const org = await Organisation.findById(user.organisationId);
-        const channels = org?.notificationChannels || {};
-        if (channels.smtpHost && channels.smtpFromEmail) {
-          const nodemailer = require("nodemailer");
-          const transport = nodemailer.createTransport({
-            host: channels.smtpHost,
-            port: Number(channels.smtpPort) || 587,
-            secure: Number(channels.smtpPort) === 465,
-            auth: channels.smtpUsername && channels.smtpPassword
-              ? { user: channels.smtpUsername, pass: channels.smtpPassword }
-              : undefined,
-          });
-          await transport.sendMail({
-            from: channels.smtpFromEmail,
-            to: email,
-            subject: "InnoDeploy Password Reset",
-            text: `You requested a password reset.\n\nClick the link to reset your password:\n${resetUrl}\n\nThis link expires in 1 hour.\n\nIf you didn't request this, ignore this email.`,
-          });
-        }
-      }
-    } catch (_emailErr) {
-      // Email delivery is best-effort; log for debugging
-      console.warn("Password reset email delivery failed:", _emailErr?.message);
-    }
+    // Send password reset email (async, don't wait)
+    sendPasswordResetEmail({
+      email,
+      name: user.name,
+      resetToken,
+    }).catch((err) => console.error("Failed to send password reset email:", err));
 
     // Always log the reset URL for development/debugging
-    console.log(`[auth] Password reset requested for ${email} — token: ${resetToken}`);
+    console.log(`[auth] Password reset requested for ${email}`);
 
     res.json({ message: successMessage });
   } catch (error) {
@@ -621,6 +669,74 @@ const resetPassword = async (req, res, next) => {
   }
 };
 
+// ── Verify Email ──────────────────────────────────────────
+const verifyEmail = async (req, res, next) => {
+  try {
+    const { token } = req.body;
+
+    if (!token) {
+      return res.status(400).json({ message: "Verification token is required" });
+    }
+
+    const user = await User.findOne({ 
+      emailVerificationToken: token,
+      emailVerificationExpiresAt: { $gt: new Date() }
+    });
+
+    if (!user) {
+      return res.status(400).json({ message: "Invalid or expired verification token" });
+    }
+
+    // Mark email as verified
+    user.emailVerified = true;
+    user.emailVerificationToken = null;
+    user.emailVerificationExpiresAt = null;
+    await user.save();
+
+    res.json({ 
+      message: "Email verified successfully",
+      user: { id: user._id, name: user.name, email: user.email, emailVerified: user.emailVerified }
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// ── Resend Verification Email ──────────────────────────────
+const resendVerificationEmail = async (req, res, next) => {
+  try {
+    const { email } = req.body;
+
+    if (!email) {
+      return res.status(400).json({ message: "Email is required" });
+    }
+
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    if (user.emailVerified) {
+      return res.status(400).json({ message: "Email is already verified" });
+    }
+
+    // Generate new verification token
+    const emailVerificationToken = crypto.randomBytes(32).toString("hex");
+    const emailVerificationExpiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000);
+
+    user.emailVerificationToken = emailVerificationToken;
+    user.emailVerificationExpiresAt = emailVerificationExpiresAt;
+    await user.save();
+
+    // TODO: Send verification email here
+
+    res.json({ message: "Verification email has been resent" });
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   register,
   login,
@@ -628,6 +744,8 @@ module.exports = {
   logout,
   forgotPassword,
   resetPassword,
+  verifyEmail,
+  resendVerificationEmail,
   startGoogleOAuth,
   googleOAuthCallback,
   startGithubOAuth,
