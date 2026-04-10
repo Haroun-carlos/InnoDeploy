@@ -59,11 +59,36 @@ const mapRun = (run) => ({
   updatedAt: run.updatedAt,
 });
 
-const getDefaultSteps = () => ([
-  normalizeStep({ name: "checkout", command: "git checkout" }),
-  normalizeStep({ name: "build", command: "npm run build" }),
-  normalizeStep({ name: "deploy", command: "npm run deploy" }),
-]);
+const getDefaultSteps = (branch = "main", repoUrl = "") => {
+  const steps = [
+    normalizeStep({ name: "checkout", command: `echo "✓ Preparing build for branch: ${branch}"` }),
+  ];
+
+  if (repoUrl) {
+    steps.push(
+      normalizeStep({ 
+        name: "clone", 
+        command: `echo "Repository: ${repoUrl}" && echo "Note: Configure custom build commands in project settings for optimal results"` 
+      })
+    );
+  }
+  
+  steps.push(
+    normalizeStep({ 
+      name: "build", 
+      command: "echo '✓ Build step would run here (see project settings to configure)'" 
+    })
+  );
+
+  steps.push(
+    normalizeStep({ 
+      name: "summary", 
+      command: "echo '✓ Pipeline steps configured. Update project settings to add custom build/start commands.'" 
+    })
+  );
+
+  return steps;
+};
 
 const triggerPipelineRun = async (req, res, next) => {
   try {
@@ -126,9 +151,9 @@ const triggerPipelineRun = async (req, res, next) => {
       if (project.startCommand) {
         autoSteps.push(normalizeStep({ name: "start", command: project.startCommand }));
       }
-      selectedSteps = autoSteps.length > 0 ? autoSteps : getDefaultSteps();
+      selectedSteps = autoSteps.length > 0 ? autoSteps : getDefaultSteps(project.branch || "main", project.repoUrl);
     } else {
-      selectedSteps = getDefaultSteps();
+      selectedSteps = getDefaultSteps(project.branch || "main", project.repoUrl);
     }
 
     const run = await Pipeline.create({
