@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
 import { useRequireAuth } from "@/hooks/useRequireAuth";
 import Sidebar from "@/components/shared/Sidebar";
 import Navbar from "@/components/shared/Navbar";
@@ -9,11 +10,11 @@ import AlertFilterBar from "@/components/alertspage/AlertFilterBar";
 import AlertRulesConfig from "@/components/alertspage/AlertRulesConfig";
 import AlertsTable from "@/components/alertspage/AlertsTable";
 import NotificationTestButton from "@/components/alertspage/NotificationTestButton";
-import { alertApi } from "@/lib/apiClient";
+import { alertApi, projectApi } from "@/lib/apiClient";
 import { useLanguagePreference } from "@/hooks/useLanguagePreference";
 import { localeFromLanguage, t } from "@/lib/settingsI18n";
 import { ShieldAlert, Siren, BellRing, Bell, RefreshCcw, CheckCircle2 } from "lucide-react";
-import type { AlertRuleConfig, ProjectAlert } from "@/types";
+import type { AlertRuleConfig, Project, ProjectAlert } from "@/types";
 
 const initialRules: AlertRuleConfig = {
   cpuThreshold: 90,
@@ -29,6 +30,7 @@ const initialRules: AlertRuleConfig = {
 
 export default function AlertsPage() {
   const isReady = useRequireAuth();
+  const router = useRouter();
   const [alerts, setAlerts] = useState<ProjectAlert[]>([]);
   const [severity, setSeverity] = useState("all");
   const [project, setProject] = useState("all");
@@ -39,6 +41,8 @@ export default function AlertsPage() {
   const [rules, setRules] = useState<AlertRuleConfig>(initialRules);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [creatingDemoAlert, setCreatingDemoAlert] = useState(false);
+  const [seedProjectId, setSeedProjectId] = useState<string | null>(null);
   const language = useLanguagePreference();
 
   const loadAlerts = useCallback(async () => {
@@ -61,6 +65,20 @@ export default function AlertsPage() {
     if (!isReady) return;
     loadAlerts();
   }, [isReady, loadAlerts]);
+
+  useEffect(() => {
+    if (!isReady) return;
+    const loadSeedProject = async () => {
+      try {
+        const { data } = await projectApi.getProjects();
+        const firstProject = (Array.isArray(data?.projects) ? data.projects : [])[0] as Project | undefined;
+        setSeedProjectId(firstProject?.id || null);
+      } catch {
+        setSeedProjectId(null);
+      }
+    };
+    void loadSeedProject();
+  }, [isReady]);
 
   const projects = useMemo(() => Array.from(new Set(alerts.map((alert) => alert.project))), [alerts]);
 
@@ -109,6 +127,33 @@ export default function AlertsPage() {
     }
   };
 
+  const handleCreateDemoAlert = async () => {
+    if (!seedProjectId) {
+      setError("No project found to attach a demo alert. Create a project first.");
+      return;
+    }
+
+    try {
+      setCreatingDemoAlert(true);
+      setError(null);
+      await alertApi.createAlert({
+        projectId: seedProjectId,
+        severity: "warning",
+        message: "Demo alert: CPU usage crossed threshold during investigation flow test.",
+        ruleType: "cpu",
+        metricAtTrigger: [
+          { label: "CPU", value: 92, unit: "%" },
+          { label: "Load", value: 3.2, unit: "" },
+        ],
+      });
+      await loadAlerts();
+    } catch (createError: unknown) {
+      setError(createError instanceof Error ? createError.message : "Failed to create demo alert");
+    } finally {
+      setCreatingDemoAlert(false);
+    }
+  };
+
   const handleRulesChange = async (nextRules: AlertRuleConfig) => {
     setRules(nextRules);
     try {
@@ -116,6 +161,20 @@ export default function AlertsPage() {
     } catch (saveError: unknown) {
       setError(saveError instanceof Error ? saveError.message : t(language, "alerts.rulesTitle"));
     }
+  };
+
+  const handleJumpToLogs = (alert: ProjectAlert) => {
+    if (!alert.projectId) return;
+
+    const level = alert.severity === "critical" ? "error" : alert.severity === "warning" ? "warn" : "info";
+    const params = new URLSearchParams({
+      tab: "Logs",
+      mode: "live",
+      logQuery: alert.message,
+      logLevel: level,
+    });
+
+    router.push(`/dashboard/projects/${alert.projectId}?${params.toString()}`);
   };
 
   return (
@@ -146,6 +205,13 @@ export default function AlertsPage() {
               >
                 <RefreshCcw className={`h-4 w-4 ${loading ? "animate-spin" : ""}`} />
                 {loading ? "Refreshing..." : "Refresh"}
+              </button>
+              <button
+                onClick={() => void handleCreateDemoAlert()}
+                disabled={creatingDemoAlert || !seedProjectId}
+                className="inline-flex items-center gap-2 rounded-xl border border-cyan-500/30 bg-cyan-500/10 px-4 py-2 text-sm font-medium text-cyan-300 transition-all hover:bg-cyan-500/20 disabled:opacity-50"
+              >
+                {creatingDemoAlert ? "Creating..." : "Create Demo Alert"}
               </button>
               <NotificationTestButton onTest={handleNotificationTest} />
             </div>
@@ -212,6 +278,7 @@ export default function AlertsPage() {
         open={selectedAlert !== null}
         onClose={() => setSelectedAlertId(null)}
         onAcknowledge={handleAcknowledge}
+        onJumpToLogs={handleJumpToLogs}
       />
     </div>
   );

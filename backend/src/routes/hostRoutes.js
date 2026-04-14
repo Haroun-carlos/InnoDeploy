@@ -11,6 +11,8 @@ const {
 	testDraftConnection,
 	testConnection,
 	removeHost,
+	assignEnvironment,
+	unassignEnvironment,
 } = require("../controllers/hostController");
 
 const router = express.Router();
@@ -22,6 +24,8 @@ router.patch("/:id", authMiddleware, requireRole("owner", "admin", "developer"),
 router.post("/test-connection", authMiddleware, requireRole("owner", "admin", "developer"), testDraftConnection);
 router.post("/:id/test-connection", authMiddleware, testConnection);
 router.post("/:id/test", authMiddleware, testConnection);
+router.post("/:id/assignments", authMiddleware, requireRole("owner", "admin", "developer"), audit("host.assign", "host"), assignEnvironment);
+router.post("/:id/assignments/remove", authMiddleware, requireRole("owner", "admin", "developer"), audit("host.unassign", "host"), unassignEnvironment);
 router.delete("/:id", authMiddleware, requireRole("owner", "admin"), audit("host.delete", "host"), removeHost);
 
 module.exports = router;

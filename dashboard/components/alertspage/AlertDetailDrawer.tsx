@@ -1,7 +1,7 @@
 "use client";
 
 import { Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
-import { X } from "lucide-react";
+import { ArrowRight, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useLanguagePreference } from "@/hooks/useLanguagePreference";
 import { alertRuleLabel, localeFromLanguage, t } from "@/lib/settingsI18n";
@@ -13,9 +13,10 @@ interface AlertDetailDrawerProps {
   open: boolean;
   onClose: () => void;
   onAcknowledge: (alertId: string) => Promise<void>;
+  onJumpToLogs: (alert: ProjectAlert) => void;
 }
 
-export default function AlertDetailDrawer({ alert, open, onClose, onAcknowledge }: AlertDetailDrawerProps) {
+export default function AlertDetailDrawer({ alert, open, onClose, onAcknowledge, onJumpToLogs }: AlertDetailDrawerProps) {
   const language = useLanguagePreference();
   if (!open || !alert) return null;
 
@@ -67,7 +68,17 @@ export default function AlertDetailDrawer({ alert, open, onClose, onAcknowledge 
 
         <div className="flex items-center justify-between border-t px-6 py-4">
           <p className="text-sm text-muted-foreground capitalize">{t(language, "alerts.statusPrefix", { status: alert.status })}</p>
-          <AcknowledgeButton alertId={alert.id} disabled={alert.status !== "open"} onAcknowledge={onAcknowledge} />
+          <div className="flex items-center gap-2">
+            <Button
+              variant="outline"
+              onClick={() => onJumpToLogs(alert)}
+              className="inline-flex items-center gap-1.5"
+            >
+              Jump to Logs
+              <ArrowRight className="h-3.5 w-3.5" />
+            </Button>
+            <AcknowledgeButton alertId={alert.id} disabled={alert.status !== "open"} onAcknowledge={onAcknowledge} />
+          </div>
         </div>
       </div>
     </div>

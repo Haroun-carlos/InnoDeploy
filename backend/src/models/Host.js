@@ -73,6 +73,30 @@ const hostSchema = new mongoose.Schema(
         },
       },
     ],
+    assignments: [
+      {
+        projectId: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Project",
+          required: true,
+        },
+        projectName: {
+          type: String,
+          required: true,
+          trim: true,
+        },
+        environment: {
+          type: String,
+          required: true,
+          trim: true,
+          lowercase: true,
+        },
+        assignedAt: {
+          type: Date,
+          default: Date.now,
+        },
+      },
+    ],
     lastConnectionTestAt: {
       type: Date,
       default: null,

@@ -43,8 +43,11 @@ export default function LandingTerminalPanel() {
   const [selectedProjectId, setSelectedProjectId] = useState("");
   const [entries, setEntries] = useState<LogEntry[]>([]);
   const [streamState, setStreamState] = useState<StreamState>("demo");
+  const [hasToken, setHasToken] = useState(false);
 
-  const hasToken = typeof window !== "undefined" && Boolean(localStorage.getItem("accessToken"));
+  useEffect(() => {
+    setHasToken(Boolean(localStorage.getItem("accessToken")));
+  }, []);
 
   useEffect(() => {
     if (!hasToken) {

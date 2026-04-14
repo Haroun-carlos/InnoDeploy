@@ -1,4 +1,5 @@
 const Host = require("../models/Host");
+const Project = require("../models/Project");
 const User = require("../models/User");
 const mongoose = require("mongoose");
 const { Client: SSHClient } = require("ssh2");
@@ -349,6 +350,93 @@ const removeHost = async (req, res, next) => {
   }
 };
 
+const assignEnvironment = async (req, res, next) => {
+  try {
+    const organisationId = await getOrganisationId(req.user.id);
+    if (!organisationId) {
+      return res.status(400).json({ message: "User is not attached to an organisation" });
+    }
+
+    const host = await getHostForOrganisation(req.params.id, organisationId);
+    if (!host) {
+      return res.status(404).json({ message: "Host not found" });
+    }
+
+    const projectId = String(req.body.projectId || "").trim();
+    const environment = String(req.body.environment || "").trim().toLowerCase();
+
+    if (!projectId || !environment) {
+      return res.status(400).json({ message: "projectId and environment are required" });
+    }
+
+    if (!mongoose.Types.ObjectId.isValid(projectId)) {
+      return res.status(400).json({ message: "Invalid projectId" });
+    }
+
+    const project = await Project.findOne({ _id: projectId, organisationId }).select("name environments");
+    if (!project) {
+      return res.status(404).json({ message: "Project not found" });
+    }
+
+    const envExists = (project.environments || []).some((env) => String(env.name || "").toLowerCase() === environment);
+    if (!envExists) {
+      return res.status(404).json({ message: "Environment not found in project" });
+    }
+
+    const duplicate = (host.assignments || []).some(
+      (assignment) => String(assignment.projectId) === projectId && String(assignment.environment) === environment
+    );
+
+    if (!duplicate) {
+      host.assignments.push({
+        projectId,
+        projectName: project.name,
+        environment,
+      });
+      await host.save();
+    }
+
+    res.json({ message: "Host assigned to environment", host });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const unassignEnvironment = async (req, res, next) => {
+  try {
+    const organisationId = await getOrganisationId(req.user.id);
+    if (!organisationId) {
+      return res.status(400).json({ message: "User is not attached to an organisation" });
+    }
+
+    const host = await getHostForOrganisation(req.params.id, organisationId);
+    if (!host) {
+      return res.status(404).json({ message: "Host not found" });
+    }
+
+    const projectId = String(req.body.projectId || "").trim();
+    const environment = String(req.body.environment || "").trim().toLowerCase();
+
+    if (!projectId || !environment) {
+      return res.status(400).json({ message: "projectId and environment are required" });
+    }
+
+    const previousLength = (host.assignments || []).length;
+    host.assignments = (host.assignments || []).filter(
+      (assignment) => !(String(assignment.projectId) === projectId && String(assignment.environment) === environment)
+    );
+
+    if (host.assignments.length === previousLength) {
+      return res.status(404).json({ message: "Assignment not found" });
+    }
+
+    await host.save();
+    res.json({ message: "Host unassigned from environment", host });
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   listHosts,
   getHost,
@@ -357,4 +445,6 @@ module.exports = {
   testDraftConnection,
   testConnection,
   removeHost,
+  assignEnvironment,
+  unassignEnvironment,
 };

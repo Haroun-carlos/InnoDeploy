@@ -27,6 +27,10 @@ export interface Project {
   status: ProjectStatus;
   lastDeployAt: string | null;
   envCount: number;
+  environments?: Array<{
+    name: string;
+    config?: Record<string, unknown>;
+  }>;
   setupMode: 'automatic' | 'manual';
   pipelineConfig: string;
   installCommand: string;
@@ -175,6 +179,13 @@ export interface HostDeployedContainer {
   status: "running" | "stopped";
 }
 
+export interface HostAssignment {
+  projectId: string;
+  projectName: string;
+  environment: string;
+  assignedAt: string;
+}
+
 export interface Host {
   id: string;
   hostname: string;
@@ -188,6 +199,7 @@ export interface Host {
   dockerVersion: string;
   activeDeployments: number;
   containers: HostDeployedContainer[];
+  assignments?: HostAssignment[];
 }
 
 export interface HostFormData {
@@ -199,6 +211,7 @@ export interface HostFormData {
 
 export interface ProjectAlert {
   id: string;
+  projectId?: string;
   severity: Exclude<AlertSeverity, "info"> | "info";
   project: string;
   ruleType: AlertRuleType;

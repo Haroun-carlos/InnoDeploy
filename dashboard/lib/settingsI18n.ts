@@ -1171,6 +1171,11 @@ messages["projectDetail.confirmRollback"] = {
   french: "Confirmer le retour arriere ?",
   arabic: "تأكيد التراجع؟",
 };
+messages["projectDetail.noVersionsAvailable"] = {
+  english: "No previous versions available",
+  french: "Aucune version anterieure disponible",
+  arabic: "لا توجد اصدارات سابقة متاحة",
+};
 messages["projectDetail.recentDeployments"] = {
   english: "Recent Deployments",
   french: "Deploiements recents",

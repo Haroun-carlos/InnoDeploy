@@ -140,6 +140,12 @@ export const projectApi = {
     apiClient.get(`/projects/${projectId}/logs`, { params }),
 
   getProjectStatus: (projectId: string) => apiClient.get(`/projects/${projectId}/status`),
+
+  updateEnvironment: (projectId: string, envName: string, payload: { name?: string; config?: Record<string, unknown> }) =>
+    apiClient.patch(`/projects/${projectId}/envs/${encodeURIComponent(envName)}`, payload),
+
+  createEnvironment: (projectId: string, payload: { name: string; config?: Record<string, unknown>; secrets?: Record<string, string> }) =>
+    apiClient.post(`/projects/${projectId}/envs`, payload),
 };
 
 export const hostApi = {
@@ -160,6 +166,12 @@ export const hostApi = {
 
   testConnection: (hostId: string) => apiClient.post(`/hosts/${hostId}/test-connection`),
 
+  assignEnvironment: (hostId: string, payload: { projectId: string; environment: string }) =>
+    apiClient.post(`/hosts/${hostId}/assignments`, payload),
+
+  unassignEnvironment: (hostId: string, payload: { projectId: string; environment: string }) =>
+    apiClient.post(`/hosts/${hostId}/assignments/remove`, payload),
+
   removeHost: (hostId: string) => apiClient.delete(`/hosts/${hostId}`),
 };
 
@@ -178,6 +190,14 @@ export const pipelineApi = {
 
 export const alertApi = {
   getAlerts: () => apiClient.get("/alerts"),
+
+  createAlert: (payload: {
+    projectId: string;
+    severity: "info" | "warning" | "critical";
+    message: string;
+    ruleType: "cpu" | "memory" | "latency" | "availability" | "deployment" | "disk" | "certificate";
+    metricAtTrigger?: Array<{ label: string; value: number; unit: string }>;
+  }) => apiClient.post("/alerts", payload),
 
   acknowledgeAlert: (alertId: string) => apiClient.patch(`/alerts/${alertId}/acknowledge`),
 

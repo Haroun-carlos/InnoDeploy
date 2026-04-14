@@ -7,12 +7,14 @@ interface EnvironmentTabsProps {
   environments: Environment[];
   activeId: string;
   onChange: (id: string) => void;
+  onRenameRequest?: (id: string, currentName: string) => void;
 }
 
 export default function EnvironmentTabs({
   environments,
   activeId,
   onChange,
+  onRenameRequest,
 }: EnvironmentTabsProps) {
   return (
     <div className="flex gap-2 flex-wrap">
@@ -20,12 +22,14 @@ export default function EnvironmentTabs({
         <button
           key={env.id}
           onClick={() => onChange(env.id)}
+          onDoubleClick={() => onRenameRequest?.(env.id, env.name)}
           className={cn(
             "rounded-md px-3 py-1.5 text-sm font-medium transition-colors border",
             activeId === env.id
               ? "bg-primary text-primary-foreground border-primary"
               : "bg-background text-muted-foreground border-input hover:bg-accent hover:text-accent-foreground"
           )}
+          title={onRenameRequest ? "Double-click to rename environment" : undefined}
         >
           {env.name}
         </button>

@@ -2,6 +2,7 @@
 
 import { useState, useMemo, useEffect } from "react";
 import { useParams, useSearchParams } from "next/navigation";
+import { Plus } from "lucide-react";
 import { useRequireAuth } from "@/hooks/useRequireAuth";
 import Sidebar from "@/components/shared/Sidebar";
 import Navbar from "@/components/shared/Navbar";
@@ -11,6 +12,7 @@ import EnvironmentTabs from "@/components/projectdetail/EnvironmentTabs";
 import EnvironmentPanel from "@/components/projectdetail/EnvironmentPanel";
 import DeployButton from "@/components/projectdetail/DeployButton";
 import RollbackButton from "@/components/projectdetail/RollbackButton";
+import EnvironmentNameModal from "@/components/projectdetail/EnvironmentNameModal";
 import SecretsList from "@/components/projectdetail/SecretsList";
 import PipelineConfigEditor from "@/components/projectdetail/PipelineConfigEditor";
 import RecentDeploysTable from "@/components/projectdetail/RecentDeploysTable";
@@ -161,9 +163,22 @@ export default function ProjectDetailPage() {
   const [settingsSaving, setSettingsSaving] = useState(false);
   const [settingsSuccess, setSettingsSuccess] = useState<string | null>(null);
 
+  // Rollback status state
+  const [rollbackStatus, setRollbackStatus] = useState<"idle" | "rolling-back" | "checking-health" | "complete">("idle");
+  const [rollbackMessage, setRollbackMessage] = useState<string | null>(null);
+  const [isCreateEnvModalOpen, setIsCreateEnvModalOpen] = useState(false);
+  const [newEnvironmentName, setNewEnvironmentName] = useState("");
+  const [isCreatingEnvironment, setIsCreatingEnvironment] = useState(false);
+  const [isRenameEnvModalOpen, setIsRenameEnvModalOpen] = useState(false);
+  const [renameEnvironmentName, setRenameEnvironmentName] = useState("");
+  const [renameEnvironmentId, setRenameEnvironmentId] = useState<string | null>(null);
+  const [isRenamingEnvironment, setIsRenamingEnvironment] = useState(false);
+
   useEffect(() => {
     const requestedTab = String(searchParams.get("tab") || "");
     const requestedMode = String(searchParams.get("mode") || "");
+    const requestedLogQuery = String(searchParams.get("logQuery") || "");
+    const requestedLogLevel = String(searchParams.get("logLevel") || "").toLowerCase();
     const allowedTabs: SubNavTab[] = ["Overview", "Pipelines", "Monitoring", "Logs", "Terminal", "Settings"];
 
     if (allowedTabs.includes(requestedTab as SubNavTab)) {
@@ -174,6 +189,14 @@ export default function ProjectDetailPage() {
       setLogMode("live");
     } else if (requestedMode === "historical") {
       setLogMode("historical");
+    }
+
+    if (requestedLogQuery) {
+      setLogSearch(requestedLogQuery);
+    }
+
+    if (["debug", "info", "warn", "error", "fatal"].includes(requestedLogLevel)) {
+      setLogLevels(new Set([requestedLogLevel as LogLevel]));
     }
   }, [searchParams]);
 
@@ -201,28 +224,37 @@ export default function ProjectDetailPage() {
           alertApi.getAlerts(),
         ]);
 
-        const projectData = projectRes.data?.project as Project;
+        const projectData = projectRes.data?.project as Project & {
+          environments?: Array<{ name?: string; config?: Record<string, unknown> }>;
+        };
         const deploymentHistory = Array.isArray(historyRes.data?.history) ? historyRes.data.history : [];
         const latestMetric = statusRes.data?.latestMetric || null;
+        const backendEnvironments = Array.isArray(projectData?.environments) ? projectData.environments : [];
+        const synthesizedCount = Math.max(1, Number(projectData?.envCount || 1));
+        const uiEnvironments = (backendEnvironments.length > 0
+          ? backendEnvironments
+          : Array.from({ length: synthesizedCount }, (_, idx) => ({
+              name: idx === 0 ? t(language, "projectDetail.defaultEnv") : `env-${idx + 1}`,
+              config: {},
+            }))
+        ).map((env, idx) => ({
+          id: `env-${String(env?.name || idx + 1).toLowerCase().replace(/[^a-z0-9-]+/g, "-")}-${idx}`,
+          name: String(env?.name || `env-${idx + 1}`),
+          image: String((env?.config as any)?.image || ""),
+          domain: String((env?.config as any)?.domain || ""),
+          replicas: Math.max(1, Number((env?.config as any)?.replicas || projectData?.envCount || 1)),
+          strategy: String((env?.config as any)?.strategy || "rolling") as ProjectDetail["environments"][number]["strategy"],
+          status:
+            projectData.status === "running"
+              ? "healthy"
+              : projectData.status === "failed"
+                ? "down"
+                : "degraded",
+        }));
 
         const mappedProject: ProjectDetail = {
           ...projectData,
-          environments: [
-            {
-              id: "env-default",
-              name: t(language, "projectDetail.defaultEnv"),
-              image: "",
-              domain: "",
-              replicas: Math.max(1, Number(projectData.envCount || 1)),
-              strategy: "rolling",
-              status:
-                projectData.status === "running"
-                  ? "healthy"
-                  : projectData.status === "failed"
-                    ? "down"
-                    : "degraded",
-            },
-          ],
+          environments: uiEnvironments,
           deployments: deploymentHistory.map((run: any) => ({
             id: String(run._id || run.id),
             version: String(run.version || "unknown"),
@@ -671,22 +703,63 @@ export default function ProjectDetailPage() {
     }
   };
 
-  const handleRollback = async () => {
+  const handleRollback = async (selectedVersion: string) => {
     try {
       setProjectError(null);
       setProjectSuccess(null);
+      setRollbackStatus("rolling-back");
+      setRollbackMessage("🔄 Rolling back to version " + selectedVersion + "...");
+
       await projectApi.triggerRollback(_projectId, {
         environment: activeEnv?.name?.toLowerCase() || t(language, "projectDetail.defaultEnv"),
-        version: project.deployments[0]?.version,
+        version: selectedVersion,
       });
-      // Refresh project data to show updated status
-      const { data } = await projectApi.getProject(_projectId);
-      setProject(data.project);
-      setProjectSuccess("✅ Rollback triggered successfully! Project is rolling back.");
-      setTimeout(() => setProjectSuccess(null), 5000);
+
+      setRollbackStatus("checking-health");
+      setRollbackMessage("🔍 Checking service health...");
+      
+      // Poll for health check status
+      let healthCheckAttempts = 0;
+      const maxAttempts = 30;
+      const pollInterval = 2000; // 2 seconds
+      
+      const pollHealthCheck = async () => {
+        if (healthCheckAttempts >= maxAttempts) {
+          setRollbackStatus("complete");
+          setRollbackMessage("✅ Rollback completed. Please verify service health manually.");
+          setTimeout(() => setRollbackMessage(null), 7000);
+          return;
+        }
+        
+        try {
+          const { data } = await projectApi.getProject(_projectId);
+          const status = data.project?.status;
+          healthCheckAttempts += 1;
+          
+          if (status === "running") {
+            setRollbackStatus("complete");
+            setRollbackMessage("✅ Rollback complete! Service health check passed.");
+            setTimeout(() => {
+              setRollbackMessage(null);
+              setRollbackStatus("idle");
+            }, 5000);
+            return;
+          }
+          
+          // Continue polling
+          setTimeout(pollHealthCheck, pollInterval);
+        } catch {
+          // Continue polling on error
+          setTimeout(pollHealthCheck, pollInterval);
+        }
+      };
+      
+      setTimeout(pollHealthCheck, pollInterval);
     } catch (error: unknown) {
       const axiosErr = error as { response?: { data?: { message?: string } } };
       setProjectError(axiosErr.response?.data?.message || "Failed to trigger rollback");
+      setRollbackStatus("idle");
+      setRollbackMessage(null);
     }
   };
 
@@ -757,6 +830,108 @@ export default function ProjectDetailPage() {
     setSecrets((prev) => prev.filter((s) => s.id !== id));
   };
 
+  const handleRenameEnvironment = async (envId: string, nextName: string) => {
+    const target = project?.environments?.find((env) => env.id === envId);
+    if (!target || !nextName.trim()) return;
+
+    const previousName = String(target.name || "").trim().toLowerCase();
+    const nextNormalized = nextName.trim().toLowerCase();
+    if (!previousName || previousName === nextNormalized) return;
+
+    try {
+      await projectApi.updateEnvironment(_projectId, previousName, { name: nextNormalized });
+      setProject((prev) => {
+        if (!prev) return prev;
+        return {
+          ...prev,
+          environments: prev.environments.map((env) =>
+            env.id === envId ? { ...env, name: nextNormalized } : env
+          ),
+        };
+      });
+      setProjectSuccess(`Environment renamed to ${nextNormalized}`);
+      setTimeout(() => setProjectSuccess(null), 2500);
+    } catch (error: unknown) {
+      const axiosErr = error as { response?: { data?: { message?: string } } };
+      setProjectError(axiosErr.response?.data?.message || "Failed to rename environment");
+    }
+  };
+
+  const handleOpenRenameEnvironment = (envId: string, currentName: string) => {
+    setProjectError(null);
+    setRenameEnvironmentId(envId);
+    setRenameEnvironmentName(currentName);
+    setIsRenameEnvModalOpen(true);
+  };
+
+  const handleSubmitRenameEnvironment = async () => {
+    if (!renameEnvironmentId) return;
+    const nextName = renameEnvironmentName.trim();
+    if (!nextName) return;
+    try {
+      setIsRenamingEnvironment(true);
+      await handleRenameEnvironment(renameEnvironmentId, nextName);
+      setIsRenameEnvModalOpen(false);
+      setRenameEnvironmentId(null);
+      setRenameEnvironmentName("");
+    } finally {
+      setIsRenamingEnvironment(false);
+    }
+  };
+
+  const handleCreateEnvironment = async () => {
+    setProjectError(null);
+    setNewEnvironmentName("");
+    setIsCreateEnvModalOpen(true);
+  };
+
+  const handleSubmitCreateEnvironment = async () => {
+    const normalized = String(newEnvironmentName || "").trim().toLowerCase();
+    if (!normalized) return;
+
+    const exists = (project?.environments || []).some((env) => env.name.toLowerCase() === normalized);
+    if (exists) {
+      setProjectError(`Environment '${normalized}' already exists`);
+      return;
+    }
+
+    try {
+      setIsCreatingEnvironment(true);
+      setProjectError(null);
+      await projectApi.createEnvironment(_projectId, { name: normalized });
+
+      const nextId = `env-${normalized.replace(/[^a-z0-9-]+/g, "-")}-${Date.now()}`;
+      setProject((prev) => {
+        if (!prev) return prev;
+        return {
+          ...prev,
+          environments: [
+            ...prev.environments,
+            {
+              id: nextId,
+              name: normalized,
+              image: "",
+              domain: "",
+              replicas: 1,
+              strategy: "rolling",
+              status: prev.status === "running" ? "healthy" : prev.status === "failed" ? "down" : "degraded",
+            },
+          ],
+        };
+      });
+      setActiveEnvId(nextId);
+      setProjectSuccess(`Environment '${normalized}' created`);
+      setTimeout(() => setProjectSuccess(null), 2500);
+      setIsCreateEnvModalOpen(false);
+      setNewEnvironmentName("");
+    } catch (error: unknown) {
+      const axiosErr = error as { response?: { data?: { message?: string } } };
+      setProjectError(axiosErr.response?.data?.message || "Failed to create environment");
+    } finally {
+      setIsCreatingEnvironment(false);
+    }
+  };
+
   return (
     <div className="flex min-h-screen bg-background">
       <Sidebar />
@@ -765,6 +940,7 @@ export default function ProjectDetailPage() {
         <Navbar />
 
         <main className="flex-1 p-6 space-y-6">
+
           <ProjectHeader project={project} />
           <SubNavTabs active={activeTab} onChange={setActiveTab} />
 
@@ -782,10 +958,45 @@ export default function ProjectDetailPage() {
                 </div>
               )}
               
-              <EnvironmentTabs
-                environments={project?.environments || []}
-                activeId={activeEnvId}
-                onChange={setActiveEnvId}
+              <div className="flex items-center justify-between gap-3 flex-wrap">
+                <EnvironmentTabs
+                  environments={project?.environments || []}
+                  activeId={activeEnvId}
+                  onChange={setActiveEnvId}
+                  onRenameRequest={handleOpenRenameEnvironment}
+                />
+                <button
+                  onClick={handleCreateEnvironment}
+                  className="group inline-flex items-center gap-2 rounded-lg border border-cyan-500/30 bg-gradient-to-r from-cyan-500/20 to-blue-500/15 px-4 py-2 text-sm font-medium text-cyan-200 shadow-[0_0_0_1px_rgba(34,211,238,0.12)] transition-all hover:-translate-y-0.5 hover:from-cyan-500/30 hover:to-blue-500/25 hover:shadow-[0_8px_24px_rgba(14,116,144,0.25)]"
+                >
+                  <Plus className="h-4 w-4 transition-transform group-hover:rotate-90" />
+                  Add Environment
+                </button>
+              </div>
+              <p className="text-xs text-muted-foreground -mt-3">Tip: double-click an environment tab to rename it.</p>
+
+              <EnvironmentNameModal
+                open={isCreateEnvModalOpen}
+                title="Create New Environment"
+                subtitle="Add an environment like production, staging, or dev."
+                value={newEnvironmentName}
+                submitLabel="Create Environment"
+                loading={isCreatingEnvironment}
+                onChange={setNewEnvironmentName}
+                onSubmit={handleSubmitCreateEnvironment}
+                onClose={() => setIsCreateEnvModalOpen(false)}
+              />
+
+              <EnvironmentNameModal
+                open={isRenameEnvModalOpen}
+                title="Rename Environment"
+                subtitle="Update this environment name."
+                value={renameEnvironmentName}
+                submitLabel="Save Name"
+                loading={isRenamingEnvironment}
+                onChange={setRenameEnvironmentName}
+                onSubmit={handleSubmitRenameEnvironment}
+                onClose={() => setIsRenameEnvModalOpen(false)}
               />
 
               <div className="grid gap-6 lg:grid-cols-2">
@@ -795,7 +1006,12 @@ export default function ProjectDetailPage() {
                     environmentName={activeEnv?.name || t(language, "projectDetail.defaultEnv")}
                     onDeploy={handleDeploy}
                   />
-                  <RollbackButton onRollback={handleRollback} />
+                  <RollbackButton 
+                    onRollback={handleRollback}
+                    deployments={project?.deployments || []}
+                    rollbackStatus={rollbackStatus}
+                    rollbackMessage={rollbackMessage}
+                  />
                 </div>
               </div>
 

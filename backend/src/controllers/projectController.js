@@ -67,6 +67,12 @@ const mapProject = (project) => ({
   installCommand: project.installCommand || '',
   buildCommand: project.buildCommand || '',
   startCommand: project.startCommand || '',
+  environments: Array.isArray(project.environments)
+    ? project.environments.map((env) => ({
+        name: env.name,
+        config: env.config || {},
+      }))
+    : [],
   createdAt: project.createdAt,
   updatedAt: project.updatedAt,
 });
@@ -341,6 +347,20 @@ const updateEnvironment = async (req, res, next) => {
     const environment = project.environments.find((env) => env.name === envName);
     if (!environment) {
       return res.status(404).json({ message: "Environment not found" });
+    }
+
+    if (req.body.name !== undefined) {
+      const nextName = normalizeEnvName(req.body.name);
+      if (!nextName) {
+        return res.status(400).json({ message: "Environment name is required" });
+      }
+
+      const nameTaken = project.environments.find((env) => env.name === nextName && env.name !== envName);
+      if (nameTaken) {
+        return res.status(409).json({ message: "Environment already exists" });
+      }
+
+      environment.name = nextName;
     }
 
     if (req.body.config !== undefined) {

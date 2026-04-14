@@ -10,10 +10,10 @@ import AddHostModal from "@/components/hostspage/AddHostModal";
 import HostDetailPanel from "@/components/hostspage/HostDetailPanel";
 import HostsList from "@/components/hostspage/HostsList";
 import { useLanguagePreference } from "@/hooks/useLanguagePreference";
-import { hostApi } from "@/lib/apiClient";
+import { hostApi, projectApi } from "@/lib/apiClient";
 import { t } from "@/lib/settingsI18n";
 import { Server, Wifi, WifiOff, HardDrive, RefreshCcw } from "lucide-react";
-import type { Host, HostFormData } from "@/types";
+import type { Host, HostFormData, Project } from "@/types";
 
 export default function HostsPage() {
   const language = useLanguagePreference();
@@ -25,6 +25,7 @@ export default function HostsPage() {
   const [modalOpen, setModalOpen] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [projectOptions, setProjectOptions] = useState<Array<{ id: string; name: string; environments: string[] }>>([]);
 
   const selectedHost = useMemo(
     () => hosts.find((host) => host.id === selectedHostId) ?? hosts[0] ?? null,
@@ -50,6 +51,29 @@ export default function HostsPage() {
     if (!isReady) return;
     loadHosts();
   }, [isReady, loadHosts]);
+
+  useEffect(() => {
+    if (!isReady) return;
+
+    const loadProjects = async () => {
+      try {
+        const { data } = await projectApi.getProjects();
+        const projects = (Array.isArray(data?.projects) ? data.projects : []) as Project[];
+        const mapped = projects.map((project) => ({
+          id: project.id,
+          name: project.name,
+          environments: Array.isArray(project.environments) && project.environments.length > 0
+            ? project.environments.map((env) => String(env.name || "default").toLowerCase())
+            : ["default"],
+        }));
+        setProjectOptions(mapped);
+      } catch {
+        setProjectOptions([]);
+      }
+    };
+
+    void loadProjects();
+  }, [isReady]);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -126,6 +150,20 @@ export default function HostsPage() {
       }
       return next;
     });
+  };
+
+  const handleAssignHost = async (hostId: string, projectId: string, environment: string) => {
+    setError(null);
+    const { data } = await hostApi.assignEnvironment(hostId, { projectId, environment });
+    const updatedHost = data.host as Host;
+    setHosts((prev) => prev.map((host) => (host.id === hostId ? updatedHost : host)));
+  };
+
+  const handleUnassignHost = async (hostId: string, projectId: string, environment: string) => {
+    setError(null);
+    const { data } = await hostApi.unassignEnvironment(hostId, { projectId, environment });
+    const updatedHost = data.host as Host;
+    setHosts((prev) => prev.map((host) => (host.id === hostId ? updatedHost : host)));
   };
 
   return (
@@ -205,7 +243,14 @@ export default function HostsPage() {
 
           {selectedHost && (
             <div className="relative">
-              <HostDetailPanel host={selectedHost} onTest={handleTestConnection} onRemove={handleRemoveHost} />
+              <HostDetailPanel
+                host={selectedHost}
+                onTest={handleTestConnection}
+                onRemove={handleRemoveHost}
+                projects={projectOptions}
+                onAssign={handleAssignHost}
+                onUnassign={handleUnassignHost}
+              />
             </div>
           )}
         </main>
