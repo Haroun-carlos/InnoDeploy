@@ -312,7 +312,7 @@ export default function HomePage() {
                                 <ul className="mt-3 space-y-1">
                                   {column.items.map((entry) => (
                                     <li key={entry.title}>
-                                      <Link href={entry.href ?? item.href} className="group/item flex items-start gap-3 rounded-lg px-2 py-2 transition hover:bg-white/[0.04]">
+                                      <Link href={"href" in entry && entry.href ? entry.href : item.href} className="group/item flex items-start gap-3 rounded-lg px-2 py-2 transition hover:bg-white/[0.04]">
                                         {"icon" in entry ? <entry.icon className="mt-0.5 h-4 w-4 shrink-0 text-slate-500 transition group-hover/item:text-cyan-400" /> : null}
                                         <div>
                                           <p className="text-sm font-medium text-slate-200 transition group-hover/item:text-white">{entry.title}</p>

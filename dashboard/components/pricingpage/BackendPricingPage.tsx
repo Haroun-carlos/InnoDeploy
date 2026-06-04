@@ -206,7 +206,7 @@ export default function BackendPricingPage() {
                                 <ul className="mt-4 space-y-2.5">
                                   {column.items.map((entry) => (
                                     <li key={entry.title}>
-                                      <Link href={entry.href ?? item.href} className="block rounded-md px-2 py-1.5 transition hover:bg-white/5">
+                                      <Link href={"href" in entry && entry.href ? entry.href : item.href} className="block rounded-md px-2 py-1.5 transition hover:bg-white/5">
                                         <div className="flex items-start gap-2.5">
                                           <entry.icon className="mt-0.5 h-[18px] w-[18px] text-slate-300/85" />
                                           <div>

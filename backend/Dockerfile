@@ -2,7 +2,7 @@ FROM node:20-alpine
 
 WORKDIR /app
 
-RUN apk add --no-cache git docker-cli
+RUN apk add --no-cache git docker-cli python3 make g++
 
 COPY package*.json ./
 RUN npm ci --omit=dev

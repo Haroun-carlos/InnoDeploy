@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, Suspense } from "react";
 import { useParams, useSearchParams } from "next/navigation";
 import { Plus } from "lucide-react";
 import { useRequireAuth } from "@/hooks/useRequireAuth";
@@ -112,7 +112,7 @@ const mapBackendRunToUi = (run: BackendPipelineRun): PipelineRun => ({
   })),
 });
 
-export default function ProjectDetailPage() {
+function ProjectDetailPageContent() {
   const isReady = useRequireAuth();
   const language = useLanguagePreference();
   const locale = localeFromLanguage(language);
@@ -245,11 +245,11 @@ export default function ProjectDetailPage() {
           replicas: Math.max(1, Number((env?.config as any)?.replicas || projectData?.envCount || 1)),
           strategy: String((env?.config as any)?.strategy || "rolling") as ProjectDetail["environments"][number]["strategy"],
           status:
-            projectData.status === "running"
+            (projectData.status === "running"
               ? "healthy"
               : projectData.status === "failed"
                 ? "down"
-                : "degraded",
+                : "degraded") as ProjectDetail["environments"][number]["status"],
         }));
 
         const mappedProject: ProjectDetail = {
@@ -1341,5 +1341,19 @@ export default function ProjectDetailPage() {
         </main>
       </div>
     </div>
+  );
+}
+
+export default function ProjectDetailPage() {
+  return (
+    <Suspense
+      fallback={(
+        <div className="min-h-screen bg-[#030711] text-white flex items-center justify-center">
+          Loading...
+        </div>
+      )}
+    >
+      <ProjectDetailPageContent />
+    </Suspense>
   );
 }

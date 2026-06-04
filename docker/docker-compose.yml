@@ -1,7 +1,7 @@
 services:
   # ── Traefik Reverse Proxy ───────────────────────────────
   traefik:
-    image: traefik:v3.1
+    image: traefik:latest
     container_name: innodeploy-traefik
     restart: unless-stopped
     command:
@@ -25,6 +25,8 @@ services:
       - traefik-acme:/etc/traefik/acme
     networks:
       - innodeploy-net
+    environment:
+      - DOCKER_API_VERSION=1.41
 
   # ── Backend API ──────────────────────────────────────────
   backend:
@@ -85,6 +87,9 @@ services:
     build:
       context: ../dashboard
       dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-http://localhost:5000/api}
+        NEXT_PUBLIC_WS_URL: ${NEXT_PUBLIC_WS_URL:-http://localhost:7070}
     restart: unless-stopped
     depends_on:
       - traefik
@@ -107,6 +112,8 @@ services:
       dockerfile: Dockerfile
     restart: unless-stopped
     command: ["node", "src/workers/pipelineRunnerMain.js"]
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
     environment:
       PIPELINE_RUNNER_ENABLED: "true"
       OBJECT_STORE_ENABLED: "true"
