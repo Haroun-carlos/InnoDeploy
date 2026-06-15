@@ -4,10 +4,15 @@ import { useRouter } from "next/navigation";
 import { Plus, Rocket, Server } from "lucide-react";
 import { useLanguagePreference } from "@/hooks/useLanguagePreference";
 import { t } from "@/lib/settingsI18n";
+import { useAuthStore } from "@/store/authStore";
 
 export default function QuickActions() {
   const language = useLanguagePreference();
   const router = useRouter();
+  const user = useAuthStore((state) => state.user);
+  const isViewer = user?.role === "viewer";
+
+  if (isViewer) return null;
 
   return (
     <div className="flex flex-wrap gap-3">

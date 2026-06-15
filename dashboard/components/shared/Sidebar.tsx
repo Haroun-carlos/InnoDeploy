@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { usePathname } from "next/navigation";
 import {
   LayoutDashboard,
@@ -41,9 +41,20 @@ export default function Sidebar() {
   const user = useAuthStore((state) => state.user);
   const [isCollapsed, setIsCollapsed] = useState(false);
   const showAdmin = user?.role === "owner" || user?.role === "admin";
-  const items = showAdmin
-    ? [...navItems, { labelKey: "Admin", href: "/dashboard/admin", icon: UserCog }]
-    : navItems;
+  const isViewer = user?.role === "viewer";
+
+  const items = useMemo(() => {
+    const filtered = navItems.filter((item) => {
+      if (isViewer && (item.href === "/dashboard/terminal" || item.href === "/dashboard/settings")) {
+        return false;
+      }
+      return true;
+    });
+    if (showAdmin) {
+      return [...filtered, { labelKey: "Admin", href: "/dashboard/admin", icon: UserCog }];
+    }
+    return filtered;
+  }, [showAdmin, isViewer]);
 
   useEffect(() => {
     const stored = window.localStorage.getItem("sidebarCollapsed");

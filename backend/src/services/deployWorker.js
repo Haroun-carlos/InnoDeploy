@@ -477,10 +477,88 @@ const triggerAutoRollback = async (failedRun) => {
   console.log(`Auto-rollback: enqueued rollback to ${lastSuccess.version} for project ${failedRun.projectId}`);
 };
 
+const simulateDeploymentRun = async (runId) => {
+  const startedAt = Date.now();
+  let run = await Pipeline.findById(runId);
+  if (!run || ["success", "failed", "cancelled"].includes(run.status)) {
+    return;
+  }
+
+  const project = await Project.findById(run.projectId);
+  if (!project) {
+    run.status = "failed";
+    run.duration = Date.now() - startedAt;
+    await run.save();
+    return;
+  }
+
+  run.status = "in-progress";
+  await run.save();
+  await emitRunSnapshot(run._id, "deploy-run-started");
+  await appendDeploymentLog({
+    run,
+    projectId: project._id,
+    level: "info",
+    message: `[Demo] ${run.runType} started using ${run.strategy} strategy (Simulated Mode)`,
+  });
+
+  const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+  for (let index = 0; index < run.steps.length; index++) {
+    const step = run.steps[index];
+    step.status = "running";
+    step.attempt = 1;
+    step.output = `$ ${step.command}\nRunning deployment step ${step.name}...`;
+    await run.save();
+    
+    await emitRunSnapshot(run._id, "deploy-step-started");
+
+    const stepStart = Date.now();
+    await sleep(800);
+
+    step.status = "success";
+    step.duration = Date.now() - stepStart;
+    step.output += `\n✓ Step ${step.name} completed successfully`;
+    await run.save();
+
+    await emitRunSnapshot(run._id, "deploy-step-success");
+    await appendDeploymentLog({
+      run,
+      projectId: project._id,
+      level: "info",
+      message: `Step '${step.name}' completed successfully`,
+    });
+  }
+
+  run.status = "success";
+  run.duration = Date.now() - startedAt;
+  await run.save();
+
+  project.status = "running";
+  project.lastDeployAt = new Date();
+  await project.save();
+
+  await emitRunSnapshot(run._id, "deploy-run-success");
+  await appendDeploymentLog({
+    run,
+    projectId: project._id,
+    level: "info",
+    message: `${run.runType} completed successfully`,
+  });
+
+  const { seedHistoricalDataForProject } = require("../utils/demoProjectSeed");
+  await seedHistoricalDataForProject(project._id, run.environment || "production");
+};
+
 const processDeploymentRun = async (runId) => {
   const startedAt = Date.now();
   let run = await Pipeline.findById(runId);
   if (!run) return;
+
+  if (String(process.env.DEMO_MODE || "").toLowerCase() === "true") {
+    await simulateDeploymentRun(runId);
+    return;
+  }
 
   if (!["deployment", "rollback"].includes(run.runType)) {
     return;

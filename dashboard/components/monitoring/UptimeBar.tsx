@@ -26,9 +26,9 @@ export default function UptimeBar({ segments = [] }: UptimeBarProps) {
       </div>
       <div className="flex gap-0.5 h-8">
         {segments.length === 0 && <span className="text-xs text-muted-foreground">{t(language, "monitoring.noUptimeHistory")}</span>}
-        {segments.map((seg) => (
+        {segments.map((seg, idx) => (
           <div
-            key={seg.date}
+            key={`${seg.date}-${idx}`}
             title={`${seg.date}: ${seg.status === "up" ? t(language, "monitoring.operational") : t(language, "monitoring.incident")}`}
             className={cn(
               "flex-1 rounded-sm cursor-default transition-opacity hover:opacity-75",

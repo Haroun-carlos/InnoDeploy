@@ -12,10 +12,11 @@ test("registers a new user and passes terms gate", async ({ page }) => {
   const suffix = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
 
   await page.goto("/register");
-  await page.getByLabel("Full name").fill(`Playwright User ${suffix}`);
-  await page.getByLabel("Email").fill(`playwright-${suffix}@example.com`);
-  await page.getByLabel("Password").fill("Passw0rd!123");
-  await page.getByLabel("Organisation name (optional)").fill(`pw-org-${suffix}`);
+  await page.locator("#name").fill(`Playwright User ${suffix}`);
+  await page.locator("#email").fill(`playwright-${suffix}@example.com`);
+  await page.locator("#password").fill("Passw0rd!123");
+  await page.locator("#passwordConfirm").fill("Passw0rd!123");
+  await page.locator("#org").fill(`pw-org-${suffix}`);
 
   await page.getByRole("button", { name: /create account/i }).click();
 
@@ -27,7 +28,7 @@ test("registers a new user and passes terms gate", async ({ page }) => {
   await page.getByRole("button", { name: /^continue$/i }).click();
 
   await expect(page).toHaveURL(/\/dashboard/);
-  await expect(page.getByText("InnoDeploy")).toBeVisible();
+  await expect(page.getByText("InnoDeploy").first()).toBeVisible();
 });
 
 test("logs in an existing user", async ({ page, request }) => {

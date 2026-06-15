@@ -74,14 +74,15 @@ export async function loginThroughUi(page: Page, user: Pick<SeededUser, "email" 
   await page.getByLabel("Password").fill(user.password);
   await page.getByRole("button", { name: /sign in/i }).click();
 
-  await expect
-    .poll(() => page.url(), { timeout: 20_000 })
-    .toMatch(/\/(auth\/terms|dashboard)/);
+  // Wait for either terms gate or dashboard to be loaded
+  await expect(page).toHaveURL(/\/(auth\/terms|dashboard)/, { timeout: 15_000 });
 
   if (page.url().includes("/auth/terms")) {
-    await page.getByRole("checkbox").check();
+    const checkbox = page.getByRole("checkbox");
+    await checkbox.waitFor({ state: "visible", timeout: 5000 });
+    await checkbox.check();
     await page.getByRole("button", { name: /^continue$/i }).click();
   }
 
-  await expect(page).toHaveURL(/\/dashboard/);
+  await expect(page).toHaveURL(/\/dashboard/, { timeout: 15_000 });
 }

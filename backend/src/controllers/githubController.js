@@ -6,10 +6,10 @@ const sanitizeNextPath = (raw) => {
   return raw;
 };
 
-const buildGithubConnectUrl = () => {
+const buildGithubConnectUrl = (userId) => {
   const apiBase = process.env.API_BASE_URL || `http://localhost:${process.env.PORT || 5000}/api`;
   const nextPath = "/dashboard/new-project";
-  return `${apiBase}/auth/github?mode=connect&next=${encodeURIComponent(nextPath)}`;
+  return `${apiBase}/auth/github?mode=connect&userId=${userId || ""}&next=${encodeURIComponent(nextPath)}`;
 };
 
 const listRepositories = async (req, res, next) => {
@@ -23,7 +23,19 @@ const listRepositories = async (req, res, next) => {
     if (!githubAccessToken) {
       return res.status(409).json({
         message: "GitHub account is not connected",
-        connectUrl: buildGithubConnectUrl(),
+        connectUrl: buildGithubConnectUrl(user._id.toString()),
+      });
+    }
+
+    if (githubAccessToken === "mock-github-access-token") {
+      const repositories = [
+        { id: 101, name: "E-commerce", fullName: `${user.github?.username || "owner"}/E-commerce`, private: false, defaultBranch: "main", htmlUrl: `https://github.com/${user.github?.username || "owner"}/E-commerce`, cloneUrl: `https://github.com/${user.github?.username || "owner"}/E-commerce.git` },
+        { id: 102, name: "RentTn", fullName: `${user.github?.username || "owner"}/RentTn`, private: false, defaultBranch: "main", htmlUrl: `https://github.com/${user.github?.username || "owner"}/RentTn`, cloneUrl: `https://github.com/${user.github?.username || "owner"}/RentTn.git` },
+        { id: 103, name: "Churnprediction", fullName: `${user.github?.username || "owner"}/Churnprediction`, private: true, defaultBranch: "master", htmlUrl: `https://github.com/${user.github?.username || "owner"}/Churnprediction`, cloneUrl: `https://github.com/${user.github?.username || "owner"}/Churnprediction.git` },
+      ];
+      return res.json({
+        repositories,
+        githubUsername: user.github?.username || "owner",
       });
     }
 

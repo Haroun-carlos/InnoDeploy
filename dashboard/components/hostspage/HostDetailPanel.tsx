@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { HardDrive, MemoryStick, MonitorCog, Server, Cpu, Circle, X } from "lucide-react";
+import { useAuthStore } from "@/store/authStore";
 import { useLanguagePreference } from "@/hooks/useLanguagePreference";
 import { t } from "@/lib/settingsI18n";
 import { cn } from "@/lib/utils";
@@ -38,6 +39,8 @@ function Gauge({ label, value, color, icon: Icon }: { label: string; value: numb
 
 export default function HostDetailPanel({ host, onTest, onRemove, projects, onAssign, onUnassign }: HostDetailPanelProps) {
   const language = useLanguagePreference();
+  const user = useAuthStore((state) => state.user);
+  const isViewer = user?.role === "viewer";
   const [selectedProjectId, setSelectedProjectId] = useState("");
   const [selectedEnvironment, setSelectedEnvironment] = useState("");
   const [assigning, setAssigning] = useState(false);
@@ -88,10 +91,12 @@ export default function HostDetailPanel({ host, onTest, onRemove, projects, onAs
               {host.dockerVersion && <> · Docker {host.dockerVersion}</>}
             </p>
           </div>
-          <div className="flex gap-2">
-            <TestConnectionButton hostId={host.id} onTest={onTest} />
-            <RemoveHostButton hostId={host.id} onRemove={onRemove} disabled={host.activeDeployments > 0} />
-          </div>
+          {!isViewer && (
+            <div className="flex gap-2">
+              <TestConnectionButton hostId={host.id} onTest={onTest} />
+              <RemoveHostButton hostId={host.id} onRemove={onRemove} disabled={host.activeDeployments > 0} />
+            </div>
+          )}
         </div>
         {host.activeDeployments > 0 && (
           <p className="mt-2 text-xs text-amber-400">{t(language, "hosts.removeBlocked", { count: String(host.activeDeployments), suffix: host.activeDeployments > 1 ? "s" : "" })}</p>
@@ -128,73 +133,75 @@ export default function HostDetailPanel({ host, onTest, onRemove, projects, onAs
           </div>
         </div>
 
-        <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-3">
-          <p className="text-sm font-medium text-slate-300">Assign Host to Project Environment</p>
-          <div className="grid gap-3 md:grid-cols-3">
-            <select
-              value={selectedProjectId}
-              onChange={(e) => {
-                setSelectedProjectId(e.target.value);
-                setSelectedEnvironment("");
-              }}
-              className="rounded-lg border border-white/[0.08] bg-[#0c1b31] px-3 py-2 text-sm text-slate-200 outline-none"
-            >
-              <option value="">Select project</option>
-              {projects.map((project) => (
-                <option key={project.id} value={project.id}>{project.name}</option>
-              ))}
-            </select>
-
-            <select
-              value={selectedEnvironment}
-              onChange={(e) => setSelectedEnvironment(e.target.value)}
-              disabled={!selectedProjectId}
-              className="rounded-lg border border-white/[0.08] bg-[#0c1b31] px-3 py-2 text-sm text-slate-200 outline-none disabled:opacity-50"
-            >
-              <option value="">Select environment</option>
-              {environmentOptions.map((env) => (
-                <option key={env} value={env}>{env}</option>
-              ))}
-            </select>
-
-            <button
-              onClick={() => { void handleAssign(); }}
-              disabled={assigning || !selectedProjectId || !selectedEnvironment}
-              className="rounded-lg bg-gradient-to-r from-cyan-600 to-emerald-600 px-4 py-2 text-sm font-medium text-white transition-all hover:brightness-110 disabled:opacity-40 disabled:pointer-events-none"
-            >
-              {assigning ? "Assigning..." : "Assign"}
-            </button>
-          </div>
-          {assignError && <p className="text-xs text-rose-400">{assignError}</p>}
-
-          <div className="space-y-2">
-            <p className="text-xs font-medium uppercase tracking-wide text-slate-500">Current Assignments</p>
-            {(host.assignments || []).length === 0 ? (
-              <p className="text-xs text-slate-500">No assignments yet.</p>
-            ) : (
-              <div className="flex flex-wrap gap-2">
-                {(host.assignments || []).map((assignment, index) => (
-                  <span
-                    key={`${assignment.projectId}-${assignment.environment}-${index}`}
-                    className="inline-flex items-center gap-1.5 rounded-full border border-cyan-500/20 bg-cyan-500/10 px-2.5 py-1 text-xs text-cyan-300"
-                  >
-                    {assignment.projectName} / {assignment.environment}
-                    <button
-                      onClick={() => {
-                        void handleUnassign(assignment.projectId, assignment.environment);
-                      }}
-                      disabled={unassigningKey === `${assignment.projectId}:${assignment.environment}`}
-                      className="rounded-full p-0.5 text-cyan-300/80 transition hover:bg-cyan-500/20 hover:text-cyan-200 disabled:opacity-50"
-                      title="Unassign"
-                    >
-                      <X className="h-3 w-3" />
-                    </button>
-                  </span>
+        {!isViewer && (
+          <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-3">
+            <p className="text-sm font-medium text-slate-300">Assign Host to Project Environment</p>
+            <div className="grid gap-3 md:grid-cols-3">
+              <select
+                value={selectedProjectId}
+                onChange={(e) => {
+                  setSelectedProjectId(e.target.value);
+                  setSelectedEnvironment("");
+                }}
+                className="rounded-lg border border-white/[0.08] bg-[#0c1b31] px-3 py-2 text-sm text-slate-200 outline-none"
+              >
+                <option value="">Select project</option>
+                {projects.map((project) => (
+                  <option key={project.id} value={project.id}>{project.name}</option>
                 ))}
-              </div>
-            )}
+              </select>
+
+              <select
+                value={selectedEnvironment}
+                onChange={(e) => setSelectedEnvironment(e.target.value)}
+                disabled={!selectedProjectId}
+                className="rounded-lg border border-white/[0.08] bg-[#0c1b31] px-3 py-2 text-sm text-slate-200 outline-none disabled:opacity-50"
+              >
+                <option value="">Select environment</option>
+                {environmentOptions.map((env) => (
+                  <option key={env} value={env}>{env}</option>
+                ))}
+              </select>
+
+              <button
+                onClick={() => { void handleAssign(); }}
+                disabled={assigning || !selectedProjectId || !selectedEnvironment}
+                className="rounded-lg bg-gradient-to-r from-cyan-600 to-emerald-600 px-4 py-2 text-sm font-medium text-white transition-all hover:brightness-110 disabled:opacity-40 disabled:pointer-events-none"
+              >
+                {assigning ? "Assigning..." : "Assign"}
+              </button>
+            </div>
+            {assignError && <p className="text-xs text-rose-400">{assignError}</p>}
+
+            <div className="space-y-2">
+              <p className="text-xs font-medium uppercase tracking-wide text-slate-500">Current Assignments</p>
+              {(host.assignments || []).length === 0 ? (
+                <p className="text-xs text-slate-500">No assignments yet.</p>
+              ) : (
+                <div className="flex flex-wrap gap-2">
+                  {(host.assignments || []).map((assignment, index) => (
+                    <span
+                      key={`${assignment.projectId}-${assignment.environment}-${index}`}
+                      className="inline-flex items-center gap-1.5 rounded-full border border-cyan-500/20 bg-cyan-500/10 px-2.5 py-1 text-xs text-cyan-300"
+                    >
+                      {assignment.projectName} / {assignment.environment}
+                      <button
+                        onClick={() => {
+                          void handleUnassign(assignment.projectId, assignment.environment);
+                        }}
+                        disabled={unassigningKey === `${assignment.projectId}:${assignment.environment}`}
+                        className="rounded-full p-0.5 text-cyan-300/80 transition hover:bg-cyan-500/20 hover:text-cyan-200 disabled:opacity-50"
+                        title="Unassign"
+                      >
+                        <X className="h-3 w-3" />
+                      </button>
+                    </span>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
-        </div>
+        )}
 
         {/* Containers */}
         {host.containers && host.containers.length > 0 && (

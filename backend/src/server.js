@@ -20,6 +20,17 @@ const PORT = process.env.PORT || 5000;
  */
 const startServer = async () => {
   await connectDB();
+
+  // Seed demo data if DEMO_MODE is enabled
+  if (String(process.env.DEMO_MODE || "").toLowerCase() === "true") {
+    try {
+      const { seedDemoData } = require("./utils/demoSeed");
+      await seedDemoData();
+    } catch (err) {
+      console.error("[Demo] Seed failed:", err.message);
+    }
+  }
+
   await connectRedis();
   await initializeDefaultTransporter();
   await startPipelineRunner();

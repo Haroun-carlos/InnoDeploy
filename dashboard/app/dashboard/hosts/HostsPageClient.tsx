@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { useRequireAuth } from "@/hooks/useRequireAuth";
+import { useAuthStore } from "@/store/authStore";
 import Sidebar from "@/components/shared/Sidebar";
 import Navbar from "@/components/shared/Navbar";
 import AddHostButton from "@/components/hostspage/AddHostButton";
@@ -19,6 +20,8 @@ export default function HostsPageClient() {
   const language = useLanguagePreference();
   const isReady = useRequireAuth();
   const searchParams = useSearchParams();
+  const user = useAuthStore((state) => state.user);
+  const isViewer = user?.role === "viewer";
   const [hosts, setHosts] = useState<Host[]>([]);
   const [requestedHostId, setRequestedHostId] = useState<string | null>(null);
   const [selectedHostId, setSelectedHostId] = useState<string | null>(null);
@@ -195,7 +198,7 @@ export default function HostsPageClient() {
                 <RefreshCcw className={`h-4 w-4 ${loading ? "animate-spin" : ""}`} />
                 Refresh
               </button>
-              <AddHostButton onClick={() => setModalOpen(true)} />
+              {!isViewer && <AddHostButton onClick={() => setModalOpen(true)} />}
             </div>
           </div>
 

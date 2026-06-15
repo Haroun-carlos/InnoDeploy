@@ -4,6 +4,7 @@ import { useState, useMemo, useEffect, Suspense } from "react";
 import { useParams, useSearchParams } from "next/navigation";
 import { Plus } from "lucide-react";
 import { useRequireAuth } from "@/hooks/useRequireAuth";
+import { useAuthStore } from "@/store/authStore";
 import Sidebar from "@/components/shared/Sidebar";
 import Navbar from "@/components/shared/Navbar";
 import ProjectHeader from "@/components/projectdetail/ProjectHeader";
@@ -114,6 +115,8 @@ const mapBackendRunToUi = (run: BackendPipelineRun): PipelineRun => ({
 
 function ProjectDetailPageContent() {
   const isReady = useRequireAuth();
+  const user = useAuthStore((state) => state.user);
+  const isViewer = user?.role === "viewer";
   const language = useLanguagePreference();
   const locale = localeFromLanguage(language);
   const params = useParams();
@@ -182,7 +185,11 @@ function ProjectDetailPageContent() {
     const allowedTabs: SubNavTab[] = ["Overview", "Pipelines", "Monitoring", "Logs", "Terminal", "Settings"];
 
     if (allowedTabs.includes(requestedTab as SubNavTab)) {
-      setActiveTab(requestedTab as SubNavTab);
+      if (requestedTab === "Settings" && isViewer) {
+        setActiveTab("Overview");
+      } else {
+        setActiveTab(requestedTab as SubNavTab);
+      }
     }
 
     if (requestedMode === "live") {
@@ -965,13 +972,15 @@ function ProjectDetailPageContent() {
                   onChange={setActiveEnvId}
                   onRenameRequest={handleOpenRenameEnvironment}
                 />
-                <button
-                  onClick={handleCreateEnvironment}
-                  className="group inline-flex items-center gap-2 rounded-lg border border-cyan-500/30 bg-gradient-to-r from-cyan-500/20 to-blue-500/15 px-4 py-2 text-sm font-medium text-cyan-200 shadow-[0_0_0_1px_rgba(34,211,238,0.12)] transition-all hover:-translate-y-0.5 hover:from-cyan-500/30 hover:to-blue-500/25 hover:shadow-[0_8px_24px_rgba(14,116,144,0.25)]"
-                >
-                  <Plus className="h-4 w-4 transition-transform group-hover:rotate-90" />
-                  Add Environment
-                </button>
+                {!isViewer && (
+                  <button
+                    onClick={handleCreateEnvironment}
+                    className="group inline-flex items-center gap-2 rounded-lg border border-cyan-500/30 bg-gradient-to-r from-cyan-500/20 to-blue-500/15 px-4 py-2 text-sm font-medium text-cyan-200 shadow-[0_0_0_1px_rgba(34,211,238,0.12)] transition-all hover:-translate-y-0.5 hover:from-cyan-500/30 hover:to-blue-500/25 hover:shadow-[0_8px_24px_rgba(14,116,144,0.25)]"
+                  >
+                    <Plus className="h-4 w-4 transition-transform group-hover:rotate-90" />
+                    Add Environment
+                  </button>
+                )}
               </div>
               <p className="text-xs text-muted-foreground -mt-3">Tip: double-click an environment tab to rename it.</p>
 
@@ -1001,18 +1010,20 @@ function ProjectDetailPageContent() {
 
               <div className="grid gap-6 lg:grid-cols-2">
                 {activeEnv && <EnvironmentPanel environment={activeEnv} />}
-                <div className="flex flex-col gap-3">
-                  <DeployButton
-                    environmentName={activeEnv?.name || t(language, "projectDetail.defaultEnv")}
-                    onDeploy={handleDeploy}
-                  />
-                  <RollbackButton 
-                    onRollback={handleRollback}
-                    deployments={project?.deployments || []}
-                    rollbackStatus={rollbackStatus}
-                    rollbackMessage={rollbackMessage}
-                  />
-                </div>
+                {!isViewer && (
+                  <div className="flex flex-col gap-3">
+                    <DeployButton
+                      environmentName={activeEnv?.name || t(language, "projectDetail.defaultEnv")}
+                      onDeploy={handleDeploy}
+                    />
+                    <RollbackButton 
+                      onRollback={handleRollback}
+                      deployments={project?.deployments || []}
+                      rollbackStatus={rollbackStatus}
+                      rollbackMessage={rollbackMessage}
+                    />
+                  </div>
+                )}
               </div>
 
               <MetricsSummaryCards metrics={project?.metrics || []} />
@@ -1029,7 +1040,7 @@ function ProjectDetailPageContent() {
                     suffix: pipelineRuns.length !== 1 ? "s" : "",
                   })}
                 </h2>
-                <TriggerPipelineButton onTrigger={handleTriggerPipeline} />
+                {!isViewer && <TriggerPipelineButton onTrigger={handleTriggerPipeline} />}
               </div>
 
               {pipelineLoading && (

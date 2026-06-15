@@ -469,8 +469,144 @@ const resolveEnvironmentName = (project) => {
     : "default";
 };
 
+const simulateMonitorTickForProject = async (project, environment) => {
+  const rand = (min, max) => Math.round((Math.random() * (max - min) + min) * 100) / 100;
+  const randInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+  const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
+
+  const cpuPercent = rand(12, 38);
+  const memoryPercent = rand(22, 54);
+  const memoryMb = Math.round(memoryPercent * 40.96);
+  const httpLatencyMs = randInt(45, 160);
+  const netRxBytes = randInt(2000, 20000);
+  const netTxBytes = randInt(1000, 15000);
+  const diskUsageMb = 3120;
+  const diskUsagePercent = 32.5;
+  const uptimeSeconds = 120 + Math.floor((Date.now() % 3600000) / 1000);
+
+  const metric = await createMetricRecord({
+    projectId: project._id,
+    environment,
+    cpuPercent,
+    memoryMb,
+    memoryPercent,
+    netRxBytes,
+    netTxBytes,
+    httpStatus: 200,
+    httpLatencyMs,
+    restartCount: 0,
+    uptimeSeconds,
+    diskUsageMb,
+    diskUsagePercent,
+    healthState: "up",
+    failedProbes: 0,
+    probeMode: "http",
+    uptime: 100,
+  });
+
+  if (Math.random() < 0.5) {
+    const logMessages = [
+      `Incoming request: GET /api/v1/projects - 200 OK - ${httpLatencyMs}ms`,
+      `Incoming request: GET /api/health - 200 OK - 2ms`,
+      `Database query executed successfully: find_users_active`,
+      `Connection pool connection created`,
+      `Cache hit for query: project_details_${String(project._id).slice(-4)}`,
+      `WebSocket gateway broadcast: metric.delta for ${project.name}`,
+    ];
+    const message = pick(logMessages);
+    const saved = await Log.create({
+      projectId: project._id,
+      level: "info",
+      message,
+      environment,
+      source: "app",
+      containerName: project.name.toLowerCase().replace(/\s+/g, "-"),
+      stream: "stdout",
+      eventAt: new Date(),
+      timestamp: new Date(),
+    });
+
+    const LOG_STREAM_CHANNEL = "logs:stream";
+    const LOG_PROJECT_CHANNEL_PREFIX = "logs:project:";
+
+    if (redisClient?.isOpen) {
+      const serializedLog = JSON.stringify({
+        type: "log.line",
+        id: String(saved._id),
+        projectId: String(project._id),
+        pipelineId: null,
+        timestamp: saved.timestamp,
+        level: saved.level,
+        message: saved.message,
+        containerId: "demo-container-id",
+        containerName: saved.containerName,
+        stream: saved.stream,
+        source: saved.source,
+      });
+
+      await Promise.all([
+        redisClient.publish(LOG_STREAM_CHANNEL, serializedLog),
+        redisClient.publish(`${LOG_PROJECT_CHANNEL_PREFIX}${project._id}`, serializedLog),
+      ]);
+    }
+  }
+
+  const deltaPayload = {
+    type: "metric.delta",
+    projectId: String(project._id),
+    projectName: project.name,
+    environment,
+    metric: {
+      id: String(metric._id),
+      cpu: cpuPercent,
+      cpu_percent: cpuPercent,
+      memory: memoryPercent,
+      memory_mb: memoryMb,
+      memory_percent: memoryPercent,
+      net_rx_bytes: netRxBytes,
+      net_tx_bytes: netTxBytes,
+      http_status: 200,
+      latency: httpLatencyMs,
+      http_latency_ms: httpLatencyMs,
+      restart_count: 0,
+      uptime: 100,
+      uptime_s: uptimeSeconds,
+      disk_usage_mb: diskUsageMb,
+      disk_usage_percent: diskUsagePercent,
+      health_state: "up",
+      failed_probes: 0,
+      probe_mode: "http",
+      recordedAt: metric.recordedAt,
+    },
+    health: {
+      url: "http://localhost/health",
+      tcp: null,
+      mode: "http",
+      statusCode: 200,
+      ok: true,
+      state: "up",
+      failedProbes: 0,
+    },
+    container: {
+      id: "demo-container-id",
+      name: project.name.toLowerCase().replace(/\s+/g, "-"),
+      hasContainer: true,
+      state: "running",
+      signal: { errors: 0, warns: 0 },
+    },
+    createdAt: new Date().toISOString(),
+  };
+
+  await publishDelta(deltaPayload);
+};
+
 const evaluateProject = async (project) => {
   const environment = resolveEnvironmentName(project);
+
+  if (String(process.env.DEMO_MODE || "").toLowerCase() === "true") {
+    await simulateMonitorTickForProject(project, environment);
+    return;
+  }
   const healthUrl = parseHealthUrl(project);
   const tcpTarget = parseTcpTarget(project);
   const probeMode = healthUrl ? "http" : tcpTarget ? "tcp" : "container";

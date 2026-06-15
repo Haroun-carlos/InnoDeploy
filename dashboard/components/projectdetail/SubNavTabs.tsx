@@ -3,6 +3,7 @@
 import { cn } from "@/lib/utils";
 import { useLanguagePreference } from "@/hooks/useLanguagePreference";
 import { t } from "@/lib/settingsI18n";
+import { useAuthStore } from "@/store/authStore";
 
 const tabs = ["Overview", "Pipelines", "Monitoring", "Logs", "Terminal", "Settings"] as const;
 export type SubNavTab = (typeof tabs)[number];
@@ -14,6 +15,8 @@ interface SubNavTabsProps {
 
 export default function SubNavTabs({ active, onChange }: SubNavTabsProps) {
   const language = useLanguagePreference();
+  const user = useAuthStore((state) => state.user);
+  const isViewer = user?.role === "viewer";
 
   const labelByTab: Record<SubNavTab, string> = {
     Overview: t(language, "nav.overview"),
@@ -24,10 +27,12 @@ export default function SubNavTabs({ active, onChange }: SubNavTabsProps) {
     Settings: t(language, "nav.settings"),
   };
 
+  const visibleTabs = isViewer ? tabs.filter((t) => t !== "Settings") : tabs;
+
   return (
     <div className="border-b">
       <nav className="flex gap-4 -mb-px">
-        {tabs.map((tab) => (
+        {visibleTabs.map((tab) => (
           <button
             key={tab}
             onClick={() => onChange(tab)}

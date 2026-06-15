@@ -2,6 +2,7 @@
 
 import { useState, useMemo, useEffect } from "react";
 import { Check, X, Loader2, Clock, ChevronRight, CircleDot } from "lucide-react";
+import { useAuthStore } from "@/store/authStore";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { useLanguagePreference } from "@/hooks/useLanguagePreference";
@@ -54,6 +55,8 @@ const streamStatusConfig: Record<NonNullable<PipelineDetailPanelProps["streamSta
 
 export default function PipelineDetailPanel({ run, onCancel, onRetry, streamState = "idle" }: PipelineDetailPanelProps) {
   const language = useLanguagePreference();
+  const user = useAuthStore((state) => state.user);
+  const isViewer = user?.role === "viewer";
   const [selectedStageId, setSelectedStageId] = useState<string>(run.stages[0]?.id ?? "");
   const streamStatus = streamStatusConfig[streamState];
   const streamLabelByState: Record<NonNullable<PipelineDetailPanelProps["streamState"]>, string> = {
@@ -92,14 +95,16 @@ export default function PipelineDetailPanel({ run, onCancel, onRetry, streamStat
               {streamLabelByState[streamState]}
             </span>
           </div>
-          <div className="flex gap-2">
-            {run.status === "running" && (
-              <CancelRunButton runId={run.id} onCancel={onCancel} />
-            )}
-            {run.status === "failed" && (
-              <RetryButton runId={run.id} onRetry={onRetry} />
-            )}
-          </div>
+          {!isViewer && (
+            <div className="flex gap-2">
+              {run.status === "running" && (
+                <CancelRunButton runId={run.id} onCancel={onCancel} />
+              )}
+              {run.status === "failed" && (
+                <RetryButton runId={run.id} onRetry={onRetry} />
+              )}
+            </div>
+          )}
         </div>
       </CardHeader>
 

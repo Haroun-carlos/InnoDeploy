@@ -15,6 +15,7 @@ import {
 import { cn } from "@/lib/utils";
 import { projectApi, hostApi, pipelineApi } from "@/lib/apiClient";
 import type { Project, Host } from "@/types";
+import { useAuthStore } from "@/store/authStore";
 
 interface Step {
   key: string;
@@ -29,6 +30,8 @@ export default function GettingStartedCard() {
   const router = useRouter();
   const [steps, setSteps] = useState<Step[] | null>(null);
   const [dismissed, setDismissed] = useState(false);
+  const user = useAuthStore((state) => state.user);
+  const isViewer = user?.role === "viewer";
 
   useEffect(() => {
     // Check localStorage for dismissal
@@ -112,7 +115,7 @@ export default function GettingStartedCard() {
     localStorage.setItem("innodeploy_onboarding_dismissed", "1");
   };
 
-  if (dismissed || steps === null) return null;
+  if (isViewer || dismissed || steps === null) return null;
 
   const completedCount = steps.filter((s) => s.done).length;
   const allDone = completedCount === steps.length;

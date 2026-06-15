@@ -4,7 +4,7 @@ import { useState } from "react";
 import { aiopsApi } from "@/lib/apiClient";
 import type { AiOpsAnalysis } from "@/types";
 import AiOpsResultCard from "./AiOpsResultCard";
-import { Search } from "lucide-react";
+import { Search, Loader2 } from "lucide-react";
 
 interface Props {
   projectId: string;
@@ -39,7 +39,7 @@ export default function AiOpsProjectAnalysis({ projectId }: Props) {
         <select
           value={timeRange}
           onChange={(e) => setTimeRange(e.target.value)}
-          className="px-3 py-1.5 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-sm text-gray-900 dark:text-white"
+          className="rounded-xl border border-white/[0.08] bg-white/[0.03] px-3 py-2 text-sm text-slate-300 outline-none transition hover:border-white/[0.15] focus:border-cyan-500/40"
         >
           <option value="15m">Last 15 min</option>
           <option value="1h">Last 1 hour</option>
@@ -53,21 +53,25 @@ export default function AiOpsProjectAnalysis({ projectId }: Props) {
           placeholder="Environment (optional)"
           value={environment}
           onChange={(e) => setEnvironment(e.target.value)}
-          className="px-3 py-1.5 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-sm text-gray-900 dark:text-white w-48"
+          className="rounded-xl border border-white/[0.08] bg-white/[0.03] px-3 py-2 text-sm text-slate-300 placeholder-slate-600 outline-none transition hover:border-white/[0.15] focus:border-cyan-500/40 w-48"
         />
 
         <button
           onClick={runAnalysis}
           disabled={loading}
-          className="flex items-center gap-2 px-4 py-1.5 bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:opacity-50 text-sm font-medium transition-colors"
+          className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-purple-600 to-violet-600 text-white rounded-xl hover:from-purple-500 hover:to-violet-500 disabled:opacity-50 text-sm font-medium transition-all shadow-[0_0_20px_rgba(139,92,246,0.15)] hover:shadow-[0_0_30px_rgba(139,92,246,0.25)]"
         >
-          <Search className="h-4 w-4" />
+          {loading ? (
+            <Loader2 className="h-4 w-4 animate-spin" />
+          ) : (
+            <Search className="h-4 w-4" />
+          )}
           {loading ? "Analysing..." : "Analyse Project"}
         </button>
       </div>
 
       {error && (
-        <div className="p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg text-red-700 dark:text-red-300 text-sm">
+        <div className="p-4 bg-rose-500/[0.06] border border-rose-500/20 rounded-xl text-rose-300 text-sm">
           {error}
         </div>
       )}

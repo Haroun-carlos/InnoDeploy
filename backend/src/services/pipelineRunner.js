@@ -662,10 +662,192 @@ const markRemainingStepsSkipped = (run, fromIndex) => {
   }
 };
 
+const simulatePipelineRun = async (runId) => {
+  const startedAt = Date.now();
+  let run = await Pipeline.findById(runId);
+  if (!run || ["success", "failed", "cancelled"].includes(run.status)) {
+    return;
+  }
+
+  run.status = "in-progress";
+  await run.save();
+  await emitRunSnapshot(run._id, "run-started");
+
+  await Log.create({
+    projectId: run.projectId,
+    pipelineId: run._id,
+    level: "info",
+    message: `[Demo] Pipeline runner picked job ${run.version} (Simulated Mode)`,
+    environment: run.environment,
+    source: "pipeline-runner",
+    stream: "system",
+  });
+
+  await publishEvent({
+    type: "pipeline.started",
+    projectId: String(run.projectId),
+    pipelineId: String(run._id),
+    version: run.version,
+    createdAt: new Date().toISOString(),
+  });
+
+  const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+  const logTemplatesByStep = {
+    checkout: [
+      "Cloning repository into /workspace/src...",
+      `Checking out branch ${run.branch || "main"}...`,
+      `✓ Checked out branch ${run.branch || "main"}`
+    ],
+    clone: [
+      "Cloning repository into /workspace/src...",
+      `Checking out branch ${run.branch || "main"}...`,
+      `✓ Checked out branch ${run.branch || "main"}`
+    ],
+    install: [
+      "$ npm ci --production",
+      "npm warn deprecated influx@5.9.3: influxdb v1 client is deprecated",
+      "added 642 packages in 8.42s",
+      "✓ Dependencies installed successfully"
+    ],
+    build: [
+      "$ npm run build",
+      "> next build",
+      "▲ Next.js 14.2.3",
+      "- Creating an optimized production build ...",
+      "✓ Compiled successfully in 4.2s",
+      "✓ Collecting page data",
+      "✓ Generating static pages (20/20)",
+      "✓ Finalizing page optimization",
+      "✓ Build completed successfully"
+    ],
+    deploy: [
+      `$ docker push ${String(run.version || "latest")}`,
+      "The push refers to repository [docker.io/library/app]",
+      "352e8966144e: Pushed",
+      "5f70bf3597d8: Pushed",
+      "✓ Image pushed and enqueued for deployment"
+    ],
+    summary: [
+      "✓ Pipeline summary compiled.",
+      "All automated pipeline checks passed."
+    ]
+  };
+
+  for (let index = 0; index < run.steps.length; index++) {
+    const step = run.steps[index];
+    step.status = "running";
+    step.attempt = 1;
+    step.output = `$ ${step.command}`;
+    await run.save();
+    
+    await emitRunSnapshot(run._id, "step-started");
+    
+    await publishEvent({
+      type: "pipeline.stage.started",
+      projectId: String(run.projectId),
+      pipelineId: String(run._id),
+      stage: step.name,
+      createdAt: new Date().toISOString(),
+    });
+
+    const stepStart = Date.now();
+    const stepKey = String(step.name || "").toLowerCase();
+    const templates = logTemplatesByStep[stepKey] || [
+      `$ ${step.command}`,
+      `Running step ${step.name}...`,
+      `✓ Step ${step.name} completed successfully`
+    ];
+
+    for (const line of templates) {
+      await sleep(250);
+      step.output += `\n${line}`;
+      await run.save();
+      await publishLog({
+        pipelineId: String(run._id),
+        projectId: String(run.projectId),
+        stage: step.name,
+        stream: line.startsWith("ERR!") ? "stderr" : "stdout",
+        line
+      });
+    }
+
+    step.status = "success";
+    step.duration = Date.now() - stepStart;
+    await run.save();
+
+    await emitRunSnapshot(run._id, "step-success");
+    await publishEvent({
+      type: "pipeline.stage.completed",
+      projectId: String(run.projectId),
+      pipelineId: String(run._id),
+      stage: step.name,
+      duration: step.duration,
+      createdAt: new Date().toISOString(),
+    });
+  }
+
+  const deployJob = await enqueueDeployJob({
+    projectId: String(run.projectId),
+    pipelineId: String(run._id),
+    version: run.version,
+    strategy: run.strategy,
+    branch: run.branch,
+    triggeredBy: run.triggeredBy,
+    environment: run.environment,
+  });
+
+  await publishEvent({
+    type: "pipeline.deploy.queued",
+    projectId: String(run.projectId),
+    pipelineId: String(run._id),
+    strategy: run.strategy,
+    deployJobId: String(deployJob.id),
+    createdAt: new Date().toISOString(),
+  });
+
+  run.status = "success";
+  run.duration = Date.now() - startedAt;
+  await run.save();
+
+  let artifact;
+  try {
+    artifact = await uploadJsonArtifact({
+      key: `pipelines/${run.projectId}/${run._id}/summary`,
+      payload: {
+        projectId: String(run.projectId),
+        pipelineId: String(run._id),
+        version: run.version,
+        branch: run.branch,
+        status: run.status,
+        duration: run.duration,
+        steps: run.steps,
+      },
+    });
+  } catch (_e) {
+    artifact = `s3://pipelines/${run.projectId}/${run._id}/summary`;
+  }
+
+  await publishEvent({
+    type: "pipeline.completed",
+    projectId: String(run.projectId),
+    pipelineId: String(run._id),
+    status: run.status,
+    duration: run.duration,
+    artifact,
+    createdAt: new Date().toISOString(),
+  });
+};
+
 const processPipelineRun = async (runId) => {
   const startedAt = Date.now();
   let run = await Pipeline.findById(runId);
   if (!run) {
+    return;
+  }
+
+  if (String(process.env.DEMO_MODE || "").toLowerCase() === "true") {
+    await simulatePipelineRun(runId);
     return;
   }
 
