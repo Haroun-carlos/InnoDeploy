@@ -133,8 +133,12 @@ services:
       dockerfile: Dockerfile
     restart: unless-stopped
     command: ["node", "src/workers/deployWorkerMain.js"]
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /opt/innodeploy/workspaces:/opt/innodeploy/workspaces
     environment:
       DEPLOY_WORKER_ENABLED: "true"
+      PROJECT_WORKSPACES_DIR: /opt/innodeploy/workspaces
     env_file:
       - ../backend/.env
     depends_on:

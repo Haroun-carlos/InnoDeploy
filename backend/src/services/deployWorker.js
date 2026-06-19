@@ -1,3 +1,8 @@
+const fs = require("fs/promises");
+const path = require("path");
+const { spawn } = require("child_process");
+
+const Docker = require("dockerode");
 const mongoose = require("mongoose");
 
 const { redisClient } = require("../config/redis");
@@ -34,6 +39,9 @@ let workerStarted = false;
 let deployWorkerStarted = false;
 const DEPLOY_STEP_TIMEOUT_MS = Math.max(1000, Number(process.env.DEPLOY_STEP_TIMEOUT_MS) || 300000);
 const MAX_STEP_OUTPUT_LENGTH = 60_000;
+const PROJECT_WORKSPACES_DIR = String(process.env.PROJECT_WORKSPACES_DIR || "/opt/innodeploy/workspaces");
+const PROJECT_SITE_HOST = String(process.env.PROJECT_SITE_HOST || process.env.TRAEFIK_APP_HOST || "inverp.cloud").trim() || "inverp.cloud";
+let dockerClient = null;
 
 const clampOutput = (output) => {
   const normalized = String(output || "");
@@ -43,13 +51,38 @@ const clampOutput = (output) => {
   return `${normalized.slice(0, MAX_STEP_OUTPUT_LENGTH)}\n...output truncated...`;
 };
 
-const runProcess = ({ command, args = [], cwd, shell = false, timeoutMs = DEPLOY_STEP_TIMEOUT_MS }) =>
+const toSlug = (value) =>
+  String(value || "")
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9-]+/g, "-")
+    .replace(/(^-|-$)/g, "");
+
+const normalizeRepositoryPath = (value) => {
+  const cleaned = String(value || "")
+    .trim()
+    .replace(/\\+/g, "/")
+    .replace(/^\/+/, "")
+    .replace(/\/+$/, "");
+
+  if (!cleaned) {
+    return "";
+  }
+
+  const normalized = cleaned.split("/").filter((segment) => segment && segment !== ".").join("/");
+  if (!normalized || normalized.includes("..")) {
+    throw new Error("repositoryPath must be a relative subdirectory inside the repository");
+  }
+
+  return normalized;
+};
+
+const runProcess = ({ command, args = [], cwd, timeoutMs = DEPLOY_STEP_TIMEOUT_MS }) =>
   new Promise((resolve) => {
-    const { spawn } = require("child_process");
     const startedAt = Date.now();
     const child = spawn(command, args, {
       cwd,
-      shell,
+      shell: false,
       stdio: ["ignore", "pipe", "pipe"],
     });
 
@@ -86,6 +119,52 @@ const runProcess = ({ command, args = [], cwd, shell = false, timeoutMs = DEPLOY
       });
     });
   });
+
+const getDockerClient = () => {
+  if (dockerClient) {
+    return dockerClient;
+  }
+
+  dockerClient = process.platform === "win32"
+    ? new Docker({ socketPath: "//./pipe/docker_engine" })
+    : new Docker({ socketPath: "/var/run/docker.sock" });
+
+  return dockerClient;
+};
+
+const removeExistingProjectContainer = async (containerName) => {
+  const container = getDockerClient().getContainer(containerName);
+  try {
+    await container.inspect();
+    await container.remove({ force: true });
+  } catch (_error) {
+    // Ignore missing containers.
+  }
+};
+
+const cloneProjectWorkspace = async ({ project, deploymentId }) => {
+  const projectSlug = toSlug(project.name);
+  const workspaceRoot = path.join(PROJECT_WORKSPACES_DIR, projectSlug, String(deploymentId));
+
+  await fs.rm(workspaceRoot, { recursive: true, force: true });
+  await fs.mkdir(workspaceRoot, { recursive: true });
+
+  const cloneResult = await runProcess({
+    command: "git",
+    args: ["clone", "--depth", "1", "--branch", project.branch || "main", project.repoUrl, workspaceRoot],
+    cwd: path.dirname(workspaceRoot),
+  });
+
+  if (!cloneResult.success) {
+    throw new Error(`Failed to clone repository: ${cloneResult.output}`);
+  }
+
+  const repositoryPath = normalizeRepositoryPath(project.repositoryPath);
+  const appWorkspace = repositoryPath ? path.join(workspaceRoot, repositoryPath) : workspaceRoot;
+  await fs.access(appWorkspace);
+
+  return { workspaceRoot, appWorkspace, repositoryPath, projectSlug };
+};
 
 const isValidObjectId = (value) => mongoose.Types.ObjectId.isValid(value);
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -314,6 +393,11 @@ const processDeployJob = async (job) => {
     throw new Error(`unsupported deployment strategy '${strategy}'`);
   }
 
+  const project = await Project.findById(job.projectId).select("name repoUrl branch repositoryPath installCommand buildCommand startCommand");
+  if (!project) {
+    throw new Error("deploy job project was not found");
+  }
+
   const deployment = await Pipeline.create({
     projectId: job.projectId,
     version: String(job.version || `deploy-${Date.now()}`),
@@ -324,6 +408,7 @@ const processDeployJob = async (job) => {
     triggeredBy: String(job.triggeredBy || "system"),
     environment: String(job.environment || "production"),
     steps: [],
+    config: String(job.repositoryPath || project.repositoryPath || ""),
   });
 
   await publishEvent({
@@ -341,6 +426,70 @@ const processDeployJob = async (job) => {
       await runBlueGreenStrategy(deployment, job);
     } else {
       await runCanaryStrategy(deployment, job);
+    }
+
+    const { workspaceRoot, appWorkspace, projectSlug } = await cloneProjectWorkspace({
+      project,
+      deploymentId: deployment._id,
+    });
+    const containerName = `innodeploy-${projectSlug}`;
+    const routeName = `project-${projectSlug}`;
+    const startCommand = String(project.startCommand || "").trim() || "npm start";
+    const appWorkdir = appWorkspace === workspaceRoot
+      ? "/workspace"
+      : `/workspace/${normalizeRepositoryPath(project.repositoryPath)}`;
+
+    await removeExistingProjectContainer(containerName);
+
+    const container = await getDockerClient().createContainer({
+      name: containerName,
+      Image: "node:20-alpine",
+      Cmd: [
+        "sh",
+        "-lc",
+        [
+          'cd "$APP_WORKDIR"',
+          'if [ -n "$APP_INSTALL_COMMAND" ]; then sh -lc "$APP_INSTALL_COMMAND"; else npm ci; fi',
+          'if [ -n "$APP_BUILD_COMMAND" ]; then sh -lc "$APP_BUILD_COMMAND"; fi',
+          'exec sh -lc "$APP_START_COMMAND"',
+        ].join(" && "),
+      ],
+      Env: [
+        "NODE_ENV=production",
+        "PORT=3000",
+        "HOST=0.0.0.0",
+        `APP_WORKDIR=${appWorkdir}`,
+        `APP_INSTALL_COMMAND=${String(project.installCommand || "").trim()}`,
+        `APP_BUILD_COMMAND=${String(project.buildCommand || "").trim()}`,
+        `APP_START_COMMAND=${startCommand}`,
+      ],
+      ExposedPorts: { "3000/tcp": {} },
+      HostConfig: {
+        Binds: [`${workspaceRoot}:/workspace`],
+        NetworkMode: "innodeploy-net",
+        RestartPolicy: { Name: "unless-stopped" },
+      },
+      Labels: {
+        "traefik.enable": "true",
+        [`traefik.http.routers.${routeName}.rule`]: `Host(\`${PROJECT_SITE_HOST}\`) && PathPrefix(\`/sites/${projectSlug}\`)`,
+        [`traefik.http.routers.${routeName}.entrypoints`]: "websecure",
+        [`traefik.http.routers.${routeName}.tls`]: "true",
+        [`traefik.http.routers.${routeName}.tls.certresolver`]: "letsencrypt",
+        [`traefik.http.routers.${routeName}.priority`]: "250",
+        [`traefik.http.routers.${routeName}.middlewares`]: `${routeName}-strip`,
+        [`traefik.http.middlewares.${routeName}-strip.stripprefix.prefixes`]: `/sites/${projectSlug}`,
+        [`traefik.http.services.${routeName}.loadbalancer.server.port`]: "3000",
+        "innodeploy.projectId": String(project._id),
+        "innodeploy.deploymentId": String(deployment._id),
+      },
+    });
+
+    await container.start();
+
+    const healthy = await waitForHealthGate(`http://${containerName}:3000`);
+    if (!healthy) {
+      await container.remove({ force: true }).catch(() => {});
+      throw new Error(`project container failed health gate for ${project.name}`);
     }
 
     deployment.status = "success";
@@ -363,6 +512,7 @@ const processDeployJob = async (job) => {
       deploymentId: String(deployment._id),
       status: deployment.status,
       strategy: deployment.strategy,
+      publicUrl: `https://${PROJECT_SITE_HOST}/sites/${projectSlug}`,
       duration: deployment.duration,
       createdAt: new Date().toISOString(),
     });

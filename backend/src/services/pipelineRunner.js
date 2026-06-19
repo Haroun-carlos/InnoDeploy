@@ -433,6 +433,7 @@ const runPipelineJob = async (job) => {
     branch: pipeline.branch,
     triggeredBy: pipeline.triggeredBy,
     environment: pipeline.environment,
+    repositoryPath: project.repositoryPath || "",
   });
 
   await publishEvent({
