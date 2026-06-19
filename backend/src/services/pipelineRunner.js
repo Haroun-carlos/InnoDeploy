@@ -603,8 +603,7 @@ const detectDockerAvailability = async () => {
 
 const runStepInsideDocker = async ({ workspaceRoot, workspace, image, command, timeoutMs }) => {
   const workspacePosix = asPosixPath(workspace);
-  const relativeWorkspace = path.relative(workspaceRoot, workspace);
-  const containerWorkspace = relativeWorkspace ? path.posix.join("/workspace", asPosixPath(relativeWorkspace)) : "/workspace";
+  const containerWorkspace = "/workspace";
   return runProcess({
     command: "docker",
     args: [
