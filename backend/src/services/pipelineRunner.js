@@ -841,6 +841,7 @@ const simulatePipelineRun = async (runId) => {
     branch: run.branch,
     triggeredBy: run.triggeredBy,
     environment: run.environment,
+    repositoryPath: project.repositoryPath || "",
   });
 
   await publishEvent({

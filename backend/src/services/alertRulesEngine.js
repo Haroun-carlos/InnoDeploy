@@ -135,6 +135,7 @@ const createRuleAlert = async ({
       branch: String(project.branch || "main"),
       triggeredBy: "alert-rules-engine",
       environment: String(project.environments?.[0]?.name || "production"),
+      repositoryPath: String(project.repositoryPath || ""),
     });
   }
 
