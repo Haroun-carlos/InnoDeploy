@@ -23,6 +23,7 @@ export default function ProjectHeader({ project }: ProjectHeaderProps) {
   const lastDeploy = project.lastDeployAt
     ? new Date(project.lastDeployAt).toLocaleString(locale)
     : t(language, "projectHeader.neverDeployed");
+  const liveSiteUrl = `https://inverp.cloud/sites/${encodeURIComponent(project.name)}`;
 
   return (
     <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
@@ -48,6 +49,16 @@ export default function ProjectHeader({ project }: ProjectHeaderProps) {
           >
             <ExternalLink className="h-3.5 w-3.5" />
             {project.repoUrl}
+          </a>
+          <a
+            href={liveSiteUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-1 hover:text-foreground transition-colors"
+            title={liveSiteUrl}
+          >
+            <ExternalLink className="h-3.5 w-3.5" />
+            {liveSiteUrl}
           </a>
           <span className="flex items-center gap-1">
             <Clock className="h-3.5 w-3.5" />

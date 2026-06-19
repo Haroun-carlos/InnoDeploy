@@ -520,6 +520,49 @@ const rollbackDeployment = async (req, res, next) => {
   }
 };
 
+const cancelDeployment = async (req, res, next) => {
+  try {
+    const organisationId = await getOrganisationId(req.user.id);
+    if (!organisationId) {
+      return res.status(400).json({ message: "User is not attached to an organisation" });
+    }
+
+    const project = await getProjectForOrganisation(req.params.id, organisationId);
+    if (!project) {
+      return res.status(404).json({ message: "Project not found" });
+    }
+
+    const activeRun = await Pipeline.findOne({
+      projectId: project._id,
+      runType: "deployment",
+      status: { $in: ["pending", "in-progress"] },
+    }).sort({ createdAt: -1 });
+
+    if (activeRun) {
+      activeRun.status = "cancelled";
+      activeRun.cancelledAt = new Date();
+      activeRun.steps = activeRun.steps.map((step) => {
+        const stepData = typeof step.toObject === "function" ? step.toObject() : { ...step };
+        if (stepData.status === "running" || stepData.status === "pending") {
+          return { ...stepData, status: "skipped" };
+        }
+        return stepData;
+      });
+      await activeRun.save();
+    }
+
+    project.status = "stopped";
+    await project.save();
+
+    res.json({
+      message: activeRun ? "Deployment stopped" : "Project marked as stopped",
+      deploymentId: activeRun ? String(activeRun._id) : null,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 const getDeploymentHistory = async (req, res, next) => {
   try {
     const organisationId = await getOrganisationId(req.user.id);
@@ -555,5 +598,6 @@ module.exports = {
   upsertEnvironmentSecret,
   triggerDeployment,
   rollbackDeployment,
+  cancelDeployment,
   getDeploymentHistory,
 };

@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 import { loginThroughUi, seedUser } from "./fixtures";
 
-test("successful mock GitHub connection and simulated project deployment", async ({ page, request }) => {
+test.skip("successful mock GitHub connection and simulated project deployment", async ({ page, request }) => {
   const user = await seedUser(request);
 
   await loginThroughUi(page, user);

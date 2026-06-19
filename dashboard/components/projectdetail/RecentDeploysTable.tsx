@@ -10,6 +10,7 @@ const statusStyle: Record<Deployment["status"], string> = {
   success: "text-green-600",
   failed: "text-red-600",
   "in-progress": "text-blue-600",
+  cancelled: "text-amber-600",
 };
 
 interface RecentDeploysTableProps {

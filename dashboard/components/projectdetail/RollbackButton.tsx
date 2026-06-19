@@ -121,6 +121,8 @@ export default function RollbackButton({ onRollback, deployments, rollbackStatus
                           ? "bg-green-500/20 text-green-600"
                           : deployment.status === "failed"
                             ? "bg-red-500/20 text-red-600"
+                            : deployment.status === "cancelled"
+                              ? "bg-amber-500/20 text-amber-600"
                             : "bg-blue-500/20 text-blue-600"
                       }`}>
                         {deployment.status}

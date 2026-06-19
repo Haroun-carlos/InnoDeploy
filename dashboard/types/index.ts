@@ -77,7 +77,7 @@ export interface Deployment {
   duration: string;
   triggeredBy: string;
   createdAt: string;
-  status: "success" | "failed" | "in-progress";
+  status: "success" | "failed" | "in-progress" | "cancelled";
 }
 
 /** Secret / env variable */

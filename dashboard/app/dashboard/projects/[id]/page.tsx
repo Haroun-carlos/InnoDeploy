@@ -1,10 +1,11 @@
 "use client";
 
 import { useState, useMemo, useEffect, Suspense } from "react";
-import { useParams, useSearchParams } from "next/navigation";
-import { Plus } from "lucide-react";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
+import { Loader2, Plus, Square, Trash2 } from "lucide-react";
 import { useRequireAuth } from "@/hooks/useRequireAuth";
 import { useAuthStore } from "@/store/authStore";
+import { Button } from "@/components/ui/button";
 import Sidebar from "@/components/shared/Sidebar";
 import Navbar from "@/components/shared/Navbar";
 import ProjectHeader from "@/components/projectdetail/ProjectHeader";
@@ -119,6 +120,7 @@ function ProjectDetailPageContent() {
   const isViewer = user?.role === "viewer";
   const language = useLanguagePreference();
   const locale = localeFromLanguage(language);
+  const router = useRouter();
   const params = useParams();
   const searchParams = useSearchParams();
   const _projectId = params.id as string;
@@ -136,6 +138,7 @@ function ProjectDetailPageContent() {
   const [pipelineLoading, setPipelineLoading] = useState(false);
   const [pipelineError, setPipelineError] = useState<string | null>(null);
   const [pipelineStreamState, setPipelineStreamState] = useState<PipelineStreamState>("idle");
+  const [stoppingDeployment, setStoppingDeployment] = useState(false);
   const [monitoringRange, setMonitoringRange] = useState<MonitoringTimeRange>("24h");
 
   // Logs state
@@ -269,7 +272,14 @@ function ProjectDetailPageContent() {
             duration: asDurationLabel(Number(run.duration || 0)) || "-",
             triggeredBy: String(run.triggeredBy || "manual"),
             createdAt: String(run.createdAt || new Date().toISOString()),
-            status: run.status === "success" ? "success" : run.status === "failed" ? "failed" : "in-progress",
+            status:
+              run.status === "success"
+                ? "success"
+                : run.status === "failed"
+                  ? "failed"
+                  : run.status === "cancelled"
+                    ? "cancelled"
+                    : "in-progress",
           })),
           secrets: [],
           metrics: {
@@ -798,6 +808,40 @@ function ProjectDetailPageContent() {
     }
   };
 
+  const handleStopDeployment = async () => {
+    try {
+      setProjectError(null);
+      setProjectSuccess(null);
+      setStoppingDeployment(true);
+      await projectApi.cancelDeployment(_projectId);
+      setProject((prev) => (prev ? { ...prev, status: "stopped" } : prev));
+      setProjectSuccess("Deployment stopped successfully.");
+      setTimeout(() => setProjectSuccess(null), 4000);
+    } catch (error: unknown) {
+      const axiosErr = error as { response?: { data?: { message?: string } } };
+      setProjectError(axiosErr.response?.data?.message || "Failed to stop deployment");
+    } finally {
+      setStoppingDeployment(false);
+    }
+  };
+
+  const handleDeleteProject = async () => {
+    const confirmed = window.confirm(
+      `Delete project "${project.name}"? This will remove deployments, logs, metrics, and alerts for this project.`
+    );
+    if (!confirmed) return;
+
+    try {
+      setProjectError(null);
+      setProjectSuccess(null);
+      await projectApi.deleteProject(_projectId);
+      router.push("/dashboard/projects");
+    } catch (error: unknown) {
+      const axiosErr = error as { response?: { data?: { message?: string } } };
+      setProjectError(axiosErr.response?.data?.message || "Failed to delete project");
+    }
+  };
+
   const handleRetryRun = async (runId: string) => {
     const run = pipelineRuns.find((item) => item.id === runId);
     if (!run) return;
@@ -1016,6 +1060,24 @@ function ProjectDetailPageContent() {
                       environmentName={activeEnv?.name || t(language, "projectDetail.defaultEnv")}
                       onDeploy={handleDeploy}
                     />
+                    {project.status === "running" && (
+                      <Button
+                        variant="destructive"
+                        onClick={() => void handleStopDeployment()}
+                        disabled={stoppingDeployment}
+                      >
+                        {stoppingDeployment ? (
+                          <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                        ) : (
+                          <Square className="h-4 w-4 mr-2" fill="currentColor" />
+                        )}
+                        Stop Deployment
+                      </Button>
+                    )}
+                    <Button variant="destructive" onClick={() => void handleDeleteProject()}>
+                      <Trash2 className="h-4 w-4 mr-2" />
+                      Delete Project
+                    </Button>
                     <RollbackButton 
                       onRollback={handleRollback}
                       deployments={project?.deployments || []}

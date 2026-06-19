@@ -125,10 +125,14 @@ export const projectApi = {
   updateProject: (projectId: string, payload: Record<string, unknown>) =>
     apiClient.put(`/projects/${projectId}`, payload),
 
+  deleteProject: (projectId: string) => apiClient.delete(`/projects/${projectId}`),
+
   getDeploymentHistory: (projectId: string) => apiClient.get(`/projects/${projectId}/deploy/history`),
 
   triggerDeploy: (projectId: string, payload?: { environment?: string; strategy?: string; version?: string }) =>
     apiClient.post(`/projects/${projectId}/deploy`, payload || {}),
+
+  cancelDeployment: (projectId: string) => apiClient.post(`/projects/${projectId}/deploy/cancel`),
 
   triggerRollback: (projectId: string, payload?: { environment?: string; version?: string }) =>
     apiClient.post(`/projects/${projectId}/rollback`, payload || {}),

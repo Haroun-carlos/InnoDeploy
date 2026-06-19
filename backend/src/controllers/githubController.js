@@ -27,18 +27,6 @@ const listRepositories = async (req, res, next) => {
       });
     }
 
-    if (githubAccessToken === "mock-github-access-token") {
-      const repositories = [
-        { id: 101, name: "E-commerce", fullName: `${user.github?.username || "owner"}/E-commerce`, private: false, defaultBranch: "main", htmlUrl: `https://github.com/${user.github?.username || "owner"}/E-commerce`, cloneUrl: `https://github.com/${user.github?.username || "owner"}/E-commerce.git` },
-        { id: 102, name: "RentTn", fullName: `${user.github?.username || "owner"}/RentTn`, private: false, defaultBranch: "main", htmlUrl: `https://github.com/${user.github?.username || "owner"}/RentTn`, cloneUrl: `https://github.com/${user.github?.username || "owner"}/RentTn.git` },
-        { id: 103, name: "Churnprediction", fullName: `${user.github?.username || "owner"}/Churnprediction`, private: true, defaultBranch: "master", htmlUrl: `https://github.com/${user.github?.username || "owner"}/Churnprediction`, cloneUrl: `https://github.com/${user.github?.username || "owner"}/Churnprediction.git` },
-      ];
-      return res.json({
-        repositories,
-        githubUsername: user.github?.username || "owner",
-      });
-    }
-
     const response = await fetch("https://api.github.com/user/repos?sort=updated&per_page=100&type=owner", {
       headers: {
         Authorization: `Bearer ${githubAccessToken}`,

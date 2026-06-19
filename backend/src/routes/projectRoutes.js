@@ -13,6 +13,7 @@ const {
 	upsertEnvironmentSecret,
 	triggerDeployment,
 	rollbackDeployment,
+	cancelDeployment,
 	getDeploymentHistory,
 } = require("../controllers/projectController");
 
@@ -31,6 +32,7 @@ router.post("/:id/envs/:env/secrets", authMiddleware, requireRole("owner", "admi
 
 router.post("/:id/deploy", authMiddleware, requireRole("owner", "admin", "developer"), audit("deployment.trigger", "deployment"), triggerDeployment);
 router.post("/:id/rollback", authMiddleware, requireRole("owner", "admin", "developer"), audit("deployment.rollback", "deployment"), rollbackDeployment);
+router.post("/:id/deploy/cancel", authMiddleware, requireRole("owner", "admin", "developer"), audit("deployment.cancel", "deployment"), cancelDeployment);
 router.get("/:id/deploy/history", authMiddleware, getDeploymentHistory);
 
 module.exports = router;

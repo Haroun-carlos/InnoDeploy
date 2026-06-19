@@ -533,42 +533,7 @@ const startGithubOAuth = async (req, res, next) => {
   try {
     const githubClientId = getGithubClientId();
     const githubClientSecret = getGithubClientSecret();
-    const isDemoMode = String(process.env.DEMO_MODE || "").toLowerCase() === "true";
-    if (isDemoMode || !githubClientId || !githubClientSecret) {
-      if (isDemoMode) {
-        const mongoose = require("mongoose");
-        const nextPath = sanitizeNextPath(req.query.next);
-        const mode = req.query.mode === "connect" ? "connect" : "auth";
-        const userId = req.query.userId;
-
-        let user;
-        if (userId && mongoose.Types.ObjectId.isValid(userId)) {
-          user = await User.findById(userId);
-        }
-        if (!user) {
-          user = await User.findOne({ email: "owner@innodeploy.io" });
-        }
-
-        if (user) {
-          user.github = {
-            username: "owner",
-            accessToken: "mock-github-access-token",
-            connectedAt: new Date()
-          };
-          await user.save();
-        }
-
-        const { accessToken, refreshToken } = await issueAuthTokens(user);
-
-        return redirectWithResult(res, {
-          accessToken,
-          refreshToken,
-          user: encodeUserParam({ id: String(user._id), name: user.name, email: user.email, role: user.role }),
-          ...(nextPath ? { next: nextPath } : {}),
-          ...(mode === "connect" ? { mode } : {}),
-        });
-      }
-
+    if (!githubClientId || !githubClientSecret) {
       return redirectWithResult(res, {
         error: "github_oauth_not_configured",
         reason: "Missing GITHUB_CLIENT_ID or GITHUB_CLIENT_SECRET",

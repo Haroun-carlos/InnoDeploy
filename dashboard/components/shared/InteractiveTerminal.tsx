@@ -65,6 +65,7 @@ export default function InteractiveTerminal({ height = 260 }: InteractiveTermina
       term.loadAddon(fit);
       term.open(containerRef.current);
       fit.fit();
+      term.focus();
 
       termRef.current = term;
       fitRef.current = fit;
@@ -189,7 +190,9 @@ export default function InteractiveTerminal({ height = 260 }: InteractiveTermina
       </span>
       <div
         ref={containerRef}
-        className="rounded-md border border-[#30363d] overflow-hidden"
+        tabIndex={0}
+        onClick={() => termRef.current?.focus()}
+        className="rounded-md border border-[#30363d] overflow-hidden outline-none cursor-text"
         style={{ height, background: "#0d1117" }}
       />
     </div>
