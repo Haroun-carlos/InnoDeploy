@@ -122,25 +122,20 @@ const listRepositoryDirectories = async (req, res, next) => {
 
     const payload = await treeResponse.json();
     const tree = Array.isArray(payload.tree) ? payload.tree : [];
-    const directories = new Set([""]);
+    const directories = new Set();
 
     for (const entry of tree) {
-      if (!entry || entry.type !== "tree" || typeof entry.path !== "string") {
+      if (!entry || typeof entry.path !== "string") {
         continue;
       }
 
       const normalized = entry.path.replace(/^\/+/, "").replace(/\/+$/, "");
-      if (!normalized) {
+      if (!normalized || !normalized.endsWith("package.json")) {
         continue;
       }
 
-      const parts = normalized.split("/");
-      for (let index = 1; index <= parts.length; index += 1) {
-        const nextPath = parts.slice(0, index).join("/");
-        if (nextPath) {
-          directories.add(nextPath);
-        }
-      }
+      const directory = normalized === "package.json" ? "" : normalized.slice(0, -"package.json".length).replace(/\/+$/, "");
+      directories.add(directory);
     }
 
     return res.json({

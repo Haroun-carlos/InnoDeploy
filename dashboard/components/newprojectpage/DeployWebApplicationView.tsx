@@ -135,7 +135,7 @@ export default function DeployWebApplicationView() {
     } catch (err: unknown) {
       const apiErr = err as GithubApiError;
       setError(apiErr.response?.data?.message || "Unable to load repository directories.");
-      setRepositoryDirectories([""]);
+      setRepositoryDirectories([]);
     } finally {
       setDirectoriesLoading(false);
     }
@@ -155,6 +155,10 @@ export default function DeployWebApplicationView() {
 
   const handleCreateProject = async () => {
     if (!selectedRepo) return;
+    if (!repositoryPath.trim() && !repositoryDirectories.includes("")) {
+      setError("Please select a subdirectory that contains package.json.");
+      return;
+    }
     setCreatingRepoId(selectedRepo.id);
     setError("");
     try {
@@ -228,7 +232,7 @@ export default function DeployWebApplicationView() {
                   disabled={directoriesLoading}
                   className="w-full rounded-md border border-slate-600/50 bg-[#091d3b] px-3 py-2 text-sm text-slate-100 outline-none focus:border-emerald-400 disabled:opacity-70"
                 >
-                  <option value="">Repository root</option>
+                  {repositoryDirectories.includes("") && <option value="">Repository root</option>}
                   {repositoryDirectories
                     .filter((directory) => directory !== "")
                     .map((directory) => (
@@ -240,7 +244,9 @@ export default function DeployWebApplicationView() {
                 <p className="mt-1 text-xs text-slate-400">
                   {directoriesLoading
                     ? "Loading subdirectories from the repository..."
-                    : "Choose the subdirectory that contains the app, or leave it on repository root."}
+                    : repositoryDirectories.length === 0
+                      ? "No package.json was found in this repository. Select a repo folder that contains a Node app root."
+                      : "Choose the subdirectory that contains the app, or leave it on repository root."}
                 </p>
               </div>
 
@@ -332,7 +338,7 @@ export default function DeployWebApplicationView() {
 
               <button
                 type="button"
-                disabled={creatingRepoId === selectedRepo.id}
+                disabled={creatingRepoId === selectedRepo.id || (!repositoryPath.trim() && !repositoryDirectories.includes("")) || directoriesLoading}
                 onClick={() => void handleCreateProject()}
                 className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-md bg-emerald-500 px-5 text-sm font-semibold text-white transition hover:bg-emerald-400 disabled:cursor-not-allowed disabled:opacity-70"
               >
