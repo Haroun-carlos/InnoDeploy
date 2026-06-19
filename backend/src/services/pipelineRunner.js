@@ -558,6 +558,34 @@ const runProcess = ({ command, args = [], cwd, shell = false, timeoutMs = RUNNER
 
 const asPosixPath = (inputPath) => String(inputPath || "").replace(/\\/g, "/");
 
+const pathExists = async (candidate) => {
+  try {
+    await fs.access(candidate);
+    return true;
+  } catch {
+    return false;
+  }
+};
+
+// Finds immediate subdirectories that contain a package.json — used to give a clear
+// hint when a monorepo's app lives in a subfolder and repositoryPath wasn't set.
+const findPackageJsonSubdirs = async (rootDir) => {
+  const found = [];
+  try {
+    const entries = await fs.readdir(rootDir, { withFileTypes: true });
+    for (const entry of entries) {
+      if (entry.isDirectory() && entry.name !== ".git" && entry.name !== "node_modules") {
+        if (await pathExists(path.join(rootDir, entry.name, "package.json"))) {
+          found.push(entry.name);
+        }
+      }
+    }
+  } catch {
+    // ignore
+  }
+  return found;
+};
+
 const normalizeRepositoryPath = (value) => {
   const cleaned = String(value || "")
     .trim()
@@ -694,6 +722,24 @@ const prepareWorkspace = async ({ runId, project, branch }) => {
       output: repositoryPath
         ? `Repository path '${repositoryPath}' does not exist in the cloned repository`
         : `Repository workspace is unavailable`,
+      durationMs: cloneResult.durationMs,
+    };
+  }
+
+  // Clear, actionable error for the most common misconfiguration: a monorepo whose
+  // package.json lives in a subdirectory while the project's repositoryPath is unset
+  // or wrong. Without this, the stage just emits a cryptic "ENOENT package.json".
+  if (!(await pathExists(path.join(workspace, "package.json")))) {
+    const candidates = await findPackageJsonSubdirs(runWorkspace);
+    const where = repositoryPath ? `path '${repositoryPath}'` : "repository root";
+    const hint = candidates.length
+      ? ` Found package.json in subdirector${candidates.length > 1 ? "ies" : "y"}: ${candidates.join(", ")}. Set the project's "Repository path" to the folder that contains your app (e.g. "${candidates[0]}").`
+      : "";
+    return {
+      success: false,
+      workspaceRoot: runWorkspace,
+      workspace,
+      output: `No package.json found at the ${where}.${hint}`,
       durationMs: cloneResult.durationMs,
     };
   }

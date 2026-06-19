@@ -279,7 +279,7 @@ const updateProject = async (req, res, next) => {
     }
 
     const allowedStatus = ["running", "stopped", "failed"];
-    const { name, description, repoUrl, branch, status, envCount, lastDeployAt } = req.body;
+    const { name, description, repoUrl, repositoryPath, branch, status, envCount, lastDeployAt } = req.body;
 
     if (name !== undefined) {
       const normalizedName = String(name).trim();
@@ -305,6 +305,9 @@ const updateProject = async (req, res, next) => {
     }
     if (repoUrl !== undefined) {
       project.repoUrl = String(repoUrl).trim();
+    }
+    if (repositoryPath !== undefined) {
+      project.repositoryPath = normalizeRepositoryPath(repositoryPath);
     }
     if (branch !== undefined) {
       project.branch = String(branch).trim() || "main";

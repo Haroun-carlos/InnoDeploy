@@ -80,12 +80,12 @@ const normalizeRepositoryPath = (value) => {
   return normalized;
 };
 
-const runProcess = ({ command, args = [], cwd, timeoutMs = DEPLOY_STEP_TIMEOUT_MS }) =>
+const runProcess = ({ command, args = [], cwd, shell = false, timeoutMs = DEPLOY_STEP_TIMEOUT_MS }) =>
   new Promise((resolve) => {
     const startedAt = Date.now();
     const child = spawn(command, args, {
       cwd,
-      shell: false,
+      shell,
       stdio: ["ignore", "pipe", "pipe"],
     });
 
@@ -966,7 +966,7 @@ const processDeploymentRun = async (runId) => {
         await emitRunSnapshot(run._id, "deploy-step-retry");
       }
 
-      result = await runProcess({ command: step.command, timeoutMs });
+      result = await runProcess({ command: step.command, timeoutMs, shell: true });
       if (result.success) {
         break;
       }
