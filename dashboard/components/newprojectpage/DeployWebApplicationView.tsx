@@ -42,6 +42,7 @@ export default function DeployWebApplicationView() {
 
   // Setup configuration step
   const [selectedRepo, setSelectedRepo] = useState<GithubRepository | null>(null);
+  const [repositoryPath, setRepositoryPath] = useState('');
   const [setupMode, setSetupMode] = useState<'automatic' | 'manual'>('automatic');
   const [installCommand, setInstallCommand] = useState('');
   const [buildCommand, setBuildCommand] = useState('');
@@ -116,6 +117,11 @@ export default function DeployWebApplicationView() {
   const handleBackToRepos = () => {
     setSelectedRepo(null);
     setError("");
+    setRepositoryPath('');
+    setSetupMode('automatic');
+    setInstallCommand('');
+    setBuildCommand('');
+    setStartCommand('');
   };
 
   const handleCreateProject = async () => {
@@ -126,6 +132,7 @@ export default function DeployWebApplicationView() {
       await projectApi.createProject({
         name: selectedRepo.name,
         repoUrl: selectedRepo.cloneUrl,
+        repositoryPath: repositoryPath.trim(),
         branch: selectedRepo.defaultBranch || "main",
         setupMode,
         installCommand: setupMode === 'automatic' ? installCommand : undefined,
@@ -183,6 +190,21 @@ export default function DeployWebApplicationView() {
             </header>
 
             <div className="px-5 py-5 space-y-5">
+              {/* Repository subdirectory */}
+              <div>
+                <label className="block text-sm font-medium text-slate-300 mb-1">Repository Subdirectory</label>
+                <input
+                  type="text"
+                  value={repositoryPath}
+                  onChange={(e) => setRepositoryPath(e.target.value)}
+                  placeholder="apps/web"
+                  className="w-full rounded-md border border-slate-600/50 bg-[#091d3b] px-3 py-2 text-sm text-slate-100 placeholder:text-slate-500 outline-none focus:border-emerald-400"
+                />
+                <p className="mt-1 text-xs text-slate-400">
+                  Optional. Leave blank to deploy from the repository root.
+                </p>
+              </div>
+
               {/* Setup Mode Toggle */}
               <div>
                 <p className="text-sm font-medium text-slate-200 mb-3">Pipeline Setup Mode</p>
