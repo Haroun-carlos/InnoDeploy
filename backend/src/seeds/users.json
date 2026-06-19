@@ -1,0 +1,3435 @@
+[
+  {
+    "_id": {
+      "$oid": "69ae0a599cc3b39a8f0ec367"
+    },
+    "name": "Haroun Razgallah",
+    "email": "haroun20041@gmail.com",
+    "passwordHash": "$2b$12$j27Je4hoKD2Zz4BXrRWX0uZwMYKE1I/EXZ0wLQUppxDSL.eO9h56i",
+    "role": "owner",
+    "organisationId": {
+      "$oid": "69ae0a599cc3b39a8f0ec365"
+    },
+    "createdAt": {
+      "$date": "2026-03-08T23:46:33.244Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-20T04:37:57.134Z"
+    },
+    "__v": 0,
+    "avatar": "https://lh3.googleusercontent.com/a/ACg8ocJ1HrPYC112lVKLP_LGrvtIuuZ8NWDmqm2Hmz9YEIqhBdg2sTzZ=s96-c",
+    "preferences": {
+      "language": "english",
+      "notifications": {
+        "email": true,
+        "push": true,
+        "slack": false
+      },
+      "theme": "system"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69b1fa712495817062992740"
+    },
+    "name": "Test User",
+    "email": "test@innodeploy.com",
+    "passwordHash": "$2b$12$MmUMMlla9c8Rtt4KwIx2VeSobuC30uc0mYXTM/.JKIJeYTE2CdHm6",
+    "role": "owner",
+    "organisationId": {
+      "$oid": "69b1fa71249581706299273e"
+    },
+    "createdAt": {
+      "$date": "2026-03-11T23:27:45.674Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-11T23:27:45.674Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69b6545905099da588f94958"
+    },
+    "name": "Verify User",
+    "email": "verify20260315074025@example.com",
+    "passwordHash": "$2b$12$H9gXiQe5fYqkzEBUeh8kFuK8tOxOKfiTwY0468k8N.sRY/vX7hG8a",
+    "role": "developer",
+    "organisationId": null,
+    "createdAt": {
+      "$date": "2026-03-15T06:40:25.876Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-15T06:40:25.876Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69bcde6a2c58235ee2f34f19"
+    },
+    "name": "Deploy Smoke",
+    "email": "deploy.smoke.1773985385@example.com",
+    "passwordHash": "$2b$12$CKV6U.r1dDeQA2Atmvo42eHyV8nEbqlKBShBrltTZ76Ha4WnjSznm",
+    "role": "owner",
+    "organisationId": {
+      "$oid": "69bcde6a2c58235ee2f34f17"
+    },
+    "avatar": null,
+    "preferences": {
+      "notifications": {
+        "email": true,
+        "slack": false,
+        "push": true
+      },
+      "theme": "system",
+      "language": "english",
+      "defaultProject": null
+    },
+    "createdAt": {
+      "$date": "2026-03-20T05:43:06.261Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-20T05:43:06.261Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69bce1452c58235ee2f34f20"
+    },
+    "name": "Deploy Smoke",
+    "email": "deploy.smoke.1773986117@example.com",
+    "passwordHash": "$2b$12$SBE1l59h6C2Qsbxvu3CUUOf1n6gC/h3CmsTAArqRAYwn96ntvnXy2",
+    "role": "owner",
+    "organisationId": {
+      "$oid": "69bce1452c58235ee2f34f1e"
+    },
+    "avatar": null,
+    "preferences": {
+      "notifications": {
+        "email": true,
+        "slack": false,
+        "push": true
+      },
+      "theme": "system",
+      "language": "english",
+      "defaultProject": null
+    },
+    "createdAt": {
+      "$date": "2026-03-20T05:55:17.154Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-20T05:55:17.154Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69c29e79d594c5eff0b4deb9"
+    },
+    "name": "Smoke User",
+    "email": "smoke+20260324152353@example.com",
+    "passwordHash": "$2b$12$YInCiOPMpTZaVOL2iszEreeGYOIdNzOj3m/TX.oKUdI/OT3X6XVZu",
+    "role": "owner",
+    "organisationId": {
+      "$oid": "69c29e79d594c5eff0b4deb7"
+    },
+    "avatar": null,
+    "preferences": {
+      "notifications": {
+        "email": true,
+        "slack": false,
+        "push": true
+      },
+      "theme": "system",
+      "language": "english",
+      "defaultProject": null
+    },
+    "createdAt": {
+      "$date": "2026-03-24T14:23:53.874Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-24T14:23:53.874Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69c29eb2d594c5eff0b4decc"
+    },
+    "name": "Smoke User",
+    "email": "smoke+20260324152450@example.com",
+    "passwordHash": "$2b$12$eoCJFAzxxtqlZpJusQufZeKez9KljKmSUn0legRstUg7iZAJVawJK",
+    "role": "owner",
+    "organisationId": {
+      "$oid": "69c29eb2d594c5eff0b4deca"
+    },
+    "avatar": null,
+    "preferences": {
+      "notifications": {
+        "email": true,
+        "slack": false,
+        "push": true
+      },
+      "theme": "system",
+      "language": "english",
+      "defaultProject": null
+    },
+    "createdAt": {
+      "$date": "2026-03-24T14:24:50.252Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-24T14:24:50.252Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69c29ed3d594c5eff0b4ded4"
+    },
+    "name": "Smoke User",
+    "email": "smoke2+20260324152523@example.com",
+    "passwordHash": "$2b$12$/ENzO0JkM2fRappoCo1NgOWo0olTl//okQSKnJv6U20UlE0VNgL8G",
+    "role": "owner",
+    "organisationId": {
+      "$oid": "69c29ed3d594c5eff0b4ded2"
+    },
+    "avatar": null,
+    "preferences": {
+      "notifications": {
+        "email": true,
+        "slack": false,
+        "push": true
+      },
+      "theme": "system",
+      "language": "english",
+      "defaultProject": null
+    },
+    "createdAt": {
+      "$date": "2026-03-24T14:25:23.279Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-24T14:25:23.279Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69c29ef0d594c5eff0b4dee4"
+    },
+    "name": "Smoke User",
+    "email": "smoke3+20260324152552@example.com",
+    "passwordHash": "$2b$12$ED4vXHfVYsjafSXnUPjgG.obQUlA/1uzWC2owJgo5D8nTb18uFVgy",
+    "role": "owner",
+    "organisationId": {
+      "$oid": "69c29ef0d594c5eff0b4dee2"
+    },
+    "avatar": null,
+    "preferences": {
+      "notifications": {
+        "email": true,
+        "slack": false,
+        "push": true
+      },
+      "theme": "system",
+      "language": "english",
+      "defaultProject": null
+    },
+    "createdAt": {
+      "$date": "2026-03-24T14:25:52.600Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-24T14:25:52.600Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69c29efdd594c5eff0b4def2"
+    },
+    "name": "Smoke User",
+    "email": "smoke4+20260324152605@example.com",
+    "passwordHash": "$2b$12$w1a51Z1lhD4iIzS4gm0ulO4s2MPGsLFbo10MxvSZabf8C78/v.0om",
+    "role": "owner",
+    "organisationId": {
+      "$oid": "69c29efdd594c5eff0b4def0"
+    },
+    "avatar": null,
+    "preferences": {
+      "notifications": {
+        "email": true,
+        "slack": false,
+        "push": true
+      },
+      "theme": "system",
+      "language": "english",
+      "defaultProject": null
+    },
+    "createdAt": {
+      "$date": "2026-03-24T14:26:05.661Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-24T14:26:05.661Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69c2abbd0f769c6176c9bf01"
+    },
+    "name": "Test User",
+    "email": "test@example.com",
+    "passwordHash": "$2b$12$GM9j.5Qbk/VUrrLL2UPFD.fPDSB7lNWjROqQMEI2RDng9hYkE3rlC",
+    "role": "owner",
+    "organisationId": {
+      "$oid": "69c2abbd0f769c6176c9beff"
+    },
+    "avatar": null,
+    "preferences": {
+      "notifications": {
+        "email": true,
+        "slack": false,
+        "push": true
+      },
+      "theme": "system",
+      "language": "english",
+      "defaultProject": null
+    },
+    "createdAt": {
+      "$date": "2026-03-24T15:20:29.922Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-24T15:20:29.922Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69c9579da8108782a9e0e2ee"
+    },
+    "name": "Haroun",
+    "email": "mohamed.haroun.razgallah@horizon-tech.tn",
+    "passwordHash": "$2b$12$KpnOH8/XUypiRLIXX7fDIe07wWEajkbTLyU00LLC5Uw8A54hmGO7O",
+    "role": "owner",
+    "organisationId": {
+      "$oid": "69c959d5cd5b890ba6cfae5f"
+    },
+    "avatar": "https://avatars.githubusercontent.com/u/190758431?v=4",
+    "github": {
+      "username": "Haroun-carlos",
+      "accessToken": "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",
+      "connectedAt": {
+        "$date": "2026-06-12T21:02:32.792Z"
+      }
+    },
+    "preferences": {
+      "notifications": {
+        "email": true,
+        "slack": false,
+        "push": true
+      },
+      "theme": "system",
+      "language": "english",
+      "defaultProject": null
+    },
+    "createdAt": {
+      "$date": "2026-03-29T16:47:25.562Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-12T21:02:32.795Z"
+    },
+    "__v": 0,
+    "deactivatedReason": "",
+    "isActive": true,
+    "companySize": "",
+    "emailVerified": false,
+    "newsletter": true,
+    "referralSource": "",
+    "twoFactorEnabled": false,
+    "useCase": ""
+  },
+  {
+    "_id": {
+      "$oid": "69cb040f90a4c2456ea66448"
+    },
+    "name": "Test User",
+    "email": "test_integration@example.com",
+    "passwordHash": "$2b$12$0gtiv.luw1ocXhVUNtjBXO38Morh/ULRUv5LswRv/Pisjta/hWOUu",
+    "role": "developer",
+    "organisationId": null,
+    "avatar": null,
+    "github": {
+      "username": null,
+      "accessToken": null,
+      "connectedAt": null
+    },
+    "preferences": {
+      "notifications": {
+        "email": true,
+        "slack": false,
+        "push": true
+      },
+      "theme": "system",
+      "language": "english",
+      "defaultProject": null
+    },
+    "createdAt": {
+      "$date": "2026-03-30T23:15:27.431Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-30T23:15:27.431Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69d85a041a5c1efc34ce60d7"
+    },
+    "name": "Test User",
+    "email": "test_1775786500170@example.com",
+    "passwordHash": "$2b$12$c50xNPE7MPXOicherfJ6x.1ErSrmFrFvmzogAY11AHpKKjnmC.mgu",
+    "role": "developer",
+    "isActive": true,
+    "deactivatedAt": null,
+    "deactivatedReason": "",
+    "organisationId": null,
+    "avatar": null,
+    "github": {
+      "username": null,
+      "accessToken": null,
+      "connectedAt": null
+    },
+    "preferences": {
+      "notifications": {
+        "email": true,
+        "slack": false,
+        "push": true
+      },
+      "theme": "system",
+      "language": "english",
+      "defaultProject": null
+    },
+    "createdAt": {
+      "$date": "2026-04-10T02:01:40.221Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-10T02:01:40.221Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69d85a3c1a5c1efc34ce60df"
+    },
+    "name": "Test User",
+    "email": "test_1775786556222@example.com",
+    "passwordHash": "$2b$12$8rZfOoshXcPGQMFrv32Z3O1kWjS6MiJBPG/ggnsxWln7gXH1xa46K",
+    "role": "owner",
+    "isActive": true,
+    "deactivatedAt": null,
+    "deactivatedReason": "",
+    "organisationId": {
+      "$oid": "69d85a3c1a5c1efc34ce60dd"
+    },
+    "avatar": null,
+    "github": {
+      "username": null,
+      "accessToken": null,
+      "connectedAt": null
+    },
+    "preferences": {
+      "notifications": {
+        "email": true,
+        "slack": false,
+        "push": true
+      },
+      "theme": "system",
+      "language": "english",
+      "defaultProject": null
+    },
+    "createdAt": {
+      "$date": "2026-04-10T02:02:36.259Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-10T02:02:36.259Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69d882eb990887fd0141e9e8"
+    },
+    "name": "CarlitossX",
+    "email": "carlitossx749@gmail.com",
+    "emailVerified": false,
+    "emailVerificationToken": "98abdd206f2078a4aa9cfd9f80c22d08fe60748c3c4185f254baf0ce28074ac1",
+    "emailVerificationExpiresAt": {
+      "$date": "2026-04-11T04:56:11.801Z"
+    },
+    "passwordHash": "$2b$12$cchC98MSnBhLYx8tcIkS0ep4DO2pvEwATYNSyA7U4Ht6x0fCmkIy.",
+    "role": "owner",
+    "isActive": true,
+    "deactivatedAt": null,
+    "deactivatedReason": "",
+    "organisationId": {
+      "$oid": "69d882eb990887fd0141e9e6"
+    },
+    "recoveryEmail": null,
+    "recoveryPhone": null,
+    "companySize": "",
+    "useCase": "",
+    "referralSource": "",
+    "twoFactorEnabled": false,
+    "twoFactorSecret": null,
+    "newsletter": true,
+    "avatar": null,
+    "github": {
+      "username": null,
+      "accessToken": null,
+      "connectedAt": null
+    },
+    "preferences": {
+      "notifications": {
+        "email": true,
+        "slack": false,
+        "push": true
+      },
+      "theme": "system",
+      "language": "english",
+      "defaultProject": null
+    },
+    "createdAt": {
+      "$date": "2026-04-10T04:56:11.828Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-10T04:56:11.828Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a212739dc1eef616abed426"
+    },
+    "name": "3mor",
+    "email": "bouassidaomar9@gmail.com",
+    "emailVerified": false,
+    "emailVerificationToken": "8bbed0ce7d219f8282ebdc09b142741db18735062d1c3b78edbbccc2ad0d529c",
+    "emailVerificationExpiresAt": {
+      "$date": "2026-06-05T07:20:25.148Z"
+    },
+    "passwordHash": "$2b$12$Q2u3wNw/4vcM3p3k3qsaD.SLqOneVCYO6PcwFWU6ERetOkIGS/mHW",
+    "role": "owner",
+    "isActive": true,
+    "deactivatedAt": null,
+    "deactivatedReason": "",
+    "organisationId": {
+      "$oid": "6a212739dc1eef616abed424"
+    },
+    "recoveryEmail": null,
+    "recoveryPhone": null,
+    "companySize": "",
+    "useCase": "",
+    "referralSource": "",
+    "twoFactorEnabled": false,
+    "twoFactorSecret": null,
+    "newsletter": true,
+    "avatar": null,
+    "github": {
+      "username": null,
+      "accessToken": null,
+      "connectedAt": null
+    },
+    "preferences": {
+      "notifications": {
+        "email": true,
+        "slack": false,
+        "push": true
+      },
+      "theme": "system",
+      "language": "english",
+      "defaultProject": null
+    },
+    "createdAt": {
+      "$date": "2026-06-04T07:20:25.181Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-04T07:20:25.181Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2b4f4213a692187fa2a4c3"
+    },
+    "name": "Test User",
+    "email": "testdemo@innodeploy.com",
+    "emailVerified": false,
+    "emailVerificationToken": "6ddf2dd4f5e47899f2524cafc795964363b086173ea25dc0273fe929ba7b37d0",
+    "emailVerificationExpiresAt": {
+      "$date": "2026-06-13T00:13:54.148Z"
+    },
+    "passwordHash": "$2b$12$GIVlKJJwu.Vb4b5fIuriLeAZU4rtqncN5QM5CAEsCrva/XQiMkmLy",
+    "role": "owner",
+    "isActive": true,
+    "deactivatedAt": null,
+    "deactivatedReason": "",
+    "organisationId": {
+      "$oid": "6a2b4f4213a692187fa2a4c1"
+    },
+    "recoveryEmail": null,
+    "recoveryPhone": null,
+    "companySize": "",
+    "useCase": "",
+    "referralSource": "",
+    "twoFactorEnabled": false,
+    "twoFactorSecret": null,
+    "newsletter": true,
+    "avatar": null,
+    "github": {
+      "username": null,
+      "accessToken": null,
+      "connectedAt": null
+    },
+    "preferences": {
+      "notifications": {
+        "email": true,
+        "slack": false,
+        "push": true
+      },
+      "theme": "system",
+      "language": "english",
+      "defaultProject": null
+    },
+    "createdAt": {
+      "$date": "2026-06-12T00:13:54.194Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-12T00:13:54.194Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2df240883006e9e1cde969"
+    },
+    "name": "Admin",
+    "email": "admin@innodeploy.io",
+    "emailVerified": true,
+    "emailVerificationToken": null,
+    "emailVerificationExpiresAt": null,
+    "passwordHash": "$2b$12$q.Uht.b.sTV9s6cCSZQwD.QMinuJ9gTnHYMvL3bjarRF1qSuGx252",
+    "role": "admin",
+    "isActive": true,
+    "deactivatedAt": null,
+    "deactivatedReason": "",
+    "organisationId": {
+      "$oid": "6a2c6b1c90842fe284841de6"
+    },
+    "recoveryEmail": null,
+    "recoveryPhone": null,
+    "companySize": "11-50",
+    "useCase": "startups",
+    "referralSource": "",
+    "twoFactorEnabled": false,
+    "twoFactorSecret": null,
+    "newsletter": true,
+    "avatar": null,
+    "github": {
+      "username": null,
+      "accessToken": null,
+      "connectedAt": null
+    },
+    "preferences": {
+      "theme": "dark",
+      "language": "english",
+      "defaultProject": null,
+      "notifications": {
+        "email": true,
+        "slack": false,
+        "push": true
+      }
+    },
+    "createdAt": {
+      "$date": "2026-06-14T00:13:52.448Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-19T14:18:53.461Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2df240883006e9e1cde96d"
+    },
+    "name": "Developer",
+    "email": "developer@innodeploy.io",
+    "emailVerified": true,
+    "emailVerificationToken": null,
+    "emailVerificationExpiresAt": null,
+    "passwordHash": "$2b$12$UxeKCyA/889VF6pp0xpMIOOR6VviHoHbyZNx5h.kMf.d/hI7edTeC",
+    "role": "developer",
+    "isActive": true,
+    "deactivatedAt": null,
+    "deactivatedReason": "",
+    "organisationId": {
+      "$oid": "6a2c6b1c90842fe284841de6"
+    },
+    "recoveryEmail": null,
+    "recoveryPhone": null,
+    "companySize": "11-50",
+    "useCase": "startups",
+    "referralSource": "",
+    "twoFactorEnabled": false,
+    "twoFactorSecret": null,
+    "newsletter": true,
+    "avatar": null,
+    "github": {
+      "username": "haroun-mock",
+      "accessToken": "mock-github-access-token",
+      "connectedAt": {
+        "$date": "2026-06-14T03:04:17.932Z"
+      }
+    },
+    "preferences": {
+      "theme": "dark",
+      "language": "english",
+      "defaultProject": null,
+      "notifications": {
+        "email": true,
+        "slack": false,
+        "push": true
+      }
+    },
+    "createdAt": {
+      "$date": "2026-06-14T00:13:52.688Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-19T14:18:53.705Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2df240883006e9e1cde971"
+    },
+    "name": "Viewer",
+    "email": "viewer@innodeploy.io",
+    "emailVerified": true,
+    "emailVerificationToken": null,
+    "emailVerificationExpiresAt": null,
+    "passwordHash": "$2b$12$ii.j.feMtmOHLzBOZWdnoeYNl0QphuwiHaQSsbjzOwa.gvT0iMR0S",
+    "role": "viewer",
+    "isActive": true,
+    "deactivatedAt": null,
+    "deactivatedReason": "",
+    "organisationId": {
+      "$oid": "6a2c6b1c90842fe284841de6"
+    },
+    "recoveryEmail": null,
+    "recoveryPhone": null,
+    "companySize": "11-50",
+    "useCase": "startups",
+    "referralSource": "",
+    "twoFactorEnabled": false,
+    "twoFactorSecret": null,
+    "newsletter": true,
+    "avatar": null,
+    "github": {
+      "username": null,
+      "accessToken": null,
+      "connectedAt": null
+    },
+    "preferences": {
+      "theme": "dark",
+      "language": "english",
+      "defaultProject": null,
+      "notifications": {
+        "email": true,
+        "slack": false,
+        "push": true
+      }
+    },
+    "createdAt": {
+      "$date": "2026-06-14T00:13:52.943Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-19T14:18:53.944Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2df61e7245fd4cba8c34bd"
+    },
+    "name": "E2E User 1781397022817-lwvju4",
+    "email": "e2e-1781397022817-lwvju4@example.com",
+    "emailVerified": false,
+    "emailVerificationToken": "a979d1a9af088d137f8ecda44e8a3d937599264184807e200e44e2f28ed24ba9",
+    "emailVerificationExpiresAt": {
+      "$date": "2026-06-15T00:30:22.892Z"
+    },
+    "passwordHash": "$2b$12$LmZ05eIkpGFade9AV7YTxenVaex/KGCLnhSJw8O3WSrcSEPSBVdJe",
+    "role": "owner",
+    "isActive": true,
+    "deactivatedAt": null,
+    "deactivatedReason": "",
+    "organisationId": {
+      "$oid": "6a2df61e7245fd4cba8c34bb"
+    },
+    "recoveryEmail": null,
+    "recoveryPhone": null,
+    "companySize": "",
+    "useCase": "",
+    "referralSource": "",
+    "twoFactorEnabled": false,
+    "twoFactorSecret": null,
+    "newsletter": true,
+    "avatar": null,
+    "github": {
+      "username": null,
+      "accessToken": null,
+      "connectedAt": null
+    },
+    "preferences": {
+      "notifications": {
+        "email": true,
+        "slack": false,
+        "push": true
+      },
+      "theme": "system",
+      "language": "english",
+      "defaultProject": null
+    },
+    "createdAt": {
+      "$date": "2026-06-14T00:30:22.914Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T00:30:22.914Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2df61e7245fd4cba8c34c5"
+    },
+    "name": "E2E User 1781397022844-ncmy4e",
+    "email": "e2e-1781397022844-ncmy4e@example.com",
+    "emailVerified": false,
+    "emailVerificationToken": "f19d0514a04e944996e65b5859cdcb522fbc28707dc7e0bf8bb6137faf237804",
+    "emailVerificationExpiresAt": {
+      "$date": "2026-06-15T00:30:22.947Z"
+    },
+    "passwordHash": "$2b$12$mbW5fp76SfnD.UShd5ul/eQtgPJdBTO076IdPO7y14ZfibMYGYD02",
+    "role": "owner",
+    "isActive": true,
+    "deactivatedAt": null,
+    "deactivatedReason": "",
+    "organisationId": {
+      "$oid": "6a2df61e7245fd4cba8c34c3"
+    },
+    "recoveryEmail": null,
+    "recoveryPhone": null,
+    "companySize": "",
+    "useCase": "",
+    "referralSource": "",
+    "twoFactorEnabled": false,
+    "twoFactorSecret": null,
+    "newsletter": true,
+    "avatar": null,
+    "github": {
+      "username": null,
+      "accessToken": null,
+      "connectedAt": null
+    },
+    "preferences": {
+      "notifications": {
+        "email": true,
+        "slack": false,
+        "push": true
+      },
+      "theme": "system",
+      "language": "english",
+      "defaultProject": null
+    },
+    "createdAt": {
+      "$date": "2026-06-14T00:30:22.957Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T00:30:22.957Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2df61e7245fd4cba8c34c1"
+    },
+    "name": "E2E User 1781397022861-ioiwi4",
+    "email": "e2e-1781397022861-ioiwi4@example.com",
+    "emailVerified": false,
+    "emailVerificationToken": "dadd6900e021c8fdfcf4cc588555a24cf8c123674e127f543a7e49c263bba690",
+    "emailVerificationExpiresAt": {
+      "$date": "2026-06-15T00:30:22.924Z"
+    },
+    "passwordHash": "$2b$12$T9JXRESy3KgiTp5gHSLkCO5xOYkfnuK/mAZkl9uPhU2OEje2K8Gg.",
+    "role": "owner",
+    "isActive": true,
+    "deactivatedAt": null,
+    "deactivatedReason": "",
+    "organisationId": {
+      "$oid": "6a2df61e7245fd4cba8c34bf"
+    },
+    "recoveryEmail": null,
+    "recoveryPhone": null,
+    "companySize": "",
+    "useCase": "",
+    "referralSource": "",
+    "twoFactorEnabled": false,
+    "twoFactorSecret": null,
+    "newsletter": true,
+    "avatar": null,
+    "github": {
+      "username": null,
+      "accessToken": null,
+      "connectedAt": null
+    },
+    "preferences": {
+      "notifications": {
+        "email": true,
+        "slack": false,
+        "push": true
+      },
+      "theme": "system",
+      "language": "english",
+      "defaultProject": null
+    },
+    "createdAt": {
+      "$date": "2026-06-14T00:30:22.936Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T00:30:22.936Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2df61e7245fd4cba8c34c9"
+    },
+    "name": "E2E User 1781397022858-93iw9l",
+    "email": "e2e-1781397022858-93iw9l@example.com",
+    "emailVerified": false,
+    "emailVerificationToken": "e9dbb1af47f2ddab6459e2ccdb303bc94d90e28da922770e3bc7fa9b8209ef6e",
+    "emailVerificationExpiresAt": {
+      "$date": "2026-06-15T00:30:22.983Z"
+    },
+    "passwordHash": "$2b$12$EUSfdC1Ok8h9H0f5ytaMr.ehSI4FwapaQq5E1KxWBWzjgykW5Dbf.",
+    "role": "owner",
+    "isActive": true,
+    "deactivatedAt": null,
+    "deactivatedReason": "",
+    "organisationId": {
+      "$oid": "6a2df61e7245fd4cba8c34c7"
+    },
+    "recoveryEmail": null,
+    "recoveryPhone": null,
+    "companySize": "",
+    "useCase": "",
+    "referralSource": "",
+    "twoFactorEnabled": false,
+    "twoFactorSecret": null,
+    "newsletter": true,
+    "avatar": null,
+    "github": {
+      "username": null,
+      "accessToken": null,
+      "connectedAt": null
+    },
+    "preferences": {
+      "notifications": {
+        "email": true,
+        "slack": false,
+        "push": true
+      },
+      "theme": "system",
+      "language": "english",
+      "defaultProject": null
+    },
+    "createdAt": {
+      "$date": "2026-06-14T00:30:22.993Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T00:30:22.993Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2df662ebfc391378bbd750"
+    },
+    "name": "E2E User 1781397090940-nqas9u",
+    "email": "e2e-1781397090940-nqas9u@example.com",
+    "emailVerified": false,
+    "emailVerificationToken": "a16350f8e95f243f47dd2e90bcc55a2fade8f3541e51dc91597a30e65818f107",
+    "emailVerificationExpiresAt": {
+      "$date": "2026-06-15T00:31:30.981Z"
+    },
+    "passwordHash": "$2b$12$1qbjkYH5xYopkFEoD9pd5OiUHdqI8Rfqr8.55Yw0M9pj35H/imQba",
+    "role": "owner",
+    "isActive": true,
+    "deactivatedAt": null,
+    "deactivatedReason": "",
+    "organisationId": {
+      "$oid": "6a2df662ebfc391378bbd74e"
+    },
+    "recoveryEmail": null,
+    "recoveryPhone": null,
+    "companySize": "",
+    "useCase": "",
+    "referralSource": "",
+    "twoFactorEnabled": false,
+    "twoFactorSecret": null,
+    "newsletter": true,
+    "avatar": null,
+    "github": {
+      "username": null,
+      "accessToken": null,
+      "connectedAt": null
+    },
+    "preferences": {
+      "notifications": {
+        "email": true,
+        "slack": false,
+        "push": true
+      },
+      "theme": "system",
+      "language": "english",
+      "defaultProject": null
+    },
+    "createdAt": {
+      "$date": "2026-06-14T00:31:30.991Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T00:31:30.991Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2df68676fa87dec46c126d"
+    },
+    "name": "E2E User 1781397126527-pv0oiq",
+    "email": "e2e-1781397126527-pv0oiq@example.com",
+    "emailVerified": false,
+    "emailVerificationToken": "edb934a646f750d9b1b855affe38658862233345e750bcae6bbf60763016e2b0",
+    "emailVerificationExpiresAt": {
+      "$date": "2026-06-15T00:32:06.648Z"
+    },
+    "passwordHash": "$2b$12$ygIClr.VUYKCaWpBdTPBVOpPAdzrFi7kH.FeIHEzD8LFW0Ql3gHOq",
+    "role": "owner",
+    "isActive": true,
+    "deactivatedAt": null,
+    "deactivatedReason": "",
+    "organisationId": {
+      "$oid": "6a2df68676fa87dec46c126b"
+    },
+    "recoveryEmail": null,
+    "recoveryPhone": null,
+    "companySize": "",
+    "useCase": "",
+    "referralSource": "",
+    "twoFactorEnabled": false,
+    "twoFactorSecret": null,
+    "newsletter": true,
+    "avatar": null,
+    "github": {
+      "username": null,
+      "accessToken": null,
+      "connectedAt": null
+    },
+    "preferences": {
+      "notifications": {
+        "email": true,
+        "slack": false,
+        "push": true
+      },
+      "theme": "system",
+      "language": "english",
+      "defaultProject": null
+    },
+    "createdAt": {
+      "$date": "2026-06-14T00:32:06.672Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T00:32:06.672Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2df68676fa87dec46c1271"
+    },
+    "name": "E2E User 1781397126599-lwkfod",
+    "email": "e2e-1781397126599-lwkfod@example.com",
+    "emailVerified": false,
+    "emailVerificationToken": "3941f40537adceb02846c2eb2de90772e2a87e800d72cf01f6d2dfbc57f8db90",
+    "emailVerificationExpiresAt": {
+      "$date": "2026-06-15T00:32:06.681Z"
+    },
+    "passwordHash": "$2b$12$a8tjwqnXTtouvCri.bdYZuNueKtSAS1Y.6r3YFcHxFC7qZujd2s7e",
+    "role": "owner",
+    "isActive": true,
+    "deactivatedAt": null,
+    "deactivatedReason": "",
+    "organisationId": {
+      "$oid": "6a2df68676fa87dec46c126f"
+    },
+    "recoveryEmail": null,
+    "recoveryPhone": null,
+    "companySize": "",
+    "useCase": "",
+    "referralSource": "",
+    "twoFactorEnabled": false,
+    "twoFactorSecret": null,
+    "newsletter": true,
+    "avatar": null,
+    "github": {
+      "username": null,
+      "accessToken": null,
+      "connectedAt": null
+    },
+    "preferences": {
+      "notifications": {
+        "email": true,
+        "slack": false,
+        "push": true
+      },
+      "theme": "system",
+      "language": "english",
+      "defaultProject": null
+    },
+    "createdAt": {
+      "$date": "2026-06-14T00:32:06.691Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T00:32:06.691Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2df68676fa87dec46c1276"
+    },
+    "name": "E2E User 1781397126801-z3glv4",
+    "email": "e2e-1781397126801-z3glv4@example.com",
+    "emailVerified": false,
+    "emailVerificationToken": "554983a91ec57bb2dd4f73c0c5530690212bfdae01863e9e9119dfd71e539e1d",
+    "emailVerificationExpiresAt": {
+      "$date": "2026-06-15T00:32:06.841Z"
+    },
+    "passwordHash": "$2b$12$n3wgwnuYb3VIDHLvBTOq6OkSJca3mZjT9/dD2w./gK1G.iwuqSU/6",
+    "role": "owner",
+    "isActive": true,
+    "deactivatedAt": null,
+    "deactivatedReason": "",
+    "organisationId": {
+      "$oid": "6a2df68676fa87dec46c1273"
+    },
+    "recoveryEmail": null,
+    "recoveryPhone": null,
+    "companySize": "",
+    "useCase": "",
+    "referralSource": "",
+    "twoFactorEnabled": false,
+    "twoFactorSecret": null,
+    "newsletter": true,
+    "avatar": null,
+    "github": {
+      "username": "haroun-mock",
+      "accessToken": "mock-github-access-token",
+      "connectedAt": {
+        "$date": "2026-06-14T00:32:29.589Z"
+      }
+    },
+    "preferences": {
+      "notifications": {
+        "email": true,
+        "slack": false,
+        "push": true
+      },
+      "theme": "system",
+      "language": "english",
+      "defaultProject": null
+    },
+    "createdAt": {
+      "$date": "2026-06-14T00:32:06.853Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T00:32:29.592Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2df68676fa87dec46c1279"
+    },
+    "name": "E2E User 1781397126810-17ymqs",
+    "email": "e2e-1781397126810-17ymqs@example.com",
+    "emailVerified": false,
+    "emailVerificationToken": "f7a879c16c524363d6f3022e11f93c0c1f198e1e4f5dc160d0fc040794503e6f",
+    "emailVerificationExpiresAt": {
+      "$date": "2026-06-15T00:32:06.855Z"
+    },
+    "passwordHash": "$2b$12$NnoR9pTfmETSsO4jnQk8vuhdGWZz77jftu./3FkzaPrcidplNJ4Pi",
+    "role": "owner",
+    "isActive": true,
+    "deactivatedAt": null,
+    "deactivatedReason": "",
+    "organisationId": {
+      "$oid": "6a2df68676fa87dec46c1277"
+    },
+    "recoveryEmail": null,
+    "recoveryPhone": null,
+    "companySize": "",
+    "useCase": "",
+    "referralSource": "",
+    "twoFactorEnabled": false,
+    "twoFactorSecret": null,
+    "newsletter": true,
+    "avatar": null,
+    "github": {
+      "username": null,
+      "accessToken": null,
+      "connectedAt": null
+    },
+    "preferences": {
+      "notifications": {
+        "email": true,
+        "slack": false,
+        "push": true
+      },
+      "theme": "system",
+      "language": "english",
+      "defaultProject": null
+    },
+    "createdAt": {
+      "$date": "2026-06-14T00:32:06.867Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T00:32:06.867Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2df6e79335aeb2c2b26696"
+    },
+    "name": "E2E User 1781397223678-666h83",
+    "email": "e2e-1781397223678-666h83@example.com",
+    "emailVerified": false,
+    "emailVerificationToken": "a22ecd56c7aa343085177aa84f7d91f680edcb8e5492230d8efae5dcb8f67f2a",
+    "emailVerificationExpiresAt": {
+      "$date": "2026-06-15T00:33:43.762Z"
+    },
+    "passwordHash": "$2b$12$YLNTaKIIhWo8W1ZRrcXp2u0njL84u7qwtgKoQPRX7CzgBDM1iEK72",
+    "role": "owner",
+    "isActive": true,
+    "deactivatedAt": null,
+    "deactivatedReason": "",
+    "organisationId": {
+      "$oid": "6a2df6e79335aeb2c2b26694"
+    },
+    "recoveryEmail": null,
+    "recoveryPhone": null,
+    "companySize": "",
+    "useCase": "",
+    "referralSource": "",
+    "twoFactorEnabled": false,
+    "twoFactorSecret": null,
+    "newsletter": true,
+    "avatar": null,
+    "github": {
+      "username": "haroun-mock",
+      "accessToken": "mock-github-access-token",
+      "connectedAt": {
+        "$date": "2026-06-14T00:34:15.694Z"
+      }
+    },
+    "preferences": {
+      "notifications": {
+        "email": true,
+        "slack": false,
+        "push": true
+      },
+      "theme": "system",
+      "language": "english",
+      "defaultProject": null
+    },
+    "createdAt": {
+      "$date": "2026-06-14T00:33:43.787Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T00:34:15.698Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2df6e89335aeb2c2b266a1"
+    },
+    "name": "E2E User 1781397224056-vva3ky",
+    "email": "e2e-1781397224056-vva3ky@example.com",
+    "emailVerified": false,
+    "emailVerificationToken": "afbcabf6ba70792d6c9db0226e46b60d32e3406c977004edb184bf75e1c393a9",
+    "emailVerificationExpiresAt": {
+      "$date": "2026-06-15T00:33:44.109Z"
+    },
+    "passwordHash": "$2b$12$HnYi/rKeZY19wdDFON7isOJtk3tzOnVkpuDTlBNLnRLnPfHsScuYC",
+    "role": "owner",
+    "isActive": true,
+    "deactivatedAt": null,
+    "deactivatedReason": "",
+    "organisationId": {
+      "$oid": "6a2df6e89335aeb2c2b2669d"
+    },
+    "recoveryEmail": null,
+    "recoveryPhone": null,
+    "companySize": "",
+    "useCase": "",
+    "referralSource": "",
+    "twoFactorEnabled": false,
+    "twoFactorSecret": null,
+    "newsletter": true,
+    "avatar": null,
+    "github": {
+      "username": null,
+      "accessToken": null,
+      "connectedAt": null
+    },
+    "preferences": {
+      "notifications": {
+        "email": true,
+        "slack": false,
+        "push": true
+      },
+      "theme": "system",
+      "language": "english",
+      "defaultProject": null
+    },
+    "createdAt": {
+      "$date": "2026-06-14T00:33:44.123Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T00:33:44.123Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2df6e89335aeb2c2b2669c"
+    },
+    "name": "E2E User 1781397224016-j3pn5a",
+    "email": "e2e-1781397224016-j3pn5a@example.com",
+    "emailVerified": false,
+    "emailVerificationToken": "b2bcca89eb867321ea3590c8d3153067ad62b51502baaa5803bd579617925b40",
+    "emailVerificationExpiresAt": {
+      "$date": "2026-06-15T00:33:44.092Z"
+    },
+    "passwordHash": "$2b$12$qq2Ba4vFbC4KHStbIXpSm.OIOGOIxdQwSwBBIjd/weYhVLJ0nZ366",
+    "role": "owner",
+    "isActive": true,
+    "deactivatedAt": null,
+    "deactivatedReason": "",
+    "organisationId": {
+      "$oid": "6a2df6e89335aeb2c2b26698"
+    },
+    "recoveryEmail": null,
+    "recoveryPhone": null,
+    "companySize": "",
+    "useCase": "",
+    "referralSource": "",
+    "twoFactorEnabled": false,
+    "twoFactorSecret": null,
+    "newsletter": true,
+    "avatar": null,
+    "github": {
+      "username": null,
+      "accessToken": null,
+      "connectedAt": null
+    },
+    "preferences": {
+      "notifications": {
+        "email": true,
+        "slack": false,
+        "push": true
+      },
+      "theme": "system",
+      "language": "english",
+      "defaultProject": null
+    },
+    "createdAt": {
+      "$date": "2026-06-14T00:33:44.108Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T00:33:44.108Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2df6e89335aeb2c2b266a2"
+    },
+    "name": "E2E User 1781397224056-bqhwlt",
+    "email": "e2e-1781397224056-bqhwlt@example.com",
+    "emailVerified": false,
+    "emailVerificationToken": "e33ebfd611894f29bd91a2216126f632d793061a2291ec16d8741b89c0e2c100",
+    "emailVerificationExpiresAt": {
+      "$date": "2026-06-15T00:33:44.115Z"
+    },
+    "passwordHash": "$2b$12$kAQp8Ri43tkK2xjC5/nUEe806JU7HkGfiSqSTUZP8nqB90qu0m2/6",
+    "role": "owner",
+    "isActive": true,
+    "deactivatedAt": null,
+    "deactivatedReason": "",
+    "organisationId": {
+      "$oid": "6a2df6e89335aeb2c2b2669f"
+    },
+    "recoveryEmail": null,
+    "recoveryPhone": null,
+    "companySize": "",
+    "useCase": "",
+    "referralSource": "",
+    "twoFactorEnabled": false,
+    "twoFactorSecret": null,
+    "newsletter": true,
+    "avatar": null,
+    "github": {
+      "username": null,
+      "accessToken": null,
+      "connectedAt": null
+    },
+    "preferences": {
+      "notifications": {
+        "email": true,
+        "slack": false,
+        "push": true
+      },
+      "theme": "system",
+      "language": "english",
+      "defaultProject": null
+    },
+    "createdAt": {
+      "$date": "2026-06-14T00:33:44.125Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T00:33:44.125Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2df6f29335aeb2c2b266e4"
+    },
+    "name": "Playwright User 1781397223892-k0eevq",
+    "email": "playwright-1781397223892-k0eevq@example.com",
+    "emailVerified": false,
+    "emailVerificationToken": "d93910640234e71d0e1781a0b03a2d96a23b3a4fd9c5e1a3ebb18dd75a81e598",
+    "emailVerificationExpiresAt": {
+      "$date": "2026-06-15T00:33:54.520Z"
+    },
+    "passwordHash": "$2b$12$sShAbkrZP5wS4vnl8MyQ9O8Ywp5V5GGKuaBc9SBKPpedfdZxWMJjS",
+    "role": "owner",
+    "isActive": true,
+    "deactivatedAt": null,
+    "deactivatedReason": "",
+    "organisationId": {
+      "$oid": "6a2df6f29335aeb2c2b266e2"
+    },
+    "recoveryEmail": null,
+    "recoveryPhone": null,
+    "companySize": "",
+    "useCase": "",
+    "referralSource": "",
+    "twoFactorEnabled": false,
+    "twoFactorSecret": null,
+    "newsletter": true,
+    "avatar": null,
+    "github": {
+      "username": null,
+      "accessToken": null,
+      "connectedAt": null
+    },
+    "preferences": {
+      "notifications": {
+        "email": true,
+        "slack": false,
+        "push": true
+      },
+      "theme": "system",
+      "language": "english",
+      "defaultProject": null
+    },
+    "createdAt": {
+      "$date": "2026-06-14T00:33:54.552Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T00:33:54.552Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2df7b24f3de3dc936c2421"
+    },
+    "name": "Playwright User 1781397424376-p0xdab",
+    "email": "playwright-1781397424376-p0xdab@example.com",
+    "emailVerified": false,
+    "emailVerificationToken": "28c2a091bd3c98122b202a93678d531f4ec1905253de99142abb0bb847e20cb4",
+    "emailVerificationExpiresAt": {
+      "$date": "2026-06-15T00:37:06.069Z"
+    },
+    "passwordHash": "$2b$12$aKEV8Vxhji/QgCg.cptdn./KQh1FZR6MpLo8GkclIABoVPX/jH60S",
+    "role": "owner",
+    "isActive": true,
+    "deactivatedAt": null,
+    "deactivatedReason": "",
+    "organisationId": {
+      "$oid": "6a2df7b24f3de3dc936c241f"
+    },
+    "recoveryEmail": null,
+    "recoveryPhone": null,
+    "companySize": "",
+    "useCase": "",
+    "referralSource": "",
+    "twoFactorEnabled": false,
+    "twoFactorSecret": null,
+    "newsletter": true,
+    "avatar": null,
+    "github": {
+      "username": null,
+      "accessToken": null,
+      "connectedAt": null
+    },
+    "preferences": {
+      "notifications": {
+        "email": true,
+        "slack": false,
+        "push": true
+      },
+      "theme": "system",
+      "language": "english",
+      "defaultProject": null
+    },
+    "createdAt": {
+      "$date": "2026-06-14T00:37:06.082Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T00:37:06.082Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2df7dbd2a3f4395cec8ddb"
+    },
+    "name": "Playwright User 1781397465951-d84j4h",
+    "email": "playwright-1781397465951-d84j4h@example.com",
+    "emailVerified": false,
+    "emailVerificationToken": "9852600cc9b9160945034543a513b7a2e5f78c5e0f9fce7be3aed928aabece78",
+    "emailVerificationExpiresAt": {
+      "$date": "2026-06-15T00:37:47.523Z"
+    },
+    "passwordHash": "$2b$12$KLzkBf7cYxn/MQE5HAZj6./Xx9iIWJqsiooaKQdzQd5P373Vyet6K",
+    "role": "owner",
+    "isActive": true,
+    "deactivatedAt": null,
+    "deactivatedReason": "",
+    "organisationId": {
+      "$oid": "6a2df7dbd2a3f4395cec8dd9"
+    },
+    "recoveryEmail": null,
+    "recoveryPhone": null,
+    "companySize": "",
+    "useCase": "",
+    "referralSource": "",
+    "twoFactorEnabled": false,
+    "twoFactorSecret": null,
+    "newsletter": true,
+    "avatar": null,
+    "github": {
+      "username": null,
+      "accessToken": null,
+      "connectedAt": null
+    },
+    "preferences": {
+      "notifications": {
+        "email": true,
+        "slack": false,
+        "push": true
+      },
+      "theme": "system",
+      "language": "english",
+      "defaultProject": null
+    },
+    "createdAt": {
+      "$date": "2026-06-14T00:37:47.540Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T00:37:47.540Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2df7f27d4b4794d0f8669a"
+    },
+    "name": "E2E User 1781397490411-q7cv3e",
+    "email": "e2e-1781397490411-q7cv3e@example.com",
+    "emailVerified": false,
+    "emailVerificationToken": "ac5b8fb8487c708c95b17e979cba5545e8b7fe5e4c8a090f48c49dedc846ac04",
+    "emailVerificationExpiresAt": {
+      "$date": "2026-06-15T00:38:10.462Z"
+    },
+    "passwordHash": "$2b$12$rcs50JKwLw/97QS/euC9YeLZaxT6SOZ.YfsQEeNzp8EWdWolf86Ka",
+    "role": "owner",
+    "isActive": true,
+    "deactivatedAt": null,
+    "deactivatedReason": "",
+    "organisationId": {
+      "$oid": "6a2df7f27d4b4794d0f86698"
+    },
+    "recoveryEmail": null,
+    "recoveryPhone": null,
+    "companySize": "",
+    "useCase": "",
+    "referralSource": "",
+    "twoFactorEnabled": false,
+    "twoFactorSecret": null,
+    "newsletter": true,
+    "avatar": null,
+    "github": {
+      "username": "haroun-mock",
+      "accessToken": "mock-github-access-token",
+      "connectedAt": {
+        "$date": "2026-06-14T00:38:15.740Z"
+      }
+    },
+    "preferences": {
+      "notifications": {
+        "email": true,
+        "slack": false,
+        "push": true
+      },
+      "theme": "system",
+      "language": "english",
+      "defaultProject": null
+    },
+    "createdAt": {
+      "$date": "2026-06-14T00:38:10.474Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T00:38:15.741Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2df8193bfeb008c7ac8b75"
+    },
+    "name": "E2E User 1781397529817-53gxww",
+    "email": "e2e-1781397529817-53gxww@example.com",
+    "emailVerified": false,
+    "emailVerificationToken": "ff190294f9cc736ed2781416114695fef78cdd7b91803cbdded8eae34792d426",
+    "emailVerificationExpiresAt": {
+      "$date": "2026-06-15T00:38:49.871Z"
+    },
+    "passwordHash": "$2b$12$D9Iy50tTdqxJbc4/Bwh3s.l67n81.R60ngSQ5yFZgVOQDhzvRn.FO",
+    "role": "owner",
+    "isActive": true,
+    "deactivatedAt": null,
+    "deactivatedReason": "",
+    "organisationId": {
+      "$oid": "6a2df8193bfeb008c7ac8b73"
+    },
+    "recoveryEmail": null,
+    "recoveryPhone": null,
+    "companySize": "",
+    "useCase": "",
+    "referralSource": "",
+    "twoFactorEnabled": false,
+    "twoFactorSecret": null,
+    "newsletter": true,
+    "avatar": null,
+    "github": {
+      "username": "haroun-mock",
+      "accessToken": "mock-github-access-token",
+      "connectedAt": {
+        "$date": "2026-06-14T00:38:55.005Z"
+      }
+    },
+    "preferences": {
+      "notifications": {
+        "email": true,
+        "slack": false,
+        "push": true
+      },
+      "theme": "system",
+      "language": "english",
+      "defaultProject": null
+    },
+    "createdAt": {
+      "$date": "2026-06-14T00:38:49.885Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T00:38:55.006Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2df8352f30ffbb478c070f"
+    },
+    "name": "E2E User 1781397557542-gitzm9",
+    "email": "e2e-1781397557542-gitzm9@example.com",
+    "emailVerified": false,
+    "emailVerificationToken": "3b2a90ca4f65320da36aa6031e77302665357a0fcaf159433091032627b9c8db",
+    "emailVerificationExpiresAt": {
+      "$date": "2026-06-15T00:39:17.660Z"
+    },
+    "passwordHash": "$2b$12$UBddFNLv7KwKWF7s/C4qnevEIakPbWtVSOU8u5t3IeT7QIACtpLhC",
+    "role": "owner",
+    "isActive": true,
+    "deactivatedAt": null,
+    "deactivatedReason": "",
+    "organisationId": {
+      "$oid": "6a2df8352f30ffbb478c070c"
+    },
+    "recoveryEmail": null,
+    "recoveryPhone": null,
+    "companySize": "",
+    "useCase": "",
+    "referralSource": "",
+    "twoFactorEnabled": false,
+    "twoFactorSecret": null,
+    "newsletter": true,
+    "avatar": null,
+    "github": {
+      "username": null,
+      "accessToken": null,
+      "connectedAt": null
+    },
+    "preferences": {
+      "notifications": {
+        "email": true,
+        "slack": false,
+        "push": true
+      },
+      "theme": "system",
+      "language": "english",
+      "defaultProject": null
+    },
+    "createdAt": {
+      "$date": "2026-06-14T00:39:17.688Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T00:39:17.688Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2df8352f30ffbb478c0712"
+    },
+    "name": "E2E User 1781397557612-zn2zni",
+    "email": "e2e-1781397557612-zn2zni@example.com",
+    "emailVerified": false,
+    "emailVerificationToken": "7f8d86c77860eb05d09174a10c1f084106200c5c6b6f9e0ba8cf15868f1c9806",
+    "emailVerificationExpiresAt": {
+      "$date": "2026-06-15T00:39:17.690Z"
+    },
+    "passwordHash": "$2b$12$7DySpYK6q73UpF0ojlJoB.Op9sNGR0zHrFoLHWJQY19UfiLuthlW2",
+    "role": "owner",
+    "isActive": true,
+    "deactivatedAt": null,
+    "deactivatedReason": "",
+    "organisationId": {
+      "$oid": "6a2df8352f30ffbb478c0710"
+    },
+    "recoveryEmail": null,
+    "recoveryPhone": null,
+    "companySize": "",
+    "useCase": "",
+    "referralSource": "",
+    "twoFactorEnabled": false,
+    "twoFactorSecret": null,
+    "newsletter": true,
+    "avatar": null,
+    "github": {
+      "username": "haroun-mock",
+      "accessToken": "mock-github-access-token",
+      "connectedAt": {
+        "$date": "2026-06-14T00:39:45.766Z"
+      }
+    },
+    "preferences": {
+      "notifications": {
+        "email": true,
+        "slack": false,
+        "push": true
+      },
+      "theme": "system",
+      "language": "english",
+      "defaultProject": null
+    },
+    "createdAt": {
+      "$date": "2026-06-14T00:39:17.703Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T00:39:45.769Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2df8352f30ffbb478c0716"
+    },
+    "name": "E2E User 1781397557667-fyvyp2",
+    "email": "e2e-1781397557667-fyvyp2@example.com",
+    "emailVerified": false,
+    "emailVerificationToken": "72de5bd016cc8b1ae8a7c90cc5b4c6ad877b80e2837deeac70b07efa86215ad8",
+    "emailVerificationExpiresAt": {
+      "$date": "2026-06-15T00:39:17.721Z"
+    },
+    "passwordHash": "$2b$12$MT2/rRRrr5X8EWZTRPYfXebgmFqvfiOpRWC1PDRdMnBKiBcFA1g26",
+    "role": "owner",
+    "isActive": true,
+    "deactivatedAt": null,
+    "deactivatedReason": "",
+    "organisationId": {
+      "$oid": "6a2df8352f30ffbb478c0714"
+    },
+    "recoveryEmail": null,
+    "recoveryPhone": null,
+    "companySize": "",
+    "useCase": "",
+    "referralSource": "",
+    "twoFactorEnabled": false,
+    "twoFactorSecret": null,
+    "newsletter": true,
+    "avatar": null,
+    "github": {
+      "username": null,
+      "accessToken": null,
+      "connectedAt": null
+    },
+    "preferences": {
+      "notifications": {
+        "email": true,
+        "slack": false,
+        "push": true
+      },
+      "theme": "system",
+      "language": "english",
+      "defaultProject": null
+    },
+    "createdAt": {
+      "$date": "2026-06-14T00:39:17.731Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T00:39:17.731Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2df8352f30ffbb478c071a"
+    },
+    "name": "E2E User 1781397557746-19sewi",
+    "email": "e2e-1781397557746-19sewi@example.com",
+    "emailVerified": false,
+    "emailVerificationToken": "8ac4f5af6986565f5216d0cc4094261cabd70af3c7bf09d349e8bdbc6581edb5",
+    "emailVerificationExpiresAt": {
+      "$date": "2026-06-15T00:39:17.787Z"
+    },
+    "passwordHash": "$2b$12$EksYn2wZlcMrUHrdkbhCluMpGuBjgTCBtkbvVsK/9pQeGPL4Udwbq",
+    "role": "owner",
+    "isActive": true,
+    "deactivatedAt": null,
+    "deactivatedReason": "",
+    "organisationId": {
+      "$oid": "6a2df8352f30ffbb478c0718"
+    },
+    "recoveryEmail": null,
+    "recoveryPhone": null,
+    "companySize": "",
+    "useCase": "",
+    "referralSource": "",
+    "twoFactorEnabled": false,
+    "twoFactorSecret": null,
+    "newsletter": true,
+    "avatar": null,
+    "github": {
+      "username": null,
+      "accessToken": null,
+      "connectedAt": null
+    },
+    "preferences": {
+      "notifications": {
+        "email": true,
+        "slack": false,
+        "push": true
+      },
+      "theme": "system",
+      "language": "english",
+      "defaultProject": null
+    },
+    "createdAt": {
+      "$date": "2026-06-14T00:39:17.797Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T00:39:17.797Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2df8422f30ffbb478c074b"
+    },
+    "name": "Playwright User 1781397557516-j7bvka",
+    "email": "playwright-1781397557516-j7bvka@example.com",
+    "emailVerified": false,
+    "emailVerificationToken": "d3e061483da85a81d32e1df566aafbb8d80d3fbb7e926fd11dc2c758d3c12c27",
+    "emailVerificationExpiresAt": {
+      "$date": "2026-06-15T00:39:29.728Z"
+    },
+    "passwordHash": "$2b$12$UJijf744nxSKQszOANWPZOK9DgRKb5xI3XngHE2gopLwtXLIHItWm",
+    "role": "owner",
+    "isActive": true,
+    "deactivatedAt": null,
+    "deactivatedReason": "",
+    "organisationId": {
+      "$oid": "6a2df8412f30ffbb478c0745"
+    },
+    "recoveryEmail": null,
+    "recoveryPhone": null,
+    "companySize": "",
+    "useCase": "",
+    "referralSource": "",
+    "twoFactorEnabled": false,
+    "twoFactorSecret": null,
+    "newsletter": true,
+    "avatar": null,
+    "github": {
+      "username": null,
+      "accessToken": null,
+      "connectedAt": null
+    },
+    "preferences": {
+      "notifications": {
+        "email": true,
+        "slack": false,
+        "push": true
+      },
+      "theme": "system",
+      "language": "english",
+      "defaultProject": null
+    },
+    "createdAt": {
+      "$date": "2026-06-14T00:39:30.026Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T00:39:30.026Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2dfed4b0c1a96970cdf03c"
+    },
+    "name": "E2E User 1781399251987-lfx0ns",
+    "email": "e2e-1781399251987-lfx0ns@example.com",
+    "emailVerified": false,
+    "emailVerificationToken": "13d3a66bd74647782f302467792a8fb27ec1e591ee2b2cc7715a6ace2513cbb9",
+    "emailVerificationExpiresAt": {
+      "$date": "2026-06-15T01:07:32.158Z"
+    },
+    "passwordHash": "$2b$12$D5wZrgsy1uBxO3H1PzXtn.0p/FB.whGZuwOzEV3Sja6S2o8/yS.ve",
+    "role": "owner",
+    "isActive": true,
+    "deactivatedAt": null,
+    "deactivatedReason": "",
+    "organisationId": {
+      "$oid": "6a2dfed4b0c1a96970cdf038"
+    },
+    "recoveryEmail": null,
+    "recoveryPhone": null,
+    "companySize": "",
+    "useCase": "",
+    "referralSource": "",
+    "twoFactorEnabled": false,
+    "twoFactorSecret": null,
+    "newsletter": true,
+    "avatar": null,
+    "github": {
+      "username": null,
+      "accessToken": null,
+      "connectedAt": null
+    },
+    "preferences": {
+      "notifications": {
+        "email": true,
+        "slack": false,
+        "push": true
+      },
+      "theme": "system",
+      "language": "english",
+      "defaultProject": null
+    },
+    "createdAt": {
+      "$date": "2026-06-14T01:07:32.209Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T01:07:32.209Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2dfed4b0c1a96970cdf03d"
+    },
+    "name": "E2E User 1781399252077-vlwcqm",
+    "email": "e2e-1781399252077-vlwcqm@example.com",
+    "emailVerified": false,
+    "emailVerificationToken": "f39eeffe28b1e54c8b7a4be87b5916146f761cad3c0eaf32e95d377c584e46a0",
+    "emailVerificationExpiresAt": {
+      "$date": "2026-06-15T01:07:32.189Z"
+    },
+    "passwordHash": "$2b$12$ptTwmlBJjSPIzvmOFYabW.woSOShAIAiJRxB16CdWxK1noQpxrQ9a",
+    "role": "owner",
+    "isActive": true,
+    "deactivatedAt": null,
+    "deactivatedReason": "",
+    "organisationId": {
+      "$oid": "6a2dfed4b0c1a96970cdf03a"
+    },
+    "recoveryEmail": null,
+    "recoveryPhone": null,
+    "companySize": "",
+    "useCase": "",
+    "referralSource": "",
+    "twoFactorEnabled": false,
+    "twoFactorSecret": null,
+    "newsletter": true,
+    "avatar": null,
+    "github": {
+      "username": null,
+      "accessToken": null,
+      "connectedAt": null
+    },
+    "preferences": {
+      "notifications": {
+        "email": true,
+        "slack": false,
+        "push": true
+      },
+      "theme": "system",
+      "language": "english",
+      "defaultProject": null
+    },
+    "createdAt": {
+      "$date": "2026-06-14T01:07:32.257Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T01:07:32.257Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2dfed4b0c1a96970cdf045"
+    },
+    "name": "E2E User 1781399252213-cuxade",
+    "email": "e2e-1781399252213-cuxade@example.com",
+    "emailVerified": false,
+    "emailVerificationToken": "406070dd69d7a2fc81a83ac07da8dfa91f20df9fa2b080b293d5e23aa20e1006",
+    "emailVerificationExpiresAt": {
+      "$date": "2026-06-15T01:07:32.275Z"
+    },
+    "passwordHash": "$2b$12$asYFBc0TRRBAj1OWH74th.EA/Dn4G65C1Ch7nMW5D16JOaaC6RgWC",
+    "role": "owner",
+    "isActive": true,
+    "deactivatedAt": null,
+    "deactivatedReason": "",
+    "organisationId": {
+      "$oid": "6a2dfed4b0c1a96970cdf042"
+    },
+    "recoveryEmail": null,
+    "recoveryPhone": null,
+    "companySize": "",
+    "useCase": "",
+    "referralSource": "",
+    "twoFactorEnabled": false,
+    "twoFactorSecret": null,
+    "newsletter": true,
+    "avatar": null,
+    "github": {
+      "username": "haroun-mock",
+      "accessToken": "mock-github-access-token",
+      "connectedAt": {
+        "$date": "2026-06-14T01:08:02.910Z"
+      }
+    },
+    "preferences": {
+      "notifications": {
+        "email": true,
+        "slack": false,
+        "push": true
+      },
+      "theme": "system",
+      "language": "english",
+      "defaultProject": null
+    },
+    "createdAt": {
+      "$date": "2026-06-14T01:07:32.290Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T01:08:02.912Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2dfed4b0c1a96970cdf044"
+    },
+    "name": "E2E User 1781399252200-nmofj6",
+    "email": "e2e-1781399252200-nmofj6@example.com",
+    "emailVerified": false,
+    "emailVerificationToken": "44f007a9c9ee2523f5bb193933e47a8ebcccd5e88ba685bdfe3cc314a2b06b47",
+    "emailVerificationExpiresAt": {
+      "$date": "2026-06-15T01:07:32.270Z"
+    },
+    "passwordHash": "$2b$12$kShynr/0XW9Xp4EN6gh8yOhwmbnKanPWrLY2xXarV5bfmBkMvYKu2",
+    "role": "owner",
+    "isActive": true,
+    "deactivatedAt": null,
+    "deactivatedReason": "",
+    "organisationId": {
+      "$oid": "6a2dfed4b0c1a96970cdf040"
+    },
+    "recoveryEmail": null,
+    "recoveryPhone": null,
+    "companySize": "",
+    "useCase": "",
+    "referralSource": "",
+    "twoFactorEnabled": false,
+    "twoFactorSecret": null,
+    "newsletter": true,
+    "avatar": null,
+    "github": {
+      "username": null,
+      "accessToken": null,
+      "connectedAt": null
+    },
+    "preferences": {
+      "notifications": {
+        "email": true,
+        "slack": false,
+        "push": true
+      },
+      "theme": "system",
+      "language": "english",
+      "defaultProject": null
+    },
+    "createdAt": {
+      "$date": "2026-06-14T01:07:32.287Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T01:07:32.287Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2dfedeb0c1a96970cdf069"
+    },
+    "name": "Playwright User 1781399252038-heypka",
+    "email": "playwright-1781399252038-heypka@example.com",
+    "emailVerified": false,
+    "emailVerificationToken": "7d9daec02374c41be99ca344a6d6f0ec635ec5128e16f8374e61d0c28de8e316",
+    "emailVerificationExpiresAt": {
+      "$date": "2026-06-15T01:07:42.491Z"
+    },
+    "passwordHash": "$2b$12$sNb1dddIpZcEkZvOrhn4quZAcv2gXhe8VnvAw5yrjDmBua2/qSSUW",
+    "role": "owner",
+    "isActive": true,
+    "deactivatedAt": null,
+    "deactivatedReason": "",
+    "organisationId": {
+      "$oid": "6a2dfedeb0c1a96970cdf067"
+    },
+    "recoveryEmail": null,
+    "recoveryPhone": null,
+    "companySize": "",
+    "useCase": "",
+    "referralSource": "",
+    "twoFactorEnabled": false,
+    "twoFactorSecret": null,
+    "newsletter": true,
+    "avatar": null,
+    "github": {
+      "username": null,
+      "accessToken": null,
+      "connectedAt": null
+    },
+    "preferences": {
+      "notifications": {
+        "email": true,
+        "slack": false,
+        "push": true
+      },
+      "theme": "system",
+      "language": "english",
+      "defaultProject": null
+    },
+    "createdAt": {
+      "$date": "2026-06-14T01:07:42.544Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T01:07:42.544Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2e036a82308dfe94999bd5"
+    },
+    "name": "Owner",
+    "email": "owner@innodeploy.io",
+    "emailVerified": true,
+    "emailVerificationToken": null,
+    "emailVerificationExpiresAt": null,
+    "passwordHash": "$2b$12$5cuI1nvTibcCalnAp6ocBe1GD3.g4cNoF0n2eota2HdZImwzq6aEq",
+    "role": "owner",
+    "isActive": true,
+    "deactivatedAt": null,
+    "deactivatedReason": "",
+    "organisationId": {
+      "$oid": "6a2c6b1c90842fe284841de6"
+    },
+    "recoveryEmail": null,
+    "recoveryPhone": null,
+    "companySize": "11-50",
+    "useCase": "startups",
+    "referralSource": "",
+    "twoFactorEnabled": false,
+    "twoFactorSecret": null,
+    "newsletter": true,
+    "avatar": null,
+    "github": {
+      "username": "haroun-mock",
+      "accessToken": "mock-github-access-token",
+      "connectedAt": {
+        "$date": "2026-06-14T02:24:52.520Z"
+      }
+    },
+    "preferences": {
+      "theme": "dark",
+      "language": "english",
+      "defaultProject": null,
+      "notifications": {
+        "email": true,
+        "slack": false,
+        "push": true
+      }
+    },
+    "createdAt": {
+      "$date": "2026-06-14T01:27:06.297Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-19T14:18:53.215Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2e038f29c08418f35ef066"
+    },
+    "name": "E2E User 1781400463448-p1lxdh",
+    "email": "e2e-1781400463448-p1lxdh@example.com",
+    "emailVerified": false,
+    "emailVerificationToken": "ccbad387784470055904101de3b596d518ab62513680d380363e8805815dfe04",
+    "emailVerificationExpiresAt": {
+      "$date": "2026-06-15T01:27:43.611Z"
+    },
+    "passwordHash": "$2b$12$j9eRyCv7TP0Je945WyW3nev.Trf.ZpDO6dzoZRvSHpQ1W.VM7qSzS",
+    "role": "owner",
+    "isActive": true,
+    "deactivatedAt": null,
+    "deactivatedReason": "",
+    "organisationId": {
+      "$oid": "6a2e038f29c08418f35ef061"
+    },
+    "recoveryEmail": null,
+    "recoveryPhone": null,
+    "companySize": "",
+    "useCase": "",
+    "referralSource": "",
+    "twoFactorEnabled": false,
+    "twoFactorSecret": null,
+    "newsletter": true,
+    "avatar": null,
+    "github": {
+      "username": null,
+      "accessToken": null,
+      "connectedAt": null
+    },
+    "preferences": {
+      "notifications": {
+        "email": true,
+        "slack": false,
+        "push": true
+      },
+      "theme": "system",
+      "language": "english",
+      "defaultProject": null
+    },
+    "createdAt": {
+      "$date": "2026-06-14T01:27:43.663Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T01:27:43.663Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2e038f29c08418f35ef063"
+    },
+    "name": "E2E User 1781400463435-7hut2p",
+    "email": "e2e-1781400463435-7hut2p@example.com",
+    "emailVerified": false,
+    "emailVerificationToken": "5f9e98dafd1ee03a42948fa4ad62b379bbf738d3345151d0a0a31a59287316ea",
+    "emailVerificationExpiresAt": {
+      "$date": "2026-06-15T01:27:43.554Z"
+    },
+    "passwordHash": "$2b$12$TR6jkttbk0PAlogZCIZecupNt1MWg2hJaXhGDfnDaGJG8K.jf3bcW",
+    "role": "owner",
+    "isActive": true,
+    "deactivatedAt": null,
+    "deactivatedReason": "",
+    "organisationId": {
+      "$oid": "6a2e038f29c08418f35ef05d"
+    },
+    "recoveryEmail": null,
+    "recoveryPhone": null,
+    "companySize": "",
+    "useCase": "",
+    "referralSource": "",
+    "twoFactorEnabled": false,
+    "twoFactorSecret": null,
+    "newsletter": true,
+    "avatar": null,
+    "github": {
+      "username": null,
+      "accessToken": null,
+      "connectedAt": null
+    },
+    "preferences": {
+      "notifications": {
+        "email": true,
+        "slack": false,
+        "push": true
+      },
+      "theme": "system",
+      "language": "english",
+      "defaultProject": null
+    },
+    "createdAt": {
+      "$date": "2026-06-14T01:27:43.643Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T01:27:43.643Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2e038f29c08418f35ef065"
+    },
+    "name": "E2E User 1781400463438-8zucfg",
+    "email": "e2e-1781400463438-8zucfg@example.com",
+    "emailVerified": false,
+    "emailVerificationToken": "7bd3dbe5c50a22f1c0ec80f3eb26fbbb08bf0022e8febaf19e68c562b8e84d05",
+    "emailVerificationExpiresAt": {
+      "$date": "2026-06-15T01:27:43.598Z"
+    },
+    "passwordHash": "$2b$12$0LPO1Zjviq4zjPjFaqtY/eMLnO8I/pAGmxpz2pxup02wpkYSZ5zG.",
+    "role": "owner",
+    "isActive": true,
+    "deactivatedAt": null,
+    "deactivatedReason": "",
+    "organisationId": {
+      "$oid": "6a2e038f29c08418f35ef05f"
+    },
+    "recoveryEmail": null,
+    "recoveryPhone": null,
+    "companySize": "",
+    "useCase": "",
+    "referralSource": "",
+    "twoFactorEnabled": false,
+    "twoFactorSecret": null,
+    "newsletter": true,
+    "avatar": null,
+    "github": {
+      "username": null,
+      "accessToken": null,
+      "connectedAt": null
+    },
+    "preferences": {
+      "notifications": {
+        "email": true,
+        "slack": false,
+        "push": true
+      },
+      "theme": "system",
+      "language": "english",
+      "defaultProject": null
+    },
+    "createdAt": {
+      "$date": "2026-06-14T01:27:43.653Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T01:27:43.653Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2e038f29c08418f35ef069"
+    },
+    "name": "E2E User 1781400463522-28ukmh",
+    "email": "e2e-1781400463522-28ukmh@example.com",
+    "emailVerified": false,
+    "emailVerificationToken": "ac3565073038f7c48735a9c50c467e54b64fa71a579c0ab17493edca3ea7087c",
+    "emailVerificationExpiresAt": {
+      "$date": "2026-06-15T01:27:43.666Z"
+    },
+    "passwordHash": "$2b$12$wjGpgFuJGz26ceGx1n7UheM7uybevXtN6uQCtikd6YU4fUXaHhVMC",
+    "role": "owner",
+    "isActive": true,
+    "deactivatedAt": null,
+    "deactivatedReason": "",
+    "organisationId": {
+      "$oid": "6a2e038f29c08418f35ef067"
+    },
+    "recoveryEmail": null,
+    "recoveryPhone": null,
+    "companySize": "",
+    "useCase": "",
+    "referralSource": "",
+    "twoFactorEnabled": false,
+    "twoFactorSecret": null,
+    "newsletter": true,
+    "avatar": null,
+    "github": {
+      "username": "haroun-mock",
+      "accessToken": "mock-github-access-token",
+      "connectedAt": {
+        "$date": "2026-06-14T01:28:09.321Z"
+      }
+    },
+    "preferences": {
+      "notifications": {
+        "email": true,
+        "slack": false,
+        "push": true
+      },
+      "theme": "system",
+      "language": "english",
+      "defaultProject": null
+    },
+    "createdAt": {
+      "$date": "2026-06-14T01:27:43.689Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T01:28:09.323Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2e039c29c08418f35ef091"
+    },
+    "name": "Playwright User 1781400463529-0nof7t",
+    "email": "playwright-1781400463529-0nof7t@example.com",
+    "emailVerified": false,
+    "emailVerificationToken": "c765bcdc49a0e159203f31414bff52190014750c393572de0b94dcfea5fc490c",
+    "emailVerificationExpiresAt": {
+      "$date": "2026-06-15T01:27:55.987Z"
+    },
+    "passwordHash": "$2b$12$E0enKLgzoUUnFQEQaejP/eX6NoI2z4OJrY8e0iW2VO3Dgt.0SqdJu",
+    "role": "owner",
+    "isActive": true,
+    "deactivatedAt": null,
+    "deactivatedReason": "",
+    "organisationId": {
+      "$oid": "6a2e039b29c08418f35ef08f"
+    },
+    "recoveryEmail": null,
+    "recoveryPhone": null,
+    "companySize": "",
+    "useCase": "",
+    "referralSource": "",
+    "twoFactorEnabled": false,
+    "twoFactorSecret": null,
+    "newsletter": true,
+    "avatar": null,
+    "github": {
+      "username": null,
+      "accessToken": null,
+      "connectedAt": null
+    },
+    "preferences": {
+      "notifications": {
+        "email": true,
+        "slack": false,
+        "push": true
+      },
+      "theme": "system",
+      "language": "english",
+      "defaultProject": null
+    },
+    "createdAt": {
+      "$date": "2026-06-14T01:27:56.043Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T01:27:56.043Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2e133729c08418f35ef8b3"
+    },
+    "name": "E2E User 1781404471728-8pszv0",
+    "email": "e2e-1781404471728-8pszv0@example.com",
+    "emailVerified": false,
+    "emailVerificationToken": "77f1c9a8156a6276f34d7b2e8c682e5de28f5e21dc34e4fca98c7fb08dc84372",
+    "emailVerificationExpiresAt": {
+      "$date": "2026-06-15T02:34:31.847Z"
+    },
+    "passwordHash": "$2b$12$HcC8Uv7yrpuAO6N3L1s.kew90R22.LGIfTMy1cCqpJgT5ldTxkUiu",
+    "role": "owner",
+    "isActive": true,
+    "deactivatedAt": null,
+    "deactivatedReason": "",
+    "organisationId": {
+      "$oid": "6a2e133729c08418f35ef8ad"
+    },
+    "recoveryEmail": null,
+    "recoveryPhone": null,
+    "companySize": "",
+    "useCase": "",
+    "referralSource": "",
+    "twoFactorEnabled": false,
+    "twoFactorSecret": null,
+    "newsletter": true,
+    "avatar": null,
+    "github": {
+      "username": null,
+      "accessToken": null,
+      "connectedAt": null
+    },
+    "preferences": {
+      "notifications": {
+        "email": true,
+        "slack": false,
+        "push": true
+      },
+      "theme": "system",
+      "language": "english",
+      "defaultProject": null
+    },
+    "createdAt": {
+      "$date": "2026-06-14T02:34:31.880Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T02:34:31.880Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2e133729c08418f35ef8b4"
+    },
+    "name": "E2E User 1781404471672-2v2523",
+    "email": "e2e-1781404471672-2v2523@example.com",
+    "emailVerified": false,
+    "emailVerificationToken": "4d59251ae1f6142521678dded5b5a6e75e054b585b0706bffb1f7dfc84ad6ac0",
+    "emailVerificationExpiresAt": {
+      "$date": "2026-06-15T02:34:31.858Z"
+    },
+    "passwordHash": "$2b$12$tqX4Mj1ZvltS7a907ePst.CFR5Ko5XGFrxH0oHAzmRuLKvB7AAeN6",
+    "role": "owner",
+    "isActive": true,
+    "deactivatedAt": null,
+    "deactivatedReason": "",
+    "organisationId": {
+      "$oid": "6a2e133729c08418f35ef8af"
+    },
+    "recoveryEmail": null,
+    "recoveryPhone": null,
+    "companySize": "",
+    "useCase": "",
+    "referralSource": "",
+    "twoFactorEnabled": false,
+    "twoFactorSecret": null,
+    "newsletter": true,
+    "avatar": null,
+    "github": {
+      "username": null,
+      "accessToken": null,
+      "connectedAt": null
+    },
+    "preferences": {
+      "notifications": {
+        "email": true,
+        "slack": false,
+        "push": true
+      },
+      "theme": "system",
+      "language": "english",
+      "defaultProject": null
+    },
+    "createdAt": {
+      "$date": "2026-06-14T02:34:31.882Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T02:34:31.882Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2e133729c08418f35ef8b9"
+    },
+    "name": "E2E User 1781404471803-kgwzox",
+    "email": "e2e-1781404471803-kgwzox@example.com",
+    "emailVerified": false,
+    "emailVerificationToken": "b800b14bc44a4abd9a3f1e485493318ca20af7a2795bcdfc478e2bc824303852",
+    "emailVerificationExpiresAt": {
+      "$date": "2026-06-15T02:34:31.887Z"
+    },
+    "passwordHash": "$2b$12$XId9fGlMSu.NK4VBW5wopeOR8.436Q.W67q/pJanUSEAt0A3Xy/VO",
+    "role": "owner",
+    "isActive": true,
+    "deactivatedAt": null,
+    "deactivatedReason": "",
+    "organisationId": {
+      "$oid": "6a2e133729c08418f35ef8b7"
+    },
+    "recoveryEmail": null,
+    "recoveryPhone": null,
+    "companySize": "",
+    "useCase": "",
+    "referralSource": "",
+    "twoFactorEnabled": false,
+    "twoFactorSecret": null,
+    "newsletter": true,
+    "avatar": null,
+    "github": {
+      "username": null,
+      "accessToken": null,
+      "connectedAt": null
+    },
+    "preferences": {
+      "notifications": {
+        "email": true,
+        "slack": false,
+        "push": true
+      },
+      "theme": "system",
+      "language": "english",
+      "defaultProject": null
+    },
+    "createdAt": {
+      "$date": "2026-06-14T02:34:31.896Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T02:34:31.896Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2e133729c08418f35ef8ba"
+    },
+    "name": "E2E User 1781404471805-u9kvoy",
+    "email": "e2e-1781404471805-u9kvoy@example.com",
+    "emailVerified": false,
+    "emailVerificationToken": "54de81a9f5ea9b767d8b0ba26f410558902315427900c846c5c47ee2b9d41556",
+    "emailVerificationExpiresAt": {
+      "$date": "2026-06-15T02:34:31.882Z"
+    },
+    "passwordHash": "$2b$12$4ICOMPw5IccMTjzgNTiz0OJkMBHEtrs3If8HCNVLIAG9Eh4fPCJpu",
+    "role": "owner",
+    "isActive": true,
+    "deactivatedAt": null,
+    "deactivatedReason": "",
+    "organisationId": {
+      "$oid": "6a2e133729c08418f35ef8b5"
+    },
+    "recoveryEmail": null,
+    "recoveryPhone": null,
+    "companySize": "",
+    "useCase": "",
+    "referralSource": "",
+    "twoFactorEnabled": false,
+    "twoFactorSecret": null,
+    "newsletter": true,
+    "avatar": null,
+    "github": {
+      "username": null,
+      "accessToken": null,
+      "connectedAt": null
+    },
+    "preferences": {
+      "notifications": {
+        "email": true,
+        "slack": false,
+        "push": true
+      },
+      "theme": "system",
+      "language": "english",
+      "defaultProject": null
+    },
+    "createdAt": {
+      "$date": "2026-06-14T02:34:31.900Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T02:34:31.900Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2e134c29c08418f35ef8de"
+    },
+    "name": "Playwright User 1781404471971-0qkju2",
+    "email": "playwright-1781404471971-0qkju2@example.com",
+    "emailVerified": false,
+    "emailVerificationToken": "282655464bdde721e6c2b686222c814e9da1bcedbcf72dd60f704cad0cf4f2fa",
+    "emailVerificationExpiresAt": {
+      "$date": "2026-06-15T02:34:51.832Z"
+    },
+    "passwordHash": "$2b$12$ndgbwpfWfl.mFD9cBmXsmuLXAADMpXudDelIzYVfSWukBTmrfdfh.",
+    "role": "owner",
+    "isActive": true,
+    "deactivatedAt": null,
+    "deactivatedReason": "",
+    "organisationId": {
+      "$oid": "6a2e134b29c08418f35ef8dc"
+    },
+    "recoveryEmail": null,
+    "recoveryPhone": null,
+    "companySize": "",
+    "useCase": "",
+    "referralSource": "",
+    "twoFactorEnabled": false,
+    "twoFactorSecret": null,
+    "newsletter": true,
+    "avatar": null,
+    "github": {
+      "username": null,
+      "accessToken": null,
+      "connectedAt": null
+    },
+    "preferences": {
+      "notifications": {
+        "email": true,
+        "slack": false,
+        "push": true
+      },
+      "theme": "system",
+      "language": "english",
+      "defaultProject": null
+    },
+    "createdAt": {
+      "$date": "2026-06-14T02:34:52.153Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T02:34:52.153Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2e141529c08418f35ef9c3"
+    },
+    "name": "E2E User 1781404693549-b1zt4d",
+    "email": "e2e-1781404693549-b1zt4d@example.com",
+    "emailVerified": false,
+    "emailVerificationToken": "ed04ceed3397c4ec7f097ac0e526aa02249eed7e9499fc9ecefed0406c01a7af",
+    "emailVerificationExpiresAt": {
+      "$date": "2026-06-15T02:38:13.570Z"
+    },
+    "passwordHash": "$2b$12$X8icJiyU8QxLKJh.IbGBBel4I74hMdGWqJs3fzUh2fwwrBdjk3y3e",
+    "role": "owner",
+    "isActive": true,
+    "deactivatedAt": null,
+    "deactivatedReason": "",
+    "organisationId": {
+      "$oid": "6a2e141529c08418f35ef9c1"
+    },
+    "recoveryEmail": null,
+    "recoveryPhone": null,
+    "companySize": "",
+    "useCase": "",
+    "referralSource": "",
+    "twoFactorEnabled": false,
+    "twoFactorSecret": null,
+    "newsletter": true,
+    "avatar": null,
+    "github": {
+      "username": "haroun-mock",
+      "accessToken": "mock-github-access-token",
+      "connectedAt": {
+        "$date": "2026-06-14T02:38:18.401Z"
+      }
+    },
+    "preferences": {
+      "notifications": {
+        "email": true,
+        "slack": false,
+        "push": true
+      },
+      "theme": "system",
+      "language": "english",
+      "defaultProject": null
+    },
+    "createdAt": {
+      "$date": "2026-06-14T02:38:13.576Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T02:38:18.402Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2e15c829c08418f35efaab"
+    },
+    "name": "E2E User 1781405128892-xijxrg",
+    "email": "e2e-1781405128892-xijxrg@example.com",
+    "emailVerified": false,
+    "emailVerificationToken": "48a87ed9266efbe5826005a9259c40bde8c336b50b7803fe15f9067fedf264df",
+    "emailVerificationExpiresAt": {
+      "$date": "2026-06-15T02:45:28.950Z"
+    },
+    "passwordHash": "$2b$12$UwSPDF5G/h7m943UjZxRhutmdD91fgOT0pKgwAtYOLrApXa7iDTgC",
+    "role": "owner",
+    "isActive": true,
+    "deactivatedAt": null,
+    "deactivatedReason": "",
+    "organisationId": {
+      "$oid": "6a2e15c829c08418f35efaa8"
+    },
+    "recoveryEmail": null,
+    "recoveryPhone": null,
+    "companySize": "",
+    "useCase": "",
+    "referralSource": "",
+    "twoFactorEnabled": false,
+    "twoFactorSecret": null,
+    "newsletter": true,
+    "avatar": null,
+    "github": {
+      "username": null,
+      "accessToken": null,
+      "connectedAt": null
+    },
+    "preferences": {
+      "notifications": {
+        "email": true,
+        "slack": false,
+        "push": true
+      },
+      "theme": "system",
+      "language": "english",
+      "defaultProject": null
+    },
+    "createdAt": {
+      "$date": "2026-06-14T02:45:28.975Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T02:45:28.975Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2e15c829c08418f35efaaa"
+    },
+    "name": "E2E User 1781405128800-6vqc58",
+    "email": "e2e-1781405128800-6vqc58@example.com",
+    "emailVerified": false,
+    "emailVerificationToken": "ef7edf62cb138e617ebfb8d25779a34c4ffba79031f196711fb43b1230a6f0ee",
+    "emailVerificationExpiresAt": {
+      "$date": "2026-06-15T02:45:28.941Z"
+    },
+    "passwordHash": "$2b$12$DSKjLQSeQPWt3Ua2j7A1kuRie/J5kmOUErdzxbK8ns8ix/VJmVNIC",
+    "role": "owner",
+    "isActive": true,
+    "deactivatedAt": null,
+    "deactivatedReason": "",
+    "organisationId": {
+      "$oid": "6a2e15c829c08418f35efaa6"
+    },
+    "recoveryEmail": null,
+    "recoveryPhone": null,
+    "companySize": "",
+    "useCase": "",
+    "referralSource": "",
+    "twoFactorEnabled": false,
+    "twoFactorSecret": null,
+    "newsletter": true,
+    "avatar": null,
+    "github": {
+      "username": null,
+      "accessToken": null,
+      "connectedAt": null
+    },
+    "preferences": {
+      "notifications": {
+        "email": true,
+        "slack": false,
+        "push": true
+      },
+      "theme": "system",
+      "language": "english",
+      "defaultProject": null
+    },
+    "createdAt": {
+      "$date": "2026-06-14T02:45:28.962Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T02:45:28.962Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2e15c929c08418f35efaaf"
+    },
+    "name": "E2E User 1781405128981-sp0h8y",
+    "email": "e2e-1781405128981-sp0h8y@example.com",
+    "emailVerified": false,
+    "emailVerificationToken": "6827ae392239d193c2b6997ae386151f7dae7d6e93be4bf300c68c0995a80043",
+    "emailVerificationExpiresAt": {
+      "$date": "2026-06-15T02:45:29.035Z"
+    },
+    "passwordHash": "$2b$12$ePHyH0vivmsUWtfgG6lumufVleLQ4wM21sphJoWEOn0CUqf6yGA/q",
+    "role": "owner",
+    "isActive": true,
+    "deactivatedAt": null,
+    "deactivatedReason": "",
+    "organisationId": {
+      "$oid": "6a2e15c929c08418f35efaad"
+    },
+    "recoveryEmail": null,
+    "recoveryPhone": null,
+    "companySize": "",
+    "useCase": "",
+    "referralSource": "",
+    "twoFactorEnabled": false,
+    "twoFactorSecret": null,
+    "newsletter": true,
+    "avatar": null,
+    "github": {
+      "username": null,
+      "accessToken": null,
+      "connectedAt": null
+    },
+    "preferences": {
+      "notifications": {
+        "email": true,
+        "slack": false,
+        "push": true
+      },
+      "theme": "system",
+      "language": "english",
+      "defaultProject": null
+    },
+    "createdAt": {
+      "$date": "2026-06-14T02:45:29.051Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T02:45:29.051Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2e15c929c08418f35efab3"
+    },
+    "name": "E2E User 1781405129139-vejdld",
+    "email": "e2e-1781405129139-vejdld@example.com",
+    "emailVerified": false,
+    "emailVerificationToken": "7aefb54f1b51e893635d54e29db7d8c38b410967d7b9176fe044e4ac5c6c6d85",
+    "emailVerificationExpiresAt": {
+      "$date": "2026-06-15T02:45:29.174Z"
+    },
+    "passwordHash": "$2b$12$98hEBGyztgZkngSdQQ0RruuFFOAJYBToIyifTv/h2uJI/7ZRPz6QC",
+    "role": "owner",
+    "isActive": true,
+    "deactivatedAt": null,
+    "deactivatedReason": "",
+    "organisationId": {
+      "$oid": "6a2e15c929c08418f35efab1"
+    },
+    "recoveryEmail": null,
+    "recoveryPhone": null,
+    "companySize": "",
+    "useCase": "",
+    "referralSource": "",
+    "twoFactorEnabled": false,
+    "twoFactorSecret": null,
+    "newsletter": true,
+    "avatar": null,
+    "github": {
+      "username": "haroun-mock",
+      "accessToken": "mock-github-access-token",
+      "connectedAt": {
+        "$date": "2026-06-14T02:46:11.099Z"
+      }
+    },
+    "preferences": {
+      "notifications": {
+        "email": true,
+        "slack": false,
+        "push": true
+      },
+      "theme": "system",
+      "language": "english",
+      "defaultProject": null
+    },
+    "createdAt": {
+      "$date": "2026-06-14T02:45:29.182Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T02:46:11.101Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2e15d729c08418f35efad7"
+    },
+    "name": "Playwright User 1781405128674-0menkl",
+    "email": "playwright-1781405128674-0menkl@example.com",
+    "emailVerified": false,
+    "emailVerificationToken": "d18711fedbbf7f2c480ffe8837dea47263b931ec6c539fb1c46354b3c0da66bd",
+    "emailVerificationExpiresAt": {
+      "$date": "2026-06-15T02:45:43.659Z"
+    },
+    "passwordHash": "$2b$12$eZaxuD6Twd.gG8JSfPtQj.NAAHHTCsQtvCg5VgX05f.cbOJ6iQA1u",
+    "role": "owner",
+    "isActive": true,
+    "deactivatedAt": null,
+    "deactivatedReason": "",
+    "organisationId": {
+      "$oid": "6a2e15d729c08418f35efad5"
+    },
+    "recoveryEmail": null,
+    "recoveryPhone": null,
+    "companySize": "",
+    "useCase": "",
+    "referralSource": "",
+    "twoFactorEnabled": false,
+    "twoFactorSecret": null,
+    "newsletter": true,
+    "avatar": null,
+    "github": {
+      "username": null,
+      "accessToken": null,
+      "connectedAt": null
+    },
+    "preferences": {
+      "notifications": {
+        "email": true,
+        "slack": false,
+        "push": true
+      },
+      "theme": "system",
+      "language": "english",
+      "defaultProject": null
+    },
+    "createdAt": {
+      "$date": "2026-06-14T02:45:43.711Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T02:45:43.711Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2ee4d3d1a8cf03f9e9a83e"
+    },
+    "name": "E2E User 1781458131775-w10laj",
+    "email": "e2e-1781458131775-w10laj@example.com",
+    "emailVerified": false,
+    "emailVerificationToken": "2786969a096f821255178861dc323e9e200bed149dc8b19ee1fdc9b2bad5d8ac",
+    "emailVerificationExpiresAt": {
+      "$date": "2026-06-15T17:28:51.800Z"
+    },
+    "passwordHash": "$2b$12$5xzJ2.QyzWyeDDQRlvnhieu543APAigH8PGBOeYOstPQaRxq3tW2W",
+    "role": "owner",
+    "isActive": true,
+    "deactivatedAt": null,
+    "deactivatedReason": "",
+    "organisationId": {
+      "$oid": "6a2ee4d3d1a8cf03f9e9a83c"
+    },
+    "recoveryEmail": null,
+    "recoveryPhone": null,
+    "companySize": "",
+    "useCase": "",
+    "referralSource": "",
+    "twoFactorEnabled": false,
+    "twoFactorSecret": null,
+    "newsletter": true,
+    "avatar": null,
+    "github": {
+      "username": "owner",
+      "accessToken": "mock-github-access-token",
+      "connectedAt": {
+        "$date": "2026-06-14T17:28:57.369Z"
+      }
+    },
+    "preferences": {
+      "notifications": {
+        "email": true,
+        "slack": false,
+        "push": true
+      },
+      "theme": "system",
+      "language": "english",
+      "defaultProject": null
+    },
+    "createdAt": {
+      "$date": "2026-06-14T17:28:51.809Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T17:28:57.372Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2ee5dfd1a8cf03f9e9a93e"
+    },
+    "name": "E2E User 1781458399174-d11grn",
+    "email": "e2e-1781458399174-d11grn@example.com",
+    "emailVerified": false,
+    "emailVerificationToken": "fd9954a6de492c49c5b8b7f9c818711b498c4c21d7bdd76659d0f9d1db193ef9",
+    "emailVerificationExpiresAt": {
+      "$date": "2026-06-15T17:33:19.194Z"
+    },
+    "passwordHash": "$2b$12$n7wscxLicC6yUduOsJU4/.HvFg55ZfWKcyh4apPp4oXYw.b7MXp5O",
+    "role": "owner",
+    "isActive": true,
+    "deactivatedAt": null,
+    "deactivatedReason": "",
+    "organisationId": {
+      "$oid": "6a2ee5dfd1a8cf03f9e9a93c"
+    },
+    "recoveryEmail": null,
+    "recoveryPhone": null,
+    "companySize": "",
+    "useCase": "",
+    "referralSource": "",
+    "twoFactorEnabled": false,
+    "twoFactorSecret": null,
+    "newsletter": true,
+    "avatar": null,
+    "github": {
+      "username": "owner",
+      "accessToken": "mock-github-access-token",
+      "connectedAt": {
+        "$date": "2026-06-14T17:33:24.168Z"
+      }
+    },
+    "preferences": {
+      "notifications": {
+        "email": true,
+        "slack": false,
+        "push": true
+      },
+      "theme": "system",
+      "language": "english",
+      "defaultProject": null
+    },
+    "createdAt": {
+      "$date": "2026-06-14T17:33:19.201Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T17:33:24.169Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2ee8b1d1a8cf03f9e9b24d"
+    },
+    "name": "E2E User 1781459121224-u00mhe",
+    "email": "e2e-1781459121224-u00mhe@example.com",
+    "emailVerified": false,
+    "emailVerificationToken": "e46798da0f08b9a070c6f0a824d10cac1b6f9ef07c7768079f35b9e777602a4e",
+    "emailVerificationExpiresAt": {
+      "$date": "2026-06-15T17:45:21.277Z"
+    },
+    "passwordHash": "$2b$12$hOeRm8H3XkOSIHJVpNr.EOh4aUbtDKsuEXzRd5akRMEi5fv4JzUjm",
+    "role": "owner",
+    "isActive": true,
+    "deactivatedAt": null,
+    "deactivatedReason": "",
+    "organisationId": {
+      "$oid": "6a2ee8b1d1a8cf03f9e9b24b"
+    },
+    "recoveryEmail": null,
+    "recoveryPhone": null,
+    "companySize": "",
+    "useCase": "",
+    "referralSource": "",
+    "twoFactorEnabled": false,
+    "twoFactorSecret": null,
+    "newsletter": true,
+    "avatar": null,
+    "github": {
+      "username": null,
+      "accessToken": null,
+      "connectedAt": null
+    },
+    "preferences": {
+      "notifications": {
+        "email": true,
+        "slack": false,
+        "push": true
+      },
+      "theme": "system",
+      "language": "english",
+      "defaultProject": null
+    },
+    "createdAt": {
+      "$date": "2026-06-14T17:45:21.288Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T17:45:21.288Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2ee8b1d1a8cf03f9e9b249"
+    },
+    "name": "E2E User 1781459121149-l7jngh",
+    "email": "e2e-1781459121149-l7jngh@example.com",
+    "emailVerified": false,
+    "emailVerificationToken": "ec44f477a35a17b180c38aaae255b68ad18635e97a9d74034978e814daa30d7b",
+    "emailVerificationExpiresAt": {
+      "$date": "2026-06-15T17:45:21.254Z"
+    },
+    "passwordHash": "$2b$12$/J/93EWjAXYjO1NdrM8.NOnu1LaRu7YcKAhPLzxMWWBkSa2N8BuXW",
+    "role": "owner",
+    "isActive": true,
+    "deactivatedAt": null,
+    "deactivatedReason": "",
+    "organisationId": {
+      "$oid": "6a2ee8b1d1a8cf03f9e9b246"
+    },
+    "recoveryEmail": null,
+    "recoveryPhone": null,
+    "companySize": "",
+    "useCase": "",
+    "referralSource": "",
+    "twoFactorEnabled": false,
+    "twoFactorSecret": null,
+    "newsletter": true,
+    "avatar": null,
+    "github": {
+      "username": null,
+      "accessToken": null,
+      "connectedAt": null
+    },
+    "preferences": {
+      "notifications": {
+        "email": true,
+        "slack": false,
+        "push": true
+      },
+      "theme": "system",
+      "language": "english",
+      "defaultProject": null
+    },
+    "createdAt": {
+      "$date": "2026-06-14T17:45:21.263Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T17:45:21.263Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2ee8b1d1a8cf03f9e9b248"
+    },
+    "name": "E2E User 1781459121160-xuh79y",
+    "email": "e2e-1781459121160-xuh79y@example.com",
+    "emailVerified": false,
+    "emailVerificationToken": "81d24a038683781ddb2baf1df700b637e26c02852c6e9d182e64a03e33418e95",
+    "emailVerificationExpiresAt": {
+      "$date": "2026-06-15T17:45:21.246Z"
+    },
+    "passwordHash": "$2b$12$0pPVUvUHGnpr3LcS7wu/6eCSNwO3hoeSbDfurSzO2XmFWzQ.upwFW",
+    "role": "owner",
+    "isActive": true,
+    "deactivatedAt": null,
+    "deactivatedReason": "",
+    "organisationId": {
+      "$oid": "6a2ee8b1d1a8cf03f9e9b244"
+    },
+    "recoveryEmail": null,
+    "recoveryPhone": null,
+    "companySize": "",
+    "useCase": "",
+    "referralSource": "",
+    "twoFactorEnabled": false,
+    "twoFactorSecret": null,
+    "newsletter": true,
+    "avatar": null,
+    "github": {
+      "username": null,
+      "accessToken": null,
+      "connectedAt": null
+    },
+    "preferences": {
+      "notifications": {
+        "email": true,
+        "slack": false,
+        "push": true
+      },
+      "theme": "system",
+      "language": "english",
+      "defaultProject": null
+    },
+    "createdAt": {
+      "$date": "2026-06-14T17:45:21.261Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T17:45:21.261Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2ee8b1d1a8cf03f9e9b251"
+    },
+    "name": "E2E User 1781459121478-amvxfx",
+    "email": "e2e-1781459121478-amvxfx@example.com",
+    "emailVerified": false,
+    "emailVerificationToken": "bb599dcb4313a295c0bf06832992e8a59b05a5e2f43c26a1b0a4f06b9e167c77",
+    "emailVerificationExpiresAt": {
+      "$date": "2026-06-15T17:45:21.513Z"
+    },
+    "passwordHash": "$2b$12$m6Fb33WuZAR3PUQyK8BJ4.8bx3Z2eAMq8w5dJ6YzDslcZI1qcKRQq",
+    "role": "owner",
+    "isActive": true,
+    "deactivatedAt": null,
+    "deactivatedReason": "",
+    "organisationId": {
+      "$oid": "6a2ee8b1d1a8cf03f9e9b24f"
+    },
+    "recoveryEmail": null,
+    "recoveryPhone": null,
+    "companySize": "",
+    "useCase": "",
+    "referralSource": "",
+    "twoFactorEnabled": false,
+    "twoFactorSecret": null,
+    "newsletter": true,
+    "avatar": null,
+    "github": {
+      "username": null,
+      "accessToken": null,
+      "connectedAt": null
+    },
+    "preferences": {
+      "notifications": {
+        "email": true,
+        "slack": false,
+        "push": true
+      },
+      "theme": "system",
+      "language": "english",
+      "defaultProject": null
+    },
+    "createdAt": {
+      "$date": "2026-06-14T17:45:21.522Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T17:45:21.522Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2ee8c2d1a8cf03f9e9b277"
+    },
+    "name": "Playwright User 1781459121109-r1euge",
+    "email": "playwright-1781459121109-r1euge@example.com",
+    "emailVerified": false,
+    "emailVerificationToken": "964a4d7671316cc583568a200d0f6e9ff9fa95dfa5b0db9435b6851e47964403",
+    "emailVerificationExpiresAt": {
+      "$date": "2026-06-15T17:45:38.455Z"
+    },
+    "passwordHash": "$2b$12$v2VaKFGwgOmLR6KGqG/FCudAi.q5Kr2bgmcK2RitXJuxZMeQrKEpu",
+    "role": "owner",
+    "isActive": true,
+    "deactivatedAt": null,
+    "deactivatedReason": "",
+    "organisationId": {
+      "$oid": "6a2ee8c2d1a8cf03f9e9b275"
+    },
+    "recoveryEmail": null,
+    "recoveryPhone": null,
+    "companySize": "",
+    "useCase": "",
+    "referralSource": "",
+    "twoFactorEnabled": false,
+    "twoFactorSecret": null,
+    "newsletter": true,
+    "avatar": null,
+    "github": {
+      "username": null,
+      "accessToken": null,
+      "connectedAt": null
+    },
+    "preferences": {
+      "notifications": {
+        "email": true,
+        "slack": false,
+        "push": true
+      },
+      "theme": "system",
+      "language": "english",
+      "defaultProject": null
+    },
+    "createdAt": {
+      "$date": "2026-06-14T17:45:38.917Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T17:45:38.917Z"
+    },
+    "__v": 0
+  }
+]

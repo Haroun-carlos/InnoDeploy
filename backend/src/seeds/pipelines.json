@@ -1,0 +1,3324 @@
+[
+  {
+    "_id": {
+      "$oid": "69c959f6cd5b890ba6cfaece"
+    },
+    "projectId": {
+      "$oid": "69c959d5cd5b890ba6cfae64"
+    },
+    "version": "v1774803446772",
+    "strategy": "rolling",
+    "runType": "deployment",
+    "status": "failed",
+    "branch": "main",
+    "triggeredBy": "mohamed.haroun.razgallah@horizon-tech.tn",
+    "environment": "default",
+    "duration": 27,
+    "steps": [
+      {
+        "name": "build",
+        "command": "docker build .",
+        "status": "failed",
+        "duration": 2,
+        "output": "$ docker build .\n\nProcess error: spawn docker build . ENOENT",
+        "attempt": 1
+      },
+      {
+        "name": "deploy",
+        "command": "kubectl apply -f deployment.yml",
+        "status": "skipped",
+        "duration": 0,
+        "output": ""
+      }
+    ],
+    "config": "",
+    "cancelledAt": null,
+    "createdAt": {
+      "$date": "2026-03-29T16:57:26.789Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-30T23:10:18.881Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69c959f8cd5b890ba6cfaed3"
+    },
+    "projectId": {
+      "$oid": "69c959d5cd5b890ba6cfae64"
+    },
+    "version": "v1774803448448",
+    "strategy": "rolling",
+    "runType": "deployment",
+    "status": "failed",
+    "branch": "main",
+    "triggeredBy": "mohamed.haroun.razgallah@horizon-tech.tn",
+    "environment": "default",
+    "duration": 106,
+    "steps": [
+      {
+        "name": "build",
+        "command": "docker build .",
+        "status": "failed",
+        "duration": 5,
+        "output": "$ docker build .\n\nProcess error: spawn docker build . ENOENT",
+        "attempt": 1
+      },
+      {
+        "name": "deploy",
+        "command": "kubectl apply -f deployment.yml",
+        "status": "skipped",
+        "duration": 0,
+        "output": ""
+      }
+    ],
+    "config": "",
+    "cancelledAt": null,
+    "createdAt": {
+      "$date": "2026-03-29T16:57:28.451Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-30T23:10:18.840Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69d85e8b1a5c1efc34ce6ca5"
+    },
+    "projectId": {
+      "$oid": "69c959d5cd5b890ba6cfae64"
+    },
+    "version": "v1775787659120",
+    "strategy": "rolling",
+    "runType": "deployment",
+    "status": "failed",
+    "branch": "main",
+    "triggeredBy": "mohamed.haroun.razgallah@horizon-tech.tn",
+    "environment": "default",
+    "duration": 60,
+    "steps": [
+      {
+        "name": "prepare-release",
+        "command": "echo 'Preparing rolling deployment'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 1,
+        "status": "failed",
+        "duration": 6,
+        "output": "$ echo 'Preparing rolling deployment'\n\nProcess error: spawn echo 'Preparing rolling deployment' ENOENT"
+      },
+      {
+        "name": "rollout-batch",
+        "command": "echo 'Rolling update: replacing instances in batches'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 0,
+        "status": "skipped",
+        "duration": 0,
+        "output": ""
+      },
+      {
+        "name": "health-gate",
+        "command": "echo 'Waiting for health-check gate before next batch'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 0,
+        "status": "skipped",
+        "duration": 0,
+        "output": ""
+      },
+      {
+        "name": "finalize",
+        "command": "echo 'Rolling deployment completed'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 0,
+        "status": "skipped",
+        "duration": 0,
+        "output": ""
+      }
+    ],
+    "config": "",
+    "cancelledAt": null,
+    "createdAt": {
+      "$date": "2026-04-10T02:20:59.125Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-10T02:20:59.831Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69d85e911a5c1efc34ce6cbe"
+    },
+    "projectId": {
+      "$oid": "69c959d5cd5b890ba6cfae64"
+    },
+    "version": "v1774803448448",
+    "strategy": "recreate",
+    "runType": "rollback",
+    "status": "failed",
+    "branch": "main",
+    "triggeredBy": "mohamed.haroun.razgallah@horizon-tech.tn",
+    "environment": "default",
+    "duration": 28,
+    "steps": [
+      {
+        "name": "scale-down",
+        "command": "echo 'Scaling down old workload'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 1,
+        "status": "failed",
+        "duration": 3,
+        "output": "$ echo 'Scaling down old workload'\n\nProcess error: spawn echo 'Scaling down old workload' ENOENT"
+      },
+      {
+        "name": "apply-release",
+        "command": "echo 'Applying fresh release'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 0,
+        "status": "skipped",
+        "duration": 0,
+        "output": ""
+      },
+      {
+        "name": "scale-up",
+        "command": "echo 'Scaling up new workload'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 0,
+        "status": "skipped",
+        "duration": 0,
+        "output": ""
+      }
+    ],
+    "config": "",
+    "cancelledAt": null,
+    "createdAt": {
+      "$date": "2026-04-10T02:21:05.361Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-10T02:21:05.939Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69d85e931a5c1efc34ce6cd7"
+    },
+    "projectId": {
+      "$oid": "69c959d5cd5b890ba6cfae64"
+    },
+    "version": "v1775787667677",
+    "strategy": "rolling",
+    "runType": "deployment",
+    "status": "failed",
+    "branch": "main",
+    "triggeredBy": "mohamed.haroun.razgallah@horizon-tech.tn",
+    "environment": "default",
+    "duration": 30,
+    "steps": [
+      {
+        "name": "prepare-release",
+        "command": "echo 'Preparing rolling deployment'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 1,
+        "status": "failed",
+        "duration": 3,
+        "output": "$ echo 'Preparing rolling deployment'\n\nProcess error: spawn echo 'Preparing rolling deployment' ENOENT"
+      },
+      {
+        "name": "rollout-batch",
+        "command": "echo 'Rolling update: replacing instances in batches'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 0,
+        "status": "skipped",
+        "duration": 0,
+        "output": ""
+      },
+      {
+        "name": "health-gate",
+        "command": "echo 'Waiting for health-check gate before next batch'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 0,
+        "status": "skipped",
+        "duration": 0,
+        "output": ""
+      },
+      {
+        "name": "finalize",
+        "command": "echo 'Rolling deployment completed'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 0,
+        "status": "skipped",
+        "duration": 0,
+        "output": ""
+      }
+    ],
+    "config": "",
+    "cancelledAt": null,
+    "createdAt": {
+      "$date": "2026-04-10T02:21:07.680Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-10T02:21:07.996Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69d85e991a5c1efc34ce6cf0"
+    },
+    "projectId": {
+      "$oid": "69c959d5cd5b890ba6cfae64"
+    },
+    "version": "v1775787673784",
+    "strategy": "rolling",
+    "runType": "pipeline",
+    "status": "failed",
+    "branch": "main",
+    "triggeredBy": "mohamed.haroun.razgallah@horizon-tech.tn",
+    "environment": "staging",
+    "duration": 186010,
+    "steps": [
+      {
+        "name": "checkout",
+        "command": "git checkout",
+        "image": "node:20-alpine",
+        "retries": 0,
+        "timeoutMs": 600000,
+        "attempt": 1,
+        "status": "failed",
+        "duration": 178471,
+        "output": "$ git checkout\nUnable to find image 'node:20-alpine' locally\n20-alpine: Pulling from library/node\n62e0e1181d88: Pulling fs layer\nc7734204880f: Pulling fs layer\nd7f6aca05b78: Pulling fs layer\nc7734204880f: Download complete\n62e0e1181d88: Download complete\nd7f6aca05b78: Download complete\nd7f6aca05b78: Pull complete\n62e0e1181d88: Pull complete\nc7734204880f: Pull complete\nDigest: sha256:f598378b5240225e6beab68fa9f356db1fb8efe55173e6d4d8153113bb8f333c\nStatus: Downloaded newer image for node:20-alpine\nsh: git: not found"
+      },
+      {
+        "name": "build",
+        "command": "npm run build",
+        "image": "node:20-alpine",
+        "retries": 0,
+        "timeoutMs": 600000,
+        "attempt": 0,
+        "status": "skipped",
+        "duration": 0,
+        "output": ""
+      },
+      {
+        "name": "deploy",
+        "command": "npm run deploy",
+        "image": "node:20-alpine",
+        "retries": 0,
+        "timeoutMs": 600000,
+        "attempt": 0,
+        "status": "skipped",
+        "duration": 0,
+        "output": ""
+      }
+    ],
+    "config": "",
+    "cancelledAt": null,
+    "createdAt": {
+      "$date": "2026-04-10T02:21:13.786Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-10T02:24:19.932Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69d85ec21a5c1efc34ce6d3c"
+    },
+    "projectId": {
+      "$oid": "69c95b1ccd5b890ba6cfaff2"
+    },
+    "version": "v1775787714876",
+    "strategy": "rolling",
+    "runType": "deployment",
+    "status": "failed",
+    "branch": "main",
+    "triggeredBy": "mohamed.haroun.razgallah@horizon-tech.tn",
+    "environment": "default",
+    "duration": 38,
+    "steps": [
+      {
+        "name": "prepare-release",
+        "command": "echo 'Preparing rolling deployment'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 1,
+        "status": "failed",
+        "duration": 3,
+        "output": "$ echo 'Preparing rolling deployment'\n\nProcess error: spawn echo 'Preparing rolling deployment' ENOENT"
+      },
+      {
+        "name": "rollout-batch",
+        "command": "echo 'Rolling update: replacing instances in batches'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 0,
+        "status": "skipped",
+        "duration": 0,
+        "output": ""
+      },
+      {
+        "name": "health-gate",
+        "command": "echo 'Waiting for health-check gate before next batch'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 0,
+        "status": "skipped",
+        "duration": 0,
+        "output": ""
+      },
+      {
+        "name": "finalize",
+        "command": "echo 'Rolling deployment completed'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 0,
+        "status": "skipped",
+        "duration": 0,
+        "output": ""
+      }
+    ],
+    "config": "",
+    "cancelledAt": null,
+    "createdAt": {
+      "$date": "2026-04-10T02:21:54.881Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-10T02:21:55.510Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69d85ec91a5c1efc34ce6d55"
+    },
+    "projectId": {
+      "$oid": "69c95b1ccd5b890ba6cfaff2"
+    },
+    "version": "v1775787721217",
+    "strategy": "rolling",
+    "runType": "pipeline",
+    "status": "failed",
+    "branch": "main",
+    "triggeredBy": "mohamed.haroun.razgallah@horizon-tech.tn",
+    "environment": "staging",
+    "duration": 7043,
+    "steps": [
+      {
+        "name": "checkout",
+        "command": "git checkout",
+        "image": "node:20-alpine",
+        "retries": 0,
+        "timeoutMs": 600000,
+        "attempt": 0,
+        "status": "failed",
+        "duration": 7017,
+        "output": "Failed to clone repository https://github.com/Haroun-carlos/Chatbot-main.git\nCloning into 'C:\\Users\\harounn\\AppData\\Local\\Temp\\innodeploy-runs\\69d85ec91a5c1efc34ce6d55'...\nremote: Repository unavailable due to DMCA takedown.\nremote: See the takedown notice for more details:\nremote:   https://github.com/github/dmca/blob/master/2026/02/2026-02-03-truthbot.md.\nfatal: unable to access 'https://github.com/Haroun-carlos/Chatbot-main.git/': The requested URL returned error: 403"
+      },
+      {
+        "name": "build",
+        "command": "npm run build",
+        "image": "node:20-alpine",
+        "retries": 0,
+        "timeoutMs": 600000,
+        "attempt": 0,
+        "status": "skipped",
+        "duration": 0,
+        "output": ""
+      },
+      {
+        "name": "deploy",
+        "command": "npm run deploy",
+        "image": "node:20-alpine",
+        "retries": 0,
+        "timeoutMs": 600000,
+        "attempt": 0,
+        "status": "skipped",
+        "duration": 0,
+        "output": ""
+      }
+    ],
+    "config": "",
+    "cancelledAt": null,
+    "createdAt": {
+      "$date": "2026-04-10T02:22:01.219Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-10T02:24:26.994Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69d85f191a5c1efc34ce6d9a"
+    },
+    "projectId": {
+      "$oid": "69cade00d3d7170742fb603f"
+    },
+    "version": "v1775787801029",
+    "strategy": "rolling",
+    "runType": "deployment",
+    "status": "failed",
+    "branch": "main",
+    "triggeredBy": "mohamed.haroun.razgallah@horizon-tech.tn",
+    "environment": "default",
+    "duration": 72,
+    "steps": [
+      {
+        "name": "prepare-release",
+        "command": "echo 'Preparing rolling deployment'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 1,
+        "status": "failed",
+        "duration": 5,
+        "output": "$ echo 'Preparing rolling deployment'\n\nProcess error: spawn echo 'Preparing rolling deployment' ENOENT"
+      },
+      {
+        "name": "rollout-batch",
+        "command": "echo 'Rolling update: replacing instances in batches'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 0,
+        "status": "skipped",
+        "duration": 0,
+        "output": ""
+      },
+      {
+        "name": "health-gate",
+        "command": "echo 'Waiting for health-check gate before next batch'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 0,
+        "status": "skipped",
+        "duration": 0,
+        "output": ""
+      },
+      {
+        "name": "finalize",
+        "command": "echo 'Rolling deployment completed'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 0,
+        "status": "skipped",
+        "duration": 0,
+        "output": ""
+      }
+    ],
+    "config": "",
+    "cancelledAt": null,
+    "createdAt": {
+      "$date": "2026-04-10T02:23:21.033Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-10T02:23:21.534Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69d8630d1a5c1efc34ce6e39"
+    },
+    "projectId": {
+      "$oid": "69c95b1ccd5b890ba6cfaff2"
+    },
+    "version": "v1775788813239",
+    "strategy": "rolling",
+    "runType": "deployment",
+    "status": "failed",
+    "branch": "main",
+    "triggeredBy": "mohamed.haroun.razgallah@horizon-tech.tn",
+    "environment": "default",
+    "duration": 24,
+    "steps": [
+      {
+        "name": "prepare-release",
+        "command": "echo 'Preparing rolling deployment'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 1,
+        "status": "failed",
+        "duration": 2,
+        "output": "$ echo 'Preparing rolling deployment'\n\nProcess error: spawn echo 'Preparing rolling deployment' ENOENT"
+      },
+      {
+        "name": "rollout-batch",
+        "command": "echo 'Rolling update: replacing instances in batches'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 0,
+        "status": "skipped",
+        "duration": 0,
+        "output": ""
+      },
+      {
+        "name": "health-gate",
+        "command": "echo 'Waiting for health-check gate before next batch'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 0,
+        "status": "skipped",
+        "duration": 0,
+        "output": ""
+      },
+      {
+        "name": "finalize",
+        "command": "echo 'Rolling deployment completed'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 0,
+        "status": "skipped",
+        "duration": 0,
+        "output": ""
+      }
+    ],
+    "config": "",
+    "cancelledAt": null,
+    "createdAt": {
+      "$date": "2026-04-10T02:40:13.242Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-10T02:40:14.258Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69d8637a1a5c1efc34ce6e7b"
+    },
+    "projectId": {
+      "$oid": "69c95b1ccd5b890ba6cfaff2"
+    },
+    "version": "v1775788922461",
+    "strategy": "rolling",
+    "runType": "deployment",
+    "status": "failed",
+    "branch": "main",
+    "triggeredBy": "mohamed.haroun.razgallah@horizon-tech.tn",
+    "environment": "default",
+    "duration": 25,
+    "steps": [
+      {
+        "name": "prepare-release",
+        "command": "echo 'Preparing rolling deployment'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 1,
+        "status": "failed",
+        "duration": 3,
+        "output": "$ echo 'Preparing rolling deployment'\n\nProcess error: spawn echo 'Preparing rolling deployment' ENOENT"
+      },
+      {
+        "name": "rollout-batch",
+        "command": "echo 'Rolling update: replacing instances in batches'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 0,
+        "status": "skipped",
+        "duration": 0,
+        "output": ""
+      },
+      {
+        "name": "health-gate",
+        "command": "echo 'Waiting for health-check gate before next batch'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 0,
+        "status": "skipped",
+        "duration": 0,
+        "output": ""
+      },
+      {
+        "name": "finalize",
+        "command": "echo 'Rolling deployment completed'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 0,
+        "status": "skipped",
+        "duration": 0,
+        "output": ""
+      }
+    ],
+    "config": "",
+    "cancelledAt": null,
+    "createdAt": {
+      "$date": "2026-04-10T02:42:02.463Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-10T02:42:03.322Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69d865691a5c1efc34ce6f5c"
+    },
+    "projectId": {
+      "$oid": "69c95b1ccd5b890ba6cfaff2"
+    },
+    "version": "v1775789417079",
+    "strategy": "rolling",
+    "runType": "deployment",
+    "status": "failed",
+    "branch": "main",
+    "triggeredBy": "mohamed.haroun.razgallah@horizon-tech.tn",
+    "environment": "default",
+    "duration": 30,
+    "steps": [
+      {
+        "name": "prepare-release",
+        "command": "echo 'Preparing rolling deployment'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 1,
+        "status": "failed",
+        "duration": 3,
+        "output": "$ echo 'Preparing rolling deployment'\n\nProcess error: spawn echo 'Preparing rolling deployment' ENOENT"
+      },
+      {
+        "name": "rollout-batch",
+        "command": "echo 'Rolling update: replacing instances in batches'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 0,
+        "status": "skipped",
+        "duration": 0,
+        "output": ""
+      },
+      {
+        "name": "health-gate",
+        "command": "echo 'Waiting for health-check gate before next batch'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 0,
+        "status": "skipped",
+        "duration": 0,
+        "output": ""
+      },
+      {
+        "name": "finalize",
+        "command": "echo 'Rolling deployment completed'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 0,
+        "status": "skipped",
+        "duration": 0,
+        "output": ""
+      }
+    ],
+    "config": "",
+    "cancelledAt": null,
+    "createdAt": {
+      "$date": "2026-04-10T02:50:17.083Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-10T02:50:17.785Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69d865701a5c1efc34ce6f78"
+    },
+    "projectId": {
+      "$oid": "69c95b1ccd5b890ba6cfaff2"
+    },
+    "version": "v1775789424399",
+    "strategy": "rolling",
+    "runType": "pipeline",
+    "status": "failed",
+    "branch": "main",
+    "triggeredBy": "mohamed.haroun.razgallah@horizon-tech.tn",
+    "environment": "staging",
+    "duration": 2029,
+    "steps": [
+      {
+        "name": "checkout",
+        "command": "git checkout",
+        "image": "node:20-alpine",
+        "retries": 0,
+        "timeoutMs": 600000,
+        "attempt": 0,
+        "status": "failed",
+        "duration": 1997,
+        "output": "Failed to clone repository https://github.com/Haroun-carlos/Chatbot-main.git\nCloning into 'C:\\Users\\harounn\\AppData\\Local\\Temp\\innodeploy-runs\\69d865701a5c1efc34ce6f78'...\nremote: Repository unavailable due to DMCA takedown.\nremote: See the takedown notice for more details:\nremote:   https://github.com/github/dmca/blob/master/2026/02/2026-02-03-truthbot.md.\nfatal: unable to access 'https://github.com/Haroun-carlos/Chatbot-main.git/': The requested URL returned error: 403"
+      },
+      {
+        "name": "build",
+        "command": "npm run build",
+        "image": "node:20-alpine",
+        "retries": 0,
+        "timeoutMs": 600000,
+        "attempt": 0,
+        "status": "skipped",
+        "duration": 0,
+        "output": ""
+      },
+      {
+        "name": "deploy",
+        "command": "npm run deploy",
+        "image": "node:20-alpine",
+        "retries": 0,
+        "timeoutMs": 600000,
+        "attempt": 0,
+        "status": "skipped",
+        "duration": 0,
+        "output": ""
+      }
+    ],
+    "config": "",
+    "cancelledAt": null,
+    "createdAt": {
+      "$date": "2026-04-10T02:50:24.401Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-10T02:50:26.536Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69d8657d1a5c1efc34ce6fa1"
+    },
+    "projectId": {
+      "$oid": "69c95b1ccd5b890ba6cfaff2"
+    },
+    "version": "v1775789437275",
+    "strategy": "rolling",
+    "runType": "deployment",
+    "status": "failed",
+    "branch": "main",
+    "triggeredBy": "mohamed.haroun.razgallah@horizon-tech.tn",
+    "environment": "default",
+    "duration": 26,
+    "steps": [
+      {
+        "name": "prepare-release",
+        "command": "echo 'Preparing rolling deployment'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 1,
+        "status": "failed",
+        "duration": 3,
+        "output": "$ echo 'Preparing rolling deployment'\n\nProcess error: spawn echo 'Preparing rolling deployment' ENOENT"
+      },
+      {
+        "name": "rollout-batch",
+        "command": "echo 'Rolling update: replacing instances in batches'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 0,
+        "status": "skipped",
+        "duration": 0,
+        "output": ""
+      },
+      {
+        "name": "health-gate",
+        "command": "echo 'Waiting for health-check gate before next batch'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 0,
+        "status": "skipped",
+        "duration": 0,
+        "output": ""
+      },
+      {
+        "name": "finalize",
+        "command": "echo 'Rolling deployment completed'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 0,
+        "status": "skipped",
+        "duration": 0,
+        "output": ""
+      }
+    ],
+    "config": "",
+    "cancelledAt": null,
+    "createdAt": {
+      "$date": "2026-04-10T02:50:37.276Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-10T02:50:38.033Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69d865891a5c1efc34ce6fe3"
+    },
+    "projectId": {
+      "$oid": "69c959d5cd5b890ba6cfae64"
+    },
+    "version": "v1775789449123",
+    "strategy": "rolling",
+    "runType": "deployment",
+    "status": "failed",
+    "branch": "main",
+    "triggeredBy": "mohamed.haroun.razgallah@horizon-tech.tn",
+    "environment": "default",
+    "duration": 29,
+    "steps": [
+      {
+        "name": "prepare-release",
+        "command": "echo 'Preparing rolling deployment'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 1,
+        "status": "failed",
+        "duration": 2,
+        "output": "$ echo 'Preparing rolling deployment'\n\nProcess error: spawn echo 'Preparing rolling deployment' ENOENT"
+      },
+      {
+        "name": "rollout-batch",
+        "command": "echo 'Rolling update: replacing instances in batches'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 0,
+        "status": "skipped",
+        "duration": 0,
+        "output": ""
+      },
+      {
+        "name": "health-gate",
+        "command": "echo 'Waiting for health-check gate before next batch'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 0,
+        "status": "skipped",
+        "duration": 0,
+        "output": ""
+      },
+      {
+        "name": "finalize",
+        "command": "echo 'Rolling deployment completed'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 0,
+        "status": "skipped",
+        "duration": 0,
+        "output": ""
+      }
+    ],
+    "config": "",
+    "cancelledAt": null,
+    "createdAt": {
+      "$date": "2026-04-10T02:50:49.126Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-10T02:50:50.172Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69d8658b1a5c1efc34ce6fff"
+    },
+    "projectId": {
+      "$oid": "69c959d5cd5b890ba6cfae64"
+    },
+    "version": "v1775789451245",
+    "strategy": "rolling",
+    "runType": "deployment",
+    "status": "failed",
+    "branch": "main",
+    "triggeredBy": "mohamed.haroun.razgallah@horizon-tech.tn",
+    "environment": "default",
+    "duration": 26,
+    "steps": [
+      {
+        "name": "prepare-release",
+        "command": "echo 'Preparing rolling deployment'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 1,
+        "status": "failed",
+        "duration": 2,
+        "output": "$ echo 'Preparing rolling deployment'\n\nProcess error: spawn echo 'Preparing rolling deployment' ENOENT"
+      },
+      {
+        "name": "rollout-batch",
+        "command": "echo 'Rolling update: replacing instances in batches'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 0,
+        "status": "skipped",
+        "duration": 0,
+        "output": ""
+      },
+      {
+        "name": "health-gate",
+        "command": "echo 'Waiting for health-check gate before next batch'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 0,
+        "status": "skipped",
+        "duration": 0,
+        "output": ""
+      },
+      {
+        "name": "finalize",
+        "command": "echo 'Rolling deployment completed'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 0,
+        "status": "skipped",
+        "duration": 0,
+        "output": ""
+      }
+    ],
+    "config": "",
+    "cancelledAt": null,
+    "createdAt": {
+      "$date": "2026-04-10T02:50:51.247Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-10T02:50:52.240Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69d93a7cee0800296b9d9f1c"
+    },
+    "projectId": {
+      "$oid": "69c959d5cd5b890ba6cfae64"
+    },
+    "version": "v1775843964952",
+    "strategy": "rolling",
+    "runType": "deployment",
+    "status": "failed",
+    "branch": "main",
+    "triggeredBy": "mohamed.haroun.razgallah@horizon-tech.tn",
+    "environment": "default",
+    "duration": 127,
+    "steps": [
+      {
+        "name": "prepare-release",
+        "command": "echo 'Preparing rolling deployment'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 1,
+        "status": "failed",
+        "duration": 11,
+        "output": "$ echo 'Preparing rolling deployment'\n\nProcess error: spawn echo 'Preparing rolling deployment' ENOENT"
+      },
+      {
+        "name": "rollout-batch",
+        "command": "echo 'Rolling update: replacing instances in batches'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 0,
+        "status": "skipped",
+        "duration": 0,
+        "output": ""
+      },
+      {
+        "name": "health-gate",
+        "command": "echo 'Waiting for health-check gate before next batch'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 0,
+        "status": "skipped",
+        "duration": 0,
+        "output": ""
+      },
+      {
+        "name": "finalize",
+        "command": "echo 'Rolling deployment completed'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 0,
+        "status": "skipped",
+        "duration": 0,
+        "output": ""
+      }
+    ],
+    "config": "",
+    "cancelledAt": null,
+    "createdAt": {
+      "$date": "2026-04-10T17:59:24.958Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-10T17:59:25.143Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69d93a8cee0800296b9d9f5b"
+    },
+    "projectId": {
+      "$oid": "69c959d5cd5b890ba6cfae64"
+    },
+    "version": "v1775843980575",
+    "strategy": "rolling",
+    "runType": "deployment",
+    "status": "failed",
+    "branch": "main",
+    "triggeredBy": "mohamed.haroun.razgallah@horizon-tech.tn",
+    "environment": "default",
+    "duration": 47,
+    "steps": [
+      {
+        "name": "prepare-release",
+        "command": "echo 'Preparing rolling deployment'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 1,
+        "status": "failed",
+        "duration": 6,
+        "output": "$ echo 'Preparing rolling deployment'\n\nProcess error: spawn echo 'Preparing rolling deployment' ENOENT"
+      },
+      {
+        "name": "rollout-batch",
+        "command": "echo 'Rolling update: replacing instances in batches'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 0,
+        "status": "skipped",
+        "duration": 0,
+        "output": ""
+      },
+      {
+        "name": "health-gate",
+        "command": "echo 'Waiting for health-check gate before next batch'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 0,
+        "status": "skipped",
+        "duration": 0,
+        "output": ""
+      },
+      {
+        "name": "finalize",
+        "command": "echo 'Rolling deployment completed'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 0,
+        "status": "skipped",
+        "duration": 0,
+        "output": ""
+      }
+    ],
+    "config": "",
+    "cancelledAt": null,
+    "createdAt": {
+      "$date": "2026-04-10T17:59:40.577Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-10T17:59:41.380Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69d93c1dadf5cdfae7863898"
+    },
+    "projectId": {
+      "$oid": "69c959d5cd5b890ba6cfae64"
+    },
+    "version": "v1775844381327",
+    "strategy": "rolling",
+    "runType": "deployment",
+    "status": "failed",
+    "branch": "main",
+    "triggeredBy": "mohamed.haroun.razgallah@horizon-tech.tn",
+    "environment": "default",
+    "duration": 38,
+    "steps": [
+      {
+        "name": "prepare-release",
+        "command": "echo 'Preparing rolling deployment'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 1,
+        "status": "failed",
+        "duration": 4,
+        "output": "$ echo 'Preparing rolling deployment'\n\nProcess error: spawn echo 'Preparing rolling deployment' ENOENT"
+      },
+      {
+        "name": "rollout-batch",
+        "command": "echo 'Rolling update: replacing instances in batches'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 0,
+        "status": "skipped",
+        "duration": 0,
+        "output": ""
+      },
+      {
+        "name": "health-gate",
+        "command": "echo 'Waiting for health-check gate before next batch'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 0,
+        "status": "skipped",
+        "duration": 0,
+        "output": ""
+      },
+      {
+        "name": "finalize",
+        "command": "echo 'Rolling deployment completed'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 0,
+        "status": "skipped",
+        "duration": 0,
+        "output": ""
+      }
+    ],
+    "config": "",
+    "cancelledAt": null,
+    "createdAt": {
+      "$date": "2026-04-10T18:06:21.383Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-10T18:06:21.892Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69d93c25adf5cdfae78638d7"
+    },
+    "projectId": {
+      "$oid": "69c959d5cd5b890ba6cfae64"
+    },
+    "version": "v1775844389581",
+    "strategy": "rolling",
+    "runType": "deployment",
+    "status": "failed",
+    "branch": "main",
+    "triggeredBy": "mohamed.haroun.razgallah@horizon-tech.tn",
+    "environment": "default",
+    "duration": 75,
+    "steps": [
+      {
+        "name": "prepare-release",
+        "command": "echo 'Preparing rolling deployment'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 1,
+        "status": "failed",
+        "duration": 6,
+        "output": "$ echo 'Preparing rolling deployment'\n\nProcess error: spawn echo 'Preparing rolling deployment' ENOENT"
+      },
+      {
+        "name": "rollout-batch",
+        "command": "echo 'Rolling update: replacing instances in batches'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 0,
+        "status": "skipped",
+        "duration": 0,
+        "output": ""
+      },
+      {
+        "name": "health-gate",
+        "command": "echo 'Waiting for health-check gate before next batch'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 0,
+        "status": "skipped",
+        "duration": 0,
+        "output": ""
+      },
+      {
+        "name": "finalize",
+        "command": "echo 'Rolling deployment completed'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 0,
+        "status": "skipped",
+        "duration": 0,
+        "output": ""
+      }
+    ],
+    "config": "",
+    "cancelledAt": null,
+    "createdAt": {
+      "$date": "2026-04-10T18:06:29.585Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-10T18:06:30.079Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69d93c26adf5cdfae78638f3"
+    },
+    "projectId": {
+      "$oid": "69c959d5cd5b890ba6cfae64"
+    },
+    "version": "v1775844390934",
+    "strategy": "rolling",
+    "runType": "deployment",
+    "status": "failed",
+    "branch": "main",
+    "triggeredBy": "mohamed.haroun.razgallah@horizon-tech.tn",
+    "environment": "default",
+    "duration": 38,
+    "steps": [
+      {
+        "name": "prepare-release",
+        "command": "echo 'Preparing rolling deployment'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 1,
+        "status": "failed",
+        "duration": 4,
+        "output": "$ echo 'Preparing rolling deployment'\n\nProcess error: spawn echo 'Preparing rolling deployment' ENOENT"
+      },
+      {
+        "name": "rollout-batch",
+        "command": "echo 'Rolling update: replacing instances in batches'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 0,
+        "status": "skipped",
+        "duration": 0,
+        "output": ""
+      },
+      {
+        "name": "health-gate",
+        "command": "echo 'Waiting for health-check gate before next batch'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 0,
+        "status": "skipped",
+        "duration": 0,
+        "output": ""
+      },
+      {
+        "name": "finalize",
+        "command": "echo 'Rolling deployment completed'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 0,
+        "status": "skipped",
+        "duration": 0,
+        "output": ""
+      }
+    ],
+    "config": "",
+    "cancelledAt": null,
+    "createdAt": {
+      "$date": "2026-04-10T18:06:30.937Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-10T18:06:31.155Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69d93c2aadf5cdfae786390f"
+    },
+    "projectId": {
+      "$oid": "69c959d5cd5b890ba6cfae64"
+    },
+    "version": "v1775844394418",
+    "strategy": "rolling",
+    "runType": "pipeline",
+    "status": "failed",
+    "branch": "main",
+    "triggeredBy": "mohamed.haroun.razgallah@horizon-tech.tn",
+    "environment": "staging",
+    "duration": 2490,
+    "steps": [
+      {
+        "name": "checkout",
+        "command": "git checkout",
+        "image": "node:20-alpine",
+        "retries": 0,
+        "timeoutMs": 600000,
+        "attempt": 1,
+        "status": "failed",
+        "duration": 1085,
+        "output": "$ git checkout\nsh: git: not found"
+      },
+      {
+        "name": "build",
+        "command": "npm run build",
+        "image": "node:20-alpine",
+        "retries": 0,
+        "timeoutMs": 600000,
+        "attempt": 0,
+        "status": "skipped",
+        "duration": 0,
+        "output": ""
+      },
+      {
+        "name": "deploy",
+        "command": "npm run deploy",
+        "image": "node:20-alpine",
+        "retries": 0,
+        "timeoutMs": 600000,
+        "attempt": 0,
+        "status": "skipped",
+        "duration": 0,
+        "output": ""
+      }
+    ],
+    "config": "",
+    "cancelledAt": null,
+    "createdAt": {
+      "$date": "2026-04-10T18:06:34.420Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-10T18:06:37.472Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69d93c3dadf5cdfae786393f"
+    },
+    "projectId": {
+      "$oid": "69c959d5cd5b890ba6cfae64"
+    },
+    "version": "v1775844413463",
+    "strategy": "rolling",
+    "runType": "deployment",
+    "status": "failed",
+    "branch": "main",
+    "triggeredBy": "mohamed.haroun.razgallah@horizon-tech.tn",
+    "environment": "default",
+    "duration": 35,
+    "steps": [
+      {
+        "name": "prepare-release",
+        "command": "echo 'Preparing rolling deployment'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 1,
+        "status": "failed",
+        "duration": 3,
+        "output": "$ echo 'Preparing rolling deployment'\n\nProcess error: spawn echo 'Preparing rolling deployment' ENOENT"
+      },
+      {
+        "name": "rollout-batch",
+        "command": "echo 'Rolling update: replacing instances in batches'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 0,
+        "status": "skipped",
+        "duration": 0,
+        "output": ""
+      },
+      {
+        "name": "health-gate",
+        "command": "echo 'Waiting for health-check gate before next batch'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 0,
+        "status": "skipped",
+        "duration": 0,
+        "output": ""
+      },
+      {
+        "name": "finalize",
+        "command": "echo 'Rolling deployment completed'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 0,
+        "status": "skipped",
+        "duration": 0,
+        "output": ""
+      }
+    ],
+    "config": "",
+    "cancelledAt": null,
+    "createdAt": {
+      "$date": "2026-04-10T18:06:53.465Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-10T18:06:54.430Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69d93c48adf5cdfae786395b"
+    },
+    "projectId": {
+      "$oid": "69c959d5cd5b890ba6cfae64"
+    },
+    "version": "v1775844424677",
+    "strategy": "rolling",
+    "runType": "pipeline",
+    "status": "failed",
+    "branch": "main",
+    "triggeredBy": "mohamed.haroun.razgallah@horizon-tech.tn",
+    "environment": "staging",
+    "duration": 2337,
+    "steps": [
+      {
+        "name": "checkout",
+        "command": "git checkout",
+        "image": "node:20-alpine",
+        "retries": 0,
+        "timeoutMs": 600000,
+        "attempt": 1,
+        "status": "failed",
+        "duration": 1076,
+        "output": "$ git checkout\nsh: git: not found"
+      },
+      {
+        "name": "build",
+        "command": "npm run build",
+        "image": "node:20-alpine",
+        "retries": 0,
+        "timeoutMs": 600000,
+        "attempt": 0,
+        "status": "skipped",
+        "duration": 0,
+        "output": ""
+      },
+      {
+        "name": "deploy",
+        "command": "npm run deploy",
+        "image": "node:20-alpine",
+        "retries": 0,
+        "timeoutMs": 600000,
+        "attempt": 0,
+        "status": "skipped",
+        "duration": 0,
+        "output": ""
+      }
+    ],
+    "config": "",
+    "cancelledAt": null,
+    "createdAt": {
+      "$date": "2026-04-10T18:07:04.679Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-10T18:07:07.127Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69d93c50adf5cdfae786398b"
+    },
+    "projectId": {
+      "$oid": "69c959d5cd5b890ba6cfae64"
+    },
+    "version": "v1775844432232",
+    "strategy": "rolling",
+    "runType": "pipeline",
+    "status": "failed",
+    "branch": "main",
+    "triggeredBy": "mohamed.haroun.razgallah@horizon-tech.tn",
+    "environment": "staging",
+    "duration": 2312,
+    "steps": [
+      {
+        "name": "checkout",
+        "command": "git checkout",
+        "image": "node:20-alpine",
+        "retries": 0,
+        "timeoutMs": 600000,
+        "attempt": 1,
+        "status": "failed",
+        "duration": 1098,
+        "output": "$ git checkout\nsh: git: not found"
+      },
+      {
+        "name": "build",
+        "command": "npm run build",
+        "image": "node:20-alpine",
+        "retries": 0,
+        "timeoutMs": 600000,
+        "attempt": 0,
+        "status": "skipped",
+        "duration": 0,
+        "output": ""
+      },
+      {
+        "name": "deploy",
+        "command": "npm run deploy",
+        "image": "node:20-alpine",
+        "retries": 0,
+        "timeoutMs": 600000,
+        "attempt": 0,
+        "status": "skipped",
+        "duration": 0,
+        "output": ""
+      }
+    ],
+    "config": "",
+    "cancelledAt": null,
+    "createdAt": {
+      "$date": "2026-04-10T18:07:12.233Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-10T18:07:15.537Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69d93d71337b14a194945e92"
+    },
+    "projectId": {
+      "$oid": "69c959d5cd5b890ba6cfae64"
+    },
+    "version": "v1775844721648",
+    "strategy": "rolling",
+    "runType": "deployment",
+    "status": "failed",
+    "branch": "main",
+    "triggeredBy": "mohamed.haroun.razgallah@horizon-tech.tn",
+    "environment": "default",
+    "duration": 53,
+    "steps": [
+      {
+        "name": "prepare-release",
+        "command": "echo 'Preparing rolling deployment'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 1,
+        "status": "failed",
+        "duration": 6,
+        "output": "$ echo 'Preparing rolling deployment'\n\nProcess error: spawn echo 'Preparing rolling deployment' ENOENT"
+      },
+      {
+        "name": "rollout-batch",
+        "command": "echo 'Rolling update: replacing instances in batches'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 0,
+        "status": "skipped",
+        "duration": 0,
+        "output": ""
+      },
+      {
+        "name": "health-gate",
+        "command": "echo 'Waiting for health-check gate before next batch'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 0,
+        "status": "skipped",
+        "duration": 0,
+        "output": ""
+      },
+      {
+        "name": "finalize",
+        "command": "echo 'Rolling deployment completed'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 0,
+        "status": "skipped",
+        "duration": 0,
+        "output": ""
+      }
+    ],
+    "config": "",
+    "cancelledAt": null,
+    "createdAt": {
+      "$date": "2026-04-10T18:12:01.662Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-10T18:12:02.599Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69d93d76337b14a194945eae"
+    },
+    "projectId": {
+      "$oid": "69c959d5cd5b890ba6cfae64"
+    },
+    "version": "v1775844726176",
+    "strategy": "rolling",
+    "runType": "pipeline",
+    "status": "failed",
+    "branch": "main",
+    "triggeredBy": "mohamed.haroun.razgallah@horizon-tech.tn",
+    "environment": "staging",
+    "duration": 4659,
+    "steps": [
+      {
+        "name": "checkout",
+        "command": "echo \"Checking out branch: main\"",
+        "image": "node:20-alpine",
+        "retries": 0,
+        "timeoutMs": 600000,
+        "attempt": 1,
+        "status": "success",
+        "duration": 931,
+        "output": "$ echo \"Checking out branch: main\"\nChecking out branch: main"
+      },
+      {
+        "name": "build",
+        "command": "npm run build",
+        "image": "node:20-alpine",
+        "retries": 0,
+        "timeoutMs": 600000,
+        "attempt": 1,
+        "status": "failed",
+        "duration": 2351,
+        "output": "$ npm run build\nnpm error code ENOENT\nnpm error syscall open\nnpm error path /workspace/package.json\nnpm error errno -2\nnpm error enoent Could not read package.json: Error: ENOENT: no such file or directory, open '/workspace/package.json'\nnpm error enoent This is related to npm not being able to find a file.\nnpm error enoent\nnpm error A complete log of this run can be found in: /root/.npm/_logs/2026-04-10T18_12_09_981Z-debug-0.log"
+      },
+      {
+        "name": "deploy",
+        "command": "npm run deploy",
+        "image": "node:20-alpine",
+        "retries": 0,
+        "timeoutMs": 600000,
+        "attempt": 0,
+        "status": "skipped",
+        "duration": 0,
+        "output": ""
+      }
+    ],
+    "config": "",
+    "cancelledAt": null,
+    "createdAt": {
+      "$date": "2026-04-10T18:12:06.179Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-10T18:12:11.244Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69d93eab29a1a293a727b7b7"
+    },
+    "projectId": {
+      "$oid": "69c959d5cd5b890ba6cfae64"
+    },
+    "version": "v1775845035890",
+    "strategy": "rolling",
+    "runType": "deployment",
+    "status": "failed",
+    "branch": "main",
+    "triggeredBy": "mohamed.haroun.razgallah@horizon-tech.tn",
+    "environment": "default",
+    "duration": 67,
+    "steps": [
+      {
+        "name": "prepare-release",
+        "command": "echo 'Preparing rolling deployment'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 1,
+        "status": "failed",
+        "duration": 8,
+        "output": "$ echo 'Preparing rolling deployment'\n\nProcess error: spawn echo 'Preparing rolling deployment' ENOENT"
+      },
+      {
+        "name": "rollout-batch",
+        "command": "echo 'Rolling update: replacing instances in batches'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 0,
+        "status": "skipped",
+        "duration": 0,
+        "output": ""
+      },
+      {
+        "name": "health-gate",
+        "command": "echo 'Waiting for health-check gate before next batch'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 0,
+        "status": "skipped",
+        "duration": 0,
+        "output": ""
+      },
+      {
+        "name": "finalize",
+        "command": "echo 'Rolling deployment completed'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 0,
+        "status": "skipped",
+        "duration": 0,
+        "output": ""
+      }
+    ],
+    "config": "",
+    "cancelledAt": null,
+    "createdAt": {
+      "$date": "2026-04-10T18:17:15.900Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-10T18:17:16.722Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69d93eb129a1a293a727b7d3"
+    },
+    "projectId": {
+      "$oid": "69c959d5cd5b890ba6cfae64"
+    },
+    "version": "v1775845041031",
+    "strategy": "rolling",
+    "runType": "pipeline",
+    "status": "success",
+    "branch": "main",
+    "triggeredBy": "mohamed.haroun.razgallah@horizon-tech.tn",
+    "environment": "staging",
+    "duration": 7000,
+    "steps": [
+      {
+        "name": "checkout",
+        "command": "echo \"✓ Preparing build for branch: main\"",
+        "image": "node:20-alpine",
+        "retries": 0,
+        "timeoutMs": 600000,
+        "attempt": 1,
+        "status": "success",
+        "duration": 1326,
+        "output": "$ echo \"✓ Preparing build for branch: main\"\n✓ Preparing build for branch: main"
+      },
+      {
+        "name": "clone",
+        "command": "echo \"Repository: https://github.com/Haroun-carlos/Churn_Prediction_System.git\" && echo \"Note: Configure custom build commands in project settings for optimal results\"",
+        "image": "node:20-alpine",
+        "retries": 0,
+        "timeoutMs": 600000,
+        "attempt": 1,
+        "status": "success",
+        "duration": 1090,
+        "output": "$ echo \"Repository: https://github.com/Haroun-carlos/Churn_Prediction_System.git\" && echo \"Note: Configure custom build commands in project settings for optimal results\"\nRepository: https://github.com/Haroun-carlos/Churn_Prediction_System.git\nNote: Configure custom build commands in project settings for optimal results"
+      },
+      {
+        "name": "build",
+        "command": "echo '✓ Build step would run here (see project settings to configure)'",
+        "image": "node:20-alpine",
+        "retries": 0,
+        "timeoutMs": 600000,
+        "attempt": 1,
+        "status": "success",
+        "duration": 1208,
+        "output": "$ echo '✓ Build step would run here (see project settings to configure)'\n✓ Build step would run here (see project settings to configure)"
+      },
+      {
+        "name": "summary",
+        "command": "echo '✓ Pipeline steps configured. Update project settings to add custom build/start commands.'",
+        "image": "node:20-alpine",
+        "retries": 0,
+        "timeoutMs": 600000,
+        "attempt": 1,
+        "status": "success",
+        "duration": 1446,
+        "output": "$ echo '✓ Pipeline steps configured. Update project settings to add custom build/start commands.'\n✓ Pipeline steps configured. Update project settings to add custom build/start commands."
+      }
+    ],
+    "config": "",
+    "cancelledAt": null,
+    "createdAt": {
+      "$date": "2026-04-10T18:17:21.035Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-10T18:17:28.711Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69d93ee829a1a293a727b857"
+    },
+    "projectId": {
+      "$oid": "69c959d5cd5b890ba6cfae64"
+    },
+    "version": "v1775845096031",
+    "strategy": "rolling",
+    "runType": "deployment",
+    "status": "failed",
+    "branch": "main",
+    "triggeredBy": "mohamed.haroun.razgallah@horizon-tech.tn",
+    "environment": "default",
+    "duration": 34,
+    "steps": [
+      {
+        "name": "prepare-release",
+        "command": "echo 'Preparing rolling deployment'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 1,
+        "status": "failed",
+        "duration": 3,
+        "output": "$ echo 'Preparing rolling deployment'\n\nProcess error: spawn echo 'Preparing rolling deployment' ENOENT"
+      },
+      {
+        "name": "rollout-batch",
+        "command": "echo 'Rolling update: replacing instances in batches'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 0,
+        "status": "skipped",
+        "duration": 0,
+        "output": ""
+      },
+      {
+        "name": "health-gate",
+        "command": "echo 'Waiting for health-check gate before next batch'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 0,
+        "status": "skipped",
+        "duration": 0,
+        "output": ""
+      },
+      {
+        "name": "finalize",
+        "command": "echo 'Rolling deployment completed'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 0,
+        "status": "skipped",
+        "duration": 0,
+        "output": ""
+      }
+    ],
+    "config": "",
+    "cancelledAt": null,
+    "createdAt": {
+      "$date": "2026-04-10T18:18:16.034Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-10T18:18:16.382Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69d9405829a1a293a727b8ad"
+    },
+    "projectId": {
+      "$oid": "69c959d5cd5b890ba6cfae64"
+    },
+    "version": "v1775845464224",
+    "strategy": "rolling",
+    "runType": "deployment",
+    "status": "failed",
+    "branch": "main",
+    "triggeredBy": "mohamed.haroun.razgallah@horizon-tech.tn",
+    "environment": "default",
+    "duration": 43,
+    "steps": [
+      {
+        "name": "prepare-release",
+        "command": "echo 'Preparing rolling deployment'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 1,
+        "status": "failed",
+        "duration": 3,
+        "output": "$ echo 'Preparing rolling deployment'\n\nProcess error: spawn echo 'Preparing rolling deployment' ENOENT"
+      },
+      {
+        "name": "rollout-batch",
+        "command": "echo 'Rolling update: replacing instances in batches'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 0,
+        "status": "skipped",
+        "duration": 0,
+        "output": ""
+      },
+      {
+        "name": "health-gate",
+        "command": "echo 'Waiting for health-check gate before next batch'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 0,
+        "status": "skipped",
+        "duration": 0,
+        "output": ""
+      },
+      {
+        "name": "finalize",
+        "command": "echo 'Rolling deployment completed'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 0,
+        "status": "skipped",
+        "duration": 0,
+        "output": ""
+      }
+    ],
+    "config": "",
+    "cancelledAt": null,
+    "createdAt": {
+      "$date": "2026-04-10T18:24:24.226Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-10T18:24:25.178Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69d9405929a1a293a727b8c9"
+    },
+    "projectId": {
+      "$oid": "69c959d5cd5b890ba6cfae64"
+    },
+    "version": "v1775845465695",
+    "strategy": "rolling",
+    "runType": "deployment",
+    "status": "failed",
+    "branch": "main",
+    "triggeredBy": "mohamed.haroun.razgallah@horizon-tech.tn",
+    "environment": "default",
+    "duration": 33,
+    "steps": [
+      {
+        "name": "prepare-release",
+        "command": "echo 'Preparing rolling deployment'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 1,
+        "status": "failed",
+        "duration": 3,
+        "output": "$ echo 'Preparing rolling deployment'\n\nProcess error: spawn echo 'Preparing rolling deployment' ENOENT"
+      },
+      {
+        "name": "rollout-batch",
+        "command": "echo 'Rolling update: replacing instances in batches'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 0,
+        "status": "skipped",
+        "duration": 0,
+        "output": ""
+      },
+      {
+        "name": "health-gate",
+        "command": "echo 'Waiting for health-check gate before next batch'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 0,
+        "status": "skipped",
+        "duration": 0,
+        "output": ""
+      },
+      {
+        "name": "finalize",
+        "command": "echo 'Rolling deployment completed'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 0,
+        "status": "skipped",
+        "duration": 0,
+        "output": ""
+      }
+    ],
+    "config": "",
+    "cancelledAt": null,
+    "createdAt": {
+      "$date": "2026-04-10T18:24:25.697Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-10T18:24:26.255Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69d9405c29a1a293a727b8e5"
+    },
+    "projectId": {
+      "$oid": "69c959d5cd5b890ba6cfae64"
+    },
+    "version": "v1775845468156",
+    "strategy": "rolling",
+    "runType": "pipeline",
+    "status": "success",
+    "branch": "main",
+    "triggeredBy": "mohamed.haroun.razgallah@horizon-tech.tn",
+    "environment": "staging",
+    "duration": 6402,
+    "steps": [
+      {
+        "name": "checkout",
+        "command": "echo \"✓ Preparing build for branch: main\"",
+        "image": "node:20-alpine",
+        "retries": 0,
+        "timeoutMs": 600000,
+        "attempt": 1,
+        "status": "success",
+        "duration": 1193,
+        "output": "$ echo \"✓ Preparing build for branch: main\"\n✓ Preparing build for branch: main"
+      },
+      {
+        "name": "clone",
+        "command": "echo \"Repository: https://github.com/Haroun-carlos/Churn_Prediction_System.git\" && echo \"Note: Configure custom build commands in project settings for optimal results\"",
+        "image": "node:20-alpine",
+        "retries": 0,
+        "timeoutMs": 600000,
+        "attempt": 1,
+        "status": "success",
+        "duration": 1287,
+        "output": "$ echo \"Repository: https://github.com/Haroun-carlos/Churn_Prediction_System.git\" && echo \"Note: Configure custom build commands in project settings for optimal results\"\nRepository: https://github.com/Haroun-carlos/Churn_Prediction_System.git\nNote: Configure custom build commands in project settings for optimal results"
+      },
+      {
+        "name": "build",
+        "command": "echo '✓ Build step would run here (see project settings to configure)'",
+        "image": "node:20-alpine",
+        "retries": 0,
+        "timeoutMs": 600000,
+        "attempt": 1,
+        "status": "success",
+        "duration": 999,
+        "output": "$ echo '✓ Build step would run here (see project settings to configure)'\n✓ Build step would run here (see project settings to configure)"
+      },
+      {
+        "name": "summary",
+        "command": "echo '✓ Pipeline steps configured. Update project settings to add custom build/start commands.'",
+        "image": "node:20-alpine",
+        "retries": 0,
+        "timeoutMs": 600000,
+        "attempt": 1,
+        "status": "success",
+        "duration": 1216,
+        "output": "$ echo '✓ Pipeline steps configured. Update project settings to add custom build/start commands.'\n✓ Pipeline steps configured. Update project settings to add custom build/start commands."
+      }
+    ],
+    "config": "",
+    "cancelledAt": null,
+    "createdAt": {
+      "$date": "2026-04-10T18:24:28.159Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-10T18:24:35.394Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69d9408a29a1a293a727b9bb"
+    },
+    "projectId": {
+      "$oid": "69c959d5cd5b890ba6cfae64"
+    },
+    "version": "v1775845514173",
+    "strategy": "rolling",
+    "runType": "pipeline",
+    "status": "success",
+    "branch": "main",
+    "triggeredBy": "mohamed.haroun.razgallah@horizon-tech.tn",
+    "environment": "staging",
+    "duration": 4559,
+    "steps": [
+      {
+        "name": "checkout",
+        "command": "echo \"✓ Preparing build for branch: main\"",
+        "image": "node:20-alpine",
+        "retries": 0,
+        "timeoutMs": 600000,
+        "attempt": 1,
+        "status": "success",
+        "duration": 725,
+        "output": "$ echo \"✓ Preparing build for branch: main\"\n✓ Preparing build for branch: main"
+      },
+      {
+        "name": "clone",
+        "command": "echo \"Repository: https://github.com/Haroun-carlos/Churn_Prediction_System.git\" && echo \"Note: Configure custom build commands in project settings for optimal results\"",
+        "image": "node:20-alpine",
+        "retries": 0,
+        "timeoutMs": 600000,
+        "attempt": 1,
+        "status": "success",
+        "duration": 784,
+        "output": "$ echo \"Repository: https://github.com/Haroun-carlos/Churn_Prediction_System.git\" && echo \"Note: Configure custom build commands in project settings for optimal results\"\nRepository: https://github.com/Haroun-carlos/Churn_Prediction_System.git\nNote: Configure custom build commands in project settings for optimal results"
+      },
+      {
+        "name": "build",
+        "command": "echo '✓ Build step would run here (see project settings to configure)'",
+        "image": "node:20-alpine",
+        "retries": 0,
+        "timeoutMs": 600000,
+        "attempt": 1,
+        "status": "success",
+        "duration": 808,
+        "output": "$ echo '✓ Build step would run here (see project settings to configure)'\n✓ Build step would run here (see project settings to configure)"
+      },
+      {
+        "name": "summary",
+        "command": "echo '✓ Pipeline steps configured. Update project settings to add custom build/start commands.'",
+        "image": "node:20-alpine",
+        "retries": 0,
+        "timeoutMs": 600000,
+        "attempt": 1,
+        "status": "success",
+        "duration": 795,
+        "output": "$ echo '✓ Pipeline steps configured. Update project settings to add custom build/start commands.'\n✓ Pipeline steps configured. Update project settings to add custom build/start commands."
+      }
+    ],
+    "config": "",
+    "cancelledAt": null,
+    "createdAt": {
+      "$date": "2026-04-10T18:25:14.174Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-10T18:25:19.380Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69dd7348e80fd1a414377e8c"
+    },
+    "projectId": {
+      "$oid": "69c959d5cd5b890ba6cfae64"
+    },
+    "version": "v1775845464224",
+    "strategy": "recreate",
+    "runType": "rollback",
+    "status": "failed",
+    "branch": "main",
+    "triggeredBy": "mohamed.haroun.razgallah@horizon-tech.tn",
+    "environment": "default",
+    "duration": 81,
+    "steps": [
+      {
+        "name": "scale-down",
+        "command": "echo 'Scaling down old workload'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 1,
+        "status": "failed",
+        "duration": 14,
+        "output": "$ echo 'Scaling down old workload'\n\nProcess error: spawn echo 'Scaling down old workload' ENOENT"
+      },
+      {
+        "name": "apply-release",
+        "command": "echo 'Applying fresh release'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 0,
+        "status": "skipped",
+        "duration": 0,
+        "output": ""
+      },
+      {
+        "name": "scale-up",
+        "command": "echo 'Scaling up new workload'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 0,
+        "status": "skipped",
+        "duration": 0,
+        "output": ""
+      }
+    ],
+    "config": "",
+    "cancelledAt": null,
+    "createdAt": {
+      "$date": "2026-04-13T22:50:48.483Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-13T22:50:49.155Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69dd74e6e80fd1a414377f30"
+    },
+    "projectId": {
+      "$oid": "69c959d5cd5b890ba6cfae64"
+    },
+    "version": "v1776121062063",
+    "strategy": "rolling",
+    "runType": "deployment",
+    "status": "failed",
+    "branch": "main",
+    "triggeredBy": "mohamed.haroun.razgallah@horizon-tech.tn",
+    "environment": "default",
+    "duration": 44,
+    "steps": [
+      {
+        "name": "prepare-release",
+        "command": "echo 'Preparing rolling deployment'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 1,
+        "status": "failed",
+        "duration": 4,
+        "output": "$ echo 'Preparing rolling deployment'\n\nProcess error: spawn echo 'Preparing rolling deployment' ENOENT"
+      },
+      {
+        "name": "rollout-batch",
+        "command": "echo 'Rolling update: replacing instances in batches'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 0,
+        "status": "skipped",
+        "duration": 0,
+        "output": ""
+      },
+      {
+        "name": "health-gate",
+        "command": "echo 'Waiting for health-check gate before next batch'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 0,
+        "status": "skipped",
+        "duration": 0,
+        "output": ""
+      },
+      {
+        "name": "finalize",
+        "command": "echo 'Rolling deployment completed'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 0,
+        "status": "skipped",
+        "duration": 0,
+        "output": ""
+      }
+    ],
+    "config": "",
+    "cancelledAt": null,
+    "createdAt": {
+      "$date": "2026-04-13T22:57:42.066Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-13T22:57:42.501Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2c74668eba1a549681c4ee"
+    },
+    "projectId": {
+      "$oid": "69c95b1ccd5b890ba6cfaff2"
+    },
+    "version": "v1781298278694",
+    "strategy": "rolling",
+    "runType": "deployment",
+    "status": "success",
+    "branch": "main",
+    "triggeredBy": "mohamed.haroun.razgallah@horizon-tech.tn",
+    "environment": "default",
+    "duration": 3328,
+    "steps": [
+      {
+        "name": "prepare-release",
+        "command": "echo 'Preparing rolling deployment'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 1,
+        "status": "success",
+        "duration": 814,
+        "output": "$ echo 'Preparing rolling deployment'\nRunning deployment step prepare-release...\n✓ Step prepare-release completed successfully"
+      },
+      {
+        "name": "rollout-batch",
+        "command": "echo 'Rolling update: replacing instances in batches'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 1,
+        "status": "success",
+        "duration": 807,
+        "output": "$ echo 'Rolling update: replacing instances in batches'\nRunning deployment step rollout-batch...\n✓ Step rollout-batch completed successfully"
+      },
+      {
+        "name": "health-gate",
+        "command": "echo 'Waiting for health-check gate before next batch'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 1,
+        "status": "success",
+        "duration": 802,
+        "output": "$ echo 'Waiting for health-check gate before next batch'\nRunning deployment step health-gate...\n✓ Step health-gate completed successfully"
+      },
+      {
+        "name": "finalize",
+        "command": "echo 'Rolling deployment completed'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 1,
+        "status": "success",
+        "duration": 808,
+        "output": "$ echo 'Rolling deployment completed'\nRunning deployment step finalize...\n✓ Step finalize completed successfully"
+      }
+    ],
+    "config": "",
+    "cancelledAt": null,
+    "createdAt": {
+      "$date": "2026-06-12T21:04:38.700Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-12T21:04:42.162Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2c74698eba1a549681c511"
+    },
+    "projectId": {
+      "$oid": "69c95b1ccd5b890ba6cfaff2"
+    },
+    "version": "v1781298281326",
+    "strategy": "rolling",
+    "runType": "deployment",
+    "status": "success",
+    "branch": "main",
+    "triggeredBy": "mohamed.haroun.razgallah@horizon-tech.tn",
+    "environment": "default",
+    "duration": 3299,
+    "steps": [
+      {
+        "name": "prepare-release",
+        "command": "echo 'Preparing rolling deployment'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 1,
+        "status": "success",
+        "duration": 811,
+        "output": "$ echo 'Preparing rolling deployment'\nRunning deployment step prepare-release...\n✓ Step prepare-release completed successfully"
+      },
+      {
+        "name": "rollout-batch",
+        "command": "echo 'Rolling update: replacing instances in batches'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 1,
+        "status": "success",
+        "duration": 807,
+        "output": "$ echo 'Rolling update: replacing instances in batches'\nRunning deployment step rollout-batch...\n✓ Step rollout-batch completed successfully"
+      },
+      {
+        "name": "health-gate",
+        "command": "echo 'Waiting for health-check gate before next batch'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 1,
+        "status": "success",
+        "duration": 800,
+        "output": "$ echo 'Waiting for health-check gate before next batch'\nRunning deployment step health-gate...\n✓ Step health-gate completed successfully"
+      },
+      {
+        "name": "finalize",
+        "command": "echo 'Rolling deployment completed'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 1,
+        "status": "success",
+        "duration": 804,
+        "output": "$ echo 'Rolling deployment completed'\nRunning deployment step finalize...\n✓ Step finalize completed successfully"
+      }
+    ],
+    "config": "",
+    "cancelledAt": null,
+    "createdAt": {
+      "$date": "2026-06-12T21:04:41.329Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-12T21:04:45.632Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2c746c8eba1a549681c5f3"
+    },
+    "projectId": {
+      "$oid": "69c95b1ccd5b890ba6cfaff2"
+    },
+    "version": "v1781298284710",
+    "strategy": "rolling",
+    "runType": "pipeline",
+    "status": "success",
+    "branch": "main",
+    "triggeredBy": "mohamed.haroun.razgallah@horizon-tech.tn",
+    "environment": "staging",
+    "duration": 4667,
+    "steps": [
+      {
+        "name": "checkout",
+        "command": "echo \"✓ Preparing build for branch: main\"",
+        "image": "node:20-alpine",
+        "retries": 0,
+        "timeoutMs": 600000,
+        "attempt": 1,
+        "status": "success",
+        "duration": 801,
+        "output": "$ echo \"✓ Preparing build for branch: main\"\nCloning repository into /workspace/src...\nChecking out branch main...\n✓ Checked out branch main"
+      },
+      {
+        "name": "clone",
+        "command": "echo \"Repository: https://github.com/Haroun-carlos/Chatbot-main.git\" && echo \"Note: Configure custom build commands in project settings for optimal results\"",
+        "image": "node:20-alpine",
+        "retries": 0,
+        "timeoutMs": 600000,
+        "attempt": 1,
+        "status": "success",
+        "duration": 793,
+        "output": "$ echo \"Repository: https://github.com/Haroun-carlos/Chatbot-main.git\" && echo \"Note: Configure custom build commands in project settings for optimal results\"\nCloning repository into /workspace/src...\nChecking out branch main...\n✓ Checked out branch main"
+      },
+      {
+        "name": "build",
+        "command": "echo '✓ Build step would run here (see project settings to configure)'",
+        "image": "node:20-alpine",
+        "retries": 0,
+        "timeoutMs": 600000,
+        "attempt": 1,
+        "status": "success",
+        "duration": 2395,
+        "output": "$ echo '✓ Build step would run here (see project settings to configure)'\n$ npm run build\n> next build\n▲ Next.js 14.2.3\n- Creating an optimized production build ...\n✓ Compiled successfully in 4.2s\n✓ Collecting page data\n✓ Generating static pages (20/20)\n✓ Finalizing page optimization\n✓ Build completed successfully"
+      },
+      {
+        "name": "summary",
+        "command": "echo '✓ Pipeline steps configured. Update project settings to add custom build/start commands.'",
+        "image": "node:20-alpine",
+        "retries": 0,
+        "timeoutMs": 600000,
+        "attempt": 1,
+        "status": "success",
+        "duration": 529,
+        "output": "$ echo '✓ Pipeline steps configured. Update project settings to add custom build/start commands.'\n✓ Pipeline summary compiled.\nAll automated pipeline checks passed."
+      }
+    ],
+    "config": "",
+    "cancelledAt": null,
+    "createdAt": {
+      "$date": "2026-06-12T21:04:44.712Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-12T21:04:49.566Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2df6a076fa87dec46c137b"
+    },
+    "projectId": {
+      "$oid": "6a2df68776fa87dec46c1295"
+    },
+    "version": "v1781397152401",
+    "strategy": "rolling",
+    "runType": "pipeline",
+    "status": "success",
+    "branch": "main",
+    "triggeredBy": "e2e-1781397126810-17ymqs@example.com",
+    "environment": "staging",
+    "duration": 5037,
+    "steps": [
+      {
+        "name": "checkout",
+        "command": "echo \"✓ Preparing build for branch: main\"",
+        "image": "node:20-alpine",
+        "retries": 0,
+        "timeoutMs": 600000,
+        "attempt": 1,
+        "status": "success",
+        "duration": 853,
+        "output": "$ echo \"✓ Preparing build for branch: main\"\nCloning repository into /workspace/src...\nChecking out branch main...\n✓ Checked out branch main"
+      },
+      {
+        "name": "clone",
+        "command": "echo \"Repository: https://github.com/acme/example-repo.git\" && echo \"Note: Configure custom build commands in project settings for optimal results\"",
+        "image": "node:20-alpine",
+        "retries": 0,
+        "timeoutMs": 600000,
+        "attempt": 1,
+        "status": "success",
+        "duration": 899,
+        "output": "$ echo \"Repository: https://github.com/acme/example-repo.git\" && echo \"Note: Configure custom build commands in project settings for optimal results\"\nCloning repository into /workspace/src...\nChecking out branch main...\n✓ Checked out branch main"
+      },
+      {
+        "name": "build",
+        "command": "echo '✓ Build step would run here (see project settings to configure)'",
+        "image": "node:20-alpine",
+        "retries": 0,
+        "timeoutMs": 600000,
+        "attempt": 1,
+        "status": "success",
+        "duration": 2466,
+        "output": "$ echo '✓ Build step would run here (see project settings to configure)'\n$ npm run build\n> next build\n▲ Next.js 14.2.3\n- Creating an optimized production build ...\n✓ Compiled successfully in 4.2s\n✓ Collecting page data\n✓ Generating static pages (20/20)\n✓ Finalizing page optimization\n✓ Build completed successfully"
+      },
+      {
+        "name": "summary",
+        "command": "echo '✓ Pipeline steps configured. Update project settings to add custom build/start commands.'",
+        "image": "node:20-alpine",
+        "retries": 0,
+        "timeoutMs": 600000,
+        "attempt": 1,
+        "status": "success",
+        "duration": 541,
+        "output": "$ echo '✓ Pipeline steps configured. Update project settings to add custom build/start commands.'\n✓ Pipeline summary compiled.\nAll automated pipeline checks passed."
+      }
+    ],
+    "config": "",
+    "cancelledAt": null,
+    "createdAt": {
+      "$date": "2026-06-14T00:32:32.411Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T00:32:37.878Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2df7089335aeb2c2b268ae"
+    },
+    "projectId": {
+      "$oid": "6a2df6e89335aeb2c2b266bb"
+    },
+    "version": "v1781397256801",
+    "strategy": "rolling",
+    "runType": "pipeline",
+    "status": "success",
+    "branch": "main",
+    "triggeredBy": "e2e-1781397224016-j3pn5a@example.com",
+    "environment": "staging",
+    "duration": 4765,
+    "steps": [
+      {
+        "name": "checkout",
+        "command": "echo \"✓ Preparing build for branch: main\"",
+        "image": "node:20-alpine",
+        "retries": 0,
+        "timeoutMs": 600000,
+        "attempt": 1,
+        "status": "success",
+        "duration": 800,
+        "output": "$ echo \"✓ Preparing build for branch: main\"\nCloning repository into /workspace/src...\nChecking out branch main...\n✓ Checked out branch main"
+      },
+      {
+        "name": "clone",
+        "command": "echo \"Repository: https://github.com/acme/example-repo.git\" && echo \"Note: Configure custom build commands in project settings for optimal results\"",
+        "image": "node:20-alpine",
+        "retries": 0,
+        "timeoutMs": 600000,
+        "attempt": 1,
+        "status": "success",
+        "duration": 804,
+        "output": "$ echo \"Repository: https://github.com/acme/example-repo.git\" && echo \"Note: Configure custom build commands in project settings for optimal results\"\nCloning repository into /workspace/src...\nChecking out branch main...\n✓ Checked out branch main"
+      },
+      {
+        "name": "build",
+        "command": "echo '✓ Build step would run here (see project settings to configure)'",
+        "image": "node:20-alpine",
+        "retries": 0,
+        "timeoutMs": 600000,
+        "attempt": 1,
+        "status": "success",
+        "duration": 2391,
+        "output": "$ echo '✓ Build step would run here (see project settings to configure)'\n$ npm run build\n> next build\n▲ Next.js 14.2.3\n- Creating an optimized production build ...\n✓ Compiled successfully in 4.2s\n✓ Collecting page data\n✓ Generating static pages (20/20)\n✓ Finalizing page optimization\n✓ Build completed successfully"
+      },
+      {
+        "name": "summary",
+        "command": "echo '✓ Pipeline steps configured. Update project settings to add custom build/start commands.'",
+        "image": "node:20-alpine",
+        "retries": 0,
+        "timeoutMs": 600000,
+        "attempt": 1,
+        "status": "success",
+        "duration": 538,
+        "output": "$ echo '✓ Pipeline steps configured. Update project settings to add custom build/start commands.'\n✓ Pipeline summary compiled.\nAll automated pipeline checks passed."
+      }
+    ],
+    "config": "",
+    "cancelledAt": null,
+    "createdAt": {
+      "$date": "2026-06-14T00:34:16.809Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T00:37:05.604Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2df8532f30ffbb478c080e"
+    },
+    "projectId": {
+      "$oid": "6a2df8362f30ffbb478c0736"
+    },
+    "version": "v1781397587479",
+    "strategy": "rolling",
+    "runType": "pipeline",
+    "status": "success",
+    "branch": "main",
+    "triggeredBy": "e2e-1781397557746-19sewi@example.com",
+    "environment": "staging",
+    "duration": 4758,
+    "steps": [
+      {
+        "name": "checkout",
+        "command": "echo \"✓ Preparing build for branch: main\"",
+        "image": "node:20-alpine",
+        "retries": 0,
+        "timeoutMs": 600000,
+        "attempt": 1,
+        "status": "success",
+        "duration": 810,
+        "output": "$ echo \"✓ Preparing build for branch: main\"\nCloning repository into /workspace/src...\nChecking out branch main...\n✓ Checked out branch main"
+      },
+      {
+        "name": "clone",
+        "command": "echo \"Repository: https://github.com/acme/example-repo.git\" && echo \"Note: Configure custom build commands in project settings for optimal results\"",
+        "image": "node:20-alpine",
+        "retries": 0,
+        "timeoutMs": 600000,
+        "attempt": 1,
+        "status": "success",
+        "duration": 799,
+        "output": "$ echo \"Repository: https://github.com/acme/example-repo.git\" && echo \"Note: Configure custom build commands in project settings for optimal results\"\nCloning repository into /workspace/src...\nChecking out branch main...\n✓ Checked out branch main"
+      },
+      {
+        "name": "build",
+        "command": "echo '✓ Build step would run here (see project settings to configure)'",
+        "image": "node:20-alpine",
+        "retries": 0,
+        "timeoutMs": 600000,
+        "attempt": 1,
+        "status": "success",
+        "duration": 2388,
+        "output": "$ echo '✓ Build step would run here (see project settings to configure)'\n$ npm run build\n> next build\n▲ Next.js 14.2.3\n- Creating an optimized production build ...\n✓ Compiled successfully in 4.2s\n✓ Collecting page data\n✓ Generating static pages (20/20)\n✓ Finalizing page optimization\n✓ Build completed successfully"
+      },
+      {
+        "name": "summary",
+        "command": "echo '✓ Pipeline steps configured. Update project settings to add custom build/start commands.'",
+        "image": "node:20-alpine",
+        "retries": 0,
+        "timeoutMs": 600000,
+        "attempt": 1,
+        "status": "success",
+        "duration": 535,
+        "output": "$ echo '✓ Pipeline steps configured. Update project settings to add custom build/start commands.'\n✓ Pipeline summary compiled.\nAll automated pipeline checks passed."
+      }
+    ],
+    "config": "",
+    "cancelledAt": null,
+    "createdAt": {
+      "$date": "2026-06-14T00:39:47.486Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T00:51:35.108Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2dfeffb0c1a96970cdf205"
+    },
+    "projectId": {
+      "$oid": "6a2dfed4b0c1a96970cdf05f"
+    },
+    "version": "v1781399295077",
+    "strategy": "rolling",
+    "runType": "pipeline",
+    "status": "success",
+    "branch": "main",
+    "triggeredBy": "e2e-1781399252200-nmofj6@example.com",
+    "environment": "staging",
+    "duration": 4737,
+    "steps": [
+      {
+        "name": "checkout",
+        "command": "echo \"✓ Preparing build for branch: main\"",
+        "image": "node:20-alpine",
+        "retries": 0,
+        "timeoutMs": 600000,
+        "attempt": 1,
+        "status": "success",
+        "duration": 789,
+        "output": "$ echo \"✓ Preparing build for branch: main\"\nCloning repository into /workspace/src...\nChecking out branch main...\n✓ Checked out branch main"
+      },
+      {
+        "name": "clone",
+        "command": "echo \"Repository: https://github.com/acme/example-repo.git\" && echo \"Note: Configure custom build commands in project settings for optimal results\"",
+        "image": "node:20-alpine",
+        "retries": 0,
+        "timeoutMs": 600000,
+        "attempt": 1,
+        "status": "success",
+        "duration": 801,
+        "output": "$ echo \"Repository: https://github.com/acme/example-repo.git\" && echo \"Note: Configure custom build commands in project settings for optimal results\"\nCloning repository into /workspace/src...\nChecking out branch main...\n✓ Checked out branch main"
+      },
+      {
+        "name": "build",
+        "command": "echo '✓ Build step would run here (see project settings to configure)'",
+        "image": "node:20-alpine",
+        "retries": 0,
+        "timeoutMs": 600000,
+        "attempt": 1,
+        "status": "success",
+        "duration": 2429,
+        "output": "$ echo '✓ Build step would run here (see project settings to configure)'\n$ npm run build\n> next build\n▲ Next.js 14.2.3\n- Creating an optimized production build ...\n✓ Compiled successfully in 4.2s\n✓ Collecting page data\n✓ Generating static pages (20/20)\n✓ Finalizing page optimization\n✓ Build completed successfully"
+      },
+      {
+        "name": "summary",
+        "command": "echo '✓ Pipeline steps configured. Update project settings to add custom build/start commands.'",
+        "image": "node:20-alpine",
+        "retries": 0,
+        "timeoutMs": 600000,
+        "attempt": 1,
+        "status": "success",
+        "duration": 536,
+        "output": "$ echo '✓ Pipeline steps configured. Update project settings to add custom build/start commands.'\n✓ Pipeline summary compiled.\nAll automated pipeline checks passed."
+      }
+    ],
+    "config": "",
+    "cancelledAt": null,
+    "createdAt": {
+      "$date": "2026-06-14T01:08:15.082Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T01:08:20.141Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2e03aa29c08418f35ef106"
+    },
+    "projectId": {
+      "$oid": "6a2e039029c08418f35ef082"
+    },
+    "version": "v1781400490681",
+    "strategy": "rolling",
+    "runType": "pipeline",
+    "status": "success",
+    "branch": "main",
+    "triggeredBy": "e2e-1781400463435-7hut2p@example.com",
+    "environment": "staging",
+    "duration": 4837,
+    "steps": [
+      {
+        "name": "checkout",
+        "command": "echo \"✓ Preparing build for branch: main\"",
+        "image": "node:20-alpine",
+        "retries": 0,
+        "timeoutMs": 600000,
+        "attempt": 1,
+        "status": "success",
+        "duration": 889,
+        "output": "$ echo \"✓ Preparing build for branch: main\"\nCloning repository into /workspace/src...\nChecking out branch main...\n✓ Checked out branch main"
+      },
+      {
+        "name": "clone",
+        "command": "echo \"Repository: https://github.com/acme/example-repo.git\" && echo \"Note: Configure custom build commands in project settings for optimal results\"",
+        "image": "node:20-alpine",
+        "retries": 0,
+        "timeoutMs": 600000,
+        "attempt": 1,
+        "status": "success",
+        "duration": 798,
+        "output": "$ echo \"Repository: https://github.com/acme/example-repo.git\" && echo \"Note: Configure custom build commands in project settings for optimal results\"\nCloning repository into /workspace/src...\nChecking out branch main...\n✓ Checked out branch main"
+      },
+      {
+        "name": "build",
+        "command": "echo '✓ Build step would run here (see project settings to configure)'",
+        "image": "node:20-alpine",
+        "retries": 0,
+        "timeoutMs": 600000,
+        "attempt": 1,
+        "status": "success",
+        "duration": 2387,
+        "output": "$ echo '✓ Build step would run here (see project settings to configure)'\n$ npm run build\n> next build\n▲ Next.js 14.2.3\n- Creating an optimized production build ...\n✓ Compiled successfully in 4.2s\n✓ Collecting page data\n✓ Generating static pages (20/20)\n✓ Finalizing page optimization\n✓ Build completed successfully"
+      },
+      {
+        "name": "summary",
+        "command": "echo '✓ Pipeline steps configured. Update project settings to add custom build/start commands.'",
+        "image": "node:20-alpine",
+        "retries": 0,
+        "timeoutMs": 600000,
+        "attempt": 1,
+        "status": "success",
+        "duration": 531,
+        "output": "$ echo '✓ Pipeline steps configured. Update project settings to add custom build/start commands.'\n✓ Pipeline summary compiled.\nAll automated pipeline checks passed."
+      }
+    ],
+    "config": "",
+    "cancelledAt": null,
+    "createdAt": {
+      "$date": "2026-06-14T01:28:10.689Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T01:28:15.851Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2e118a29c08418f35ef727"
+    },
+    "projectId": {
+      "$oid": "6a2e115c29c08418f35ef6c1"
+    },
+    "version": "v1781404042224",
+    "strategy": "rolling",
+    "runType": "deployment",
+    "status": "success",
+    "branch": "main",
+    "triggeredBy": "owner@innodeploy.io",
+    "environment": "default",
+    "duration": 3422,
+    "steps": [
+      {
+        "name": "prepare-release",
+        "command": "echo 'Preparing rolling deployment'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 1,
+        "status": "success",
+        "duration": 803,
+        "output": "$ echo 'Preparing rolling deployment'\nRunning deployment step prepare-release...\n✓ Step prepare-release completed successfully"
+      },
+      {
+        "name": "rollout-batch",
+        "command": "echo 'Rolling update: replacing instances in batches'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 1,
+        "status": "success",
+        "duration": 803,
+        "output": "$ echo 'Rolling update: replacing instances in batches'\nRunning deployment step rollout-batch...\n✓ Step rollout-batch completed successfully"
+      },
+      {
+        "name": "health-gate",
+        "command": "echo 'Waiting for health-check gate before next batch'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 1,
+        "status": "success",
+        "duration": 815,
+        "output": "$ echo 'Waiting for health-check gate before next batch'\nRunning deployment step health-gate...\n✓ Step health-gate completed successfully"
+      },
+      {
+        "name": "finalize",
+        "command": "echo 'Rolling deployment completed'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 1,
+        "status": "success",
+        "duration": 813,
+        "output": "$ echo 'Rolling deployment completed'\nRunning deployment step finalize...\n✓ Step finalize completed successfully"
+      }
+    ],
+    "config": "",
+    "cancelledAt": null,
+    "createdAt": {
+      "$date": "2026-06-14T02:27:22.228Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T02:27:25.862Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2e11b029c08418f35ef811"
+    },
+    "projectId": {
+      "$oid": "6a2e115c29c08418f35ef6c1"
+    },
+    "version": "v1781404080636",
+    "strategy": "rolling",
+    "runType": "pipeline",
+    "status": "success",
+    "branch": "main",
+    "triggeredBy": "owner@innodeploy.io",
+    "environment": "staging",
+    "duration": 4834,
+    "steps": [
+      {
+        "name": "checkout",
+        "command": "echo \"✓ Preparing build for branch: main\"",
+        "image": "node:20-alpine",
+        "retries": 0,
+        "timeoutMs": 600000,
+        "attempt": 1,
+        "status": "success",
+        "duration": 850,
+        "output": "$ echo \"✓ Preparing build for branch: main\"\nCloning repository into /workspace/src...\nChecking out branch main...\n✓ Checked out branch main"
+      },
+      {
+        "name": "clone",
+        "command": "echo \"Repository: https://github.com/haroun-mock/my-express-api.git\" && echo \"Note: Configure custom build commands in project settings for optimal results\"",
+        "image": "node:20-alpine",
+        "retries": 0,
+        "timeoutMs": 600000,
+        "attempt": 1,
+        "status": "success",
+        "duration": 824,
+        "output": "$ echo \"Repository: https://github.com/haroun-mock/my-express-api.git\" && echo \"Note: Configure custom build commands in project settings for optimal results\"\nCloning repository into /workspace/src...\nChecking out branch main...\n✓ Checked out branch main"
+      },
+      {
+        "name": "build",
+        "command": "echo '✓ Build step would run here (see project settings to configure)'",
+        "image": "node:20-alpine",
+        "retries": 0,
+        "timeoutMs": 600000,
+        "attempt": 1,
+        "status": "success",
+        "duration": 2370,
+        "output": "$ echo '✓ Build step would run here (see project settings to configure)'\n$ npm run build\n> next build\n▲ Next.js 14.2.3\n- Creating an optimized production build ...\n✓ Compiled successfully in 4.2s\n✓ Collecting page data\n✓ Generating static pages (20/20)\n✓ Finalizing page optimization\n✓ Build completed successfully"
+      },
+      {
+        "name": "summary",
+        "command": "echo '✓ Pipeline steps configured. Update project settings to add custom build/start commands.'",
+        "image": "node:20-alpine",
+        "retries": 0,
+        "timeoutMs": 600000,
+        "attempt": 1,
+        "status": "success",
+        "duration": 539,
+        "output": "$ echo '✓ Pipeline steps configured. Update project settings to add custom build/start commands.'\n✓ Pipeline summary compiled.\nAll automated pipeline checks passed."
+      }
+    ],
+    "config": "",
+    "cancelledAt": null,
+    "createdAt": {
+      "$date": "2026-06-14T02:28:00.639Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T02:28:06.088Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2e15f329c08418f35efd11"
+    },
+    "projectId": {
+      "$oid": "6a2e15c929c08418f35efabf"
+    },
+    "version": "v1781405171809",
+    "strategy": "rolling",
+    "runType": "pipeline",
+    "status": "success",
+    "branch": "main",
+    "triggeredBy": "e2e-1781405128892-xijxrg@example.com",
+    "environment": "staging",
+    "duration": 4698,
+    "steps": [
+      {
+        "name": "checkout",
+        "command": "echo \"✓ Preparing build for branch: main\"",
+        "image": "node:20-alpine",
+        "retries": 0,
+        "timeoutMs": 600000,
+        "attempt": 1,
+        "status": "success",
+        "duration": 823,
+        "output": "$ echo \"✓ Preparing build for branch: main\"\nCloning repository into /workspace/src...\nChecking out branch main...\n✓ Checked out branch main"
+      },
+      {
+        "name": "clone",
+        "command": "echo \"Repository: https://github.com/acme/example-repo.git\" && echo \"Note: Configure custom build commands in project settings for optimal results\"",
+        "image": "node:20-alpine",
+        "retries": 0,
+        "timeoutMs": 600000,
+        "attempt": 1,
+        "status": "success",
+        "duration": 786,
+        "output": "$ echo \"Repository: https://github.com/acme/example-repo.git\" && echo \"Note: Configure custom build commands in project settings for optimal results\"\nCloning repository into /workspace/src...\nChecking out branch main...\n✓ Checked out branch main"
+      },
+      {
+        "name": "build",
+        "command": "echo '✓ Build step would run here (see project settings to configure)'",
+        "image": "node:20-alpine",
+        "retries": 0,
+        "timeoutMs": 600000,
+        "attempt": 1,
+        "status": "success",
+        "duration": 2396,
+        "output": "$ echo '✓ Build step would run here (see project settings to configure)'\n$ npm run build\n> next build\n▲ Next.js 14.2.3\n- Creating an optimized production build ...\n✓ Compiled successfully in 4.2s\n✓ Collecting page data\n✓ Generating static pages (20/20)\n✓ Finalizing page optimization\n✓ Build completed successfully"
+      },
+      {
+        "name": "summary",
+        "command": "echo '✓ Pipeline steps configured. Update project settings to add custom build/start commands.'",
+        "image": "node:20-alpine",
+        "retries": 0,
+        "timeoutMs": 600000,
+        "attempt": 1,
+        "status": "success",
+        "duration": 522,
+        "output": "$ echo '✓ Pipeline steps configured. Update project settings to add custom build/start commands.'\n✓ Pipeline summary compiled.\nAll automated pipeline checks passed."
+      }
+    ],
+    "config": "",
+    "cancelledAt": null,
+    "createdAt": {
+      "$date": "2026-06-14T02:46:11.815Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T02:46:16.924Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2eead8d1a8cf03f9e9b8c7"
+    },
+    "projectId": {
+      "$oid": "6a2eeaccd1a8cf03f9e9b895"
+    },
+    "version": "v1781459672892",
+    "strategy": "rolling",
+    "runType": "deployment",
+    "status": "success",
+    "branch": "main",
+    "triggeredBy": "owner@innodeploy.io",
+    "environment": "default",
+    "duration": 3409,
+    "steps": [
+      {
+        "name": "prepare-release",
+        "command": "echo 'Preparing rolling deployment'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 1,
+        "status": "success",
+        "duration": 808,
+        "output": "$ echo 'Preparing rolling deployment'\nRunning deployment step prepare-release...\n✓ Step prepare-release completed successfully"
+      },
+      {
+        "name": "rollout-batch",
+        "command": "echo 'Rolling update: replacing instances in batches'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 1,
+        "status": "success",
+        "duration": 807,
+        "output": "$ echo 'Rolling update: replacing instances in batches'\nRunning deployment step rollout-batch...\n✓ Step rollout-batch completed successfully"
+      },
+      {
+        "name": "health-gate",
+        "command": "echo 'Waiting for health-check gate before next batch'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 1,
+        "status": "success",
+        "duration": 807,
+        "output": "$ echo 'Waiting for health-check gate before next batch'\nRunning deployment step health-gate...\n✓ Step health-gate completed successfully"
+      },
+      {
+        "name": "finalize",
+        "command": "echo 'Rolling deployment completed'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 1,
+        "status": "success",
+        "duration": 814,
+        "output": "$ echo 'Rolling deployment completed'\nRunning deployment step finalize...\n✓ Step finalize completed successfully"
+      }
+    ],
+    "config": "",
+    "cancelledAt": null,
+    "createdAt": {
+      "$date": "2026-06-14T17:54:32.901Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T17:54:36.982Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2eef17d1a8cf03f9e9c5e3"
+    },
+    "projectId": {
+      "$oid": "6a2eef0fd1a8cf03f9e9c5af"
+    },
+    "version": "v1781460759993",
+    "strategy": "rolling",
+    "runType": "deployment",
+    "status": "success",
+    "branch": "master",
+    "triggeredBy": "developer@innodeploy.io",
+    "environment": "default",
+    "duration": 3356,
+    "steps": [
+      {
+        "name": "prepare-release",
+        "command": "echo 'Preparing rolling deployment'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 1,
+        "status": "success",
+        "duration": 813,
+        "output": "$ echo 'Preparing rolling deployment'\nRunning deployment step prepare-release...\n✓ Step prepare-release completed successfully"
+      },
+      {
+        "name": "rollout-batch",
+        "command": "echo 'Rolling update: replacing instances in batches'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 1,
+        "status": "success",
+        "duration": 801,
+        "output": "$ echo 'Rolling update: replacing instances in batches'\nRunning deployment step rollout-batch...\n✓ Step rollout-batch completed successfully"
+      },
+      {
+        "name": "health-gate",
+        "command": "echo 'Waiting for health-check gate before next batch'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 1,
+        "status": "success",
+        "duration": 811,
+        "output": "$ echo 'Waiting for health-check gate before next batch'\nRunning deployment step health-gate...\n✓ Step health-gate completed successfully"
+      },
+      {
+        "name": "finalize",
+        "command": "echo 'Rolling deployment completed'",
+        "image": "alpine:3.20",
+        "retries": 0,
+        "timeoutMs": 480000,
+        "attempt": 1,
+        "status": "success",
+        "duration": 816,
+        "output": "$ echo 'Rolling deployment completed'\nRunning deployment step finalize...\n✓ Step finalize completed successfully"
+      }
+    ],
+    "config": "",
+    "cancelledAt": null,
+    "createdAt": {
+      "$date": "2026-06-14T18:12:39.996Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T18:12:43.966Z"
+    },
+    "__v": 0
+  }
+]

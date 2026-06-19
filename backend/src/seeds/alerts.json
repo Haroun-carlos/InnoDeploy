@@ -1,0 +1,346 @@
+[
+  {
+    "_id": {
+      "$oid": "69dd8034f4f5444ad1514233"
+    },
+    "projectId": {
+      "$oid": "69cade00d3d7170742fb603f"
+    },
+    "severity": "warning",
+    "message": "Demo alert: CPU usage crossed threshold during investigation flow test.",
+    "ruleType": "cpu",
+    "acknowledged": false,
+    "acknowledgedBy": null,
+    "acknowledgedAt": null,
+    "status": "open",
+    "metricAtTrigger": [
+      {
+        "label": "CPU",
+        "value": 92,
+        "unit": "%",
+        "_id": {
+          "$oid": "69dd8034f4f5444ad1514234"
+        }
+      },
+      {
+        "label": "Load",
+        "value": 3.2,
+        "unit": "",
+        "_id": {
+          "$oid": "69dd8034f4f5444ad1514235"
+        }
+      }
+    ],
+    "createdAt": {
+      "$date": "2026-04-13T23:45:56.285Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-13T23:45:56.285Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a210c7a39b57c5428be18b7"
+    },
+    "projectId": {
+      "$oid": "69cade00d3d7170742fb603f"
+    },
+    "severity": "warning",
+    "message": "Demo alert: CPU usage crossed threshold during investigation flow test.",
+    "ruleType": "cpu",
+    "acknowledged": false,
+    "acknowledgedBy": null,
+    "acknowledgedAt": null,
+    "status": "open",
+    "metricAtTrigger": [
+      {
+        "label": "CPU",
+        "value": 92,
+        "unit": "%",
+        "_id": {
+          "$oid": "6a210c7a39b57c5428be18b8"
+        }
+      },
+      {
+        "label": "Load",
+        "value": 3.2,
+        "unit": "",
+        "_id": {
+          "$oid": "6a210c7a39b57c5428be18b9"
+        }
+      }
+    ],
+    "createdAt": {
+      "$date": "2026-06-04T05:26:18.085Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-04T05:26:18.085Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2c746a8eba1a549681c5d5"
+    },
+    "projectId": {
+      "$oid": "69c95b1ccd5b890ba6cfaff2"
+    },
+    "severity": "warning",
+    "message": "CPU usage exceeded warning threshold of 80% on Chatbot-main",
+    "ruleType": "cpu",
+    "acknowledged": true,
+    "acknowledgedBy": null,
+    "acknowledgedAt": {
+      "$date": "2026-06-12T17:34:42.317Z"
+    },
+    "status": "resolved",
+    "metricAtTrigger": [
+      {
+        "label": "CPU",
+        "value": 84,
+        "unit": "%",
+        "_id": {
+          "$oid": "6a2c746a8eba1a549681c5d6"
+        }
+      }
+    ],
+    "createdAt": {
+      "$date": "2026-06-12T17:04:42.317Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-12T17:04:42.317Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2c746a8eba1a549681c5d8"
+    },
+    "projectId": {
+      "$oid": "69c95b1ccd5b890ba6cfaff2"
+    },
+    "severity": "critical",
+    "message": "HTTP request latency spiked on Chatbot-main - SLO breached",
+    "ruleType": "latency",
+    "acknowledged": false,
+    "acknowledgedBy": null,
+    "acknowledgedAt": null,
+    "status": "open",
+    "metricAtTrigger": [
+      {
+        "label": "Latency",
+        "value": 1650,
+        "unit": "ms",
+        "_id": {
+          "$oid": "6a2c746a8eba1a549681c5d9"
+        }
+      }
+    ],
+    "createdAt": {
+      "$date": "2026-06-12T20:34:42.325Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-12T20:34:42.325Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2e118e29c08418f35ef808"
+    },
+    "projectId": {
+      "$oid": "6a2e115c29c08418f35ef6c1"
+    },
+    "severity": "warning",
+    "message": "CPU usage exceeded warning threshold of 80% on my-express-api",
+    "ruleType": "cpu",
+    "acknowledged": true,
+    "acknowledgedBy": null,
+    "acknowledgedAt": {
+      "$date": "2026-06-13T22:57:26.118Z"
+    },
+    "status": "resolved",
+    "metricAtTrigger": [
+      {
+        "label": "CPU",
+        "value": 84,
+        "unit": "%",
+        "_id": {
+          "$oid": "6a2e118e29c08418f35ef809"
+        }
+      }
+    ],
+    "createdAt": {
+      "$date": "2026-06-13T22:27:26.118Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-13T22:27:26.118Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2e118e29c08418f35ef80b"
+    },
+    "projectId": {
+      "$oid": "6a2e115c29c08418f35ef6c1"
+    },
+    "severity": "critical",
+    "message": "HTTP request latency spiked on my-express-api - SLO breached",
+    "ruleType": "latency",
+    "acknowledged": false,
+    "acknowledgedBy": null,
+    "acknowledgedAt": null,
+    "status": "open",
+    "metricAtTrigger": [
+      {
+        "label": "Latency",
+        "value": 1650,
+        "unit": "ms",
+        "_id": {
+          "$oid": "6a2e118e29c08418f35ef80c"
+        }
+      }
+    ],
+    "createdAt": {
+      "$date": "2026-06-14T01:57:26.132Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T01:57:26.132Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2eeaddd1a8cf03f9e9b9a2"
+    },
+    "projectId": {
+      "$oid": "6a2eeaccd1a8cf03f9e9b895"
+    },
+    "severity": "warning",
+    "message": "CPU usage exceeded warning threshold of 80% on RentTn",
+    "ruleType": "cpu",
+    "acknowledged": true,
+    "acknowledgedBy": null,
+    "acknowledgedAt": {
+      "$date": "2026-06-14T14:24:37.192Z"
+    },
+    "status": "resolved",
+    "metricAtTrigger": [
+      {
+        "label": "CPU",
+        "value": 84,
+        "unit": "%",
+        "_id": {
+          "$oid": "6a2eeaddd1a8cf03f9e9b9a3"
+        }
+      }
+    ],
+    "createdAt": {
+      "$date": "2026-06-14T13:54:37.192Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T13:54:37.192Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2eeaddd1a8cf03f9e9b9a5"
+    },
+    "projectId": {
+      "$oid": "6a2eeaccd1a8cf03f9e9b895"
+    },
+    "severity": "critical",
+    "message": "HTTP request latency spiked on RentTn - SLO breached",
+    "ruleType": "latency",
+    "acknowledged": false,
+    "acknowledgedBy": null,
+    "acknowledgedAt": null,
+    "status": "open",
+    "metricAtTrigger": [
+      {
+        "label": "Latency",
+        "value": 1650,
+        "unit": "ms",
+        "_id": {
+          "$oid": "6a2eeaddd1a8cf03f9e9b9a6"
+        }
+      }
+    ],
+    "createdAt": {
+      "$date": "2026-06-14T17:24:37.200Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T17:24:37.200Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2eef1cd1a8cf03f9e9c6c2"
+    },
+    "projectId": {
+      "$oid": "6a2eef0fd1a8cf03f9e9c5af"
+    },
+    "severity": "warning",
+    "message": "CPU usage exceeded warning threshold of 80% on Churnprediction",
+    "ruleType": "cpu",
+    "acknowledged": true,
+    "acknowledgedBy": null,
+    "acknowledgedAt": {
+      "$date": "2026-06-14T14:42:44.206Z"
+    },
+    "status": "resolved",
+    "metricAtTrigger": [
+      {
+        "label": "CPU",
+        "value": 84,
+        "unit": "%",
+        "_id": {
+          "$oid": "6a2eef1cd1a8cf03f9e9c6c3"
+        }
+      }
+    ],
+    "createdAt": {
+      "$date": "2026-06-14T14:12:44.206Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T14:12:44.206Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2eef1cd1a8cf03f9e9c6c5"
+    },
+    "projectId": {
+      "$oid": "6a2eef0fd1a8cf03f9e9c5af"
+    },
+    "severity": "critical",
+    "message": "HTTP request latency spiked on Churnprediction - SLO breached",
+    "ruleType": "latency",
+    "acknowledged": false,
+    "acknowledgedBy": null,
+    "acknowledgedAt": null,
+    "status": "open",
+    "metricAtTrigger": [
+      {
+        "label": "Latency",
+        "value": 1650,
+        "unit": "ms",
+        "_id": {
+          "$oid": "6a2eef1cd1a8cf03f9e9c6c6"
+        }
+      }
+    ],
+    "createdAt": {
+      "$date": "2026-06-14T17:42:44.229Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T17:42:44.229Z"
+    },
+    "__v": 0
+  }
+]

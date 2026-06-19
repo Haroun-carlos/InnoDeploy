@@ -1,0 +1,2297 @@
+[
+  {
+    "_id": {
+      "$oid": "69d85995cbbc9e35a7b5f068"
+    },
+    "organisationId": {
+      "$oid": "69d85995cbbc9e35a7b5f05e"
+    },
+    "userId": {
+      "$oid": "69d85994cbbc9e35a7b5f055"
+    },
+    "userEmail": "inttest_1775786388005@example.com",
+    "action": "project.create",
+    "resourceType": "project",
+    "resourceId": "69d85995cbbc9e35a7b5f065",
+    "details": {
+      "method": "POST",
+      "path": "/api/projects"
+    },
+    "ip": "::ffff:127.0.0.1",
+    "createdAt": {
+      "$date": "2026-04-10T01:59:49.893Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-10T01:59:49.893Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69d85996cbbc9e35a7b5f075"
+    },
+    "organisationId": {
+      "$oid": "69d85995cbbc9e35a7b5f05e"
+    },
+    "userId": {
+      "$oid": "69d85994cbbc9e35a7b5f055"
+    },
+    "userEmail": "inttest_1775786388005@example.com",
+    "action": "environment.create",
+    "resourceType": "environment",
+    "resourceId": "69d85995cbbc9e35a7b5f065",
+    "details": {
+      "method": "POST",
+      "path": "/api/projects/69d85995cbbc9e35a7b5f065/envs"
+    },
+    "ip": "::ffff:127.0.0.1",
+    "createdAt": {
+      "$date": "2026-04-10T01:59:50.136Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-10T01:59:50.136Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69d85996cbbc9e35a7b5f07c"
+    },
+    "organisationId": {
+      "$oid": "69d85995cbbc9e35a7b5f05e"
+    },
+    "userId": {
+      "$oid": "69d85994cbbc9e35a7b5f055"
+    },
+    "userEmail": "inttest_1775786388005@example.com",
+    "action": "secret.update",
+    "resourceType": "environment",
+    "resourceId": "69d85995cbbc9e35a7b5f065",
+    "details": {
+      "method": "POST",
+      "path": "/api/projects/69d85995cbbc9e35a7b5f065/envs/staging/secrets"
+    },
+    "ip": "::ffff:127.0.0.1",
+    "createdAt": {
+      "$date": "2026-04-10T01:59:50.222Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-10T01:59:50.222Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69d85e8b1a5c1efc34ce6ca9"
+    },
+    "organisationId": {
+      "$oid": "69c959d5cd5b890ba6cfae5f"
+    },
+    "userId": {
+      "$oid": "69c9579da8108782a9e0e2ee"
+    },
+    "userEmail": "mohamed.haroun.razgallah@horizon-tech.tn",
+    "action": "deployment.trigger",
+    "resourceType": "deployment",
+    "resourceId": "69d85e8b1a5c1efc34ce6ca5",
+    "details": {
+      "method": "POST",
+      "path": "/api/projects/69c959d5cd5b890ba6cfae64/deploy"
+    },
+    "ip": "::1",
+    "createdAt": {
+      "$date": "2026-04-10T02:20:59.170Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-10T02:20:59.170Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69d85e911a5c1efc34ce6cc3"
+    },
+    "organisationId": {
+      "$oid": "69c959d5cd5b890ba6cfae5f"
+    },
+    "userId": {
+      "$oid": "69c9579da8108782a9e0e2ee"
+    },
+    "userEmail": "mohamed.haroun.razgallah@horizon-tech.tn",
+    "action": "deployment.rollback",
+    "resourceType": "deployment",
+    "resourceId": "69d85e911a5c1efc34ce6cbe",
+    "details": {
+      "method": "POST",
+      "path": "/api/projects/69c959d5cd5b890ba6cfae64/rollback"
+    },
+    "ip": "::1",
+    "createdAt": {
+      "$date": "2026-04-10T02:21:05.381Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-10T02:21:05.381Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69d85e931a5c1efc34ce6cdb"
+    },
+    "organisationId": {
+      "$oid": "69c959d5cd5b890ba6cfae5f"
+    },
+    "userId": {
+      "$oid": "69c9579da8108782a9e0e2ee"
+    },
+    "userEmail": "mohamed.haroun.razgallah@horizon-tech.tn",
+    "action": "deployment.trigger",
+    "resourceType": "deployment",
+    "resourceId": "69d85e931a5c1efc34ce6cd7",
+    "details": {
+      "method": "POST",
+      "path": "/api/projects/69c959d5cd5b890ba6cfae64/deploy"
+    },
+    "ip": "::1",
+    "createdAt": {
+      "$date": "2026-04-10T02:21:07.701Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-10T02:21:07.701Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69d85e991a5c1efc34ce6cf3"
+    },
+    "organisationId": {
+      "$oid": "69c959d5cd5b890ba6cfae5f"
+    },
+    "userId": {
+      "$oid": "69c9579da8108782a9e0e2ee"
+    },
+    "userEmail": "mohamed.haroun.razgallah@horizon-tech.tn",
+    "action": "pipeline.trigger",
+    "resourceType": "pipeline",
+    "resourceId": "69d85e991a5c1efc34ce6cf0",
+    "details": {
+      "method": "POST",
+      "path": "/api/projects/69c959d5cd5b890ba6cfae64/pipelines"
+    },
+    "ip": "::1",
+    "createdAt": {
+      "$date": "2026-04-10T02:21:13.814Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-10T02:21:13.814Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69d85ec21a5c1efc34ce6d40"
+    },
+    "organisationId": {
+      "$oid": "69c959d5cd5b890ba6cfae5f"
+    },
+    "userId": {
+      "$oid": "69c9579da8108782a9e0e2ee"
+    },
+    "userEmail": "mohamed.haroun.razgallah@horizon-tech.tn",
+    "action": "deployment.trigger",
+    "resourceType": "deployment",
+    "resourceId": "69d85ec21a5c1efc34ce6d3c",
+    "details": {
+      "method": "POST",
+      "path": "/api/projects/69c95b1ccd5b890ba6cfaff2/deploy"
+    },
+    "ip": "::1",
+    "createdAt": {
+      "$date": "2026-04-10T02:21:54.919Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-10T02:21:54.919Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69d85ec91a5c1efc34ce6d58"
+    },
+    "organisationId": {
+      "$oid": "69c959d5cd5b890ba6cfae5f"
+    },
+    "userId": {
+      "$oid": "69c9579da8108782a9e0e2ee"
+    },
+    "userEmail": "mohamed.haroun.razgallah@horizon-tech.tn",
+    "action": "pipeline.trigger",
+    "resourceType": "pipeline",
+    "resourceId": "69d85ec91a5c1efc34ce6d55",
+    "details": {
+      "method": "POST",
+      "path": "/api/projects/69c95b1ccd5b890ba6cfaff2/pipelines"
+    },
+    "ip": "::1",
+    "createdAt": {
+      "$date": "2026-04-10T02:22:01.230Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-10T02:22:01.230Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69d85f191a5c1efc34ce6d9e"
+    },
+    "organisationId": {
+      "$oid": "69c959d5cd5b890ba6cfae5f"
+    },
+    "userId": {
+      "$oid": "69c9579da8108782a9e0e2ee"
+    },
+    "userEmail": "mohamed.haroun.razgallah@horizon-tech.tn",
+    "action": "deployment.trigger",
+    "resourceType": "deployment",
+    "resourceId": "69d85f191a5c1efc34ce6d9a",
+    "details": {
+      "method": "POST",
+      "path": "/api/projects/69cade00d3d7170742fb603f/deploy"
+    },
+    "ip": "::1",
+    "createdAt": {
+      "$date": "2026-04-10T02:23:21.067Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-10T02:23:21.067Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69d8630d1a5c1efc34ce6e3d"
+    },
+    "organisationId": {
+      "$oid": "69c959d5cd5b890ba6cfae5f"
+    },
+    "userId": {
+      "$oid": "69c9579da8108782a9e0e2ee"
+    },
+    "userEmail": "mohamed.haroun.razgallah@horizon-tech.tn",
+    "action": "deployment.trigger",
+    "resourceType": "deployment",
+    "resourceId": "69d8630d1a5c1efc34ce6e39",
+    "details": {
+      "method": "POST",
+      "path": "/api/projects/69c95b1ccd5b890ba6cfaff2/deploy"
+    },
+    "ip": "::1",
+    "createdAt": {
+      "$date": "2026-04-10T02:40:13.259Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-10T02:40:13.259Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69d8637a1a5c1efc34ce6e7f"
+    },
+    "organisationId": {
+      "$oid": "69c959d5cd5b890ba6cfae5f"
+    },
+    "userId": {
+      "$oid": "69c9579da8108782a9e0e2ee"
+    },
+    "userEmail": "mohamed.haroun.razgallah@horizon-tech.tn",
+    "action": "deployment.trigger",
+    "resourceType": "deployment",
+    "resourceId": "69d8637a1a5c1efc34ce6e7b",
+    "details": {
+      "method": "POST",
+      "path": "/api/projects/69c95b1ccd5b890ba6cfaff2/deploy"
+    },
+    "ip": "::1",
+    "createdAt": {
+      "$date": "2026-04-10T02:42:02.481Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-10T02:42:02.481Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69d865691a5c1efc34ce6f60"
+    },
+    "organisationId": {
+      "$oid": "69c959d5cd5b890ba6cfae5f"
+    },
+    "userId": {
+      "$oid": "69c9579da8108782a9e0e2ee"
+    },
+    "userEmail": "mohamed.haroun.razgallah@horizon-tech.tn",
+    "action": "deployment.trigger",
+    "resourceType": "deployment",
+    "resourceId": "69d865691a5c1efc34ce6f5c",
+    "details": {
+      "method": "POST",
+      "path": "/api/projects/69c95b1ccd5b890ba6cfaff2/deploy"
+    },
+    "ip": "::1",
+    "createdAt": {
+      "$date": "2026-04-10T02:50:17.113Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-10T02:50:17.113Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69d865701a5c1efc34ce6f7b"
+    },
+    "organisationId": {
+      "$oid": "69c959d5cd5b890ba6cfae5f"
+    },
+    "userId": {
+      "$oid": "69c9579da8108782a9e0e2ee"
+    },
+    "userEmail": "mohamed.haroun.razgallah@horizon-tech.tn",
+    "action": "pipeline.trigger",
+    "resourceType": "pipeline",
+    "resourceId": "69d865701a5c1efc34ce6f78",
+    "details": {
+      "method": "POST",
+      "path": "/api/projects/69c95b1ccd5b890ba6cfaff2/pipelines"
+    },
+    "ip": "::1",
+    "createdAt": {
+      "$date": "2026-04-10T02:50:24.413Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-10T02:50:24.413Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69d8657d1a5c1efc34ce6fa5"
+    },
+    "organisationId": {
+      "$oid": "69c959d5cd5b890ba6cfae5f"
+    },
+    "userId": {
+      "$oid": "69c9579da8108782a9e0e2ee"
+    },
+    "userEmail": "mohamed.haroun.razgallah@horizon-tech.tn",
+    "action": "deployment.trigger",
+    "resourceType": "deployment",
+    "resourceId": "69d8657d1a5c1efc34ce6fa1",
+    "details": {
+      "method": "POST",
+      "path": "/api/projects/69c95b1ccd5b890ba6cfaff2/deploy"
+    },
+    "ip": "::1",
+    "createdAt": {
+      "$date": "2026-04-10T02:50:37.291Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-10T02:50:37.291Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69d865891a5c1efc34ce6fe7"
+    },
+    "organisationId": {
+      "$oid": "69c959d5cd5b890ba6cfae5f"
+    },
+    "userId": {
+      "$oid": "69c9579da8108782a9e0e2ee"
+    },
+    "userEmail": "mohamed.haroun.razgallah@horizon-tech.tn",
+    "action": "deployment.trigger",
+    "resourceType": "deployment",
+    "resourceId": "69d865891a5c1efc34ce6fe3",
+    "details": {
+      "method": "POST",
+      "path": "/api/projects/69c959d5cd5b890ba6cfae64/deploy"
+    },
+    "ip": "::1",
+    "createdAt": {
+      "$date": "2026-04-10T02:50:49.144Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-10T02:50:49.144Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69d8658b1a5c1efc34ce7003"
+    },
+    "organisationId": {
+      "$oid": "69c959d5cd5b890ba6cfae5f"
+    },
+    "userId": {
+      "$oid": "69c9579da8108782a9e0e2ee"
+    },
+    "userEmail": "mohamed.haroun.razgallah@horizon-tech.tn",
+    "action": "deployment.trigger",
+    "resourceType": "deployment",
+    "resourceId": "69d8658b1a5c1efc34ce6fff",
+    "details": {
+      "method": "POST",
+      "path": "/api/projects/69c959d5cd5b890ba6cfae64/deploy"
+    },
+    "ip": "::1",
+    "createdAt": {
+      "$date": "2026-04-10T02:50:51.259Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-10T02:50:51.259Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69d93a7dee0800296b9d9f20"
+    },
+    "organisationId": {
+      "$oid": "69c959d5cd5b890ba6cfae5f"
+    },
+    "userId": {
+      "$oid": "69c9579da8108782a9e0e2ee"
+    },
+    "userEmail": "mohamed.haroun.razgallah@horizon-tech.tn",
+    "action": "deployment.trigger",
+    "resourceType": "deployment",
+    "resourceId": "69d93a7cee0800296b9d9f1c",
+    "details": {
+      "method": "POST",
+      "path": "/api/projects/69c959d5cd5b890ba6cfae64/deploy"
+    },
+    "ip": "::1",
+    "createdAt": {
+      "$date": "2026-04-10T17:59:25.001Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-10T17:59:25.001Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69d93a8cee0800296b9d9f5f"
+    },
+    "organisationId": {
+      "$oid": "69c959d5cd5b890ba6cfae5f"
+    },
+    "userId": {
+      "$oid": "69c9579da8108782a9e0e2ee"
+    },
+    "userEmail": "mohamed.haroun.razgallah@horizon-tech.tn",
+    "action": "deployment.trigger",
+    "resourceType": "deployment",
+    "resourceId": "69d93a8cee0800296b9d9f5b",
+    "details": {
+      "method": "POST",
+      "path": "/api/projects/69c959d5cd5b890ba6cfae64/deploy"
+    },
+    "ip": "::1",
+    "createdAt": {
+      "$date": "2026-04-10T17:59:40.591Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-10T17:59:40.591Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69d93c1dadf5cdfae786389c"
+    },
+    "organisationId": {
+      "$oid": "69c959d5cd5b890ba6cfae5f"
+    },
+    "userId": {
+      "$oid": "69c9579da8108782a9e0e2ee"
+    },
+    "userEmail": "mohamed.haroun.razgallah@horizon-tech.tn",
+    "action": "deployment.trigger",
+    "resourceType": "deployment",
+    "resourceId": "69d93c1dadf5cdfae7863898",
+    "details": {
+      "method": "POST",
+      "path": "/api/projects/69c959d5cd5b890ba6cfae64/deploy"
+    },
+    "ip": "::1",
+    "createdAt": {
+      "$date": "2026-04-10T18:06:21.417Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-10T18:06:21.417Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69d93c25adf5cdfae78638db"
+    },
+    "organisationId": {
+      "$oid": "69c959d5cd5b890ba6cfae5f"
+    },
+    "userId": {
+      "$oid": "69c9579da8108782a9e0e2ee"
+    },
+    "userEmail": "mohamed.haroun.razgallah@horizon-tech.tn",
+    "action": "deployment.trigger",
+    "resourceType": "deployment",
+    "resourceId": "69d93c25adf5cdfae78638d7",
+    "details": {
+      "method": "POST",
+      "path": "/api/projects/69c959d5cd5b890ba6cfae64/deploy"
+    },
+    "ip": "::1",
+    "createdAt": {
+      "$date": "2026-04-10T18:06:29.610Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-10T18:06:29.610Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69d93c26adf5cdfae78638f7"
+    },
+    "organisationId": {
+      "$oid": "69c959d5cd5b890ba6cfae5f"
+    },
+    "userId": {
+      "$oid": "69c9579da8108782a9e0e2ee"
+    },
+    "userEmail": "mohamed.haroun.razgallah@horizon-tech.tn",
+    "action": "deployment.trigger",
+    "resourceType": "deployment",
+    "resourceId": "69d93c26adf5cdfae78638f3",
+    "details": {
+      "method": "POST",
+      "path": "/api/projects/69c959d5cd5b890ba6cfae64/deploy"
+    },
+    "ip": "::1",
+    "createdAt": {
+      "$date": "2026-04-10T18:06:30.962Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-10T18:06:30.962Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69d93c2aadf5cdfae7863912"
+    },
+    "organisationId": {
+      "$oid": "69c959d5cd5b890ba6cfae5f"
+    },
+    "userId": {
+      "$oid": "69c9579da8108782a9e0e2ee"
+    },
+    "userEmail": "mohamed.haroun.razgallah@horizon-tech.tn",
+    "action": "pipeline.trigger",
+    "resourceType": "pipeline",
+    "resourceId": "69d93c2aadf5cdfae786390f",
+    "details": {
+      "method": "POST",
+      "path": "/api/projects/69c959d5cd5b890ba6cfae64/pipelines"
+    },
+    "ip": "::1",
+    "createdAt": {
+      "$date": "2026-04-10T18:06:34.431Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-10T18:06:34.431Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69d93c3dadf5cdfae7863943"
+    },
+    "organisationId": {
+      "$oid": "69c959d5cd5b890ba6cfae5f"
+    },
+    "userId": {
+      "$oid": "69c9579da8108782a9e0e2ee"
+    },
+    "userEmail": "mohamed.haroun.razgallah@horizon-tech.tn",
+    "action": "deployment.trigger",
+    "resourceType": "deployment",
+    "resourceId": "69d93c3dadf5cdfae786393f",
+    "details": {
+      "method": "POST",
+      "path": "/api/projects/69c959d5cd5b890ba6cfae64/deploy"
+    },
+    "ip": "::1",
+    "createdAt": {
+      "$date": "2026-04-10T18:06:53.480Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-10T18:06:53.480Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69d93c48adf5cdfae786395e"
+    },
+    "organisationId": {
+      "$oid": "69c959d5cd5b890ba6cfae5f"
+    },
+    "userId": {
+      "$oid": "69c9579da8108782a9e0e2ee"
+    },
+    "userEmail": "mohamed.haroun.razgallah@horizon-tech.tn",
+    "action": "pipeline.trigger",
+    "resourceType": "pipeline",
+    "resourceId": "69d93c48adf5cdfae786395b",
+    "details": {
+      "method": "POST",
+      "path": "/api/projects/69c959d5cd5b890ba6cfae64/pipelines"
+    },
+    "ip": "::1",
+    "createdAt": {
+      "$date": "2026-04-10T18:07:04.694Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-10T18:07:04.694Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69d93c50adf5cdfae786398e"
+    },
+    "organisationId": {
+      "$oid": "69c959d5cd5b890ba6cfae5f"
+    },
+    "userId": {
+      "$oid": "69c9579da8108782a9e0e2ee"
+    },
+    "userEmail": "mohamed.haroun.razgallah@horizon-tech.tn",
+    "action": "pipeline.trigger",
+    "resourceType": "pipeline",
+    "resourceId": "69d93c50adf5cdfae786398b",
+    "details": {
+      "method": "POST",
+      "path": "/api/projects/69c959d5cd5b890ba6cfae64/pipelines"
+    },
+    "ip": "::1",
+    "createdAt": {
+      "$date": "2026-04-10T18:07:12.245Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-10T18:07:12.245Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69d93d71337b14a194945e96"
+    },
+    "organisationId": {
+      "$oid": "69c959d5cd5b890ba6cfae5f"
+    },
+    "userId": {
+      "$oid": "69c9579da8108782a9e0e2ee"
+    },
+    "userEmail": "mohamed.haroun.razgallah@horizon-tech.tn",
+    "action": "deployment.trigger",
+    "resourceType": "deployment",
+    "resourceId": "69d93d71337b14a194945e92",
+    "details": {
+      "method": "POST",
+      "path": "/api/projects/69c959d5cd5b890ba6cfae64/deploy"
+    },
+    "ip": "::1",
+    "createdAt": {
+      "$date": "2026-04-10T18:12:01.700Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-10T18:12:01.700Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69d93d76337b14a194945eb1"
+    },
+    "organisationId": {
+      "$oid": "69c959d5cd5b890ba6cfae5f"
+    },
+    "userId": {
+      "$oid": "69c9579da8108782a9e0e2ee"
+    },
+    "userEmail": "mohamed.haroun.razgallah@horizon-tech.tn",
+    "action": "pipeline.trigger",
+    "resourceType": "pipeline",
+    "resourceId": "69d93d76337b14a194945eae",
+    "details": {
+      "method": "POST",
+      "path": "/api/projects/69c959d5cd5b890ba6cfae64/pipelines"
+    },
+    "ip": "::1",
+    "createdAt": {
+      "$date": "2026-04-10T18:12:06.193Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-10T18:12:06.193Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69d93eab29a1a293a727b7bb"
+    },
+    "organisationId": {
+      "$oid": "69c959d5cd5b890ba6cfae5f"
+    },
+    "userId": {
+      "$oid": "69c9579da8108782a9e0e2ee"
+    },
+    "userEmail": "mohamed.haroun.razgallah@horizon-tech.tn",
+    "action": "deployment.trigger",
+    "resourceType": "deployment",
+    "resourceId": "69d93eab29a1a293a727b7b7",
+    "details": {
+      "method": "POST",
+      "path": "/api/projects/69c959d5cd5b890ba6cfae64/deploy"
+    },
+    "ip": "::1",
+    "createdAt": {
+      "$date": "2026-04-10T18:17:15.938Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-10T18:17:15.938Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69d93eb129a1a293a727b7d6"
+    },
+    "organisationId": {
+      "$oid": "69c959d5cd5b890ba6cfae5f"
+    },
+    "userId": {
+      "$oid": "69c9579da8108782a9e0e2ee"
+    },
+    "userEmail": "mohamed.haroun.razgallah@horizon-tech.tn",
+    "action": "pipeline.trigger",
+    "resourceType": "pipeline",
+    "resourceId": "69d93eb129a1a293a727b7d3",
+    "details": {
+      "method": "POST",
+      "path": "/api/projects/69c959d5cd5b890ba6cfae64/pipelines"
+    },
+    "ip": "::1",
+    "createdAt": {
+      "$date": "2026-04-10T18:17:21.049Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-10T18:17:21.049Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69d93ee829a1a293a727b85b"
+    },
+    "organisationId": {
+      "$oid": "69c959d5cd5b890ba6cfae5f"
+    },
+    "userId": {
+      "$oid": "69c9579da8108782a9e0e2ee"
+    },
+    "userEmail": "mohamed.haroun.razgallah@horizon-tech.tn",
+    "action": "deployment.trigger",
+    "resourceType": "deployment",
+    "resourceId": "69d93ee829a1a293a727b857",
+    "details": {
+      "method": "POST",
+      "path": "/api/projects/69c959d5cd5b890ba6cfae64/deploy"
+    },
+    "ip": "::1",
+    "createdAt": {
+      "$date": "2026-04-10T18:18:16.057Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-10T18:18:16.057Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69d9405829a1a293a727b8b1"
+    },
+    "organisationId": {
+      "$oid": "69c959d5cd5b890ba6cfae5f"
+    },
+    "userId": {
+      "$oid": "69c9579da8108782a9e0e2ee"
+    },
+    "userEmail": "mohamed.haroun.razgallah@horizon-tech.tn",
+    "action": "deployment.trigger",
+    "resourceType": "deployment",
+    "resourceId": "69d9405829a1a293a727b8ad",
+    "details": {
+      "method": "POST",
+      "path": "/api/projects/69c959d5cd5b890ba6cfae64/deploy"
+    },
+    "ip": "::1",
+    "createdAt": {
+      "$date": "2026-04-10T18:24:24.241Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-10T18:24:24.241Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69d9405929a1a293a727b8cd"
+    },
+    "organisationId": {
+      "$oid": "69c959d5cd5b890ba6cfae5f"
+    },
+    "userId": {
+      "$oid": "69c9579da8108782a9e0e2ee"
+    },
+    "userEmail": "mohamed.haroun.razgallah@horizon-tech.tn",
+    "action": "deployment.trigger",
+    "resourceType": "deployment",
+    "resourceId": "69d9405929a1a293a727b8c9",
+    "details": {
+      "method": "POST",
+      "path": "/api/projects/69c959d5cd5b890ba6cfae64/deploy"
+    },
+    "ip": "::1",
+    "createdAt": {
+      "$date": "2026-04-10T18:24:25.712Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-10T18:24:25.712Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69d9405c29a1a293a727b8e8"
+    },
+    "organisationId": {
+      "$oid": "69c959d5cd5b890ba6cfae5f"
+    },
+    "userId": {
+      "$oid": "69c9579da8108782a9e0e2ee"
+    },
+    "userEmail": "mohamed.haroun.razgallah@horizon-tech.tn",
+    "action": "pipeline.trigger",
+    "resourceType": "pipeline",
+    "resourceId": "69d9405c29a1a293a727b8e5",
+    "details": {
+      "method": "POST",
+      "path": "/api/projects/69c959d5cd5b890ba6cfae64/pipelines"
+    },
+    "ip": "::1",
+    "createdAt": {
+      "$date": "2026-04-10T18:24:28.168Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-10T18:24:28.168Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69d9408a29a1a293a727b9be"
+    },
+    "organisationId": {
+      "$oid": "69c959d5cd5b890ba6cfae5f"
+    },
+    "userId": {
+      "$oid": "69c9579da8108782a9e0e2ee"
+    },
+    "userEmail": "mohamed.haroun.razgallah@horizon-tech.tn",
+    "action": "pipeline.trigger",
+    "resourceType": "pipeline",
+    "resourceId": "69d9408a29a1a293a727b9bb",
+    "details": {
+      "method": "POST",
+      "path": "/api/projects/69c959d5cd5b890ba6cfae64/pipelines"
+    },
+    "ip": "::1",
+    "createdAt": {
+      "$date": "2026-04-10T18:25:14.186Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-10T18:25:14.186Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69dd7348e80fd1a414377e91"
+    },
+    "organisationId": {
+      "$oid": "69c959d5cd5b890ba6cfae5f"
+    },
+    "userId": {
+      "$oid": "69c9579da8108782a9e0e2ee"
+    },
+    "userEmail": "mohamed.haroun.razgallah@horizon-tech.tn",
+    "action": "deployment.rollback",
+    "resourceType": "deployment",
+    "resourceId": "69dd7348e80fd1a414377e8c",
+    "details": {
+      "method": "POST",
+      "path": "/api/projects/69c959d5cd5b890ba6cfae64/rollback"
+    },
+    "ip": "::1",
+    "createdAt": {
+      "$date": "2026-04-13T22:50:48.532Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-13T22:50:48.532Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69dd74e6e80fd1a414377f34"
+    },
+    "organisationId": {
+      "$oid": "69c959d5cd5b890ba6cfae5f"
+    },
+    "userId": {
+      "$oid": "69c9579da8108782a9e0e2ee"
+    },
+    "userEmail": "mohamed.haroun.razgallah@horizon-tech.tn",
+    "action": "deployment.trigger",
+    "resourceType": "deployment",
+    "resourceId": "69dd74e6e80fd1a414377f30",
+    "details": {
+      "method": "POST",
+      "path": "/api/projects/69c959d5cd5b890ba6cfae64/deploy"
+    },
+    "ip": "::1",
+    "createdAt": {
+      "$date": "2026-04-13T22:57:42.084Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-13T22:57:42.084Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69dd789db5fa64a8acca7b4a"
+    },
+    "organisationId": {
+      "$oid": "69c959d5cd5b890ba6cfae5f"
+    },
+    "userId": {
+      "$oid": "69c9579da8108782a9e0e2ee"
+    },
+    "userEmail": "mohamed.haroun.razgallah@horizon-tech.tn",
+    "action": "environment.create",
+    "resourceType": "environment",
+    "resourceId": "69c959d5cd5b890ba6cfae64",
+    "details": {
+      "method": "POST",
+      "path": "/api/projects/69c959d5cd5b890ba6cfae64/envs"
+    },
+    "ip": "::1",
+    "createdAt": {
+      "$date": "2026-04-13T23:13:33.473Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-13T23:13:33.473Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2c6fb339b0152b1ed97565"
+    },
+    "organisationId": {
+      "$oid": "6a2c6b1c90842fe284841de6"
+    },
+    "userId": {
+      "$oid": "6a2c6b1c90842fe284841dee"
+    },
+    "userEmail": "demo@innodeploy.io",
+    "action": "deployment.trigger",
+    "resourceType": "deployment",
+    "resourceId": "6a2c6fb339b0152b1ed97561",
+    "details": {
+      "method": "POST",
+      "path": "/api/projects/6a2c6b1d90842fe284841df9/deploy"
+    },
+    "ip": "::1",
+    "createdAt": {
+      "$date": "2026-06-12T20:44:35.508Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-12T20:44:35.508Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2c6fdb39b0152b1ed975af"
+    },
+    "organisationId": {
+      "$oid": "6a2c6b1c90842fe284841de6"
+    },
+    "userId": {
+      "$oid": "6a2c6b1c90842fe284841dee"
+    },
+    "userEmail": "demo@innodeploy.io",
+    "action": "pipeline.trigger",
+    "resourceType": "pipeline",
+    "resourceId": "6a2c6fdb39b0152b1ed975ac",
+    "details": {
+      "method": "POST",
+      "path": "/api/projects/6a2c6b1d90842fe284841df9/pipelines"
+    },
+    "ip": "::1",
+    "createdAt": {
+      "$date": "2026-06-12T20:45:15.130Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-12T20:45:15.130Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2c74668eba1a549681c4f2"
+    },
+    "organisationId": {
+      "$oid": "69c959d5cd5b890ba6cfae5f"
+    },
+    "userId": {
+      "$oid": "69c9579da8108782a9e0e2ee"
+    },
+    "userEmail": "mohamed.haroun.razgallah@horizon-tech.tn",
+    "action": "deployment.trigger",
+    "resourceType": "deployment",
+    "resourceId": "6a2c74668eba1a549681c4ee",
+    "details": {
+      "method": "POST",
+      "path": "/api/projects/69c95b1ccd5b890ba6cfaff2/deploy"
+    },
+    "ip": "::1",
+    "createdAt": {
+      "$date": "2026-06-12T21:04:38.721Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-12T21:04:38.721Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2c74698eba1a549681c519"
+    },
+    "organisationId": {
+      "$oid": "69c959d5cd5b890ba6cfae5f"
+    },
+    "userId": {
+      "$oid": "69c9579da8108782a9e0e2ee"
+    },
+    "userEmail": "mohamed.haroun.razgallah@horizon-tech.tn",
+    "action": "deployment.trigger",
+    "resourceType": "deployment",
+    "resourceId": "6a2c74698eba1a549681c511",
+    "details": {
+      "method": "POST",
+      "path": "/api/projects/69c95b1ccd5b890ba6cfaff2/deploy"
+    },
+    "ip": "::1",
+    "createdAt": {
+      "$date": "2026-06-12T21:04:41.347Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-12T21:04:41.347Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2c746c8eba1a549681c5f6"
+    },
+    "organisationId": {
+      "$oid": "69c959d5cd5b890ba6cfae5f"
+    },
+    "userId": {
+      "$oid": "69c9579da8108782a9e0e2ee"
+    },
+    "userEmail": "mohamed.haroun.razgallah@horizon-tech.tn",
+    "action": "pipeline.trigger",
+    "resourceType": "pipeline",
+    "resourceId": "6a2c746c8eba1a549681c5f3",
+    "details": {
+      "method": "POST",
+      "path": "/api/projects/69c95b1ccd5b890ba6cfaff2/pipelines"
+    },
+    "ip": "::1",
+    "createdAt": {
+      "$date": "2026-06-12T21:04:44.721Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-12T21:04:44.721Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2df61f7245fd4cba8c34db"
+    },
+    "organisationId": {
+      "$oid": "6a2df61e7245fd4cba8c34c3"
+    },
+    "userId": {
+      "$oid": "6a2df61e7245fd4cba8c34c5"
+    },
+    "userEmail": "e2e-1781397022844-ncmy4e@example.com",
+    "action": "project.create",
+    "resourceType": "project",
+    "resourceId": "6a2df61f7245fd4cba8c34d8",
+    "details": {
+      "method": "POST",
+      "path": "/api/projects"
+    },
+    "ip": "::1",
+    "createdAt": {
+      "$date": "2026-06-14T00:30:23.413Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T00:30:23.413Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2df61f7245fd4cba8c34e8"
+    },
+    "organisationId": {
+      "$oid": "6a2df61e7245fd4cba8c34c7"
+    },
+    "userId": {
+      "$oid": "6a2df61e7245fd4cba8c34c9"
+    },
+    "userEmail": "e2e-1781397022858-93iw9l@example.com",
+    "action": "project.create",
+    "resourceType": "project",
+    "resourceId": "6a2df61f7245fd4cba8c34e5",
+    "details": {
+      "method": "POST",
+      "path": "/api/projects"
+    },
+    "ip": "::1",
+    "createdAt": {
+      "$date": "2026-06-14T00:30:23.508Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T00:30:23.508Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2df68776fa87dec46c1286"
+    },
+    "organisationId": {
+      "$oid": "6a2df68676fa87dec46c126b"
+    },
+    "userId": {
+      "$oid": "6a2df68676fa87dec46c126d"
+    },
+    "userEmail": "e2e-1781397126527-pv0oiq@example.com",
+    "action": "project.create",
+    "resourceType": "project",
+    "resourceId": "6a2df68776fa87dec46c1282",
+    "details": {
+      "method": "POST",
+      "path": "/api/projects"
+    },
+    "ip": "::1",
+    "createdAt": {
+      "$date": "2026-06-14T00:32:07.055Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T00:32:07.055Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2df68776fa87dec46c1298"
+    },
+    "organisationId": {
+      "$oid": "6a2df68676fa87dec46c1277"
+    },
+    "userId": {
+      "$oid": "6a2df68676fa87dec46c1279"
+    },
+    "userEmail": "e2e-1781397126810-17ymqs@example.com",
+    "action": "project.create",
+    "resourceType": "project",
+    "resourceId": "6a2df68776fa87dec46c1295",
+    "details": {
+      "method": "POST",
+      "path": "/api/projects"
+    },
+    "ip": "::1",
+    "createdAt": {
+      "$date": "2026-06-14T00:32:07.327Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T00:32:07.327Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2df6a076fa87dec46c137e"
+    },
+    "organisationId": {
+      "$oid": "6a2df68676fa87dec46c1277"
+    },
+    "userId": {
+      "$oid": "6a2df68676fa87dec46c1279"
+    },
+    "userEmail": "e2e-1781397126810-17ymqs@example.com",
+    "action": "pipeline.trigger",
+    "resourceType": "pipeline",
+    "resourceId": "6a2df6a076fa87dec46c137b",
+    "details": {
+      "method": "POST",
+      "path": "/api/projects/6a2df68776fa87dec46c1295/pipelines"
+    },
+    "ip": "::1",
+    "createdAt": {
+      "$date": "2026-06-14T00:32:32.535Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T00:32:32.535Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2df6e89335aeb2c2b266bf"
+    },
+    "organisationId": {
+      "$oid": "6a2df6e89335aeb2c2b2669d"
+    },
+    "userId": {
+      "$oid": "6a2df6e89335aeb2c2b266a1"
+    },
+    "userEmail": "e2e-1781397224056-vva3ky@example.com",
+    "action": "project.create",
+    "resourceType": "project",
+    "resourceId": "6a2df6e89335aeb2c2b266b9",
+    "details": {
+      "method": "POST",
+      "path": "/api/projects"
+    },
+    "ip": "::1",
+    "createdAt": {
+      "$date": "2026-06-14T00:33:44.499Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T00:33:44.499Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2df6e89335aeb2c2b266c1"
+    },
+    "organisationId": {
+      "$oid": "6a2df6e89335aeb2c2b26698"
+    },
+    "userId": {
+      "$oid": "6a2df6e89335aeb2c2b2669c"
+    },
+    "userEmail": "e2e-1781397224016-j3pn5a@example.com",
+    "action": "project.create",
+    "resourceType": "project",
+    "resourceId": "6a2df6e89335aeb2c2b266bb",
+    "details": {
+      "method": "POST",
+      "path": "/api/projects"
+    },
+    "ip": "::1",
+    "createdAt": {
+      "$date": "2026-06-14T00:33:44.503Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T00:33:44.503Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2df7089335aeb2c2b268b1"
+    },
+    "organisationId": {
+      "$oid": "6a2df6e89335aeb2c2b26698"
+    },
+    "userId": {
+      "$oid": "6a2df6e89335aeb2c2b2669c"
+    },
+    "userEmail": "e2e-1781397224016-j3pn5a@example.com",
+    "action": "pipeline.trigger",
+    "resourceType": "pipeline",
+    "resourceId": "6a2df7089335aeb2c2b268ae",
+    "details": {
+      "method": "POST",
+      "path": "/api/projects/6a2df6e89335aeb2c2b266bb/pipelines"
+    },
+    "ip": "::1",
+    "createdAt": {
+      "$date": "2026-06-14T00:34:16.834Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T00:34:16.834Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2df7099335aeb2c2b268e8"
+    },
+    "organisationId": {
+      "$oid": "6a2df6e79335aeb2c2b26694"
+    },
+    "userId": {
+      "$oid": "6a2df6e79335aeb2c2b26696"
+    },
+    "userEmail": "e2e-1781397223678-666h83@example.com",
+    "action": "project.create",
+    "resourceType": "project",
+    "resourceId": "6a2df7099335aeb2c2b268e5",
+    "details": {
+      "method": "POST",
+      "path": "/api/projects"
+    },
+    "ip": "::1",
+    "createdAt": {
+      "$date": "2026-06-14T00:34:17.995Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T00:34:17.995Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2df7f97d4b4794d0f8671c"
+    },
+    "organisationId": {
+      "$oid": "6a2df7f27d4b4794d0f86698"
+    },
+    "userId": {
+      "$oid": "6a2df7f27d4b4794d0f8669a"
+    },
+    "userEmail": "e2e-1781397490411-q7cv3e@example.com",
+    "action": "project.create",
+    "resourceType": "project",
+    "resourceId": "6a2df7f97d4b4794d0f86719",
+    "details": {
+      "method": "POST",
+      "path": "/api/projects"
+    },
+    "ip": "::1",
+    "createdAt": {
+      "$date": "2026-06-14T00:38:17.313Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T00:38:17.313Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2df8203bfeb008c7ac8bd9"
+    },
+    "organisationId": {
+      "$oid": "6a2df8193bfeb008c7ac8b73"
+    },
+    "userId": {
+      "$oid": "6a2df8193bfeb008c7ac8b75"
+    },
+    "userEmail": "e2e-1781397529817-53gxww@example.com",
+    "action": "project.create",
+    "resourceType": "project",
+    "resourceId": "6a2df8203bfeb008c7ac8bd6",
+    "details": {
+      "method": "POST",
+      "path": "/api/projects"
+    },
+    "ip": "::1",
+    "createdAt": {
+      "$date": "2026-06-14T00:38:56.543Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T00:38:56.543Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2df8362f30ffbb478c072c"
+    },
+    "organisationId": {
+      "$oid": "6a2df8352f30ffbb478c070c"
+    },
+    "userId": {
+      "$oid": "6a2df8352f30ffbb478c070f"
+    },
+    "userEmail": "e2e-1781397557542-gitzm9@example.com",
+    "action": "project.create",
+    "resourceType": "project",
+    "resourceId": "6a2df8362f30ffbb478c0729",
+    "details": {
+      "method": "POST",
+      "path": "/api/projects"
+    },
+    "ip": "::1",
+    "createdAt": {
+      "$date": "2026-06-14T00:39:18.066Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T00:39:18.066Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2df8362f30ffbb478c0739"
+    },
+    "organisationId": {
+      "$oid": "6a2df8352f30ffbb478c0718"
+    },
+    "userId": {
+      "$oid": "6a2df8352f30ffbb478c071a"
+    },
+    "userEmail": "e2e-1781397557746-19sewi@example.com",
+    "action": "project.create",
+    "resourceType": "project",
+    "resourceId": "6a2df8362f30ffbb478c0736",
+    "details": {
+      "method": "POST",
+      "path": "/api/projects"
+    },
+    "ip": "::1",
+    "createdAt": {
+      "$date": "2026-06-14T00:39:18.201Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T00:39:18.201Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2df8532f30ffbb478c0811"
+    },
+    "organisationId": {
+      "$oid": "6a2df8352f30ffbb478c0718"
+    },
+    "userId": {
+      "$oid": "6a2df8352f30ffbb478c071a"
+    },
+    "userEmail": "e2e-1781397557746-19sewi@example.com",
+    "action": "pipeline.trigger",
+    "resourceType": "pipeline",
+    "resourceId": "6a2df8532f30ffbb478c080e",
+    "details": {
+      "method": "POST",
+      "path": "/api/projects/6a2df8362f30ffbb478c0736/pipelines"
+    },
+    "ip": "::1",
+    "createdAt": {
+      "$date": "2026-06-14T00:39:47.513Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T00:39:47.513Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2df8552f30ffbb478c084a"
+    },
+    "organisationId": {
+      "$oid": "6a2df8352f30ffbb478c0710"
+    },
+    "userId": {
+      "$oid": "6a2df8352f30ffbb478c0712"
+    },
+    "userEmail": "e2e-1781397557612-zn2zni@example.com",
+    "action": "project.create",
+    "resourceType": "project",
+    "resourceId": "6a2df8552f30ffbb478c0847",
+    "details": {
+      "method": "POST",
+      "path": "/api/projects"
+    },
+    "ip": "::1",
+    "createdAt": {
+      "$date": "2026-06-14T00:39:49.372Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T00:39:49.372Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2dfed4b0c1a96970cdf061"
+    },
+    "organisationId": {
+      "$oid": "6a2dfed4b0c1a96970cdf03a"
+    },
+    "userId": {
+      "$oid": "6a2dfed4b0c1a96970cdf03d"
+    },
+    "userEmail": "e2e-1781399252077-vlwcqm@example.com",
+    "action": "project.create",
+    "resourceType": "project",
+    "resourceId": "6a2dfed4b0c1a96970cdf05b",
+    "details": {
+      "method": "POST",
+      "path": "/api/projects"
+    },
+    "ip": "::1",
+    "createdAt": {
+      "$date": "2026-06-14T01:07:32.785Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T01:07:32.785Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2dfed4b0c1a96970cdf064"
+    },
+    "organisationId": {
+      "$oid": "6a2dfed4b0c1a96970cdf040"
+    },
+    "userId": {
+      "$oid": "6a2dfed4b0c1a96970cdf044"
+    },
+    "userEmail": "e2e-1781399252200-nmofj6@example.com",
+    "action": "project.create",
+    "resourceType": "project",
+    "resourceId": "6a2dfed4b0c1a96970cdf05f",
+    "details": {
+      "method": "POST",
+      "path": "/api/projects"
+    },
+    "ip": "::1",
+    "createdAt": {
+      "$date": "2026-06-14T01:07:32.798Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T01:07:32.798Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2dfefeb0c1a96970cdf1dd"
+    },
+    "organisationId": {
+      "$oid": "6a2dfed4b0c1a96970cdf042"
+    },
+    "userId": {
+      "$oid": "6a2dfed4b0c1a96970cdf045"
+    },
+    "userEmail": "e2e-1781399252213-cuxade@example.com",
+    "action": "project.create",
+    "resourceType": "project",
+    "resourceId": "6a2dfefdb0c1a96970cdf1da",
+    "details": {
+      "method": "POST",
+      "path": "/api/projects"
+    },
+    "ip": "::1",
+    "createdAt": {
+      "$date": "2026-06-14T01:08:14.008Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T01:08:14.008Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2dfeffb0c1a96970cdf208"
+    },
+    "organisationId": {
+      "$oid": "6a2dfed4b0c1a96970cdf040"
+    },
+    "userId": {
+      "$oid": "6a2dfed4b0c1a96970cdf044"
+    },
+    "userEmail": "e2e-1781399252200-nmofj6@example.com",
+    "action": "pipeline.trigger",
+    "resourceType": "pipeline",
+    "resourceId": "6a2dfeffb0c1a96970cdf205",
+    "details": {
+      "method": "POST",
+      "path": "/api/projects/6a2dfed4b0c1a96970cdf05f/pipelines"
+    },
+    "ip": "::1",
+    "createdAt": {
+      "$date": "2026-06-14T01:08:15.107Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T01:08:15.107Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2e039029c08418f35ef086"
+    },
+    "organisationId": {
+      "$oid": "6a2e038f29c08418f35ef05f"
+    },
+    "userId": {
+      "$oid": "6a2e038f29c08418f35ef065"
+    },
+    "userEmail": "e2e-1781400463438-8zucfg@example.com",
+    "action": "project.create",
+    "resourceType": "project",
+    "resourceId": "6a2e039029c08418f35ef080",
+    "details": {
+      "method": "POST",
+      "path": "/api/projects"
+    },
+    "ip": "::1",
+    "createdAt": {
+      "$date": "2026-06-14T01:27:44.285Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T01:27:44.285Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2e039029c08418f35ef088"
+    },
+    "organisationId": {
+      "$oid": "6a2e038f29c08418f35ef05d"
+    },
+    "userId": {
+      "$oid": "6a2e038f29c08418f35ef063"
+    },
+    "userEmail": "e2e-1781400463435-7hut2p@example.com",
+    "action": "project.create",
+    "resourceType": "project",
+    "resourceId": "6a2e039029c08418f35ef082",
+    "details": {
+      "method": "POST",
+      "path": "/api/projects"
+    },
+    "ip": "::1",
+    "createdAt": {
+      "$date": "2026-06-14T01:27:44.290Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T01:27:44.290Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2e03aa29c08418f35ef109"
+    },
+    "organisationId": {
+      "$oid": "6a2e038f29c08418f35ef05d"
+    },
+    "userId": {
+      "$oid": "6a2e038f29c08418f35ef063"
+    },
+    "userEmail": "e2e-1781400463435-7hut2p@example.com",
+    "action": "pipeline.trigger",
+    "resourceType": "pipeline",
+    "resourceId": "6a2e03aa29c08418f35ef106",
+    "details": {
+      "method": "POST",
+      "path": "/api/projects/6a2e039029c08418f35ef082/pipelines"
+    },
+    "ip": "::1",
+    "createdAt": {
+      "$date": "2026-06-14T01:28:10.719Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T01:28:10.719Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2e03ac29c08418f35ef157"
+    },
+    "organisationId": {
+      "$oid": "6a2e038f29c08418f35ef067"
+    },
+    "userId": {
+      "$oid": "6a2e038f29c08418f35ef069"
+    },
+    "userEmail": "e2e-1781400463522-28ukmh@example.com",
+    "action": "project.create",
+    "resourceType": "project",
+    "resourceId": "6a2e03ac29c08418f35ef154",
+    "details": {
+      "method": "POST",
+      "path": "/api/projects"
+    },
+    "ip": "::1",
+    "createdAt": {
+      "$date": "2026-06-14T01:28:12.983Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T01:28:12.983Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2e115c29c08418f35ef6c4"
+    },
+    "organisationId": {
+      "$oid": "6a2c6b1c90842fe284841de6"
+    },
+    "userId": {
+      "$oid": "6a2e036a82308dfe94999bd5"
+    },
+    "userEmail": "owner@innodeploy.io",
+    "action": "project.create",
+    "resourceType": "project",
+    "resourceId": "6a2e115c29c08418f35ef6c1",
+    "details": {
+      "method": "POST",
+      "path": "/api/projects"
+    },
+    "ip": "::1",
+    "createdAt": {
+      "$date": "2026-06-14T02:26:36.474Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T02:26:36.474Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2e118a29c08418f35ef72b"
+    },
+    "organisationId": {
+      "$oid": "6a2c6b1c90842fe284841de6"
+    },
+    "userId": {
+      "$oid": "6a2e036a82308dfe94999bd5"
+    },
+    "userEmail": "owner@innodeploy.io",
+    "action": "deployment.trigger",
+    "resourceType": "deployment",
+    "resourceId": "6a2e118a29c08418f35ef727",
+    "details": {
+      "method": "POST",
+      "path": "/api/projects/6a2e115c29c08418f35ef6c1/deploy"
+    },
+    "ip": "::1",
+    "createdAt": {
+      "$date": "2026-06-14T02:27:22.252Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T02:27:22.252Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2e11b029c08418f35ef814"
+    },
+    "organisationId": {
+      "$oid": "6a2c6b1c90842fe284841de6"
+    },
+    "userId": {
+      "$oid": "6a2e036a82308dfe94999bd5"
+    },
+    "userEmail": "owner@innodeploy.io",
+    "action": "pipeline.trigger",
+    "resourceType": "pipeline",
+    "resourceId": "6a2e11b029c08418f35ef811",
+    "details": {
+      "method": "POST",
+      "path": "/api/projects/6a2e115c29c08418f35ef6c1/pipelines"
+    },
+    "ip": "::1",
+    "createdAt": {
+      "$date": "2026-06-14T02:28:00.700Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T02:28:00.700Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2e133829c08418f35ef8cf"
+    },
+    "organisationId": {
+      "$oid": "6a2e133729c08418f35ef8ad"
+    },
+    "userId": {
+      "$oid": "6a2e133729c08418f35ef8b3"
+    },
+    "userEmail": "e2e-1781404471728-8pszv0@example.com",
+    "action": "project.create",
+    "resourceType": "project",
+    "resourceId": "6a2e133829c08418f35ef8cc",
+    "details": {
+      "method": "POST",
+      "path": "/api/projects"
+    },
+    "ip": "::1",
+    "createdAt": {
+      "$date": "2026-06-14T02:34:32.253Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T02:34:32.253Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2e133829c08418f35ef8d9"
+    },
+    "organisationId": {
+      "$oid": "6a2e133729c08418f35ef8b5"
+    },
+    "userId": {
+      "$oid": "6a2e133729c08418f35ef8ba"
+    },
+    "userEmail": "e2e-1781404471805-u9kvoy@example.com",
+    "action": "project.create",
+    "resourceType": "project",
+    "resourceId": "6a2e133829c08418f35ef8d6",
+    "details": {
+      "method": "POST",
+      "path": "/api/projects"
+    },
+    "ip": "::1",
+    "createdAt": {
+      "$date": "2026-06-14T02:34:32.288Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T02:34:32.288Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2e141e29c08418f35efa3a"
+    },
+    "organisationId": {
+      "$oid": "6a2e141529c08418f35ef9c1"
+    },
+    "userId": {
+      "$oid": "6a2e141529c08418f35ef9c3"
+    },
+    "userEmail": "e2e-1781404693549-b1zt4d@example.com",
+    "action": "project.create",
+    "resourceType": "project",
+    "resourceId": "6a2e141e29c08418f35efa37",
+    "details": {
+      "method": "POST",
+      "path": "/api/projects"
+    },
+    "ip": "::1",
+    "createdAt": {
+      "$date": "2026-06-14T02:38:22.211Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T02:38:22.211Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2e15c929c08418f35efac2"
+    },
+    "organisationId": {
+      "$oid": "6a2e15c829c08418f35efaa8"
+    },
+    "userId": {
+      "$oid": "6a2e15c829c08418f35efaab"
+    },
+    "userEmail": "e2e-1781405128892-xijxrg@example.com",
+    "action": "project.create",
+    "resourceType": "project",
+    "resourceId": "6a2e15c929c08418f35efabf",
+    "details": {
+      "method": "POST",
+      "path": "/api/projects"
+    },
+    "ip": "::1",
+    "createdAt": {
+      "$date": "2026-06-14T02:45:29.348Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T02:45:29.348Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2e15c929c08418f35efacf"
+    },
+    "organisationId": {
+      "$oid": "6a2e15c929c08418f35efaad"
+    },
+    "userId": {
+      "$oid": "6a2e15c929c08418f35efaaf"
+    },
+    "userEmail": "e2e-1781405128981-sp0h8y@example.com",
+    "action": "project.create",
+    "resourceType": "project",
+    "resourceId": "6a2e15c929c08418f35efacc",
+    "details": {
+      "method": "POST",
+      "path": "/api/projects"
+    },
+    "ip": "::1",
+    "createdAt": {
+      "$date": "2026-06-14T02:45:29.409Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T02:45:29.409Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2e15f329c08418f35efd14"
+    },
+    "organisationId": {
+      "$oid": "6a2e15c829c08418f35efaa8"
+    },
+    "userId": {
+      "$oid": "6a2e15c829c08418f35efaab"
+    },
+    "userEmail": "e2e-1781405128892-xijxrg@example.com",
+    "action": "pipeline.trigger",
+    "resourceType": "pipeline",
+    "resourceId": "6a2e15f329c08418f35efd11",
+    "details": {
+      "method": "POST",
+      "path": "/api/projects/6a2e15c929c08418f35efabf/pipelines"
+    },
+    "ip": "::1",
+    "createdAt": {
+      "$date": "2026-06-14T02:46:11.868Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T02:46:11.868Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2e15f929c08418f35efd64"
+    },
+    "organisationId": {
+      "$oid": "6a2e15c929c08418f35efab1"
+    },
+    "userId": {
+      "$oid": "6a2e15c929c08418f35efab3"
+    },
+    "userEmail": "e2e-1781405129139-vejdld@example.com",
+    "action": "project.create",
+    "resourceType": "project",
+    "resourceId": "6a2e15f929c08418f35efd61",
+    "details": {
+      "method": "POST",
+      "path": "/api/projects"
+    },
+    "ip": "::1",
+    "createdAt": {
+      "$date": "2026-06-14T02:46:17.098Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T02:46:17.098Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2edf8dd1a8cf03f9e9a604"
+    },
+    "organisationId": {
+      "$oid": "6a2c6b1c90842fe284841de6"
+    },
+    "userId": {
+      "$oid": "6a2df240883006e9e1cde96d"
+    },
+    "userEmail": "developer@innodeploy.io",
+    "action": "project.create",
+    "resourceType": "project",
+    "resourceId": "6a2edf8dd1a8cf03f9e9a601",
+    "details": {
+      "method": "POST",
+      "path": "/api/projects"
+    },
+    "ip": "::1",
+    "createdAt": {
+      "$date": "2026-06-14T17:06:21.838Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T17:06:21.838Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2ee4dcd1a8cf03f9e9a8c7"
+    },
+    "organisationId": {
+      "$oid": "6a2ee4d3d1a8cf03f9e9a83c"
+    },
+    "userId": {
+      "$oid": "6a2ee4d3d1a8cf03f9e9a83e"
+    },
+    "userEmail": "e2e-1781458131775-w10laj@example.com",
+    "action": "project.create",
+    "resourceType": "project",
+    "resourceId": "6a2ee4dcd1a8cf03f9e9a8c4",
+    "details": {
+      "method": "POST",
+      "path": "/api/projects"
+    },
+    "ip": "::1",
+    "createdAt": {
+      "$date": "2026-06-14T17:29:00.326Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T17:29:00.326Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2ee5e5d1a8cf03f9e9a9b5"
+    },
+    "organisationId": {
+      "$oid": "6a2ee5dfd1a8cf03f9e9a93c"
+    },
+    "userId": {
+      "$oid": "6a2ee5dfd1a8cf03f9e9a93e"
+    },
+    "userEmail": "e2e-1781458399174-d11grn@example.com",
+    "action": "project.create",
+    "resourceType": "project",
+    "resourceId": "6a2ee5e5d1a8cf03f9e9a9b2",
+    "details": {
+      "method": "POST",
+      "path": "/api/projects"
+    },
+    "ip": "::1",
+    "createdAt": {
+      "$date": "2026-06-14T17:33:25.662Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T17:33:25.662Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2ee8b1d1a8cf03f9e9b263"
+    },
+    "organisationId": {
+      "$oid": "6a2ee8b1d1a8cf03f9e9b244"
+    },
+    "userId": {
+      "$oid": "6a2ee8b1d1a8cf03f9e9b248"
+    },
+    "userEmail": "e2e-1781459121160-xuh79y@example.com",
+    "action": "project.create",
+    "resourceType": "project",
+    "resourceId": "6a2ee8b1d1a8cf03f9e9b260",
+    "details": {
+      "method": "POST",
+      "path": "/api/projects"
+    },
+    "ip": "::1",
+    "createdAt": {
+      "$date": "2026-06-14T17:45:21.691Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T17:45:21.691Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2ee8b1d1a8cf03f9e9b270"
+    },
+    "organisationId": {
+      "$oid": "6a2ee8b1d1a8cf03f9e9b24f"
+    },
+    "userId": {
+      "$oid": "6a2ee8b1d1a8cf03f9e9b251"
+    },
+    "userEmail": "e2e-1781459121478-amvxfx@example.com",
+    "action": "project.create",
+    "resourceType": "project",
+    "resourceId": "6a2ee8b1d1a8cf03f9e9b26d",
+    "details": {
+      "method": "POST",
+      "path": "/api/projects"
+    },
+    "ip": "::1",
+    "createdAt": {
+      "$date": "2026-06-14T17:45:21.844Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T17:45:21.844Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2eeaccd1a8cf03f9e9b898"
+    },
+    "organisationId": {
+      "$oid": "6a2c6b1c90842fe284841de6"
+    },
+    "userId": {
+      "$oid": "6a2e036a82308dfe94999bd5"
+    },
+    "userEmail": "owner@innodeploy.io",
+    "action": "project.create",
+    "resourceType": "project",
+    "resourceId": "6a2eeaccd1a8cf03f9e9b895",
+    "details": {
+      "method": "POST",
+      "path": "/api/projects"
+    },
+    "ip": "::1",
+    "createdAt": {
+      "$date": "2026-06-14T17:54:20.733Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T17:54:20.733Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2eead8d1a8cf03f9e9b8cb"
+    },
+    "organisationId": {
+      "$oid": "6a2c6b1c90842fe284841de6"
+    },
+    "userId": {
+      "$oid": "6a2e036a82308dfe94999bd5"
+    },
+    "userEmail": "owner@innodeploy.io",
+    "action": "deployment.trigger",
+    "resourceType": "deployment",
+    "resourceId": "6a2eead8d1a8cf03f9e9b8c7",
+    "details": {
+      "method": "POST",
+      "path": "/api/projects/6a2eeaccd1a8cf03f9e9b895/deploy"
+    },
+    "ip": "::1",
+    "createdAt": {
+      "$date": "2026-06-14T17:54:32.934Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T17:54:32.934Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2eef0fd1a8cf03f9e9c5b2"
+    },
+    "organisationId": {
+      "$oid": "6a2c6b1c90842fe284841de6"
+    },
+    "userId": {
+      "$oid": "6a2df240883006e9e1cde96d"
+    },
+    "userEmail": "developer@innodeploy.io",
+    "action": "project.create",
+    "resourceType": "project",
+    "resourceId": "6a2eef0fd1a8cf03f9e9c5af",
+    "details": {
+      "method": "POST",
+      "path": "/api/projects"
+    },
+    "ip": "::1",
+    "createdAt": {
+      "$date": "2026-06-14T18:12:31.871Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T18:12:31.871Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2eef18d1a8cf03f9e9c5e7"
+    },
+    "organisationId": {
+      "$oid": "6a2c6b1c90842fe284841de6"
+    },
+    "userId": {
+      "$oid": "6a2df240883006e9e1cde96d"
+    },
+    "userEmail": "developer@innodeploy.io",
+    "action": "deployment.trigger",
+    "resourceType": "deployment",
+    "resourceId": "6a2eef17d1a8cf03f9e9c5e3",
+    "details": {
+      "method": "POST",
+      "path": "/api/projects/6a2eef0fd1a8cf03f9e9c5af/deploy"
+    },
+    "ip": "::1",
+    "createdAt": {
+      "$date": "2026-06-14T18:12:40.020Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T18:12:40.020Z"
+    },
+    "__v": 0
+  }
+]

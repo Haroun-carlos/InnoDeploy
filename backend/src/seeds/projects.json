@@ -1,0 +1,1240 @@
+[
+  {
+    "_id": {
+      "$oid": "69c29e7ad594c5eff0b4dec0"
+    },
+    "name": "smoke-project-20260324152353",
+    "description": "",
+    "repoUrl": "https://github.com/octocat/Hello-World",
+    "branch": "main",
+    "status": "stopped",
+    "lastDeployAt": null,
+    "envCount": 0,
+    "organisationId": {
+      "$oid": "69c29e79d594c5eff0b4deb7"
+    },
+    "createdBy": {
+      "$oid": "69c29e79d594c5eff0b4deb9"
+    },
+    "environments": [],
+    "createdAt": {
+      "$date": "2026-03-24T14:23:54.879Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-24T14:23:54.879Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69c29ed3d594c5eff0b4dedb"
+    },
+    "name": "smoke-project-20260324152523",
+    "description": "",
+    "repoUrl": "https://github.com/octocat/Hello-World",
+    "branch": "main",
+    "status": "stopped",
+    "lastDeployAt": null,
+    "envCount": 0,
+    "organisationId": {
+      "$oid": "69c29ed3d594c5eff0b4ded2"
+    },
+    "createdBy": {
+      "$oid": "69c29ed3d594c5eff0b4ded4"
+    },
+    "environments": [],
+    "createdAt": {
+      "$date": "2026-03-24T14:25:23.975Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-24T14:25:23.975Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69c29ef1d594c5eff0b4deeb"
+    },
+    "name": "smoke-project-20260324152552",
+    "description": "",
+    "repoUrl": "https://github.com/octocat/Hello-World",
+    "branch": "main",
+    "status": "stopped",
+    "lastDeployAt": null,
+    "envCount": 0,
+    "organisationId": {
+      "$oid": "69c29ef0d594c5eff0b4dee2"
+    },
+    "createdBy": {
+      "$oid": "69c29ef0d594c5eff0b4dee4"
+    },
+    "environments": [],
+    "createdAt": {
+      "$date": "2026-03-24T14:25:53.088Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-24T14:25:53.088Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69c29efed594c5eff0b4def9"
+    },
+    "name": "smoke-project-20260324152605",
+    "description": "",
+    "repoUrl": "https://github.com/octocat/Hello-World",
+    "branch": "main",
+    "status": "stopped",
+    "lastDeployAt": null,
+    "envCount": 0,
+    "organisationId": {
+      "$oid": "69c29efdd594c5eff0b4def0"
+    },
+    "createdBy": {
+      "$oid": "69c29efdd594c5eff0b4def2"
+    },
+    "environments": [],
+    "createdAt": {
+      "$date": "2026-03-24T14:26:06.154Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-24T14:26:06.154Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69c2ad460f769c6176c9bf1b"
+    },
+    "name": "my-test-project",
+    "description": "A test project for API validation",
+    "repoUrl": "https://github.com/octocat/Hello-World",
+    "branch": "main",
+    "status": "stopped",
+    "lastDeployAt": null,
+    "envCount": 0,
+    "organisationId": {
+      "$oid": "69c2abbd0f769c6176c9beff"
+    },
+    "createdBy": {
+      "$oid": "69c2abbd0f769c6176c9bf01"
+    },
+    "environments": [],
+    "createdAt": {
+      "$date": "2026-03-24T15:27:02.039Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-24T15:27:02.039Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69c959d5cd5b890ba6cfae64"
+    },
+    "name": "Churn_Prediction_System",
+    "description": "",
+    "repoUrl": "https://github.com/Haroun-carlos/Churn_Prediction_System.git",
+    "branch": "main",
+    "status": "failed",
+    "lastDeployAt": {
+      "$date": "2026-04-13T22:57:42.073Z"
+    },
+    "envCount": 1,
+    "organisationId": {
+      "$oid": "69c959d5cd5b890ba6cfae5f"
+    },
+    "createdBy": {
+      "$oid": "69c9579da8108782a9e0e2ee"
+    },
+    "environments": [
+      {
+        "name": "dev",
+        "secrets": {},
+        "createdAt": {
+          "$date": "2026-04-13T23:13:33.453Z"
+        },
+        "updatedAt": {
+          "$date": "2026-04-13T23:13:33.453Z"
+        }
+      }
+    ],
+    "createdAt": {
+      "$date": "2026-03-29T16:56:53.184Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-13T23:13:33.454Z"
+    },
+    "__v": 1,
+    "buildCommand": "",
+    "installCommand": "",
+    "pipelineConfig": "",
+    "setupMode": "automatic",
+    "startCommand": ""
+  },
+  {
+    "_id": {
+      "$oid": "69c95b1ccd5b890ba6cfaff2"
+    },
+    "name": "Chatbot-main",
+    "description": "",
+    "repoUrl": "https://github.com/Haroun-carlos/Chatbot-main.git",
+    "branch": "main",
+    "status": "running",
+    "lastDeployAt": {
+      "$date": "2026-06-12T21:04:45.635Z"
+    },
+    "envCount": 0,
+    "organisationId": {
+      "$oid": "69c959d5cd5b890ba6cfae5f"
+    },
+    "createdBy": {
+      "$oid": "69c9579da8108782a9e0e2ee"
+    },
+    "environments": [],
+    "createdAt": {
+      "$date": "2026-03-29T17:02:20.608Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-12T21:04:45.635Z"
+    },
+    "__v": 0,
+    "buildCommand": "",
+    "installCommand": "",
+    "pipelineConfig": "",
+    "setupMode": "automatic",
+    "startCommand": ""
+  },
+  {
+    "_id": {
+      "$oid": "69cade00d3d7170742fb603f"
+    },
+    "name": "InnoDeploy",
+    "description": "",
+    "repoUrl": "https://github.com/Haroun-carlos/InnoDeploy.git",
+    "branch": "main",
+    "status": "failed",
+    "lastDeployAt": {
+      "$date": "2026-04-10T02:23:21.049Z"
+    },
+    "envCount": 0,
+    "organisationId": {
+      "$oid": "69c959d5cd5b890ba6cfae5f"
+    },
+    "createdBy": {
+      "$oid": "69c9579da8108782a9e0e2ee"
+    },
+    "environments": [],
+    "createdAt": {
+      "$date": "2026-03-30T20:33:04.424Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-10T02:23:21.542Z"
+    },
+    "__v": 0,
+    "buildCommand": "",
+    "installCommand": "",
+    "pipelineConfig": "",
+    "setupMode": "automatic",
+    "startCommand": ""
+  },
+  {
+    "_id": {
+      "$oid": "6a2df61f7245fd4cba8c34d8"
+    },
+    "name": "e2e-project-1781397023359-1y3zpn",
+    "description": "",
+    "repoUrl": "https://github.com/acme/example-repo.git",
+    "branch": "main",
+    "status": "stopped",
+    "lastDeployAt": null,
+    "envCount": 0,
+    "setupMode": "automatic",
+    "pipelineConfig": "",
+    "installCommand": "",
+    "buildCommand": "",
+    "startCommand": "",
+    "organisationId": {
+      "$oid": "6a2df61e7245fd4cba8c34c3"
+    },
+    "createdBy": {
+      "$oid": "6a2df61e7245fd4cba8c34c5"
+    },
+    "environments": [],
+    "createdAt": {
+      "$date": "2026-06-14T00:30:23.398Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T00:30:23.398Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2df61f7245fd4cba8c34e5"
+    },
+    "name": "e2e-project-1781397023465-eorudd",
+    "description": "",
+    "repoUrl": "https://github.com/acme/example-repo.git",
+    "branch": "main",
+    "status": "stopped",
+    "lastDeployAt": null,
+    "envCount": 0,
+    "setupMode": "automatic",
+    "pipelineConfig": "",
+    "installCommand": "",
+    "buildCommand": "",
+    "startCommand": "",
+    "organisationId": {
+      "$oid": "6a2df61e7245fd4cba8c34c7"
+    },
+    "createdBy": {
+      "$oid": "6a2df61e7245fd4cba8c34c9"
+    },
+    "environments": [],
+    "createdAt": {
+      "$date": "2026-06-14T00:30:23.497Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T00:30:23.497Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2df68776fa87dec46c1282"
+    },
+    "name": "e2e-project-1781397127006-8zacqq",
+    "description": "",
+    "repoUrl": "https://github.com/acme/example-repo.git",
+    "branch": "main",
+    "status": "stopped",
+    "lastDeployAt": null,
+    "envCount": 0,
+    "setupMode": "automatic",
+    "pipelineConfig": "",
+    "installCommand": "",
+    "buildCommand": "",
+    "startCommand": "",
+    "organisationId": {
+      "$oid": "6a2df68676fa87dec46c126b"
+    },
+    "createdBy": {
+      "$oid": "6a2df68676fa87dec46c126d"
+    },
+    "environments": [],
+    "createdAt": {
+      "$date": "2026-06-14T00:32:07.041Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T00:32:07.041Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2df68776fa87dec46c1295"
+    },
+    "name": "e2e-project-1781397127279-fueiz3",
+    "description": "",
+    "repoUrl": "https://github.com/acme/example-repo.git",
+    "branch": "main",
+    "status": "stopped",
+    "lastDeployAt": null,
+    "envCount": 0,
+    "setupMode": "automatic",
+    "pipelineConfig": "",
+    "installCommand": "",
+    "buildCommand": "",
+    "startCommand": "",
+    "organisationId": {
+      "$oid": "6a2df68676fa87dec46c1277"
+    },
+    "createdBy": {
+      "$oid": "6a2df68676fa87dec46c1279"
+    },
+    "environments": [],
+    "createdAt": {
+      "$date": "2026-06-14T00:32:07.316Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T00:32:07.316Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2df6e89335aeb2c2b266b9"
+    },
+    "name": "e2e-project-1781397224434-skle9g",
+    "description": "",
+    "repoUrl": "https://github.com/acme/example-repo.git",
+    "branch": "main",
+    "status": "stopped",
+    "lastDeployAt": null,
+    "envCount": 0,
+    "setupMode": "automatic",
+    "pipelineConfig": "",
+    "installCommand": "",
+    "buildCommand": "",
+    "startCommand": "",
+    "organisationId": {
+      "$oid": "6a2df6e89335aeb2c2b2669d"
+    },
+    "createdBy": {
+      "$oid": "6a2df6e89335aeb2c2b266a1"
+    },
+    "environments": [],
+    "createdAt": {
+      "$date": "2026-06-14T00:33:44.484Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T00:33:44.484Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2df6e89335aeb2c2b266bb"
+    },
+    "name": "e2e-project-1781397224437-bn7pft",
+    "description": "",
+    "repoUrl": "https://github.com/acme/example-repo.git",
+    "branch": "main",
+    "status": "stopped",
+    "lastDeployAt": null,
+    "envCount": 0,
+    "setupMode": "automatic",
+    "pipelineConfig": "",
+    "installCommand": "",
+    "buildCommand": "",
+    "startCommand": "",
+    "organisationId": {
+      "$oid": "6a2df6e89335aeb2c2b26698"
+    },
+    "createdBy": {
+      "$oid": "6a2df6e89335aeb2c2b2669c"
+    },
+    "environments": [],
+    "createdAt": {
+      "$date": "2026-06-14T00:33:44.486Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T00:33:44.486Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2df7099335aeb2c2b268e5"
+    },
+    "name": "my-express-api",
+    "description": "",
+    "repoUrl": "https://github.com/haroun-mock/my-express-api.git",
+    "branch": "main",
+    "status": "stopped",
+    "lastDeployAt": null,
+    "envCount": 0,
+    "setupMode": "automatic",
+    "pipelineConfig": "",
+    "installCommand": "",
+    "buildCommand": "",
+    "startCommand": "",
+    "organisationId": {
+      "$oid": "6a2df6e79335aeb2c2b26694"
+    },
+    "createdBy": {
+      "$oid": "6a2df6e79335aeb2c2b26696"
+    },
+    "environments": [],
+    "createdAt": {
+      "$date": "2026-06-14T00:34:17.985Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T00:34:17.985Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2df7f97d4b4794d0f86719"
+    },
+    "name": "my-express-api",
+    "description": "",
+    "repoUrl": "https://github.com/haroun-mock/my-express-api.git",
+    "branch": "main",
+    "status": "stopped",
+    "lastDeployAt": null,
+    "envCount": 0,
+    "setupMode": "automatic",
+    "pipelineConfig": "",
+    "installCommand": "",
+    "buildCommand": "",
+    "startCommand": "",
+    "organisationId": {
+      "$oid": "6a2df7f27d4b4794d0f86698"
+    },
+    "createdBy": {
+      "$oid": "6a2df7f27d4b4794d0f8669a"
+    },
+    "environments": [],
+    "createdAt": {
+      "$date": "2026-06-14T00:38:17.297Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T00:38:17.297Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2df8203bfeb008c7ac8bd6"
+    },
+    "name": "my-express-api",
+    "description": "",
+    "repoUrl": "https://github.com/haroun-mock/my-express-api.git",
+    "branch": "main",
+    "status": "stopped",
+    "lastDeployAt": null,
+    "envCount": 0,
+    "setupMode": "automatic",
+    "pipelineConfig": "",
+    "installCommand": "",
+    "buildCommand": "",
+    "startCommand": "",
+    "organisationId": {
+      "$oid": "6a2df8193bfeb008c7ac8b73"
+    },
+    "createdBy": {
+      "$oid": "6a2df8193bfeb008c7ac8b75"
+    },
+    "environments": [],
+    "createdAt": {
+      "$date": "2026-06-14T00:38:56.531Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T00:38:56.531Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2df8362f30ffbb478c0729"
+    },
+    "name": "e2e-project-1781397557998-2b4keh",
+    "description": "",
+    "repoUrl": "https://github.com/acme/example-repo.git",
+    "branch": "main",
+    "status": "stopped",
+    "lastDeployAt": null,
+    "envCount": 0,
+    "setupMode": "automatic",
+    "pipelineConfig": "",
+    "installCommand": "",
+    "buildCommand": "",
+    "startCommand": "",
+    "organisationId": {
+      "$oid": "6a2df8352f30ffbb478c070c"
+    },
+    "createdBy": {
+      "$oid": "6a2df8352f30ffbb478c070f"
+    },
+    "environments": [],
+    "createdAt": {
+      "$date": "2026-06-14T00:39:18.050Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T00:39:18.050Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2df8362f30ffbb478c0736"
+    },
+    "name": "e2e-project-1781397558126-kgmlxp",
+    "description": "",
+    "repoUrl": "https://github.com/acme/example-repo.git",
+    "branch": "main",
+    "status": "stopped",
+    "lastDeployAt": null,
+    "envCount": 0,
+    "setupMode": "automatic",
+    "pipelineConfig": "",
+    "installCommand": "",
+    "buildCommand": "",
+    "startCommand": "",
+    "organisationId": {
+      "$oid": "6a2df8352f30ffbb478c0718"
+    },
+    "createdBy": {
+      "$oid": "6a2df8352f30ffbb478c071a"
+    },
+    "environments": [],
+    "createdAt": {
+      "$date": "2026-06-14T00:39:18.171Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T00:39:18.171Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2df8552f30ffbb478c0847"
+    },
+    "name": "my-express-api",
+    "description": "",
+    "repoUrl": "https://github.com/haroun-mock/my-express-api.git",
+    "branch": "main",
+    "status": "stopped",
+    "lastDeployAt": null,
+    "envCount": 0,
+    "setupMode": "automatic",
+    "pipelineConfig": "",
+    "installCommand": "",
+    "buildCommand": "",
+    "startCommand": "",
+    "organisationId": {
+      "$oid": "6a2df8352f30ffbb478c0710"
+    },
+    "createdBy": {
+      "$oid": "6a2df8352f30ffbb478c0712"
+    },
+    "environments": [],
+    "createdAt": {
+      "$date": "2026-06-14T00:39:49.362Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T00:39:49.362Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2dfed4b0c1a96970cdf05b"
+    },
+    "name": "e2e-project-1781399252718-fulpsi",
+    "description": "",
+    "repoUrl": "https://github.com/acme/example-repo.git",
+    "branch": "main",
+    "status": "stopped",
+    "lastDeployAt": null,
+    "envCount": 0,
+    "setupMode": "automatic",
+    "pipelineConfig": "",
+    "installCommand": "",
+    "buildCommand": "",
+    "startCommand": "",
+    "organisationId": {
+      "$oid": "6a2dfed4b0c1a96970cdf03a"
+    },
+    "createdBy": {
+      "$oid": "6a2dfed4b0c1a96970cdf03d"
+    },
+    "environments": [],
+    "createdAt": {
+      "$date": "2026-06-14T01:07:32.770Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T01:07:32.770Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2dfed4b0c1a96970cdf05f"
+    },
+    "name": "e2e-project-1781399252736-1d8uob",
+    "description": "",
+    "repoUrl": "https://github.com/acme/example-repo.git",
+    "branch": "main",
+    "status": "stopped",
+    "lastDeployAt": null,
+    "envCount": 0,
+    "setupMode": "automatic",
+    "pipelineConfig": "",
+    "installCommand": "",
+    "buildCommand": "",
+    "startCommand": "",
+    "organisationId": {
+      "$oid": "6a2dfed4b0c1a96970cdf040"
+    },
+    "createdBy": {
+      "$oid": "6a2dfed4b0c1a96970cdf044"
+    },
+    "environments": [],
+    "createdAt": {
+      "$date": "2026-06-14T01:07:32.780Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T01:07:32.780Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2dfefdb0c1a96970cdf1da"
+    },
+    "name": "my-express-api",
+    "description": "",
+    "repoUrl": "https://github.com/haroun-mock/my-express-api.git",
+    "branch": "main",
+    "status": "stopped",
+    "lastDeployAt": null,
+    "envCount": 0,
+    "setupMode": "automatic",
+    "pipelineConfig": "",
+    "installCommand": "",
+    "buildCommand": "",
+    "startCommand": "",
+    "organisationId": {
+      "$oid": "6a2dfed4b0c1a96970cdf042"
+    },
+    "createdBy": {
+      "$oid": "6a2dfed4b0c1a96970cdf045"
+    },
+    "environments": [],
+    "createdAt": {
+      "$date": "2026-06-14T01:08:13.993Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T01:08:13.993Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2e039029c08418f35ef080"
+    },
+    "name": "e2e-project-1781400464191-b0fwa0",
+    "description": "",
+    "repoUrl": "https://github.com/acme/example-repo.git",
+    "branch": "main",
+    "status": "stopped",
+    "lastDeployAt": null,
+    "envCount": 0,
+    "setupMode": "automatic",
+    "pipelineConfig": "",
+    "installCommand": "",
+    "buildCommand": "",
+    "startCommand": "",
+    "organisationId": {
+      "$oid": "6a2e038f29c08418f35ef05f"
+    },
+    "createdBy": {
+      "$oid": "6a2e038f29c08418f35ef065"
+    },
+    "environments": [],
+    "createdAt": {
+      "$date": "2026-06-14T01:27:44.239Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T01:27:44.239Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2e039029c08418f35ef082"
+    },
+    "name": "e2e-project-1781400464191-bow87j",
+    "description": "",
+    "repoUrl": "https://github.com/acme/example-repo.git",
+    "branch": "main",
+    "status": "stopped",
+    "lastDeployAt": null,
+    "envCount": 0,
+    "setupMode": "automatic",
+    "pipelineConfig": "",
+    "installCommand": "",
+    "buildCommand": "",
+    "startCommand": "",
+    "organisationId": {
+      "$oid": "6a2e038f29c08418f35ef05d"
+    },
+    "createdBy": {
+      "$oid": "6a2e038f29c08418f35ef063"
+    },
+    "environments": [],
+    "createdAt": {
+      "$date": "2026-06-14T01:27:44.245Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T01:27:44.245Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2e03ac29c08418f35ef154"
+    },
+    "name": "my-express-api",
+    "description": "",
+    "repoUrl": "https://github.com/haroun-mock/my-express-api.git",
+    "branch": "main",
+    "status": "stopped",
+    "lastDeployAt": null,
+    "envCount": 0,
+    "setupMode": "automatic",
+    "pipelineConfig": "",
+    "installCommand": "",
+    "buildCommand": "",
+    "startCommand": "",
+    "organisationId": {
+      "$oid": "6a2e038f29c08418f35ef067"
+    },
+    "createdBy": {
+      "$oid": "6a2e038f29c08418f35ef069"
+    },
+    "environments": [],
+    "createdAt": {
+      "$date": "2026-06-14T01:28:12.936Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T01:28:12.936Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2e115c29c08418f35ef6c1"
+    },
+    "name": "my-express-api",
+    "description": "",
+    "repoUrl": "https://github.com/haroun-mock/my-express-api.git",
+    "branch": "main",
+    "status": "running",
+    "lastDeployAt": {
+      "$date": "2026-06-14T02:27:25.868Z"
+    },
+    "envCount": 0,
+    "setupMode": "automatic",
+    "pipelineConfig": "",
+    "installCommand": "",
+    "buildCommand": "",
+    "startCommand": "",
+    "organisationId": {
+      "$oid": "6a2c6b1c90842fe284841de6"
+    },
+    "createdBy": {
+      "$oid": "6a2e036a82308dfe94999bd5"
+    },
+    "environments": [],
+    "createdAt": {
+      "$date": "2026-06-14T02:26:36.459Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T02:27:25.869Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2e133829c08418f35ef8cc"
+    },
+    "name": "e2e-project-1781404472210-dcomtr",
+    "description": "",
+    "repoUrl": "https://github.com/acme/example-repo.git",
+    "branch": "main",
+    "status": "stopped",
+    "lastDeployAt": null,
+    "envCount": 0,
+    "setupMode": "automatic",
+    "pipelineConfig": "",
+    "installCommand": "",
+    "buildCommand": "",
+    "startCommand": "",
+    "organisationId": {
+      "$oid": "6a2e133729c08418f35ef8ad"
+    },
+    "createdBy": {
+      "$oid": "6a2e133729c08418f35ef8b3"
+    },
+    "environments": [],
+    "createdAt": {
+      "$date": "2026-06-14T02:34:32.243Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T02:34:32.243Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2e133829c08418f35ef8d6"
+    },
+    "name": "e2e-project-1781404472251-evhpew",
+    "description": "",
+    "repoUrl": "https://github.com/acme/example-repo.git",
+    "branch": "main",
+    "status": "stopped",
+    "lastDeployAt": null,
+    "envCount": 0,
+    "setupMode": "automatic",
+    "pipelineConfig": "",
+    "installCommand": "",
+    "buildCommand": "",
+    "startCommand": "",
+    "organisationId": {
+      "$oid": "6a2e133729c08418f35ef8b5"
+    },
+    "createdBy": {
+      "$oid": "6a2e133729c08418f35ef8ba"
+    },
+    "environments": [],
+    "createdAt": {
+      "$date": "2026-06-14T02:34:32.280Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T02:34:32.280Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2e141e29c08418f35efa37"
+    },
+    "name": "my-express-api",
+    "description": "",
+    "repoUrl": "https://github.com/haroun-mock/my-express-api.git",
+    "branch": "main",
+    "status": "stopped",
+    "lastDeployAt": null,
+    "envCount": 0,
+    "setupMode": "automatic",
+    "pipelineConfig": "",
+    "installCommand": "",
+    "buildCommand": "",
+    "startCommand": "",
+    "organisationId": {
+      "$oid": "6a2e141529c08418f35ef9c1"
+    },
+    "createdBy": {
+      "$oid": "6a2e141529c08418f35ef9c3"
+    },
+    "environments": [],
+    "createdAt": {
+      "$date": "2026-06-14T02:38:22.202Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T02:38:22.202Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2e15c929c08418f35efabf"
+    },
+    "name": "e2e-project-1781405129316-5o9ni1",
+    "description": "",
+    "repoUrl": "https://github.com/acme/example-repo.git",
+    "branch": "main",
+    "status": "stopped",
+    "lastDeployAt": null,
+    "envCount": 0,
+    "setupMode": "automatic",
+    "pipelineConfig": "",
+    "installCommand": "",
+    "buildCommand": "",
+    "startCommand": "",
+    "organisationId": {
+      "$oid": "6a2e15c829c08418f35efaa8"
+    },
+    "createdBy": {
+      "$oid": "6a2e15c829c08418f35efaab"
+    },
+    "environments": [],
+    "createdAt": {
+      "$date": "2026-06-14T02:45:29.339Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T02:45:29.339Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2e15c929c08418f35efacc"
+    },
+    "name": "e2e-project-1781405129381-lo93e8",
+    "description": "",
+    "repoUrl": "https://github.com/acme/example-repo.git",
+    "branch": "main",
+    "status": "stopped",
+    "lastDeployAt": null,
+    "envCount": 0,
+    "setupMode": "automatic",
+    "pipelineConfig": "",
+    "installCommand": "",
+    "buildCommand": "",
+    "startCommand": "",
+    "organisationId": {
+      "$oid": "6a2e15c929c08418f35efaad"
+    },
+    "createdBy": {
+      "$oid": "6a2e15c929c08418f35efaaf"
+    },
+    "environments": [],
+    "createdAt": {
+      "$date": "2026-06-14T02:45:29.402Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T02:45:29.402Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2e15f929c08418f35efd61"
+    },
+    "name": "my-express-api",
+    "description": "",
+    "repoUrl": "https://github.com/haroun-mock/my-express-api.git",
+    "branch": "main",
+    "status": "stopped",
+    "lastDeployAt": null,
+    "envCount": 0,
+    "setupMode": "automatic",
+    "pipelineConfig": "",
+    "installCommand": "",
+    "buildCommand": "",
+    "startCommand": "",
+    "organisationId": {
+      "$oid": "6a2e15c929c08418f35efab1"
+    },
+    "createdBy": {
+      "$oid": "6a2e15c929c08418f35efab3"
+    },
+    "environments": [],
+    "createdAt": {
+      "$date": "2026-06-14T02:46:17.087Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T02:46:17.087Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2edf8dd1a8cf03f9e9a601"
+    },
+    "name": "E-commerce",
+    "description": "",
+    "repoUrl": "https://github.com/haroun-mock/E-commerce.git",
+    "branch": "main",
+    "status": "stopped",
+    "lastDeployAt": null,
+    "envCount": 0,
+    "setupMode": "manual",
+    "pipelineConfig": "",
+    "installCommand": "",
+    "buildCommand": "",
+    "startCommand": "",
+    "organisationId": {
+      "$oid": "6a2c6b1c90842fe284841de6"
+    },
+    "createdBy": {
+      "$oid": "6a2df240883006e9e1cde96d"
+    },
+    "environments": [],
+    "createdAt": {
+      "$date": "2026-06-14T17:06:21.824Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T17:06:21.824Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2ee4dcd1a8cf03f9e9a8c4"
+    },
+    "name": "E-commerce",
+    "description": "",
+    "repoUrl": "https://github.com/owner/E-commerce.git",
+    "branch": "main",
+    "status": "stopped",
+    "lastDeployAt": null,
+    "envCount": 0,
+    "setupMode": "automatic",
+    "pipelineConfig": "",
+    "installCommand": "",
+    "buildCommand": "",
+    "startCommand": "",
+    "organisationId": {
+      "$oid": "6a2ee4d3d1a8cf03f9e9a83c"
+    },
+    "createdBy": {
+      "$oid": "6a2ee4d3d1a8cf03f9e9a83e"
+    },
+    "environments": [],
+    "createdAt": {
+      "$date": "2026-06-14T17:29:00.318Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T17:29:00.318Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2ee5e5d1a8cf03f9e9a9b2"
+    },
+    "name": "E-commerce",
+    "description": "",
+    "repoUrl": "https://github.com/owner/E-commerce.git",
+    "branch": "main",
+    "status": "stopped",
+    "lastDeployAt": null,
+    "envCount": 0,
+    "setupMode": "automatic",
+    "pipelineConfig": "",
+    "installCommand": "",
+    "buildCommand": "",
+    "startCommand": "",
+    "organisationId": {
+      "$oid": "6a2ee5dfd1a8cf03f9e9a93c"
+    },
+    "createdBy": {
+      "$oid": "6a2ee5dfd1a8cf03f9e9a93e"
+    },
+    "environments": [],
+    "createdAt": {
+      "$date": "2026-06-14T17:33:25.654Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T17:33:25.654Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2ee8b1d1a8cf03f9e9b260"
+    },
+    "name": "e2e-project-1781459121657-1hgpne",
+    "description": "",
+    "repoUrl": "https://github.com/acme/example-repo.git",
+    "branch": "main",
+    "status": "stopped",
+    "lastDeployAt": null,
+    "envCount": 0,
+    "setupMode": "automatic",
+    "pipelineConfig": "",
+    "installCommand": "",
+    "buildCommand": "",
+    "startCommand": "",
+    "organisationId": {
+      "$oid": "6a2ee8b1d1a8cf03f9e9b244"
+    },
+    "createdBy": {
+      "$oid": "6a2ee8b1d1a8cf03f9e9b248"
+    },
+    "environments": [],
+    "createdAt": {
+      "$date": "2026-06-14T17:45:21.683Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T17:45:21.683Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2ee8b1d1a8cf03f9e9b26d"
+    },
+    "name": "e2e-project-1781459121813-cwk3id",
+    "description": "",
+    "repoUrl": "https://github.com/acme/example-repo.git",
+    "branch": "main",
+    "status": "stopped",
+    "lastDeployAt": null,
+    "envCount": 0,
+    "setupMode": "automatic",
+    "pipelineConfig": "",
+    "installCommand": "",
+    "buildCommand": "",
+    "startCommand": "",
+    "organisationId": {
+      "$oid": "6a2ee8b1d1a8cf03f9e9b24f"
+    },
+    "createdBy": {
+      "$oid": "6a2ee8b1d1a8cf03f9e9b251"
+    },
+    "environments": [],
+    "createdAt": {
+      "$date": "2026-06-14T17:45:21.834Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T17:45:21.834Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2eeaccd1a8cf03f9e9b895"
+    },
+    "name": "RentTn",
+    "description": "",
+    "repoUrl": "https://github.com/haroun-mock/RentTn.git",
+    "branch": "main",
+    "status": "running",
+    "lastDeployAt": {
+      "$date": "2026-06-14T17:54:36.985Z"
+    },
+    "envCount": 0,
+    "setupMode": "automatic",
+    "pipelineConfig": "",
+    "installCommand": "npm install",
+    "buildCommand": "npm run build",
+    "startCommand": "npm start",
+    "organisationId": {
+      "$oid": "6a2c6b1c90842fe284841de6"
+    },
+    "createdBy": {
+      "$oid": "6a2e036a82308dfe94999bd5"
+    },
+    "environments": [],
+    "createdAt": {
+      "$date": "2026-06-14T17:54:20.718Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T17:54:36.985Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a2eef0fd1a8cf03f9e9c5af"
+    },
+    "name": "Churnprediction",
+    "description": "",
+    "repoUrl": "https://github.com/haroun-mock/Churnprediction.git",
+    "branch": "master",
+    "status": "running",
+    "lastDeployAt": {
+      "$date": "2026-06-14T18:12:43.971Z"
+    },
+    "envCount": 0,
+    "setupMode": "manual",
+    "pipelineConfig": "",
+    "installCommand": "",
+    "buildCommand": "",
+    "startCommand": "",
+    "organisationId": {
+      "$oid": "6a2c6b1c90842fe284841de6"
+    },
+    "createdBy": {
+      "$oid": "6a2df240883006e9e1cde96d"
+    },
+    "environments": [],
+    "createdAt": {
+      "$date": "2026-06-14T18:12:31.854Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T18:12:43.971Z"
+    },
+    "__v": 0
+  }
+]

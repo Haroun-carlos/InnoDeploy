@@ -1,0 +1,5606 @@
+[
+  {
+    "_id": {
+      "$oid": "69ae0a599cc3b39a8f0ec365"
+    },
+    "name": "Innovibe",
+    "slug": "innovibe",
+    "plan": "free",
+    "members": [
+      {
+        "userId": {
+          "$oid": "69ae0a599cc3b39a8f0ec367"
+        },
+        "role": "owner",
+        "_id": {
+          "$oid": "69ae0a599cc3b39a8f0ec369"
+        },
+        "joinedAt": {
+          "$date": "2026-03-08T23:46:33.454Z"
+        }
+      }
+    ],
+    "createdAt": {
+      "$date": "2026-03-08T23:46:33.234Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-08T23:46:33.456Z"
+    },
+    "__v": 1
+  },
+  {
+    "_id": {
+      "$oid": "69b1fa71249581706299273e"
+    },
+    "name": "TestOrg",
+    "slug": "testorg",
+    "plan": "free",
+    "members": [
+      {
+        "userId": {
+          "$oid": "69b1fa712495817062992740"
+        },
+        "role": "owner",
+        "_id": {
+          "$oid": "69b1fa722495817062992742"
+        },
+        "joinedAt": {
+          "$date": "2026-03-11T23:27:46.033Z"
+        }
+      }
+    ],
+    "createdAt": {
+      "$date": "2026-03-11T23:27:45.654Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-11T23:27:46.034Z"
+    },
+    "__v": 1
+  },
+  {
+    "_id": {
+      "$oid": "69bcde6a2c58235ee2f34f17"
+    },
+    "name": "SmokeOrg1773985385",
+    "slug": "smokeorg1773985385",
+    "plan": "free",
+    "members": [
+      {
+        "userId": {
+          "$oid": "69bcde6a2c58235ee2f34f19"
+        },
+        "role": "owner",
+        "_id": {
+          "$oid": "69bcde6a2c58235ee2f34f1b"
+        },
+        "joinedAt": {
+          "$date": "2026-03-20T05:43:06.509Z"
+        }
+      }
+    ],
+    "alertRules": {
+      "cpuThreshold": 80,
+      "memoryThreshold": 85,
+      "latencyThreshold": 250,
+      "availabilityThreshold": 99,
+      "emailNotifications": true,
+      "slackNotifications": false
+    },
+    "billingInfo": {
+      "contactEmail": "",
+      "companyAddress": "",
+      "taxId": ""
+    },
+    "notificationChannels": {
+      "slackWebhook": "",
+      "discordWebhook": "",
+      "smtpHost": "",
+      "smtpPort": 587,
+      "smtpUsername": "",
+      "smtpPassword": "",
+      "smtpFromEmail": ""
+    },
+    "dockerRegistry": {
+      "registryUrl": "",
+      "username": "",
+      "password": "",
+      "namespace": ""
+    },
+    "gitProvider": {
+      "provider": "none",
+      "installationUrl": "",
+      "webhookSecret": "",
+      "repositoryOwner": ""
+    },
+    "invitations": [],
+    "apiKeys": [],
+    "createdAt": {
+      "$date": "2026-03-20T05:43:06.243Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-20T05:43:06.511Z"
+    },
+    "__v": 1
+  },
+  {
+    "_id": {
+      "$oid": "69bce1452c58235ee2f34f1e"
+    },
+    "name": "SmokeOrg1773986117",
+    "slug": "smokeorg1773986117",
+    "plan": "free",
+    "members": [
+      {
+        "userId": {
+          "$oid": "69bce1452c58235ee2f34f20"
+        },
+        "role": "owner",
+        "_id": {
+          "$oid": "69bce1452c58235ee2f34f22"
+        },
+        "joinedAt": {
+          "$date": "2026-03-20T05:55:17.392Z"
+        }
+      }
+    ],
+    "alertRules": {
+      "cpuThreshold": 80,
+      "memoryThreshold": 85,
+      "latencyThreshold": 250,
+      "availabilityThreshold": 99,
+      "emailNotifications": true,
+      "slackNotifications": false
+    },
+    "billingInfo": {
+      "contactEmail": "",
+      "companyAddress": "",
+      "taxId": ""
+    },
+    "notificationChannels": {
+      "slackWebhook": "",
+      "discordWebhook": "",
+      "smtpHost": "",
+      "smtpPort": 587,
+      "smtpUsername": "",
+      "smtpPassword": "",
+      "smtpFromEmail": ""
+    },
+    "dockerRegistry": {
+      "registryUrl": "",
+      "username": "",
+      "password": "",
+      "namespace": ""
+    },
+    "gitProvider": {
+      "provider": "none",
+      "installationUrl": "",
+      "webhookSecret": "",
+      "repositoryOwner": ""
+    },
+    "invitations": [],
+    "apiKeys": [],
+    "createdAt": {
+      "$date": "2026-03-20T05:55:17.149Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-20T05:55:17.393Z"
+    },
+    "__v": 1
+  },
+  {
+    "_id": {
+      "$oid": "69c29e79d594c5eff0b4deb7"
+    },
+    "name": "Smoke Org",
+    "slug": "smoke-org",
+    "plan": "free",
+    "members": [
+      {
+        "userId": {
+          "$oid": "69c29e79d594c5eff0b4deb9"
+        },
+        "role": "owner",
+        "_id": {
+          "$oid": "69c29e7ad594c5eff0b4debb"
+        },
+        "joinedAt": {
+          "$date": "2026-03-24T14:23:54.130Z"
+        }
+      }
+    ],
+    "alertRules": {
+      "cpuThreshold": 90,
+      "memoryThreshold": 95,
+      "latencyThreshold": 2000,
+      "availabilityThreshold": 99,
+      "serviceDownFailures": 5,
+      "diskThreshold": 85,
+      "certExpiryDays": 14,
+      "emailNotifications": true,
+      "slackNotifications": false
+    },
+    "billingInfo": {
+      "contactEmail": "",
+      "companyAddress": "",
+      "taxId": ""
+    },
+    "notificationChannels": {
+      "emailEnabled": true,
+      "slackEnabled": false,
+      "discordEnabled": false,
+      "expoEnabled": false,
+      "webhookEnabled": false,
+      "slackWebhook": "",
+      "discordWebhook": "",
+      "smtpHost": "",
+      "smtpPort": 587,
+      "smtpUsername": "",
+      "smtpPassword": "",
+      "smtpFromEmail": "",
+      "emailRecipients": [],
+      "expoAccessToken": "",
+      "expoPushTokens": [],
+      "webhookUrl": "",
+      "webhookHeaders": {}
+    },
+    "dockerRegistry": {
+      "registryUrl": "",
+      "username": "",
+      "password": "",
+      "namespace": ""
+    },
+    "gitProvider": {
+      "provider": "none",
+      "installationUrl": "",
+      "webhookSecret": "",
+      "repositoryOwner": ""
+    },
+    "invitations": [],
+    "apiKeys": [],
+    "createdAt": {
+      "$date": "2026-03-24T14:23:53.857Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-24T14:23:54.133Z"
+    },
+    "__v": 1
+  },
+  {
+    "_id": {
+      "$oid": "69c29eb2d594c5eff0b4deca"
+    },
+    "name": "Smoke Org 20260324152450",
+    "slug": "smoke-org-20260324152450",
+    "plan": "free",
+    "members": [
+      {
+        "userId": {
+          "$oid": "69c29eb2d594c5eff0b4decc"
+        },
+        "role": "owner",
+        "_id": {
+          "$oid": "69c29eb2d594c5eff0b4dece"
+        },
+        "joinedAt": {
+          "$date": "2026-03-24T14:24:50.490Z"
+        }
+      }
+    ],
+    "alertRules": {
+      "cpuThreshold": 90,
+      "memoryThreshold": 95,
+      "latencyThreshold": 2000,
+      "availabilityThreshold": 99,
+      "serviceDownFailures": 5,
+      "diskThreshold": 85,
+      "certExpiryDays": 14,
+      "emailNotifications": true,
+      "slackNotifications": false
+    },
+    "billingInfo": {
+      "contactEmail": "",
+      "companyAddress": "",
+      "taxId": ""
+    },
+    "notificationChannels": {
+      "emailEnabled": true,
+      "slackEnabled": false,
+      "discordEnabled": false,
+      "expoEnabled": false,
+      "webhookEnabled": false,
+      "slackWebhook": "",
+      "discordWebhook": "",
+      "smtpHost": "",
+      "smtpPort": 587,
+      "smtpUsername": "",
+      "smtpPassword": "",
+      "smtpFromEmail": "",
+      "emailRecipients": [],
+      "expoAccessToken": "",
+      "expoPushTokens": [],
+      "webhookUrl": "",
+      "webhookHeaders": {}
+    },
+    "dockerRegistry": {
+      "registryUrl": "",
+      "username": "",
+      "password": "",
+      "namespace": ""
+    },
+    "gitProvider": {
+      "provider": "none",
+      "installationUrl": "",
+      "webhookSecret": "",
+      "repositoryOwner": ""
+    },
+    "invitations": [],
+    "apiKeys": [],
+    "createdAt": {
+      "$date": "2026-03-24T14:24:50.248Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-24T14:24:50.490Z"
+    },
+    "__v": 1
+  },
+  {
+    "_id": {
+      "$oid": "69c29ed3d594c5eff0b4ded2"
+    },
+    "name": "Smoke Org 20260324152523",
+    "slug": "smoke-org-20260324152523",
+    "plan": "free",
+    "members": [
+      {
+        "userId": {
+          "$oid": "69c29ed3d594c5eff0b4ded4"
+        },
+        "role": "owner",
+        "_id": {
+          "$oid": "69c29ed3d594c5eff0b4ded6"
+        },
+        "joinedAt": {
+          "$date": "2026-03-24T14:25:23.541Z"
+        }
+      }
+    ],
+    "alertRules": {
+      "cpuThreshold": 90,
+      "memoryThreshold": 95,
+      "latencyThreshold": 2000,
+      "availabilityThreshold": 99,
+      "serviceDownFailures": 5,
+      "diskThreshold": 85,
+      "certExpiryDays": 14,
+      "emailNotifications": true,
+      "slackNotifications": false
+    },
+    "billingInfo": {
+      "contactEmail": "",
+      "companyAddress": "",
+      "taxId": ""
+    },
+    "notificationChannels": {
+      "emailEnabled": true,
+      "slackEnabled": false,
+      "discordEnabled": false,
+      "expoEnabled": false,
+      "webhookEnabled": false,
+      "slackWebhook": "",
+      "discordWebhook": "",
+      "smtpHost": "",
+      "smtpPort": 587,
+      "smtpUsername": "",
+      "smtpPassword": "",
+      "smtpFromEmail": "",
+      "emailRecipients": [],
+      "expoAccessToken": "",
+      "expoPushTokens": [],
+      "webhookUrl": "",
+      "webhookHeaders": {}
+    },
+    "dockerRegistry": {
+      "registryUrl": "",
+      "username": "",
+      "password": "",
+      "namespace": ""
+    },
+    "gitProvider": {
+      "provider": "none",
+      "installationUrl": "",
+      "webhookSecret": "",
+      "repositoryOwner": ""
+    },
+    "invitations": [],
+    "apiKeys": [],
+    "createdAt": {
+      "$date": "2026-03-24T14:25:23.275Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-24T14:25:23.542Z"
+    },
+    "__v": 1
+  },
+  {
+    "_id": {
+      "$oid": "69c29ef0d594c5eff0b4dee2"
+    },
+    "name": "Smoke Org 20260324152552",
+    "slug": "smoke-org-20260324152552",
+    "plan": "free",
+    "members": [
+      {
+        "userId": {
+          "$oid": "69c29ef0d594c5eff0b4dee4"
+        },
+        "role": "owner",
+        "_id": {
+          "$oid": "69c29ef0d594c5eff0b4dee6"
+        },
+        "joinedAt": {
+          "$date": "2026-03-24T14:25:52.835Z"
+        }
+      }
+    ],
+    "alertRules": {
+      "cpuThreshold": 90,
+      "memoryThreshold": 95,
+      "latencyThreshold": 2000,
+      "availabilityThreshold": 99,
+      "serviceDownFailures": 5,
+      "diskThreshold": 85,
+      "certExpiryDays": 14,
+      "emailNotifications": true,
+      "slackNotifications": false
+    },
+    "billingInfo": {
+      "contactEmail": "",
+      "companyAddress": "",
+      "taxId": ""
+    },
+    "notificationChannels": {
+      "emailEnabled": true,
+      "slackEnabled": false,
+      "discordEnabled": false,
+      "expoEnabled": false,
+      "webhookEnabled": false,
+      "slackWebhook": "",
+      "discordWebhook": "",
+      "smtpHost": "",
+      "smtpPort": 587,
+      "smtpUsername": "",
+      "smtpPassword": "",
+      "smtpFromEmail": "",
+      "emailRecipients": [],
+      "expoAccessToken": "",
+      "expoPushTokens": [],
+      "webhookUrl": "",
+      "webhookHeaders": {}
+    },
+    "dockerRegistry": {
+      "registryUrl": "",
+      "username": "",
+      "password": "",
+      "namespace": ""
+    },
+    "gitProvider": {
+      "provider": "none",
+      "installationUrl": "",
+      "webhookSecret": "",
+      "repositoryOwner": ""
+    },
+    "invitations": [],
+    "apiKeys": [],
+    "createdAt": {
+      "$date": "2026-03-24T14:25:52.596Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-24T14:25:52.835Z"
+    },
+    "__v": 1
+  },
+  {
+    "_id": {
+      "$oid": "69c29efdd594c5eff0b4def0"
+    },
+    "name": "Smoke Org 20260324152605",
+    "slug": "smoke-org-20260324152605",
+    "plan": "free",
+    "members": [
+      {
+        "userId": {
+          "$oid": "69c29efdd594c5eff0b4def2"
+        },
+        "role": "owner",
+        "_id": {
+          "$oid": "69c29efdd594c5eff0b4def4"
+        },
+        "joinedAt": {
+          "$date": "2026-03-24T14:26:05.899Z"
+        }
+      }
+    ],
+    "alertRules": {
+      "cpuThreshold": 90,
+      "memoryThreshold": 95,
+      "latencyThreshold": 2000,
+      "availabilityThreshold": 99,
+      "serviceDownFailures": 5,
+      "diskThreshold": 85,
+      "certExpiryDays": 14,
+      "emailNotifications": true,
+      "slackNotifications": false
+    },
+    "billingInfo": {
+      "contactEmail": "",
+      "companyAddress": "",
+      "taxId": ""
+    },
+    "notificationChannels": {
+      "emailEnabled": true,
+      "slackEnabled": false,
+      "discordEnabled": false,
+      "expoEnabled": false,
+      "webhookEnabled": false,
+      "slackWebhook": "",
+      "discordWebhook": "",
+      "smtpHost": "",
+      "smtpPort": 587,
+      "smtpUsername": "",
+      "smtpPassword": "",
+      "smtpFromEmail": "",
+      "emailRecipients": [],
+      "expoAccessToken": "",
+      "expoPushTokens": [],
+      "webhookUrl": "",
+      "webhookHeaders": {}
+    },
+    "dockerRegistry": {
+      "registryUrl": "",
+      "username": "",
+      "password": "",
+      "namespace": ""
+    },
+    "gitProvider": {
+      "provider": "none",
+      "installationUrl": "",
+      "webhookSecret": "",
+      "repositoryOwner": ""
+    },
+    "invitations": [],
+    "apiKeys": [],
+    "createdAt": {
+      "$date": "2026-03-24T14:26:05.657Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-24T14:26:05.899Z"
+    },
+    "__v": 1
+  },
+  {
+    "_id": {
+      "$oid": "69c2abbd0f769c6176c9beff"
+    },
+    "name": "Test Organization",
+    "slug": "test-organization",
+    "plan": "free",
+    "members": [
+      {
+        "userId": {
+          "$oid": "69c2abbd0f769c6176c9bf01"
+        },
+        "role": "owner",
+        "_id": {
+          "$oid": "69c2abbe0f769c6176c9bf03"
+        },
+        "joinedAt": {
+          "$date": "2026-03-24T15:20:30.177Z"
+        }
+      }
+    ],
+    "alertRules": {
+      "cpuThreshold": 90,
+      "memoryThreshold": 95,
+      "latencyThreshold": 2000,
+      "availabilityThreshold": 99,
+      "serviceDownFailures": 5,
+      "diskThreshold": 85,
+      "certExpiryDays": 14,
+      "emailNotifications": true,
+      "slackNotifications": false
+    },
+    "billingInfo": {
+      "contactEmail": "",
+      "companyAddress": "",
+      "taxId": ""
+    },
+    "notificationChannels": {
+      "emailEnabled": true,
+      "slackEnabled": false,
+      "discordEnabled": false,
+      "expoEnabled": false,
+      "webhookEnabled": false,
+      "slackWebhook": "",
+      "discordWebhook": "",
+      "smtpHost": "",
+      "smtpPort": 587,
+      "smtpUsername": "",
+      "smtpPassword": "",
+      "smtpFromEmail": "",
+      "emailRecipients": [],
+      "expoAccessToken": "",
+      "expoPushTokens": [],
+      "webhookUrl": "",
+      "webhookHeaders": {}
+    },
+    "dockerRegistry": {
+      "registryUrl": "",
+      "username": "",
+      "password": "",
+      "namespace": ""
+    },
+    "gitProvider": {
+      "provider": "none",
+      "installationUrl": "",
+      "webhookSecret": "",
+      "repositoryOwner": ""
+    },
+    "invitations": [],
+    "apiKeys": [],
+    "createdAt": {
+      "$date": "2026-03-24T15:20:29.909Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-24T15:20:30.179Z"
+    },
+    "__v": 1
+  },
+  {
+    "_id": {
+      "$oid": "69c959d5cd5b890ba6cfae5f"
+    },
+    "name": "Haroun's Workspace",
+    "slug": "haroun",
+    "plan": "free",
+    "members": [
+      {
+        "userId": {
+          "$oid": "69c9579da8108782a9e0e2ee"
+        },
+        "role": "owner",
+        "_id": {
+          "$oid": "69c959d5cd5b890ba6cfae60"
+        },
+        "joinedAt": {
+          "$date": "2026-03-29T16:56:53.157Z"
+        }
+      }
+    ],
+    "alertRules": {
+      "cpuThreshold": 90,
+      "memoryThreshold": 95,
+      "latencyThreshold": 2000,
+      "availabilityThreshold": 99,
+      "serviceDownFailures": 5,
+      "diskThreshold": 85,
+      "certExpiryDays": 14,
+      "emailNotifications": true,
+      "slackNotifications": true
+    },
+    "billingInfo": {
+      "contactEmail": "",
+      "companyAddress": "",
+      "taxId": ""
+    },
+    "notificationChannels": {
+      "emailEnabled": true,
+      "slackEnabled": false,
+      "discordEnabled": false,
+      "expoEnabled": false,
+      "webhookEnabled": false,
+      "slackWebhook": "",
+      "discordWebhook": "",
+      "smtpHost": "",
+      "smtpPort": 587,
+      "smtpUsername": "",
+      "smtpPassword": "",
+      "smtpFromEmail": "",
+      "emailRecipients": [],
+      "expoAccessToken": "",
+      "expoPushTokens": [],
+      "webhookUrl": "",
+      "webhookHeaders": {}
+    },
+    "dockerRegistry": {
+      "registryUrl": "",
+      "username": "",
+      "password": "",
+      "namespace": ""
+    },
+    "gitProvider": {
+      "provider": "none",
+      "installationUrl": "",
+      "webhookSecret": "",
+      "repositoryOwner": ""
+    },
+    "invitations": [],
+    "apiKeys": [],
+    "createdAt": {
+      "$date": "2026-03-29T16:56:53.160Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-10T18:25:42.512Z"
+    },
+    "__v": 0,
+    "industry": "",
+    "limits": {
+      "logRetentionDays": 30,
+      "maxDeploysPerMonth": 0,
+      "maxMembers": 0,
+      "maxProjects": 0
+    },
+    "workspaceType": ""
+  },
+  {
+    "_id": {
+      "$oid": "69d85a3c1a5c1efc34ce60dd"
+    },
+    "name": "Test Organisation",
+    "slug": "test-organisation",
+    "plan": "free",
+    "limits": {
+      "maxProjects": 0,
+      "maxDeploysPerMonth": 0,
+      "maxMembers": 0,
+      "logRetentionDays": 30
+    },
+    "members": [
+      {
+        "userId": {
+          "$oid": "69d85a3c1a5c1efc34ce60df"
+        },
+        "role": "owner",
+        "_id": {
+          "$oid": "69d85a3c1a5c1efc34ce60e1"
+        },
+        "joinedAt": {
+          "$date": "2026-04-10T02:02:36.501Z"
+        }
+      }
+    ],
+    "alertRules": {
+      "cpuThreshold": 90,
+      "memoryThreshold": 95,
+      "latencyThreshold": 2000,
+      "availabilityThreshold": 99,
+      "serviceDownFailures": 5,
+      "diskThreshold": 85,
+      "certExpiryDays": 14,
+      "emailNotifications": true,
+      "slackNotifications": false
+    },
+    "billingInfo": {
+      "contactEmail": "",
+      "companyAddress": "",
+      "taxId": ""
+    },
+    "notificationChannels": {
+      "emailEnabled": true,
+      "slackEnabled": false,
+      "discordEnabled": false,
+      "expoEnabled": false,
+      "webhookEnabled": false,
+      "slackWebhook": "",
+      "discordWebhook": "",
+      "smtpHost": "",
+      "smtpPort": 587,
+      "smtpUsername": "",
+      "smtpPassword": "",
+      "smtpFromEmail": "",
+      "emailRecipients": [],
+      "expoAccessToken": "",
+      "expoPushTokens": [],
+      "webhookUrl": "",
+      "webhookHeaders": {}
+    },
+    "dockerRegistry": {
+      "registryUrl": "",
+      "username": "",
+      "password": "",
+      "namespace": ""
+    },
+    "gitProvider": {
+      "provider": "none",
+      "installationUrl": "",
+      "webhookSecret": "",
+      "repositoryOwner": ""
+    },
+    "invitations": [],
+    "apiKeys": [],
+    "createdAt": {
+      "$date": "2026-04-10T02:02:36.256Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-10T02:02:36.502Z"
+    },
+    "__v": 1
+  },
+  {
+    "_id": {
+      "$oid": "69d882eb990887fd0141e9e6"
+    },
+    "name": "chewingum",
+    "slug": "chewingum",
+    "industry": "",
+    "workspaceType": "",
+    "plan": "free",
+    "limits": {
+      "maxProjects": 0,
+      "maxDeploysPerMonth": 0,
+      "maxMembers": 0,
+      "logRetentionDays": 30
+    },
+    "members": [
+      {
+        "userId": {
+          "$oid": "69d882eb990887fd0141e9e8"
+        },
+        "role": "owner",
+        "_id": {
+          "$oid": "69d882ec990887fd0141e9ea"
+        },
+        "joinedAt": {
+          "$date": "2026-04-10T04:56:12.081Z"
+        }
+      }
+    ],
+    "alertRules": {
+      "cpuThreshold": 90,
+      "memoryThreshold": 95,
+      "latencyThreshold": 2000,
+      "availabilityThreshold": 99,
+      "serviceDownFailures": 5,
+      "diskThreshold": 85,
+      "certExpiryDays": 14,
+      "emailNotifications": true,
+      "slackNotifications": false
+    },
+    "billingInfo": {
+      "contactEmail": "",
+      "companyAddress": "",
+      "taxId": ""
+    },
+    "notificationChannels": {
+      "emailEnabled": true,
+      "slackEnabled": true,
+      "discordEnabled": true,
+      "expoEnabled": false,
+      "webhookEnabled": false,
+      "slackWebhook": "https://hooks.slack.com/services/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",
+      "discordWebhook": "https://discord.com/api/webhooks/1492011132125450371/GPQ8FcwDMghLSDR3lt-NuuGEQYJIzGCNNbn-s0VXomnpnAjewidkyuDcWjrS3-t_7xVr",
+      "smtpHost": "smtp.gmail.com",
+      "smtpPort": 587,
+      "smtpUsername": "carlitossx749@gmail.com",
+      "smtpPassword": "qedl pzxy nrhr pepe",
+      "smtpFromEmail": "noreply@innodeploy.com",
+      "emailRecipients": [],
+      "expoAccessToken": "",
+      "expoPushTokens": [],
+      "webhookUrl": "",
+      "webhookHeaders": {}
+    },
+    "dockerRegistry": {
+      "registryUrl": "",
+      "username": "",
+      "password": "",
+      "namespace": ""
+    },
+    "gitProvider": {
+      "provider": "none",
+      "installationUrl": "",
+      "webhookSecret": "",
+      "repositoryOwner": ""
+    },
+    "invitations": [],
+    "apiKeys": [],
+    "createdAt": {
+      "$date": "2026-04-10T04:56:11.816Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-10T04:56:12.086Z"
+    },
+    "__v": 1
+  },
+  {
+    "_id": {
+      "$oid": "6a212739dc1eef616abed424"
+    },
+    "name": "innoviberr",
+    "slug": "innoviberr",
+    "industry": "",
+    "workspaceType": "",
+    "plan": "free",
+    "limits": {
+      "maxProjects": 0,
+      "maxDeploysPerMonth": 0,
+      "maxMembers": 0,
+      "logRetentionDays": 30
+    },
+    "members": [
+      {
+        "userId": {
+          "$oid": "6a212739dc1eef616abed426"
+        },
+        "role": "owner",
+        "_id": {
+          "$oid": "6a212739dc1eef616abed428"
+        },
+        "joinedAt": {
+          "$date": "2026-06-04T07:20:25.427Z"
+        }
+      }
+    ],
+    "alertRules": {
+      "cpuThreshold": 90,
+      "memoryThreshold": 95,
+      "latencyThreshold": 2000,
+      "availabilityThreshold": 99,
+      "serviceDownFailures": 5,
+      "diskThreshold": 85,
+      "certExpiryDays": 14,
+      "emailNotifications": true,
+      "slackNotifications": false
+    },
+    "billingInfo": {
+      "contactEmail": "",
+      "companyAddress": "",
+      "taxId": ""
+    },
+    "notificationChannels": {
+      "emailEnabled": true,
+      "slackEnabled": true,
+      "discordEnabled": true,
+      "expoEnabled": false,
+      "webhookEnabled": false,
+      "slackWebhook": "https://hooks.slack.com/services/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",
+      "discordWebhook": "https://discord.com/api/webhooks/1492011132125450371/GPQ8FcwDMghLSDR3lt-NuuGEQYJIzGCNNbn-s0VXomnpnAjewidkyuDcWjrS3-t_7xVr",
+      "smtpHost": "smtp.gmail.com",
+      "smtpPort": 587,
+      "smtpUsername": "haroun20041@gmail.com",
+      "smtpPassword": "qedl pzxy nrhr pepe",
+      "smtpFromEmail": "noreply@innodeploy.com",
+      "emailRecipients": [],
+      "expoAccessToken": "",
+      "expoPushTokens": [],
+      "webhookUrl": "",
+      "webhookHeaders": {}
+    },
+    "dockerRegistry": {
+      "registryUrl": "",
+      "username": "",
+      "password": "",
+      "namespace": ""
+    },
+    "gitProvider": {
+      "provider": "none",
+      "installationUrl": "",
+      "webhookSecret": "",
+      "repositoryOwner": ""
+    },
+    "invitations": [],
+    "apiKeys": [],
+    "createdAt": {
+      "$date": "2026-06-04T07:20:25.155Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-04T07:20:25.429Z"
+    },
+    "__v": 1
+  },
+  {
+    "_id": {
+      "$oid": "6a2b4f4213a692187fa2a4c1"
+    },
+    "name": "DemoOrg",
+    "slug": "demoorg",
+    "industry": "",
+    "workspaceType": "",
+    "plan": "free",
+    "limits": {
+      "maxProjects": 0,
+      "maxDeploysPerMonth": 0,
+      "maxMembers": 0,
+      "logRetentionDays": 30
+    },
+    "members": [
+      {
+        "userId": {
+          "$oid": "6a2b4f4213a692187fa2a4c3"
+        },
+        "role": "owner",
+        "_id": {
+          "$oid": "6a2b4f4213a692187fa2a4c5"
+        },
+        "joinedAt": {
+          "$date": "2026-06-12T00:13:54.501Z"
+        }
+      }
+    ],
+    "alertRules": {
+      "cpuThreshold": 90,
+      "memoryThreshold": 95,
+      "latencyThreshold": 2000,
+      "availabilityThreshold": 99,
+      "serviceDownFailures": 5,
+      "diskThreshold": 85,
+      "certExpiryDays": 14,
+      "emailNotifications": true,
+      "slackNotifications": false
+    },
+    "billingInfo": {
+      "contactEmail": "",
+      "companyAddress": "",
+      "taxId": ""
+    },
+    "notificationChannels": {
+      "emailEnabled": true,
+      "slackEnabled": true,
+      "discordEnabled": true,
+      "expoEnabled": false,
+      "webhookEnabled": false,
+      "slackWebhook": "https://hooks.slack.com/services/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",
+      "discordWebhook": "https://discord.com/api/webhooks/1492011132125450371/GPQ8FcwDMghLSDR3lt-NuuGEQYJIzGCNNbn-s0VXomnpnAjewidkyuDcWjrS3-t_7xVr",
+      "smtpHost": "smtp.gmail.com",
+      "smtpPort": 587,
+      "smtpUsername": "haroun20041@gmail.com",
+      "smtpPassword": "qedl pzxy nrhr pepe",
+      "smtpFromEmail": "noreply@innodeploy.com",
+      "emailRecipients": [],
+      "expoAccessToken": "",
+      "expoPushTokens": [],
+      "webhookUrl": "",
+      "webhookHeaders": {}
+    },
+    "dockerRegistry": {
+      "registryUrl": "",
+      "username": "",
+      "password": "",
+      "namespace": ""
+    },
+    "gitProvider": {
+      "provider": "none",
+      "installationUrl": "",
+      "webhookSecret": "",
+      "repositoryOwner": ""
+    },
+    "invitations": [],
+    "apiKeys": [],
+    "createdAt": {
+      "$date": "2026-06-12T00:13:54.169Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-12T00:13:54.504Z"
+    },
+    "__v": 1
+  },
+  {
+    "_id": {
+      "$oid": "6a2c6b1c90842fe284841de6"
+    },
+    "name": "InnoDeploy Demo Workspace",
+    "slug": "innodeploy-demo",
+    "industry": "tech",
+    "workspaceType": "startup",
+    "plan": "pro",
+    "limits": {
+      "maxProjects": 0,
+      "maxDeploysPerMonth": 0,
+      "maxMembers": 0,
+      "logRetentionDays": 30
+    },
+    "members": [
+      {
+        "userId": {
+          "$oid": "6a2c6b1c90842fe284841dee"
+        },
+        "role": "owner",
+        "_id": {
+          "$oid": "6a2c6b1d90842fe284841df1"
+        },
+        "joinedAt": {
+          "$date": "2026-06-12T20:25:01.334Z"
+        }
+      },
+      {
+        "userId": {
+          "$oid": "6a2df240883006e9e1cde969"
+        },
+        "role": "admin",
+        "_id": {
+          "$oid": "6a2df240883006e9e1cde96b"
+        },
+        "joinedAt": {
+          "$date": "2026-06-14T00:13:52.684Z"
+        }
+      },
+      {
+        "userId": {
+          "$oid": "6a2df240883006e9e1cde96d"
+        },
+        "role": "developer",
+        "_id": {
+          "$oid": "6a2df240883006e9e1cde96f"
+        },
+        "joinedAt": {
+          "$date": "2026-06-14T00:13:52.935Z"
+        }
+      },
+      {
+        "userId": {
+          "$oid": "6a2df240883006e9e1cde971"
+        },
+        "role": "viewer",
+        "_id": {
+          "$oid": "6a2df241883006e9e1cde973"
+        },
+        "joinedAt": {
+          "$date": "2026-06-14T00:13:53.178Z"
+        }
+      },
+      {
+        "userId": {
+          "$oid": "6a2e036a82308dfe94999bd5"
+        },
+        "role": "owner",
+        "_id": {
+          "$oid": "6a2e036a82308dfe94999bd8"
+        },
+        "joinedAt": {
+          "$date": "2026-06-14T01:27:06.689Z"
+        }
+      }
+    ],
+    "alertRules": {
+      "cpuThreshold": 85,
+      "memoryThreshold": 90,
+      "latencyThreshold": 1500,
+      "availabilityThreshold": 99,
+      "serviceDownFailures": 3,
+      "diskThreshold": 80,
+      "certExpiryDays": 14,
+      "emailNotifications": true,
+      "slackNotifications": true
+    },
+    "billingInfo": {
+      "contactEmail": "billing@innodeploy.io",
+      "companyAddress": "123 Innovation Street, Tech City",
+      "taxId": "DZ-12345678"
+    },
+    "notificationChannels": {
+      "emailEnabled": true,
+      "slackEnabled": false,
+      "discordEnabled": false,
+      "expoEnabled": false,
+      "webhookEnabled": false,
+      "slackWebhook": "",
+      "discordWebhook": "",
+      "smtpHost": "",
+      "smtpPort": 587,
+      "smtpUsername": "",
+      "smtpPassword": "",
+      "smtpFromEmail": "",
+      "emailRecipients": [],
+      "expoAccessToken": "",
+      "expoPushTokens": [],
+      "webhookUrl": "",
+      "webhookHeaders": {}
+    },
+    "dockerRegistry": {
+      "registryUrl": "",
+      "username": "",
+      "password": "",
+      "namespace": ""
+    },
+    "gitProvider": {
+      "provider": "github",
+      "installationUrl": "https://github.com/apps/innodeploy",
+      "webhookSecret": "demo-webhook-secret",
+      "repositoryOwner": "innodeploy-demo"
+    },
+    "invitations": [],
+    "apiKeys": [],
+    "createdAt": {
+      "$date": "2026-06-12T20:25:00.742Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T01:27:07.798Z"
+    },
+    "__v": 3
+  },
+  {
+    "_id": {
+      "$oid": "6a2df61e7245fd4cba8c34bb"
+    },
+    "name": "e2e-org-1781397022817-lwvju4",
+    "slug": "e2e-org-1781397022817-lwvju4",
+    "industry": "",
+    "workspaceType": "",
+    "plan": "free",
+    "limits": {
+      "maxProjects": 0,
+      "maxDeploysPerMonth": 0,
+      "maxMembers": 0,
+      "logRetentionDays": 30
+    },
+    "members": [
+      {
+        "userId": {
+          "$oid": "6a2df61e7245fd4cba8c34bd"
+        },
+        "role": "owner",
+        "_id": {
+          "$oid": "6a2df61f7245fd4cba8c34cb"
+        },
+        "joinedAt": {
+          "$date": "2026-06-14T00:30:23.271Z"
+        }
+      }
+    ],
+    "alertRules": {
+      "cpuThreshold": 90,
+      "memoryThreshold": 95,
+      "latencyThreshold": 2000,
+      "availabilityThreshold": 99,
+      "serviceDownFailures": 5,
+      "diskThreshold": 85,
+      "certExpiryDays": 14,
+      "emailNotifications": true,
+      "slackNotifications": false
+    },
+    "billingInfo": {
+      "contactEmail": "",
+      "companyAddress": "",
+      "taxId": ""
+    },
+    "notificationChannels": {
+      "emailEnabled": true,
+      "slackEnabled": true,
+      "discordEnabled": true,
+      "expoEnabled": false,
+      "webhookEnabled": false,
+      "slackWebhook": "https://hooks.slack.com/services/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",
+      "discordWebhook": "https://discord.com/api/webhooks/1492011132125450371/GPQ8FcwDMghLSDR3lt-NuuGEQYJIzGCNNbn-s0VXomnpnAjewidkyuDcWjrS3-t_7xVr",
+      "smtpHost": "smtp.gmail.com",
+      "smtpPort": 587,
+      "smtpUsername": "haroun20041@gmail.com",
+      "smtpPassword": "qedl pzxy nrhr pepe",
+      "smtpFromEmail": "noreply@innodeploy.com",
+      "emailRecipients": [],
+      "expoAccessToken": "",
+      "expoPushTokens": [],
+      "webhookUrl": "",
+      "webhookHeaders": {}
+    },
+    "dockerRegistry": {
+      "registryUrl": "",
+      "username": "",
+      "password": "",
+      "namespace": ""
+    },
+    "gitProvider": {
+      "provider": "none",
+      "installationUrl": "",
+      "webhookSecret": "",
+      "repositoryOwner": ""
+    },
+    "invitations": [],
+    "apiKeys": [],
+    "createdAt": {
+      "$date": "2026-06-14T00:30:22.902Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T00:30:23.273Z"
+    },
+    "__v": 1
+  },
+  {
+    "_id": {
+      "$oid": "6a2df61e7245fd4cba8c34bf"
+    },
+    "name": "e2e-org-1781397022861-ioiwi4",
+    "slug": "e2e-org-1781397022861-ioiwi4",
+    "industry": "",
+    "workspaceType": "",
+    "plan": "free",
+    "limits": {
+      "maxProjects": 0,
+      "maxDeploysPerMonth": 0,
+      "maxMembers": 0,
+      "logRetentionDays": 30
+    },
+    "members": [
+      {
+        "userId": {
+          "$oid": "6a2df61e7245fd4cba8c34c1"
+        },
+        "role": "owner",
+        "_id": {
+          "$oid": "6a2df61f7245fd4cba8c34d1"
+        },
+        "joinedAt": {
+          "$date": "2026-06-14T00:30:23.327Z"
+        }
+      }
+    ],
+    "alertRules": {
+      "cpuThreshold": 90,
+      "memoryThreshold": 95,
+      "latencyThreshold": 2000,
+      "availabilityThreshold": 99,
+      "serviceDownFailures": 5,
+      "diskThreshold": 85,
+      "certExpiryDays": 14,
+      "emailNotifications": true,
+      "slackNotifications": false
+    },
+    "billingInfo": {
+      "contactEmail": "",
+      "companyAddress": "",
+      "taxId": ""
+    },
+    "notificationChannels": {
+      "emailEnabled": true,
+      "slackEnabled": true,
+      "discordEnabled": true,
+      "expoEnabled": false,
+      "webhookEnabled": false,
+      "slackWebhook": "https://hooks.slack.com/services/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",
+      "discordWebhook": "https://discord.com/api/webhooks/1492011132125450371/GPQ8FcwDMghLSDR3lt-NuuGEQYJIzGCNNbn-s0VXomnpnAjewidkyuDcWjrS3-t_7xVr",
+      "smtpHost": "smtp.gmail.com",
+      "smtpPort": 587,
+      "smtpUsername": "haroun20041@gmail.com",
+      "smtpPassword": "qedl pzxy nrhr pepe",
+      "smtpFromEmail": "noreply@innodeploy.com",
+      "emailRecipients": [],
+      "expoAccessToken": "",
+      "expoPushTokens": [],
+      "webhookUrl": "",
+      "webhookHeaders": {}
+    },
+    "dockerRegistry": {
+      "registryUrl": "",
+      "username": "",
+      "password": "",
+      "namespace": ""
+    },
+    "gitProvider": {
+      "provider": "none",
+      "installationUrl": "",
+      "webhookSecret": "",
+      "repositoryOwner": ""
+    },
+    "invitations": [],
+    "apiKeys": [],
+    "createdAt": {
+      "$date": "2026-06-14T00:30:22.930Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T00:30:23.329Z"
+    },
+    "__v": 1
+  },
+  {
+    "_id": {
+      "$oid": "6a2df61e7245fd4cba8c34c3"
+    },
+    "name": "e2e-org-1781397022844-ncmy4e",
+    "slug": "e2e-org-1781397022844-ncmy4e",
+    "industry": "",
+    "workspaceType": "",
+    "plan": "free",
+    "limits": {
+      "maxProjects": 0,
+      "maxDeploysPerMonth": 0,
+      "maxMembers": 0,
+      "logRetentionDays": 30
+    },
+    "members": [
+      {
+        "userId": {
+          "$oid": "6a2df61e7245fd4cba8c34c5"
+        },
+        "role": "owner",
+        "_id": {
+          "$oid": "6a2df61f7245fd4cba8c34cf"
+        },
+        "joinedAt": {
+          "$date": "2026-06-14T00:30:23.320Z"
+        }
+      }
+    ],
+    "alertRules": {
+      "cpuThreshold": 90,
+      "memoryThreshold": 95,
+      "latencyThreshold": 2000,
+      "availabilityThreshold": 99,
+      "serviceDownFailures": 5,
+      "diskThreshold": 85,
+      "certExpiryDays": 14,
+      "emailNotifications": true,
+      "slackNotifications": false
+    },
+    "billingInfo": {
+      "contactEmail": "",
+      "companyAddress": "",
+      "taxId": ""
+    },
+    "notificationChannels": {
+      "emailEnabled": true,
+      "slackEnabled": true,
+      "discordEnabled": true,
+      "expoEnabled": false,
+      "webhookEnabled": false,
+      "slackWebhook": "https://hooks.slack.com/services/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",
+      "discordWebhook": "https://discord.com/api/webhooks/1492011132125450371/GPQ8FcwDMghLSDR3lt-NuuGEQYJIzGCNNbn-s0VXomnpnAjewidkyuDcWjrS3-t_7xVr",
+      "smtpHost": "smtp.gmail.com",
+      "smtpPort": 587,
+      "smtpUsername": "haroun20041@gmail.com",
+      "smtpPassword": "qedl pzxy nrhr pepe",
+      "smtpFromEmail": "noreply@innodeploy.com",
+      "emailRecipients": [],
+      "expoAccessToken": "",
+      "expoPushTokens": [],
+      "webhookUrl": "",
+      "webhookHeaders": {}
+    },
+    "dockerRegistry": {
+      "registryUrl": "",
+      "username": "",
+      "password": "",
+      "namespace": ""
+    },
+    "gitProvider": {
+      "provider": "none",
+      "installationUrl": "",
+      "webhookSecret": "",
+      "repositoryOwner": ""
+    },
+    "invitations": [],
+    "apiKeys": [],
+    "createdAt": {
+      "$date": "2026-06-14T00:30:22.950Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T00:30:23.322Z"
+    },
+    "__v": 1
+  },
+  {
+    "_id": {
+      "$oid": "6a2df61e7245fd4cba8c34c7"
+    },
+    "name": "e2e-org-1781397022858-93iw9l",
+    "slug": "e2e-org-1781397022858-93iw9l",
+    "industry": "",
+    "workspaceType": "",
+    "plan": "free",
+    "limits": {
+      "maxProjects": 0,
+      "maxDeploysPerMonth": 0,
+      "maxMembers": 0,
+      "logRetentionDays": 30
+    },
+    "members": [
+      {
+        "userId": {
+          "$oid": "6a2df61e7245fd4cba8c34c9"
+        },
+        "role": "owner",
+        "_id": {
+          "$oid": "6a2df61f7245fd4cba8c34de"
+        },
+        "joinedAt": {
+          "$date": "2026-06-14T00:30:23.422Z"
+        }
+      }
+    ],
+    "alertRules": {
+      "cpuThreshold": 90,
+      "memoryThreshold": 95,
+      "latencyThreshold": 2000,
+      "availabilityThreshold": 99,
+      "serviceDownFailures": 5,
+      "diskThreshold": 85,
+      "certExpiryDays": 14,
+      "emailNotifications": true,
+      "slackNotifications": false
+    },
+    "billingInfo": {
+      "contactEmail": "",
+      "companyAddress": "",
+      "taxId": ""
+    },
+    "notificationChannels": {
+      "emailEnabled": true,
+      "slackEnabled": true,
+      "discordEnabled": true,
+      "expoEnabled": false,
+      "webhookEnabled": false,
+      "slackWebhook": "https://hooks.slack.com/services/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",
+      "discordWebhook": "https://discord.com/api/webhooks/1492011132125450371/GPQ8FcwDMghLSDR3lt-NuuGEQYJIzGCNNbn-s0VXomnpnAjewidkyuDcWjrS3-t_7xVr",
+      "smtpHost": "smtp.gmail.com",
+      "smtpPort": 587,
+      "smtpUsername": "haroun20041@gmail.com",
+      "smtpPassword": "qedl pzxy nrhr pepe",
+      "smtpFromEmail": "noreply@innodeploy.com",
+      "emailRecipients": [],
+      "expoAccessToken": "",
+      "expoPushTokens": [],
+      "webhookUrl": "",
+      "webhookHeaders": {}
+    },
+    "dockerRegistry": {
+      "registryUrl": "",
+      "username": "",
+      "password": "",
+      "namespace": ""
+    },
+    "gitProvider": {
+      "provider": "none",
+      "installationUrl": "",
+      "webhookSecret": "",
+      "repositoryOwner": ""
+    },
+    "invitations": [],
+    "apiKeys": [],
+    "createdAt": {
+      "$date": "2026-06-14T00:30:22.987Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T00:30:23.424Z"
+    },
+    "__v": 1
+  },
+  {
+    "_id": {
+      "$oid": "6a2df662ebfc391378bbd74e"
+    },
+    "name": "e2e-org-1781397090940-nqas9u",
+    "slug": "e2e-org-1781397090940-nqas9u",
+    "industry": "",
+    "workspaceType": "",
+    "plan": "free",
+    "limits": {
+      "maxProjects": 0,
+      "maxDeploysPerMonth": 0,
+      "maxMembers": 0,
+      "logRetentionDays": 30
+    },
+    "members": [
+      {
+        "userId": {
+          "$oid": "6a2df662ebfc391378bbd750"
+        },
+        "role": "owner",
+        "_id": {
+          "$oid": "6a2df663ebfc391378bbd752"
+        },
+        "joinedAt": {
+          "$date": "2026-06-14T00:31:31.236Z"
+        }
+      }
+    ],
+    "alertRules": {
+      "cpuThreshold": 90,
+      "memoryThreshold": 95,
+      "latencyThreshold": 2000,
+      "availabilityThreshold": 99,
+      "serviceDownFailures": 5,
+      "diskThreshold": 85,
+      "certExpiryDays": 14,
+      "emailNotifications": true,
+      "slackNotifications": false
+    },
+    "billingInfo": {
+      "contactEmail": "",
+      "companyAddress": "",
+      "taxId": ""
+    },
+    "notificationChannels": {
+      "emailEnabled": true,
+      "slackEnabled": true,
+      "discordEnabled": true,
+      "expoEnabled": false,
+      "webhookEnabled": false,
+      "slackWebhook": "https://hooks.slack.com/services/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",
+      "discordWebhook": "https://discord.com/api/webhooks/1492011132125450371/GPQ8FcwDMghLSDR3lt-NuuGEQYJIzGCNNbn-s0VXomnpnAjewidkyuDcWjrS3-t_7xVr",
+      "smtpHost": "smtp.gmail.com",
+      "smtpPort": 587,
+      "smtpUsername": "haroun20041@gmail.com",
+      "smtpPassword": "qedl pzxy nrhr pepe",
+      "smtpFromEmail": "noreply@innodeploy.com",
+      "emailRecipients": [],
+      "expoAccessToken": "",
+      "expoPushTokens": [],
+      "webhookUrl": "",
+      "webhookHeaders": {}
+    },
+    "dockerRegistry": {
+      "registryUrl": "",
+      "username": "",
+      "password": "",
+      "namespace": ""
+    },
+    "gitProvider": {
+      "provider": "none",
+      "installationUrl": "",
+      "webhookSecret": "",
+      "repositoryOwner": ""
+    },
+    "invitations": [],
+    "apiKeys": [],
+    "createdAt": {
+      "$date": "2026-06-14T00:31:30.986Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T00:31:31.237Z"
+    },
+    "__v": 1
+  },
+  {
+    "_id": {
+      "$oid": "6a2df68676fa87dec46c126b"
+    },
+    "name": "e2e-org-1781397126527-pv0oiq",
+    "slug": "e2e-org-1781397126527-pv0oiq",
+    "industry": "",
+    "workspaceType": "",
+    "plan": "free",
+    "limits": {
+      "maxProjects": 0,
+      "maxDeploysPerMonth": 0,
+      "maxMembers": 0,
+      "logRetentionDays": 30
+    },
+    "members": [
+      {
+        "userId": {
+          "$oid": "6a2df68676fa87dec46c126d"
+        },
+        "role": "owner",
+        "_id": {
+          "$oid": "6a2df68676fa87dec46c127b"
+        },
+        "joinedAt": {
+          "$date": "2026-06-14T00:32:06.972Z"
+        }
+      }
+    ],
+    "alertRules": {
+      "cpuThreshold": 90,
+      "memoryThreshold": 95,
+      "latencyThreshold": 2000,
+      "availabilityThreshold": 99,
+      "serviceDownFailures": 5,
+      "diskThreshold": 85,
+      "certExpiryDays": 14,
+      "emailNotifications": true,
+      "slackNotifications": false
+    },
+    "billingInfo": {
+      "contactEmail": "",
+      "companyAddress": "",
+      "taxId": ""
+    },
+    "notificationChannels": {
+      "emailEnabled": true,
+      "slackEnabled": true,
+      "discordEnabled": true,
+      "expoEnabled": false,
+      "webhookEnabled": false,
+      "slackWebhook": "https://hooks.slack.com/services/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",
+      "discordWebhook": "https://discord.com/api/webhooks/1492011132125450371/GPQ8FcwDMghLSDR3lt-NuuGEQYJIzGCNNbn-s0VXomnpnAjewidkyuDcWjrS3-t_7xVr",
+      "smtpHost": "smtp.gmail.com",
+      "smtpPort": 587,
+      "smtpUsername": "haroun20041@gmail.com",
+      "smtpPassword": "qedl pzxy nrhr pepe",
+      "smtpFromEmail": "noreply@innodeploy.com",
+      "emailRecipients": [],
+      "expoAccessToken": "",
+      "expoPushTokens": [],
+      "webhookUrl": "",
+      "webhookHeaders": {}
+    },
+    "dockerRegistry": {
+      "registryUrl": "",
+      "username": "",
+      "password": "",
+      "namespace": ""
+    },
+    "gitProvider": {
+      "provider": "none",
+      "installationUrl": "",
+      "webhookSecret": "",
+      "repositoryOwner": ""
+    },
+    "invitations": [],
+    "apiKeys": [],
+    "createdAt": {
+      "$date": "2026-06-14T00:32:06.660Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T00:32:06.974Z"
+    },
+    "__v": 1
+  },
+  {
+    "_id": {
+      "$oid": "6a2df68676fa87dec46c126f"
+    },
+    "name": "e2e-org-1781397126599-lwkfod",
+    "slug": "e2e-org-1781397126599-lwkfod",
+    "industry": "",
+    "workspaceType": "",
+    "plan": "free",
+    "limits": {
+      "maxProjects": 0,
+      "maxDeploysPerMonth": 0,
+      "maxMembers": 0,
+      "logRetentionDays": 30
+    },
+    "members": [
+      {
+        "userId": {
+          "$oid": "6a2df68676fa87dec46c1271"
+        },
+        "role": "owner",
+        "_id": {
+          "$oid": "6a2df68776fa87dec46c1288"
+        },
+        "joinedAt": {
+          "$date": "2026-06-14T00:32:07.057Z"
+        }
+      }
+    ],
+    "alertRules": {
+      "cpuThreshold": 90,
+      "memoryThreshold": 95,
+      "latencyThreshold": 2000,
+      "availabilityThreshold": 99,
+      "serviceDownFailures": 5,
+      "diskThreshold": 85,
+      "certExpiryDays": 14,
+      "emailNotifications": true,
+      "slackNotifications": false
+    },
+    "billingInfo": {
+      "contactEmail": "",
+      "companyAddress": "",
+      "taxId": ""
+    },
+    "notificationChannels": {
+      "emailEnabled": true,
+      "slackEnabled": true,
+      "discordEnabled": true,
+      "expoEnabled": false,
+      "webhookEnabled": false,
+      "slackWebhook": "https://hooks.slack.com/services/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",
+      "discordWebhook": "https://discord.com/api/webhooks/1492011132125450371/GPQ8FcwDMghLSDR3lt-NuuGEQYJIzGCNNbn-s0VXomnpnAjewidkyuDcWjrS3-t_7xVr",
+      "smtpHost": "smtp.gmail.com",
+      "smtpPort": 587,
+      "smtpUsername": "haroun20041@gmail.com",
+      "smtpPassword": "qedl pzxy nrhr pepe",
+      "smtpFromEmail": "noreply@innodeploy.com",
+      "emailRecipients": [],
+      "expoAccessToken": "",
+      "expoPushTokens": [],
+      "webhookUrl": "",
+      "webhookHeaders": {}
+    },
+    "dockerRegistry": {
+      "registryUrl": "",
+      "username": "",
+      "password": "",
+      "namespace": ""
+    },
+    "gitProvider": {
+      "provider": "none",
+      "installationUrl": "",
+      "webhookSecret": "",
+      "repositoryOwner": ""
+    },
+    "invitations": [],
+    "apiKeys": [],
+    "createdAt": {
+      "$date": "2026-06-14T00:32:06.684Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T00:32:07.058Z"
+    },
+    "__v": 1
+  },
+  {
+    "_id": {
+      "$oid": "6a2df68676fa87dec46c1273"
+    },
+    "name": "e2e-org-1781397126801-z3glv4",
+    "slug": "e2e-org-1781397126801-z3glv4",
+    "industry": "",
+    "workspaceType": "",
+    "plan": "free",
+    "limits": {
+      "maxProjects": 0,
+      "maxDeploysPerMonth": 0,
+      "maxMembers": 0,
+      "logRetentionDays": 30
+    },
+    "members": [
+      {
+        "userId": {
+          "$oid": "6a2df68676fa87dec46c1276"
+        },
+        "role": "owner",
+        "_id": {
+          "$oid": "6a2df68776fa87dec46c128b"
+        },
+        "joinedAt": {
+          "$date": "2026-06-14T00:32:07.187Z"
+        }
+      }
+    ],
+    "alertRules": {
+      "cpuThreshold": 90,
+      "memoryThreshold": 95,
+      "latencyThreshold": 2000,
+      "availabilityThreshold": 99,
+      "serviceDownFailures": 5,
+      "diskThreshold": 85,
+      "certExpiryDays": 14,
+      "emailNotifications": true,
+      "slackNotifications": false
+    },
+    "billingInfo": {
+      "contactEmail": "",
+      "companyAddress": "",
+      "taxId": ""
+    },
+    "notificationChannels": {
+      "emailEnabled": true,
+      "slackEnabled": true,
+      "discordEnabled": true,
+      "expoEnabled": false,
+      "webhookEnabled": false,
+      "slackWebhook": "https://hooks.slack.com/services/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",
+      "discordWebhook": "https://discord.com/api/webhooks/1492011132125450371/GPQ8FcwDMghLSDR3lt-NuuGEQYJIzGCNNbn-s0VXomnpnAjewidkyuDcWjrS3-t_7xVr",
+      "smtpHost": "smtp.gmail.com",
+      "smtpPort": 587,
+      "smtpUsername": "haroun20041@gmail.com",
+      "smtpPassword": "qedl pzxy nrhr pepe",
+      "smtpFromEmail": "noreply@innodeploy.com",
+      "emailRecipients": [],
+      "expoAccessToken": "",
+      "expoPushTokens": [],
+      "webhookUrl": "",
+      "webhookHeaders": {}
+    },
+    "dockerRegistry": {
+      "registryUrl": "",
+      "username": "",
+      "password": "",
+      "namespace": ""
+    },
+    "gitProvider": {
+      "provider": "none",
+      "installationUrl": "",
+      "webhookSecret": "",
+      "repositoryOwner": ""
+    },
+    "invitations": [],
+    "apiKeys": [],
+    "createdAt": {
+      "$date": "2026-06-14T00:32:06.844Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T00:32:07.188Z"
+    },
+    "__v": 1
+  },
+  {
+    "_id": {
+      "$oid": "6a2df68676fa87dec46c1277"
+    },
+    "name": "e2e-org-1781397126810-17ymqs",
+    "slug": "e2e-org-1781397126810-17ymqs",
+    "industry": "",
+    "workspaceType": "",
+    "plan": "free",
+    "limits": {
+      "maxProjects": 0,
+      "maxDeploysPerMonth": 0,
+      "maxMembers": 0,
+      "logRetentionDays": 30
+    },
+    "members": [
+      {
+        "userId": {
+          "$oid": "6a2df68676fa87dec46c1279"
+        },
+        "role": "owner",
+        "_id": {
+          "$oid": "6a2df68776fa87dec46c128e"
+        },
+        "joinedAt": {
+          "$date": "2026-06-14T00:32:07.245Z"
+        }
+      }
+    ],
+    "alertRules": {
+      "cpuThreshold": 90,
+      "memoryThreshold": 95,
+      "latencyThreshold": 2000,
+      "availabilityThreshold": 99,
+      "serviceDownFailures": 5,
+      "diskThreshold": 85,
+      "certExpiryDays": 14,
+      "emailNotifications": true,
+      "slackNotifications": false
+    },
+    "billingInfo": {
+      "contactEmail": "",
+      "companyAddress": "",
+      "taxId": ""
+    },
+    "notificationChannels": {
+      "emailEnabled": true,
+      "slackEnabled": true,
+      "discordEnabled": true,
+      "expoEnabled": false,
+      "webhookEnabled": false,
+      "slackWebhook": "https://hooks.slack.com/services/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",
+      "discordWebhook": "https://discord.com/api/webhooks/1492011132125450371/GPQ8FcwDMghLSDR3lt-NuuGEQYJIzGCNNbn-s0VXomnpnAjewidkyuDcWjrS3-t_7xVr",
+      "smtpHost": "smtp.gmail.com",
+      "smtpPort": 587,
+      "smtpUsername": "haroun20041@gmail.com",
+      "smtpPassword": "qedl pzxy nrhr pepe",
+      "smtpFromEmail": "noreply@innodeploy.com",
+      "emailRecipients": [],
+      "expoAccessToken": "",
+      "expoPushTokens": [],
+      "webhookUrl": "",
+      "webhookHeaders": {}
+    },
+    "dockerRegistry": {
+      "registryUrl": "",
+      "username": "",
+      "password": "",
+      "namespace": ""
+    },
+    "gitProvider": {
+      "provider": "none",
+      "installationUrl": "",
+      "webhookSecret": "",
+      "repositoryOwner": ""
+    },
+    "invitations": [],
+    "apiKeys": [],
+    "createdAt": {
+      "$date": "2026-06-14T00:32:06.860Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T00:32:07.247Z"
+    },
+    "__v": 1
+  },
+  {
+    "_id": {
+      "$oid": "6a2df6e79335aeb2c2b26694"
+    },
+    "name": "e2e-org-1781397223678-666h83",
+    "slug": "e2e-org-1781397223678-666h83",
+    "industry": "",
+    "workspaceType": "",
+    "plan": "free",
+    "limits": {
+      "maxProjects": 0,
+      "maxDeploysPerMonth": 0,
+      "maxMembers": 0,
+      "logRetentionDays": 30
+    },
+    "members": [
+      {
+        "userId": {
+          "$oid": "6a2df6e79335aeb2c2b26696"
+        },
+        "role": "owner",
+        "_id": {
+          "$oid": "6a2df6e89335aeb2c2b266a4"
+        },
+        "joinedAt": {
+          "$date": "2026-06-14T00:33:44.148Z"
+        }
+      }
+    ],
+    "alertRules": {
+      "cpuThreshold": 90,
+      "memoryThreshold": 95,
+      "latencyThreshold": 2000,
+      "availabilityThreshold": 99,
+      "serviceDownFailures": 5,
+      "diskThreshold": 85,
+      "certExpiryDays": 14,
+      "emailNotifications": true,
+      "slackNotifications": false
+    },
+    "billingInfo": {
+      "contactEmail": "",
+      "companyAddress": "",
+      "taxId": ""
+    },
+    "notificationChannels": {
+      "emailEnabled": true,
+      "slackEnabled": true,
+      "discordEnabled": true,
+      "expoEnabled": false,
+      "webhookEnabled": false,
+      "slackWebhook": "https://hooks.slack.com/services/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",
+      "discordWebhook": "https://discord.com/api/webhooks/1492011132125450371/GPQ8FcwDMghLSDR3lt-NuuGEQYJIzGCNNbn-s0VXomnpnAjewidkyuDcWjrS3-t_7xVr",
+      "smtpHost": "smtp.gmail.com",
+      "smtpPort": 587,
+      "smtpUsername": "haroun20041@gmail.com",
+      "smtpPassword": "qedl pzxy nrhr pepe",
+      "smtpFromEmail": "noreply@innodeploy.com",
+      "emailRecipients": [],
+      "expoAccessToken": "",
+      "expoPushTokens": [],
+      "webhookUrl": "",
+      "webhookHeaders": {}
+    },
+    "dockerRegistry": {
+      "registryUrl": "",
+      "username": "",
+      "password": "",
+      "namespace": ""
+    },
+    "gitProvider": {
+      "provider": "none",
+      "installationUrl": "",
+      "webhookSecret": "",
+      "repositoryOwner": ""
+    },
+    "invitations": [],
+    "apiKeys": [],
+    "createdAt": {
+      "$date": "2026-06-14T00:33:43.775Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T00:33:44.150Z"
+    },
+    "__v": 1
+  },
+  {
+    "_id": {
+      "$oid": "6a2df6e89335aeb2c2b26698"
+    },
+    "name": "e2e-org-1781397224016-j3pn5a",
+    "slug": "e2e-org-1781397224016-j3pn5a",
+    "industry": "",
+    "workspaceType": "",
+    "plan": "free",
+    "limits": {
+      "maxProjects": 0,
+      "maxDeploysPerMonth": 0,
+      "maxMembers": 0,
+      "logRetentionDays": 30
+    },
+    "members": [
+      {
+        "userId": {
+          "$oid": "6a2df6e89335aeb2c2b2669c"
+        },
+        "role": "owner",
+        "_id": {
+          "$oid": "6a2df6e89335aeb2c2b266ab"
+        },
+        "joinedAt": {
+          "$date": "2026-06-14T00:33:44.402Z"
+        }
+      }
+    ],
+    "alertRules": {
+      "cpuThreshold": 90,
+      "memoryThreshold": 95,
+      "latencyThreshold": 2000,
+      "availabilityThreshold": 99,
+      "serviceDownFailures": 5,
+      "diskThreshold": 85,
+      "certExpiryDays": 14,
+      "emailNotifications": true,
+      "slackNotifications": false
+    },
+    "billingInfo": {
+      "contactEmail": "",
+      "companyAddress": "",
+      "taxId": ""
+    },
+    "notificationChannels": {
+      "emailEnabled": true,
+      "slackEnabled": true,
+      "discordEnabled": true,
+      "expoEnabled": false,
+      "webhookEnabled": false,
+      "slackWebhook": "https://hooks.slack.com/services/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",
+      "discordWebhook": "https://discord.com/api/webhooks/1492011132125450371/GPQ8FcwDMghLSDR3lt-NuuGEQYJIzGCNNbn-s0VXomnpnAjewidkyuDcWjrS3-t_7xVr",
+      "smtpHost": "smtp.gmail.com",
+      "smtpPort": 587,
+      "smtpUsername": "haroun20041@gmail.com",
+      "smtpPassword": "qedl pzxy nrhr pepe",
+      "smtpFromEmail": "noreply@innodeploy.com",
+      "emailRecipients": [],
+      "expoAccessToken": "",
+      "expoPushTokens": [],
+      "webhookUrl": "",
+      "webhookHeaders": {}
+    },
+    "dockerRegistry": {
+      "registryUrl": "",
+      "username": "",
+      "password": "",
+      "namespace": ""
+    },
+    "gitProvider": {
+      "provider": "none",
+      "installationUrl": "",
+      "webhookSecret": "",
+      "repositoryOwner": ""
+    },
+    "invitations": [],
+    "apiKeys": [],
+    "createdAt": {
+      "$date": "2026-06-14T00:33:44.096Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T00:33:44.402Z"
+    },
+    "__v": 1
+  },
+  {
+    "_id": {
+      "$oid": "6a2df6e89335aeb2c2b2669d"
+    },
+    "name": "e2e-org-1781397224056-vva3ky",
+    "slug": "e2e-org-1781397224056-vva3ky",
+    "industry": "",
+    "workspaceType": "",
+    "plan": "free",
+    "limits": {
+      "maxProjects": 0,
+      "maxDeploysPerMonth": 0,
+      "maxMembers": 0,
+      "logRetentionDays": 30
+    },
+    "members": [
+      {
+        "userId": {
+          "$oid": "6a2df6e89335aeb2c2b266a1"
+        },
+        "role": "owner",
+        "_id": {
+          "$oid": "6a2df6e89335aeb2c2b266a8"
+        },
+        "joinedAt": {
+          "$date": "2026-06-14T00:33:44.397Z"
+        }
+      }
+    ],
+    "alertRules": {
+      "cpuThreshold": 90,
+      "memoryThreshold": 95,
+      "latencyThreshold": 2000,
+      "availabilityThreshold": 99,
+      "serviceDownFailures": 5,
+      "diskThreshold": 85,
+      "certExpiryDays": 14,
+      "emailNotifications": true,
+      "slackNotifications": false
+    },
+    "billingInfo": {
+      "contactEmail": "",
+      "companyAddress": "",
+      "taxId": ""
+    },
+    "notificationChannels": {
+      "emailEnabled": true,
+      "slackEnabled": true,
+      "discordEnabled": true,
+      "expoEnabled": false,
+      "webhookEnabled": false,
+      "slackWebhook": "https://hooks.slack.com/services/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",
+      "discordWebhook": "https://discord.com/api/webhooks/1492011132125450371/GPQ8FcwDMghLSDR3lt-NuuGEQYJIzGCNNbn-s0VXomnpnAjewidkyuDcWjrS3-t_7xVr",
+      "smtpHost": "smtp.gmail.com",
+      "smtpPort": 587,
+      "smtpUsername": "haroun20041@gmail.com",
+      "smtpPassword": "qedl pzxy nrhr pepe",
+      "smtpFromEmail": "noreply@innodeploy.com",
+      "emailRecipients": [],
+      "expoAccessToken": "",
+      "expoPushTokens": [],
+      "webhookUrl": "",
+      "webhookHeaders": {}
+    },
+    "dockerRegistry": {
+      "registryUrl": "",
+      "username": "",
+      "password": "",
+      "namespace": ""
+    },
+    "gitProvider": {
+      "provider": "none",
+      "installationUrl": "",
+      "webhookSecret": "",
+      "repositoryOwner": ""
+    },
+    "invitations": [],
+    "apiKeys": [],
+    "createdAt": {
+      "$date": "2026-06-14T00:33:44.112Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T00:33:44.398Z"
+    },
+    "__v": 1
+  },
+  {
+    "_id": {
+      "$oid": "6a2df6e89335aeb2c2b2669f"
+    },
+    "name": "e2e-org-1781397224056-bqhwlt",
+    "slug": "e2e-org-1781397224056-bqhwlt",
+    "industry": "",
+    "workspaceType": "",
+    "plan": "free",
+    "limits": {
+      "maxProjects": 0,
+      "maxDeploysPerMonth": 0,
+      "maxMembers": 0,
+      "logRetentionDays": 30
+    },
+    "members": [
+      {
+        "userId": {
+          "$oid": "6a2df6e89335aeb2c2b266a2"
+        },
+        "role": "owner",
+        "_id": {
+          "$oid": "6a2df6e89335aeb2c2b266ad"
+        },
+        "joinedAt": {
+          "$date": "2026-06-14T00:33:44.406Z"
+        }
+      }
+    ],
+    "alertRules": {
+      "cpuThreshold": 90,
+      "memoryThreshold": 95,
+      "latencyThreshold": 2000,
+      "availabilityThreshold": 99,
+      "serviceDownFailures": 5,
+      "diskThreshold": 85,
+      "certExpiryDays": 14,
+      "emailNotifications": true,
+      "slackNotifications": false
+    },
+    "billingInfo": {
+      "contactEmail": "",
+      "companyAddress": "",
+      "taxId": ""
+    },
+    "notificationChannels": {
+      "emailEnabled": true,
+      "slackEnabled": true,
+      "discordEnabled": true,
+      "expoEnabled": false,
+      "webhookEnabled": false,
+      "slackWebhook": "https://hooks.slack.com/services/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",
+      "discordWebhook": "https://discord.com/api/webhooks/1492011132125450371/GPQ8FcwDMghLSDR3lt-NuuGEQYJIzGCNNbn-s0VXomnpnAjewidkyuDcWjrS3-t_7xVr",
+      "smtpHost": "smtp.gmail.com",
+      "smtpPort": 587,
+      "smtpUsername": "haroun20041@gmail.com",
+      "smtpPassword": "qedl pzxy nrhr pepe",
+      "smtpFromEmail": "noreply@innodeploy.com",
+      "emailRecipients": [],
+      "expoAccessToken": "",
+      "expoPushTokens": [],
+      "webhookUrl": "",
+      "webhookHeaders": {}
+    },
+    "dockerRegistry": {
+      "registryUrl": "",
+      "username": "",
+      "password": "",
+      "namespace": ""
+    },
+    "gitProvider": {
+      "provider": "none",
+      "installationUrl": "",
+      "webhookSecret": "",
+      "repositoryOwner": ""
+    },
+    "invitations": [],
+    "apiKeys": [],
+    "createdAt": {
+      "$date": "2026-06-14T00:33:44.119Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T00:33:44.407Z"
+    },
+    "__v": 1
+  },
+  {
+    "_id": {
+      "$oid": "6a2df6f29335aeb2c2b266e2"
+    },
+    "name": "pw-org-1781397223892-k0eevq",
+    "slug": "pw-org-1781397223892-k0eevq",
+    "industry": "",
+    "workspaceType": "",
+    "plan": "free",
+    "limits": {
+      "maxProjects": 0,
+      "maxDeploysPerMonth": 0,
+      "maxMembers": 0,
+      "logRetentionDays": 30
+    },
+    "members": [
+      {
+        "userId": {
+          "$oid": "6a2df6f29335aeb2c2b266e4"
+        },
+        "role": "owner",
+        "_id": {
+          "$oid": "6a2df6f69335aeb2c2b266e7"
+        },
+        "joinedAt": {
+          "$date": "2026-06-14T00:33:58.066Z"
+        }
+      }
+    ],
+    "alertRules": {
+      "cpuThreshold": 90,
+      "memoryThreshold": 95,
+      "latencyThreshold": 2000,
+      "availabilityThreshold": 99,
+      "serviceDownFailures": 5,
+      "diskThreshold": 85,
+      "certExpiryDays": 14,
+      "emailNotifications": true,
+      "slackNotifications": false
+    },
+    "billingInfo": {
+      "contactEmail": "",
+      "companyAddress": "",
+      "taxId": ""
+    },
+    "notificationChannels": {
+      "emailEnabled": true,
+      "slackEnabled": true,
+      "discordEnabled": true,
+      "expoEnabled": false,
+      "webhookEnabled": false,
+      "slackWebhook": "https://hooks.slack.com/services/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",
+      "discordWebhook": "https://discord.com/api/webhooks/1492011132125450371/GPQ8FcwDMghLSDR3lt-NuuGEQYJIzGCNNbn-s0VXomnpnAjewidkyuDcWjrS3-t_7xVr",
+      "smtpHost": "smtp.gmail.com",
+      "smtpPort": 587,
+      "smtpUsername": "haroun20041@gmail.com",
+      "smtpPassword": "qedl pzxy nrhr pepe",
+      "smtpFromEmail": "noreply@innodeploy.com",
+      "emailRecipients": [],
+      "expoAccessToken": "",
+      "expoPushTokens": [],
+      "webhookUrl": "",
+      "webhookHeaders": {}
+    },
+    "dockerRegistry": {
+      "registryUrl": "",
+      "username": "",
+      "password": "",
+      "namespace": ""
+    },
+    "gitProvider": {
+      "provider": "none",
+      "installationUrl": "",
+      "webhookSecret": "",
+      "repositoryOwner": ""
+    },
+    "invitations": [],
+    "apiKeys": [],
+    "createdAt": {
+      "$date": "2026-06-14T00:33:54.534Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T00:33:58.080Z"
+    },
+    "__v": 1
+  },
+  {
+    "_id": {
+      "$oid": "6a2df7b24f3de3dc936c241f"
+    },
+    "name": "pw-org-1781397424376-p0xdab",
+    "slug": "pw-org-1781397424376-p0xdab",
+    "industry": "",
+    "workspaceType": "",
+    "plan": "free",
+    "limits": {
+      "maxProjects": 0,
+      "maxDeploysPerMonth": 0,
+      "maxMembers": 0,
+      "logRetentionDays": 30
+    },
+    "members": [
+      {
+        "userId": {
+          "$oid": "6a2df7b24f3de3dc936c2421"
+        },
+        "role": "owner",
+        "_id": {
+          "$oid": "6a2df7b24f3de3dc936c2423"
+        },
+        "joinedAt": {
+          "$date": "2026-06-14T00:37:06.346Z"
+        }
+      }
+    ],
+    "alertRules": {
+      "cpuThreshold": 90,
+      "memoryThreshold": 95,
+      "latencyThreshold": 2000,
+      "availabilityThreshold": 99,
+      "serviceDownFailures": 5,
+      "diskThreshold": 85,
+      "certExpiryDays": 14,
+      "emailNotifications": true,
+      "slackNotifications": false
+    },
+    "billingInfo": {
+      "contactEmail": "",
+      "companyAddress": "",
+      "taxId": ""
+    },
+    "notificationChannels": {
+      "emailEnabled": true,
+      "slackEnabled": true,
+      "discordEnabled": true,
+      "expoEnabled": false,
+      "webhookEnabled": false,
+      "slackWebhook": "https://hooks.slack.com/services/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",
+      "discordWebhook": "https://discord.com/api/webhooks/1492011132125450371/GPQ8FcwDMghLSDR3lt-NuuGEQYJIzGCNNbn-s0VXomnpnAjewidkyuDcWjrS3-t_7xVr",
+      "smtpHost": "smtp.gmail.com",
+      "smtpPort": 587,
+      "smtpUsername": "haroun20041@gmail.com",
+      "smtpPassword": "qedl pzxy nrhr pepe",
+      "smtpFromEmail": "noreply@innodeploy.com",
+      "emailRecipients": [],
+      "expoAccessToken": "",
+      "expoPushTokens": [],
+      "webhookUrl": "",
+      "webhookHeaders": {}
+    },
+    "dockerRegistry": {
+      "registryUrl": "",
+      "username": "",
+      "password": "",
+      "namespace": ""
+    },
+    "gitProvider": {
+      "provider": "none",
+      "installationUrl": "",
+      "webhookSecret": "",
+      "repositoryOwner": ""
+    },
+    "invitations": [],
+    "apiKeys": [],
+    "createdAt": {
+      "$date": "2026-06-14T00:37:06.077Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T00:37:06.347Z"
+    },
+    "__v": 1
+  },
+  {
+    "_id": {
+      "$oid": "6a2df7dbd2a3f4395cec8dd9"
+    },
+    "name": "pw-org-1781397465951-d84j4h",
+    "slug": "pw-org-1781397465951-d84j4h",
+    "industry": "",
+    "workspaceType": "",
+    "plan": "free",
+    "limits": {
+      "maxProjects": 0,
+      "maxDeploysPerMonth": 0,
+      "maxMembers": 0,
+      "logRetentionDays": 30
+    },
+    "members": [
+      {
+        "userId": {
+          "$oid": "6a2df7dbd2a3f4395cec8ddb"
+        },
+        "role": "owner",
+        "_id": {
+          "$oid": "6a2df7dbd2a3f4395cec8ddd"
+        },
+        "joinedAt": {
+          "$date": "2026-06-14T00:37:47.782Z"
+        }
+      }
+    ],
+    "alertRules": {
+      "cpuThreshold": 90,
+      "memoryThreshold": 95,
+      "latencyThreshold": 2000,
+      "availabilityThreshold": 99,
+      "serviceDownFailures": 5,
+      "diskThreshold": 85,
+      "certExpiryDays": 14,
+      "emailNotifications": true,
+      "slackNotifications": false
+    },
+    "billingInfo": {
+      "contactEmail": "",
+      "companyAddress": "",
+      "taxId": ""
+    },
+    "notificationChannels": {
+      "emailEnabled": true,
+      "slackEnabled": true,
+      "discordEnabled": true,
+      "expoEnabled": false,
+      "webhookEnabled": false,
+      "slackWebhook": "https://hooks.slack.com/services/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",
+      "discordWebhook": "https://discord.com/api/webhooks/1492011132125450371/GPQ8FcwDMghLSDR3lt-NuuGEQYJIzGCNNbn-s0VXomnpnAjewidkyuDcWjrS3-t_7xVr",
+      "smtpHost": "smtp.gmail.com",
+      "smtpPort": 587,
+      "smtpUsername": "haroun20041@gmail.com",
+      "smtpPassword": "qedl pzxy nrhr pepe",
+      "smtpFromEmail": "noreply@innodeploy.com",
+      "emailRecipients": [],
+      "expoAccessToken": "",
+      "expoPushTokens": [],
+      "webhookUrl": "",
+      "webhookHeaders": {}
+    },
+    "dockerRegistry": {
+      "registryUrl": "",
+      "username": "",
+      "password": "",
+      "namespace": ""
+    },
+    "gitProvider": {
+      "provider": "none",
+      "installationUrl": "",
+      "webhookSecret": "",
+      "repositoryOwner": ""
+    },
+    "invitations": [],
+    "apiKeys": [],
+    "createdAt": {
+      "$date": "2026-06-14T00:37:47.531Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T00:37:47.784Z"
+    },
+    "__v": 1
+  },
+  {
+    "_id": {
+      "$oid": "6a2df7f27d4b4794d0f86698"
+    },
+    "name": "e2e-org-1781397490411-q7cv3e",
+    "slug": "e2e-org-1781397490411-q7cv3e",
+    "industry": "",
+    "workspaceType": "",
+    "plan": "free",
+    "limits": {
+      "maxProjects": 0,
+      "maxDeploysPerMonth": 0,
+      "maxMembers": 0,
+      "logRetentionDays": 30
+    },
+    "members": [
+      {
+        "userId": {
+          "$oid": "6a2df7f27d4b4794d0f8669a"
+        },
+        "role": "owner",
+        "_id": {
+          "$oid": "6a2df7f27d4b4794d0f8669c"
+        },
+        "joinedAt": {
+          "$date": "2026-06-14T00:38:10.835Z"
+        }
+      }
+    ],
+    "alertRules": {
+      "cpuThreshold": 90,
+      "memoryThreshold": 95,
+      "latencyThreshold": 2000,
+      "availabilityThreshold": 99,
+      "serviceDownFailures": 5,
+      "diskThreshold": 85,
+      "certExpiryDays": 14,
+      "emailNotifications": true,
+      "slackNotifications": false
+    },
+    "billingInfo": {
+      "contactEmail": "",
+      "companyAddress": "",
+      "taxId": ""
+    },
+    "notificationChannels": {
+      "emailEnabled": true,
+      "slackEnabled": true,
+      "discordEnabled": true,
+      "expoEnabled": false,
+      "webhookEnabled": false,
+      "slackWebhook": "https://hooks.slack.com/services/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",
+      "discordWebhook": "https://discord.com/api/webhooks/1492011132125450371/GPQ8FcwDMghLSDR3lt-NuuGEQYJIzGCNNbn-s0VXomnpnAjewidkyuDcWjrS3-t_7xVr",
+      "smtpHost": "smtp.gmail.com",
+      "smtpPort": 587,
+      "smtpUsername": "haroun20041@gmail.com",
+      "smtpPassword": "qedl pzxy nrhr pepe",
+      "smtpFromEmail": "noreply@innodeploy.com",
+      "emailRecipients": [],
+      "expoAccessToken": "",
+      "expoPushTokens": [],
+      "webhookUrl": "",
+      "webhookHeaders": {}
+    },
+    "dockerRegistry": {
+      "registryUrl": "",
+      "username": "",
+      "password": "",
+      "namespace": ""
+    },
+    "gitProvider": {
+      "provider": "none",
+      "installationUrl": "",
+      "webhookSecret": "",
+      "repositoryOwner": ""
+    },
+    "invitations": [],
+    "apiKeys": [],
+    "createdAt": {
+      "$date": "2026-06-14T00:38:10.467Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T00:38:10.836Z"
+    },
+    "__v": 1
+  },
+  {
+    "_id": {
+      "$oid": "6a2df8193bfeb008c7ac8b73"
+    },
+    "name": "e2e-org-1781397529817-53gxww",
+    "slug": "e2e-org-1781397529817-53gxww",
+    "industry": "",
+    "workspaceType": "",
+    "plan": "free",
+    "limits": {
+      "maxProjects": 0,
+      "maxDeploysPerMonth": 0,
+      "maxMembers": 0,
+      "logRetentionDays": 30
+    },
+    "members": [
+      {
+        "userId": {
+          "$oid": "6a2df8193bfeb008c7ac8b75"
+        },
+        "role": "owner",
+        "_id": {
+          "$oid": "6a2df81a3bfeb008c7ac8b77"
+        },
+        "joinedAt": {
+          "$date": "2026-06-14T00:38:50.263Z"
+        }
+      }
+    ],
+    "alertRules": {
+      "cpuThreshold": 90,
+      "memoryThreshold": 95,
+      "latencyThreshold": 2000,
+      "availabilityThreshold": 99,
+      "serviceDownFailures": 5,
+      "diskThreshold": 85,
+      "certExpiryDays": 14,
+      "emailNotifications": true,
+      "slackNotifications": false
+    },
+    "billingInfo": {
+      "contactEmail": "",
+      "companyAddress": "",
+      "taxId": ""
+    },
+    "notificationChannels": {
+      "emailEnabled": true,
+      "slackEnabled": true,
+      "discordEnabled": true,
+      "expoEnabled": false,
+      "webhookEnabled": false,
+      "slackWebhook": "https://hooks.slack.com/services/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",
+      "discordWebhook": "https://discord.com/api/webhooks/1492011132125450371/GPQ8FcwDMghLSDR3lt-NuuGEQYJIzGCNNbn-s0VXomnpnAjewidkyuDcWjrS3-t_7xVr",
+      "smtpHost": "smtp.gmail.com",
+      "smtpPort": 587,
+      "smtpUsername": "haroun20041@gmail.com",
+      "smtpPassword": "qedl pzxy nrhr pepe",
+      "smtpFromEmail": "noreply@innodeploy.com",
+      "emailRecipients": [],
+      "expoAccessToken": "",
+      "expoPushTokens": [],
+      "webhookUrl": "",
+      "webhookHeaders": {}
+    },
+    "dockerRegistry": {
+      "registryUrl": "",
+      "username": "",
+      "password": "",
+      "namespace": ""
+    },
+    "gitProvider": {
+      "provider": "none",
+      "installationUrl": "",
+      "webhookSecret": "",
+      "repositoryOwner": ""
+    },
+    "invitations": [],
+    "apiKeys": [],
+    "createdAt": {
+      "$date": "2026-06-14T00:38:49.878Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T00:38:50.264Z"
+    },
+    "__v": 1
+  },
+  {
+    "_id": {
+      "$oid": "6a2df8352f30ffbb478c070c"
+    },
+    "name": "e2e-org-1781397557542-gitzm9",
+    "slug": "e2e-org-1781397557542-gitzm9",
+    "industry": "",
+    "workspaceType": "",
+    "plan": "free",
+    "limits": {
+      "maxProjects": 0,
+      "maxDeploysPerMonth": 0,
+      "maxMembers": 0,
+      "logRetentionDays": 30
+    },
+    "members": [
+      {
+        "userId": {
+          "$oid": "6a2df8352f30ffbb478c070f"
+        },
+        "role": "owner",
+        "_id": {
+          "$oid": "6a2df8352f30ffbb478c071c"
+        },
+        "joinedAt": {
+          "$date": "2026-06-14T00:39:17.970Z"
+        }
+      }
+    ],
+    "alertRules": {
+      "cpuThreshold": 90,
+      "memoryThreshold": 95,
+      "latencyThreshold": 2000,
+      "availabilityThreshold": 99,
+      "serviceDownFailures": 5,
+      "diskThreshold": 85,
+      "certExpiryDays": 14,
+      "emailNotifications": true,
+      "slackNotifications": false
+    },
+    "billingInfo": {
+      "contactEmail": "",
+      "companyAddress": "",
+      "taxId": ""
+    },
+    "notificationChannels": {
+      "emailEnabled": true,
+      "slackEnabled": true,
+      "discordEnabled": true,
+      "expoEnabled": false,
+      "webhookEnabled": false,
+      "slackWebhook": "https://hooks.slack.com/services/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",
+      "discordWebhook": "https://discord.com/api/webhooks/1492011132125450371/GPQ8FcwDMghLSDR3lt-NuuGEQYJIzGCNNbn-s0VXomnpnAjewidkyuDcWjrS3-t_7xVr",
+      "smtpHost": "smtp.gmail.com",
+      "smtpPort": 587,
+      "smtpUsername": "haroun20041@gmail.com",
+      "smtpPassword": "qedl pzxy nrhr pepe",
+      "smtpFromEmail": "noreply@innodeploy.com",
+      "emailRecipients": [],
+      "expoAccessToken": "",
+      "expoPushTokens": [],
+      "webhookUrl": "",
+      "webhookHeaders": {}
+    },
+    "dockerRegistry": {
+      "registryUrl": "",
+      "username": "",
+      "password": "",
+      "namespace": ""
+    },
+    "gitProvider": {
+      "provider": "none",
+      "installationUrl": "",
+      "webhookSecret": "",
+      "repositoryOwner": ""
+    },
+    "invitations": [],
+    "apiKeys": [],
+    "createdAt": {
+      "$date": "2026-06-14T00:39:17.670Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T00:39:17.972Z"
+    },
+    "__v": 1
+  },
+  {
+    "_id": {
+      "$oid": "6a2df8352f30ffbb478c0710"
+    },
+    "name": "e2e-org-1781397557612-zn2zni",
+    "slug": "e2e-org-1781397557612-zn2zni",
+    "industry": "",
+    "workspaceType": "",
+    "plan": "free",
+    "limits": {
+      "maxProjects": 0,
+      "maxDeploysPerMonth": 0,
+      "maxMembers": 0,
+      "logRetentionDays": 30
+    },
+    "members": [
+      {
+        "userId": {
+          "$oid": "6a2df8352f30ffbb478c0712"
+        },
+        "role": "owner",
+        "_id": {
+          "$oid": "6a2df8352f30ffbb478c071f"
+        },
+        "joinedAt": {
+          "$date": "2026-06-14T00:39:17.989Z"
+        }
+      }
+    ],
+    "alertRules": {
+      "cpuThreshold": 90,
+      "memoryThreshold": 95,
+      "latencyThreshold": 2000,
+      "availabilityThreshold": 99,
+      "serviceDownFailures": 5,
+      "diskThreshold": 85,
+      "certExpiryDays": 14,
+      "emailNotifications": true,
+      "slackNotifications": false
+    },
+    "billingInfo": {
+      "contactEmail": "",
+      "companyAddress": "",
+      "taxId": ""
+    },
+    "notificationChannels": {
+      "emailEnabled": true,
+      "slackEnabled": true,
+      "discordEnabled": true,
+      "expoEnabled": false,
+      "webhookEnabled": false,
+      "slackWebhook": "https://hooks.slack.com/services/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",
+      "discordWebhook": "https://discord.com/api/webhooks/1492011132125450371/GPQ8FcwDMghLSDR3lt-NuuGEQYJIzGCNNbn-s0VXomnpnAjewidkyuDcWjrS3-t_7xVr",
+      "smtpHost": "smtp.gmail.com",
+      "smtpPort": 587,
+      "smtpUsername": "haroun20041@gmail.com",
+      "smtpPassword": "qedl pzxy nrhr pepe",
+      "smtpFromEmail": "noreply@innodeploy.com",
+      "emailRecipients": [],
+      "expoAccessToken": "",
+      "expoPushTokens": [],
+      "webhookUrl": "",
+      "webhookHeaders": {}
+    },
+    "dockerRegistry": {
+      "registryUrl": "",
+      "username": "",
+      "password": "",
+      "namespace": ""
+    },
+    "gitProvider": {
+      "provider": "none",
+      "installationUrl": "",
+      "webhookSecret": "",
+      "repositoryOwner": ""
+    },
+    "invitations": [],
+    "apiKeys": [],
+    "createdAt": {
+      "$date": "2026-06-14T00:39:17.694Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T00:39:17.990Z"
+    },
+    "__v": 1
+  },
+  {
+    "_id": {
+      "$oid": "6a2df8352f30ffbb478c0714"
+    },
+    "name": "e2e-org-1781397557667-fyvyp2",
+    "slug": "e2e-org-1781397557667-fyvyp2",
+    "industry": "",
+    "workspaceType": "",
+    "plan": "free",
+    "limits": {
+      "maxProjects": 0,
+      "maxDeploysPerMonth": 0,
+      "maxMembers": 0,
+      "logRetentionDays": 30
+    },
+    "members": [
+      {
+        "userId": {
+          "$oid": "6a2df8352f30ffbb478c0716"
+        },
+        "role": "owner",
+        "_id": {
+          "$oid": "6a2df8362f30ffbb478c0723"
+        },
+        "joinedAt": {
+          "$date": "2026-06-14T00:39:18.014Z"
+        }
+      }
+    ],
+    "alertRules": {
+      "cpuThreshold": 90,
+      "memoryThreshold": 95,
+      "latencyThreshold": 2000,
+      "availabilityThreshold": 99,
+      "serviceDownFailures": 5,
+      "diskThreshold": 85,
+      "certExpiryDays": 14,
+      "emailNotifications": true,
+      "slackNotifications": false
+    },
+    "billingInfo": {
+      "contactEmail": "",
+      "companyAddress": "",
+      "taxId": ""
+    },
+    "notificationChannels": {
+      "emailEnabled": true,
+      "slackEnabled": true,
+      "discordEnabled": true,
+      "expoEnabled": false,
+      "webhookEnabled": false,
+      "slackWebhook": "https://hooks.slack.com/services/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",
+      "discordWebhook": "https://discord.com/api/webhooks/1492011132125450371/GPQ8FcwDMghLSDR3lt-NuuGEQYJIzGCNNbn-s0VXomnpnAjewidkyuDcWjrS3-t_7xVr",
+      "smtpHost": "smtp.gmail.com",
+      "smtpPort": 587,
+      "smtpUsername": "haroun20041@gmail.com",
+      "smtpPassword": "qedl pzxy nrhr pepe",
+      "smtpFromEmail": "noreply@innodeploy.com",
+      "emailRecipients": [],
+      "expoAccessToken": "",
+      "expoPushTokens": [],
+      "webhookUrl": "",
+      "webhookHeaders": {}
+    },
+    "dockerRegistry": {
+      "registryUrl": "",
+      "username": "",
+      "password": "",
+      "namespace": ""
+    },
+    "gitProvider": {
+      "provider": "none",
+      "installationUrl": "",
+      "webhookSecret": "",
+      "repositoryOwner": ""
+    },
+    "invitations": [],
+    "apiKeys": [],
+    "createdAt": {
+      "$date": "2026-06-14T00:39:17.724Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T00:39:18.016Z"
+    },
+    "__v": 1
+  },
+  {
+    "_id": {
+      "$oid": "6a2df8352f30ffbb478c0718"
+    },
+    "name": "e2e-org-1781397557746-19sewi",
+    "slug": "e2e-org-1781397557746-19sewi",
+    "industry": "",
+    "workspaceType": "",
+    "plan": "free",
+    "limits": {
+      "maxProjects": 0,
+      "maxDeploysPerMonth": 0,
+      "maxMembers": 0,
+      "logRetentionDays": 30
+    },
+    "members": [
+      {
+        "userId": {
+          "$oid": "6a2df8352f30ffbb478c071a"
+        },
+        "role": "owner",
+        "_id": {
+          "$oid": "6a2df8362f30ffbb478c072f"
+        },
+        "joinedAt": {
+          "$date": "2026-06-14T00:39:18.091Z"
+        }
+      }
+    ],
+    "alertRules": {
+      "cpuThreshold": 90,
+      "memoryThreshold": 95,
+      "latencyThreshold": 2000,
+      "availabilityThreshold": 99,
+      "serviceDownFailures": 5,
+      "diskThreshold": 85,
+      "certExpiryDays": 14,
+      "emailNotifications": true,
+      "slackNotifications": false
+    },
+    "billingInfo": {
+      "contactEmail": "",
+      "companyAddress": "",
+      "taxId": ""
+    },
+    "notificationChannels": {
+      "emailEnabled": true,
+      "slackEnabled": true,
+      "discordEnabled": true,
+      "expoEnabled": false,
+      "webhookEnabled": false,
+      "slackWebhook": "https://hooks.slack.com/services/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",
+      "discordWebhook": "https://discord.com/api/webhooks/1492011132125450371/GPQ8FcwDMghLSDR3lt-NuuGEQYJIzGCNNbn-s0VXomnpnAjewidkyuDcWjrS3-t_7xVr",
+      "smtpHost": "smtp.gmail.com",
+      "smtpPort": 587,
+      "smtpUsername": "haroun20041@gmail.com",
+      "smtpPassword": "qedl pzxy nrhr pepe",
+      "smtpFromEmail": "noreply@innodeploy.com",
+      "emailRecipients": [],
+      "expoAccessToken": "",
+      "expoPushTokens": [],
+      "webhookUrl": "",
+      "webhookHeaders": {}
+    },
+    "dockerRegistry": {
+      "registryUrl": "",
+      "username": "",
+      "password": "",
+      "namespace": ""
+    },
+    "gitProvider": {
+      "provider": "none",
+      "installationUrl": "",
+      "webhookSecret": "",
+      "repositoryOwner": ""
+    },
+    "invitations": [],
+    "apiKeys": [],
+    "createdAt": {
+      "$date": "2026-06-14T00:39:17.791Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T00:39:18.093Z"
+    },
+    "__v": 1
+  },
+  {
+    "_id": {
+      "$oid": "6a2df8412f30ffbb478c0745"
+    },
+    "name": "pw-org-1781397557516-j7bvka",
+    "slug": "pw-org-1781397557516-j7bvka",
+    "industry": "",
+    "workspaceType": "",
+    "plan": "free",
+    "limits": {
+      "maxProjects": 0,
+      "maxDeploysPerMonth": 0,
+      "maxMembers": 0,
+      "logRetentionDays": 30
+    },
+    "members": [
+      {
+        "userId": {
+          "$oid": "6a2df8422f30ffbb478c074b"
+        },
+        "role": "owner",
+        "_id": {
+          "$oid": "6a2df8422f30ffbb478c074f"
+        },
+        "joinedAt": {
+          "$date": "2026-06-14T00:39:30.628Z"
+        }
+      }
+    ],
+    "alertRules": {
+      "cpuThreshold": 90,
+      "memoryThreshold": 95,
+      "latencyThreshold": 2000,
+      "availabilityThreshold": 99,
+      "serviceDownFailures": 5,
+      "diskThreshold": 85,
+      "certExpiryDays": 14,
+      "emailNotifications": true,
+      "slackNotifications": false
+    },
+    "billingInfo": {
+      "contactEmail": "",
+      "companyAddress": "",
+      "taxId": ""
+    },
+    "notificationChannels": {
+      "emailEnabled": true,
+      "slackEnabled": true,
+      "discordEnabled": true,
+      "expoEnabled": false,
+      "webhookEnabled": false,
+      "slackWebhook": "https://hooks.slack.com/services/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",
+      "discordWebhook": "https://discord.com/api/webhooks/1492011132125450371/GPQ8FcwDMghLSDR3lt-NuuGEQYJIzGCNNbn-s0VXomnpnAjewidkyuDcWjrS3-t_7xVr",
+      "smtpHost": "smtp.gmail.com",
+      "smtpPort": 587,
+      "smtpUsername": "haroun20041@gmail.com",
+      "smtpPassword": "qedl pzxy nrhr pepe",
+      "smtpFromEmail": "noreply@innodeploy.com",
+      "emailRecipients": [],
+      "expoAccessToken": "",
+      "expoPushTokens": [],
+      "webhookUrl": "",
+      "webhookHeaders": {}
+    },
+    "dockerRegistry": {
+      "registryUrl": "",
+      "username": "",
+      "password": "",
+      "namespace": ""
+    },
+    "gitProvider": {
+      "provider": "none",
+      "installationUrl": "",
+      "webhookSecret": "",
+      "repositoryOwner": ""
+    },
+    "invitations": [],
+    "apiKeys": [],
+    "createdAt": {
+      "$date": "2026-06-14T00:39:29.738Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T00:39:30.630Z"
+    },
+    "__v": 1
+  },
+  {
+    "_id": {
+      "$oid": "6a2dfed4b0c1a96970cdf038"
+    },
+    "name": "e2e-org-1781399251987-lfx0ns",
+    "slug": "e2e-org-1781399251987-lfx0ns",
+    "industry": "",
+    "workspaceType": "",
+    "plan": "free",
+    "limits": {
+      "maxProjects": 0,
+      "maxDeploysPerMonth": 0,
+      "maxMembers": 0,
+      "logRetentionDays": 30
+    },
+    "members": [
+      {
+        "userId": {
+          "$oid": "6a2dfed4b0c1a96970cdf03c"
+        },
+        "role": "owner",
+        "_id": {
+          "$oid": "6a2dfed4b0c1a96970cdf047"
+        },
+        "joinedAt": {
+          "$date": "2026-06-14T01:07:32.669Z"
+        }
+      }
+    ],
+    "alertRules": {
+      "cpuThreshold": 90,
+      "memoryThreshold": 95,
+      "latencyThreshold": 2000,
+      "availabilityThreshold": 99,
+      "serviceDownFailures": 5,
+      "diskThreshold": 85,
+      "certExpiryDays": 14,
+      "emailNotifications": true,
+      "slackNotifications": false
+    },
+    "billingInfo": {
+      "contactEmail": "",
+      "companyAddress": "",
+      "taxId": ""
+    },
+    "notificationChannels": {
+      "emailEnabled": true,
+      "slackEnabled": true,
+      "discordEnabled": true,
+      "expoEnabled": false,
+      "webhookEnabled": false,
+      "slackWebhook": "https://hooks.slack.com/services/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",
+      "discordWebhook": "https://discord.com/api/webhooks/1492011132125450371/GPQ8FcwDMghLSDR3lt-NuuGEQYJIzGCNNbn-s0VXomnpnAjewidkyuDcWjrS3-t_7xVr",
+      "smtpHost": "smtp.gmail.com",
+      "smtpPort": 587,
+      "smtpUsername": "haroun20041@gmail.com",
+      "smtpPassword": "qedl pzxy nrhr pepe",
+      "smtpFromEmail": "noreply@innodeploy.com",
+      "emailRecipients": [],
+      "expoAccessToken": "",
+      "expoPushTokens": [],
+      "webhookUrl": "",
+      "webhookHeaders": {}
+    },
+    "dockerRegistry": {
+      "registryUrl": "",
+      "username": "",
+      "password": "",
+      "namespace": ""
+    },
+    "gitProvider": {
+      "provider": "none",
+      "installationUrl": "",
+      "webhookSecret": "",
+      "repositoryOwner": ""
+    },
+    "invitations": [],
+    "apiKeys": [],
+    "createdAt": {
+      "$date": "2026-06-14T01:07:32.177Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T01:07:32.670Z"
+    },
+    "__v": 1
+  },
+  {
+    "_id": {
+      "$oid": "6a2dfed4b0c1a96970cdf03a"
+    },
+    "name": "e2e-org-1781399252077-vlwcqm",
+    "slug": "e2e-org-1781399252077-vlwcqm",
+    "industry": "",
+    "workspaceType": "",
+    "plan": "free",
+    "limits": {
+      "maxProjects": 0,
+      "maxDeploysPerMonth": 0,
+      "maxMembers": 0,
+      "logRetentionDays": 30
+    },
+    "members": [
+      {
+        "userId": {
+          "$oid": "6a2dfed4b0c1a96970cdf03d"
+        },
+        "role": "owner",
+        "_id": {
+          "$oid": "6a2dfed4b0c1a96970cdf04a"
+        },
+        "joinedAt": {
+          "$date": "2026-06-14T01:07:32.681Z"
+        }
+      }
+    ],
+    "alertRules": {
+      "cpuThreshold": 90,
+      "memoryThreshold": 95,
+      "latencyThreshold": 2000,
+      "availabilityThreshold": 99,
+      "serviceDownFailures": 5,
+      "diskThreshold": 85,
+      "certExpiryDays": 14,
+      "emailNotifications": true,
+      "slackNotifications": false
+    },
+    "billingInfo": {
+      "contactEmail": "",
+      "companyAddress": "",
+      "taxId": ""
+    },
+    "notificationChannels": {
+      "emailEnabled": true,
+      "slackEnabled": true,
+      "discordEnabled": true,
+      "expoEnabled": false,
+      "webhookEnabled": false,
+      "slackWebhook": "https://hooks.slack.com/services/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",
+      "discordWebhook": "https://discord.com/api/webhooks/1492011132125450371/GPQ8FcwDMghLSDR3lt-NuuGEQYJIzGCNNbn-s0VXomnpnAjewidkyuDcWjrS3-t_7xVr",
+      "smtpHost": "smtp.gmail.com",
+      "smtpPort": 587,
+      "smtpUsername": "haroun20041@gmail.com",
+      "smtpPassword": "qedl pzxy nrhr pepe",
+      "smtpFromEmail": "noreply@innodeploy.com",
+      "emailRecipients": [],
+      "expoAccessToken": "",
+      "expoPushTokens": [],
+      "webhookUrl": "",
+      "webhookHeaders": {}
+    },
+    "dockerRegistry": {
+      "registryUrl": "",
+      "username": "",
+      "password": "",
+      "namespace": ""
+    },
+    "gitProvider": {
+      "provider": "none",
+      "installationUrl": "",
+      "webhookSecret": "",
+      "repositoryOwner": ""
+    },
+    "invitations": [],
+    "apiKeys": [],
+    "createdAt": {
+      "$date": "2026-06-14T01:07:32.194Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T01:07:32.682Z"
+    },
+    "__v": 1
+  },
+  {
+    "_id": {
+      "$oid": "6a2dfed4b0c1a96970cdf040"
+    },
+    "name": "e2e-org-1781399252200-nmofj6",
+    "slug": "e2e-org-1781399252200-nmofj6",
+    "industry": "",
+    "workspaceType": "",
+    "plan": "free",
+    "limits": {
+      "maxProjects": 0,
+      "maxDeploysPerMonth": 0,
+      "maxMembers": 0,
+      "logRetentionDays": 30
+    },
+    "members": [
+      {
+        "userId": {
+          "$oid": "6a2dfed4b0c1a96970cdf044"
+        },
+        "role": "owner",
+        "_id": {
+          "$oid": "6a2dfed4b0c1a96970cdf050"
+        },
+        "joinedAt": {
+          "$date": "2026-06-14T01:07:32.698Z"
+        }
+      }
+    ],
+    "alertRules": {
+      "cpuThreshold": 90,
+      "memoryThreshold": 95,
+      "latencyThreshold": 2000,
+      "availabilityThreshold": 99,
+      "serviceDownFailures": 5,
+      "diskThreshold": 85,
+      "certExpiryDays": 14,
+      "emailNotifications": true,
+      "slackNotifications": false
+    },
+    "billingInfo": {
+      "contactEmail": "",
+      "companyAddress": "",
+      "taxId": ""
+    },
+    "notificationChannels": {
+      "emailEnabled": true,
+      "slackEnabled": true,
+      "discordEnabled": true,
+      "expoEnabled": false,
+      "webhookEnabled": false,
+      "slackWebhook": "https://hooks.slack.com/services/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",
+      "discordWebhook": "https://discord.com/api/webhooks/1492011132125450371/GPQ8FcwDMghLSDR3lt-NuuGEQYJIzGCNNbn-s0VXomnpnAjewidkyuDcWjrS3-t_7xVr",
+      "smtpHost": "smtp.gmail.com",
+      "smtpPort": 587,
+      "smtpUsername": "haroun20041@gmail.com",
+      "smtpPassword": "qedl pzxy nrhr pepe",
+      "smtpFromEmail": "noreply@innodeploy.com",
+      "emailRecipients": [],
+      "expoAccessToken": "",
+      "expoPushTokens": [],
+      "webhookUrl": "",
+      "webhookHeaders": {}
+    },
+    "dockerRegistry": {
+      "registryUrl": "",
+      "username": "",
+      "password": "",
+      "namespace": ""
+    },
+    "gitProvider": {
+      "provider": "none",
+      "installationUrl": "",
+      "webhookSecret": "",
+      "repositoryOwner": ""
+    },
+    "invitations": [],
+    "apiKeys": [],
+    "createdAt": {
+      "$date": "2026-06-14T01:07:32.273Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T01:07:32.698Z"
+    },
+    "__v": 1
+  },
+  {
+    "_id": {
+      "$oid": "6a2dfed4b0c1a96970cdf042"
+    },
+    "name": "e2e-org-1781399252213-cuxade",
+    "slug": "e2e-org-1781399252213-cuxade",
+    "industry": "",
+    "workspaceType": "",
+    "plan": "free",
+    "limits": {
+      "maxProjects": 0,
+      "maxDeploysPerMonth": 0,
+      "maxMembers": 0,
+      "logRetentionDays": 30
+    },
+    "members": [
+      {
+        "userId": {
+          "$oid": "6a2dfed4b0c1a96970cdf045"
+        },
+        "role": "owner",
+        "_id": {
+          "$oid": "6a2dfed4b0c1a96970cdf04d"
+        },
+        "joinedAt": {
+          "$date": "2026-06-14T01:07:32.689Z"
+        }
+      }
+    ],
+    "alertRules": {
+      "cpuThreshold": 90,
+      "memoryThreshold": 95,
+      "latencyThreshold": 2000,
+      "availabilityThreshold": 99,
+      "serviceDownFailures": 5,
+      "diskThreshold": 85,
+      "certExpiryDays": 14,
+      "emailNotifications": true,
+      "slackNotifications": false
+    },
+    "billingInfo": {
+      "contactEmail": "",
+      "companyAddress": "",
+      "taxId": ""
+    },
+    "notificationChannels": {
+      "emailEnabled": true,
+      "slackEnabled": true,
+      "discordEnabled": true,
+      "expoEnabled": false,
+      "webhookEnabled": false,
+      "slackWebhook": "https://hooks.slack.com/services/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",
+      "discordWebhook": "https://discord.com/api/webhooks/1492011132125450371/GPQ8FcwDMghLSDR3lt-NuuGEQYJIzGCNNbn-s0VXomnpnAjewidkyuDcWjrS3-t_7xVr",
+      "smtpHost": "smtp.gmail.com",
+      "smtpPort": 587,
+      "smtpUsername": "haroun20041@gmail.com",
+      "smtpPassword": "qedl pzxy nrhr pepe",
+      "smtpFromEmail": "noreply@innodeploy.com",
+      "emailRecipients": [],
+      "expoAccessToken": "",
+      "expoPushTokens": [],
+      "webhookUrl": "",
+      "webhookHeaders": {}
+    },
+    "dockerRegistry": {
+      "registryUrl": "",
+      "username": "",
+      "password": "",
+      "namespace": ""
+    },
+    "gitProvider": {
+      "provider": "none",
+      "installationUrl": "",
+      "webhookSecret": "",
+      "repositoryOwner": ""
+    },
+    "invitations": [],
+    "apiKeys": [],
+    "createdAt": {
+      "$date": "2026-06-14T01:07:32.279Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T01:07:32.690Z"
+    },
+    "__v": 1
+  },
+  {
+    "_id": {
+      "$oid": "6a2dfedeb0c1a96970cdf067"
+    },
+    "name": "pw-org-1781399252038-heypka",
+    "slug": "pw-org-1781399252038-heypka",
+    "industry": "",
+    "workspaceType": "",
+    "plan": "free",
+    "limits": {
+      "maxProjects": 0,
+      "maxDeploysPerMonth": 0,
+      "maxMembers": 0,
+      "logRetentionDays": 30
+    },
+    "members": [
+      {
+        "userId": {
+          "$oid": "6a2dfedeb0c1a96970cdf069"
+        },
+        "role": "owner",
+        "_id": {
+          "$oid": "6a2dfedeb0c1a96970cdf06b"
+        },
+        "joinedAt": {
+          "$date": "2026-06-14T01:07:42.990Z"
+        }
+      }
+    ],
+    "alertRules": {
+      "cpuThreshold": 90,
+      "memoryThreshold": 95,
+      "latencyThreshold": 2000,
+      "availabilityThreshold": 99,
+      "serviceDownFailures": 5,
+      "diskThreshold": 85,
+      "certExpiryDays": 14,
+      "emailNotifications": true,
+      "slackNotifications": false
+    },
+    "billingInfo": {
+      "contactEmail": "",
+      "companyAddress": "",
+      "taxId": ""
+    },
+    "notificationChannels": {
+      "emailEnabled": true,
+      "slackEnabled": true,
+      "discordEnabled": true,
+      "expoEnabled": false,
+      "webhookEnabled": false,
+      "slackWebhook": "https://hooks.slack.com/services/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",
+      "discordWebhook": "https://discord.com/api/webhooks/1492011132125450371/GPQ8FcwDMghLSDR3lt-NuuGEQYJIzGCNNbn-s0VXomnpnAjewidkyuDcWjrS3-t_7xVr",
+      "smtpHost": "smtp.gmail.com",
+      "smtpPort": 587,
+      "smtpUsername": "haroun20041@gmail.com",
+      "smtpPassword": "qedl pzxy nrhr pepe",
+      "smtpFromEmail": "noreply@innodeploy.com",
+      "emailRecipients": [],
+      "expoAccessToken": "",
+      "expoPushTokens": [],
+      "webhookUrl": "",
+      "webhookHeaders": {}
+    },
+    "dockerRegistry": {
+      "registryUrl": "",
+      "username": "",
+      "password": "",
+      "namespace": ""
+    },
+    "gitProvider": {
+      "provider": "none",
+      "installationUrl": "",
+      "webhookSecret": "",
+      "repositoryOwner": ""
+    },
+    "invitations": [],
+    "apiKeys": [],
+    "createdAt": {
+      "$date": "2026-06-14T01:07:42.498Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T01:07:42.993Z"
+    },
+    "__v": 1
+  },
+  {
+    "_id": {
+      "$oid": "6a2e038f29c08418f35ef05d"
+    },
+    "name": "e2e-org-1781400463435-7hut2p",
+    "slug": "e2e-org-1781400463435-7hut2p",
+    "industry": "",
+    "workspaceType": "",
+    "plan": "free",
+    "limits": {
+      "maxProjects": 0,
+      "maxDeploysPerMonth": 0,
+      "maxMembers": 0,
+      "logRetentionDays": 30
+    },
+    "members": [
+      {
+        "userId": {
+          "$oid": "6a2e038f29c08418f35ef063"
+        },
+        "role": "owner",
+        "_id": {
+          "$oid": "6a2e039029c08418f35ef06f"
+        },
+        "joinedAt": {
+          "$date": "2026-06-14T01:27:44.153Z"
+        }
+      }
+    ],
+    "alertRules": {
+      "cpuThreshold": 90,
+      "memoryThreshold": 95,
+      "latencyThreshold": 2000,
+      "availabilityThreshold": 99,
+      "serviceDownFailures": 5,
+      "diskThreshold": 85,
+      "certExpiryDays": 14,
+      "emailNotifications": true,
+      "slackNotifications": false
+    },
+    "billingInfo": {
+      "contactEmail": "",
+      "companyAddress": "",
+      "taxId": ""
+    },
+    "notificationChannels": {
+      "emailEnabled": true,
+      "slackEnabled": true,
+      "discordEnabled": true,
+      "expoEnabled": false,
+      "webhookEnabled": false,
+      "slackWebhook": "https://hooks.slack.com/services/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",
+      "discordWebhook": "https://discord.com/api/webhooks/1492011132125450371/GPQ8FcwDMghLSDR3lt-NuuGEQYJIzGCNNbn-s0VXomnpnAjewidkyuDcWjrS3-t_7xVr",
+      "smtpHost": "smtp.gmail.com",
+      "smtpPort": 587,
+      "smtpUsername": "haroun20041@gmail.com",
+      "smtpPassword": "qedl pzxy nrhr pepe",
+      "smtpFromEmail": "noreply@innodeploy.com",
+      "emailRecipients": [],
+      "expoAccessToken": "",
+      "expoPushTokens": [],
+      "webhookUrl": "",
+      "webhookHeaders": {}
+    },
+    "dockerRegistry": {
+      "registryUrl": "",
+      "username": "",
+      "password": "",
+      "namespace": ""
+    },
+    "gitProvider": {
+      "provider": "none",
+      "installationUrl": "",
+      "webhookSecret": "",
+      "repositoryOwner": ""
+    },
+    "invitations": [],
+    "apiKeys": [],
+    "createdAt": {
+      "$date": "2026-06-14T01:27:43.576Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T01:27:44.154Z"
+    },
+    "__v": 1
+  },
+  {
+    "_id": {
+      "$oid": "6a2e038f29c08418f35ef05f"
+    },
+    "name": "e2e-org-1781400463438-8zucfg",
+    "slug": "e2e-org-1781400463438-8zucfg",
+    "industry": "",
+    "workspaceType": "",
+    "plan": "free",
+    "limits": {
+      "maxProjects": 0,
+      "maxDeploysPerMonth": 0,
+      "maxMembers": 0,
+      "logRetentionDays": 30
+    },
+    "members": [
+      {
+        "userId": {
+          "$oid": "6a2e038f29c08418f35ef065"
+        },
+        "role": "owner",
+        "_id": {
+          "$oid": "6a2e039029c08418f35ef071"
+        },
+        "joinedAt": {
+          "$date": "2026-06-14T01:27:44.156Z"
+        }
+      }
+    ],
+    "alertRules": {
+      "cpuThreshold": 90,
+      "memoryThreshold": 95,
+      "latencyThreshold": 2000,
+      "availabilityThreshold": 99,
+      "serviceDownFailures": 5,
+      "diskThreshold": 85,
+      "certExpiryDays": 14,
+      "emailNotifications": true,
+      "slackNotifications": false
+    },
+    "billingInfo": {
+      "contactEmail": "",
+      "companyAddress": "",
+      "taxId": ""
+    },
+    "notificationChannels": {
+      "emailEnabled": true,
+      "slackEnabled": true,
+      "discordEnabled": true,
+      "expoEnabled": false,
+      "webhookEnabled": false,
+      "slackWebhook": "https://hooks.slack.com/services/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",
+      "discordWebhook": "https://discord.com/api/webhooks/1492011132125450371/GPQ8FcwDMghLSDR3lt-NuuGEQYJIzGCNNbn-s0VXomnpnAjewidkyuDcWjrS3-t_7xVr",
+      "smtpHost": "smtp.gmail.com",
+      "smtpPort": 587,
+      "smtpUsername": "haroun20041@gmail.com",
+      "smtpPassword": "qedl pzxy nrhr pepe",
+      "smtpFromEmail": "noreply@innodeploy.com",
+      "emailRecipients": [],
+      "expoAccessToken": "",
+      "expoPushTokens": [],
+      "webhookUrl": "",
+      "webhookHeaders": {}
+    },
+    "dockerRegistry": {
+      "registryUrl": "",
+      "username": "",
+      "password": "",
+      "namespace": ""
+    },
+    "gitProvider": {
+      "provider": "none",
+      "installationUrl": "",
+      "webhookSecret": "",
+      "repositoryOwner": ""
+    },
+    "invitations": [],
+    "apiKeys": [],
+    "createdAt": {
+      "$date": "2026-06-14T01:27:43.605Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T01:27:44.157Z"
+    },
+    "__v": 1
+  },
+  {
+    "_id": {
+      "$oid": "6a2e038f29c08418f35ef061"
+    },
+    "name": "e2e-org-1781400463448-p1lxdh",
+    "slug": "e2e-org-1781400463448-p1lxdh",
+    "industry": "",
+    "workspaceType": "",
+    "plan": "free",
+    "limits": {
+      "maxProjects": 0,
+      "maxDeploysPerMonth": 0,
+      "maxMembers": 0,
+      "logRetentionDays": 30
+    },
+    "members": [
+      {
+        "userId": {
+          "$oid": "6a2e038f29c08418f35ef066"
+        },
+        "role": "owner",
+        "_id": {
+          "$oid": "6a2e039029c08418f35ef06b"
+        },
+        "joinedAt": {
+          "$date": "2026-06-14T01:27:44.131Z"
+        }
+      }
+    ],
+    "alertRules": {
+      "cpuThreshold": 90,
+      "memoryThreshold": 95,
+      "latencyThreshold": 2000,
+      "availabilityThreshold": 99,
+      "serviceDownFailures": 5,
+      "diskThreshold": 85,
+      "certExpiryDays": 14,
+      "emailNotifications": true,
+      "slackNotifications": false
+    },
+    "billingInfo": {
+      "contactEmail": "",
+      "companyAddress": "",
+      "taxId": ""
+    },
+    "notificationChannels": {
+      "emailEnabled": true,
+      "slackEnabled": true,
+      "discordEnabled": true,
+      "expoEnabled": false,
+      "webhookEnabled": false,
+      "slackWebhook": "https://hooks.slack.com/services/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",
+      "discordWebhook": "https://discord.com/api/webhooks/1492011132125450371/GPQ8FcwDMghLSDR3lt-NuuGEQYJIzGCNNbn-s0VXomnpnAjewidkyuDcWjrS3-t_7xVr",
+      "smtpHost": "smtp.gmail.com",
+      "smtpPort": 587,
+      "smtpUsername": "haroun20041@gmail.com",
+      "smtpPassword": "qedl pzxy nrhr pepe",
+      "smtpFromEmail": "noreply@innodeploy.com",
+      "emailRecipients": [],
+      "expoAccessToken": "",
+      "expoPushTokens": [],
+      "webhookUrl": "",
+      "webhookHeaders": {}
+    },
+    "dockerRegistry": {
+      "registryUrl": "",
+      "username": "",
+      "password": "",
+      "namespace": ""
+    },
+    "gitProvider": {
+      "provider": "none",
+      "installationUrl": "",
+      "webhookSecret": "",
+      "repositoryOwner": ""
+    },
+    "invitations": [],
+    "apiKeys": [],
+    "createdAt": {
+      "$date": "2026-06-14T01:27:43.617Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T01:27:44.134Z"
+    },
+    "__v": 1
+  },
+  {
+    "_id": {
+      "$oid": "6a2e038f29c08418f35ef067"
+    },
+    "name": "e2e-org-1781400463522-28ukmh",
+    "slug": "e2e-org-1781400463522-28ukmh",
+    "industry": "",
+    "workspaceType": "",
+    "plan": "free",
+    "limits": {
+      "maxProjects": 0,
+      "maxDeploysPerMonth": 0,
+      "maxMembers": 0,
+      "logRetentionDays": 30
+    },
+    "members": [
+      {
+        "userId": {
+          "$oid": "6a2e038f29c08418f35ef069"
+        },
+        "role": "owner",
+        "_id": {
+          "$oid": "6a2e039029c08418f35ef074"
+        },
+        "joinedAt": {
+          "$date": "2026-06-14T01:27:44.168Z"
+        }
+      }
+    ],
+    "alertRules": {
+      "cpuThreshold": 90,
+      "memoryThreshold": 95,
+      "latencyThreshold": 2000,
+      "availabilityThreshold": 99,
+      "serviceDownFailures": 5,
+      "diskThreshold": 85,
+      "certExpiryDays": 14,
+      "emailNotifications": true,
+      "slackNotifications": false
+    },
+    "billingInfo": {
+      "contactEmail": "",
+      "companyAddress": "",
+      "taxId": ""
+    },
+    "notificationChannels": {
+      "emailEnabled": true,
+      "slackEnabled": true,
+      "discordEnabled": true,
+      "expoEnabled": false,
+      "webhookEnabled": false,
+      "slackWebhook": "https://hooks.slack.com/services/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",
+      "discordWebhook": "https://discord.com/api/webhooks/1492011132125450371/GPQ8FcwDMghLSDR3lt-NuuGEQYJIzGCNNbn-s0VXomnpnAjewidkyuDcWjrS3-t_7xVr",
+      "smtpHost": "smtp.gmail.com",
+      "smtpPort": 587,
+      "smtpUsername": "haroun20041@gmail.com",
+      "smtpPassword": "qedl pzxy nrhr pepe",
+      "smtpFromEmail": "noreply@innodeploy.com",
+      "emailRecipients": [],
+      "expoAccessToken": "",
+      "expoPushTokens": [],
+      "webhookUrl": "",
+      "webhookHeaders": {}
+    },
+    "dockerRegistry": {
+      "registryUrl": "",
+      "username": "",
+      "password": "",
+      "namespace": ""
+    },
+    "gitProvider": {
+      "provider": "none",
+      "installationUrl": "",
+      "webhookSecret": "",
+      "repositoryOwner": ""
+    },
+    "invitations": [],
+    "apiKeys": [],
+    "createdAt": {
+      "$date": "2026-06-14T01:27:43.680Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T01:27:44.170Z"
+    },
+    "__v": 1
+  },
+  {
+    "_id": {
+      "$oid": "6a2e039b29c08418f35ef08f"
+    },
+    "name": "pw-org-1781400463529-0nof7t",
+    "slug": "pw-org-1781400463529-0nof7t",
+    "industry": "",
+    "workspaceType": "",
+    "plan": "free",
+    "limits": {
+      "maxProjects": 0,
+      "maxDeploysPerMonth": 0,
+      "maxMembers": 0,
+      "logRetentionDays": 30
+    },
+    "members": [
+      {
+        "userId": {
+          "$oid": "6a2e039c29c08418f35ef091"
+        },
+        "role": "owner",
+        "_id": {
+          "$oid": "6a2e039c29c08418f35ef093"
+        },
+        "joinedAt": {
+          "$date": "2026-06-14T01:27:56.929Z"
+        }
+      }
+    ],
+    "alertRules": {
+      "cpuThreshold": 90,
+      "memoryThreshold": 95,
+      "latencyThreshold": 2000,
+      "availabilityThreshold": 99,
+      "serviceDownFailures": 5,
+      "diskThreshold": 85,
+      "certExpiryDays": 14,
+      "emailNotifications": true,
+      "slackNotifications": false
+    },
+    "billingInfo": {
+      "contactEmail": "",
+      "companyAddress": "",
+      "taxId": ""
+    },
+    "notificationChannels": {
+      "emailEnabled": true,
+      "slackEnabled": true,
+      "discordEnabled": true,
+      "expoEnabled": false,
+      "webhookEnabled": false,
+      "slackWebhook": "https://hooks.slack.com/services/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",
+      "discordWebhook": "https://discord.com/api/webhooks/1492011132125450371/GPQ8FcwDMghLSDR3lt-NuuGEQYJIzGCNNbn-s0VXomnpnAjewidkyuDcWjrS3-t_7xVr",
+      "smtpHost": "smtp.gmail.com",
+      "smtpPort": 587,
+      "smtpUsername": "haroun20041@gmail.com",
+      "smtpPassword": "qedl pzxy nrhr pepe",
+      "smtpFromEmail": "noreply@innodeploy.com",
+      "emailRecipients": [],
+      "expoAccessToken": "",
+      "expoPushTokens": [],
+      "webhookUrl": "",
+      "webhookHeaders": {}
+    },
+    "dockerRegistry": {
+      "registryUrl": "",
+      "username": "",
+      "password": "",
+      "namespace": ""
+    },
+    "gitProvider": {
+      "provider": "none",
+      "installationUrl": "",
+      "webhookSecret": "",
+      "repositoryOwner": ""
+    },
+    "invitations": [],
+    "apiKeys": [],
+    "createdAt": {
+      "$date": "2026-06-14T01:27:56.003Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T01:27:56.932Z"
+    },
+    "__v": 1
+  },
+  {
+    "_id": {
+      "$oid": "6a2e133729c08418f35ef8ad"
+    },
+    "name": "e2e-org-1781404471728-8pszv0",
+    "slug": "e2e-org-1781404471728-8pszv0",
+    "industry": "",
+    "workspaceType": "",
+    "plan": "free",
+    "limits": {
+      "maxProjects": 0,
+      "maxDeploysPerMonth": 0,
+      "maxMembers": 0,
+      "logRetentionDays": 30
+    },
+    "members": [
+      {
+        "userId": {
+          "$oid": "6a2e133729c08418f35ef8b3"
+        },
+        "role": "owner",
+        "_id": {
+          "$oid": "6a2e133829c08418f35ef8bc"
+        },
+        "joinedAt": {
+          "$date": "2026-06-14T02:34:32.186Z"
+        }
+      }
+    ],
+    "alertRules": {
+      "cpuThreshold": 90,
+      "memoryThreshold": 95,
+      "latencyThreshold": 2000,
+      "availabilityThreshold": 99,
+      "serviceDownFailures": 5,
+      "diskThreshold": 85,
+      "certExpiryDays": 14,
+      "emailNotifications": true,
+      "slackNotifications": false
+    },
+    "billingInfo": {
+      "contactEmail": "",
+      "companyAddress": "",
+      "taxId": ""
+    },
+    "notificationChannels": {
+      "emailEnabled": true,
+      "slackEnabled": true,
+      "discordEnabled": true,
+      "expoEnabled": false,
+      "webhookEnabled": false,
+      "slackWebhook": "https://hooks.slack.com/services/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",
+      "discordWebhook": "https://discord.com/api/webhooks/1492011132125450371/GPQ8FcwDMghLSDR3lt-NuuGEQYJIzGCNNbn-s0VXomnpnAjewidkyuDcWjrS3-t_7xVr",
+      "smtpHost": "smtp.gmail.com",
+      "smtpPort": 587,
+      "smtpUsername": "haroun20041@gmail.com",
+      "smtpPassword": "qedl pzxy nrhr pepe",
+      "smtpFromEmail": "noreply@innodeploy.com",
+      "emailRecipients": [],
+      "expoAccessToken": "",
+      "expoPushTokens": [],
+      "webhookUrl": "",
+      "webhookHeaders": {}
+    },
+    "dockerRegistry": {
+      "registryUrl": "",
+      "username": "",
+      "password": "",
+      "namespace": ""
+    },
+    "gitProvider": {
+      "provider": "none",
+      "installationUrl": "",
+      "webhookSecret": "",
+      "repositoryOwner": ""
+    },
+    "invitations": [],
+    "apiKeys": [],
+    "createdAt": {
+      "$date": "2026-06-14T02:34:31.851Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T02:34:32.186Z"
+    },
+    "__v": 1
+  },
+  {
+    "_id": {
+      "$oid": "6a2e133729c08418f35ef8af"
+    },
+    "name": "e2e-org-1781404471672-2v2523",
+    "slug": "e2e-org-1781404471672-2v2523",
+    "industry": "",
+    "workspaceType": "",
+    "plan": "free",
+    "limits": {
+      "maxProjects": 0,
+      "maxDeploysPerMonth": 0,
+      "maxMembers": 0,
+      "logRetentionDays": 30
+    },
+    "members": [
+      {
+        "userId": {
+          "$oid": "6a2e133729c08418f35ef8b4"
+        },
+        "role": "owner",
+        "_id": {
+          "$oid": "6a2e133829c08418f35ef8bf"
+        },
+        "joinedAt": {
+          "$date": "2026-06-14T02:34:32.201Z"
+        }
+      }
+    ],
+    "alertRules": {
+      "cpuThreshold": 90,
+      "memoryThreshold": 95,
+      "latencyThreshold": 2000,
+      "availabilityThreshold": 99,
+      "serviceDownFailures": 5,
+      "diskThreshold": 85,
+      "certExpiryDays": 14,
+      "emailNotifications": true,
+      "slackNotifications": false
+    },
+    "billingInfo": {
+      "contactEmail": "",
+      "companyAddress": "",
+      "taxId": ""
+    },
+    "notificationChannels": {
+      "emailEnabled": true,
+      "slackEnabled": true,
+      "discordEnabled": true,
+      "expoEnabled": false,
+      "webhookEnabled": false,
+      "slackWebhook": "https://hooks.slack.com/services/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",
+      "discordWebhook": "https://discord.com/api/webhooks/1492011132125450371/GPQ8FcwDMghLSDR3lt-NuuGEQYJIzGCNNbn-s0VXomnpnAjewidkyuDcWjrS3-t_7xVr",
+      "smtpHost": "smtp.gmail.com",
+      "smtpPort": 587,
+      "smtpUsername": "haroun20041@gmail.com",
+      "smtpPassword": "qedl pzxy nrhr pepe",
+      "smtpFromEmail": "noreply@innodeploy.com",
+      "emailRecipients": [],
+      "expoAccessToken": "",
+      "expoPushTokens": [],
+      "webhookUrl": "",
+      "webhookHeaders": {}
+    },
+    "dockerRegistry": {
+      "registryUrl": "",
+      "username": "",
+      "password": "",
+      "namespace": ""
+    },
+    "gitProvider": {
+      "provider": "none",
+      "installationUrl": "",
+      "webhookSecret": "",
+      "repositoryOwner": ""
+    },
+    "invitations": [],
+    "apiKeys": [],
+    "createdAt": {
+      "$date": "2026-06-14T02:34:31.861Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T02:34:32.202Z"
+    },
+    "__v": 1
+  },
+  {
+    "_id": {
+      "$oid": "6a2e133729c08418f35ef8b7"
+    },
+    "name": "e2e-org-1781404471803-kgwzox",
+    "slug": "e2e-org-1781404471803-kgwzox",
+    "industry": "",
+    "workspaceType": "",
+    "plan": "free",
+    "limits": {
+      "maxProjects": 0,
+      "maxDeploysPerMonth": 0,
+      "maxMembers": 0,
+      "logRetentionDays": 30
+    },
+    "members": [
+      {
+        "userId": {
+          "$oid": "6a2e133729c08418f35ef8b9"
+        },
+        "role": "owner",
+        "_id": {
+          "$oid": "6a2e133829c08418f35ef8c3"
+        },
+        "joinedAt": {
+          "$date": "2026-06-14T02:34:32.210Z"
+        }
+      }
+    ],
+    "alertRules": {
+      "cpuThreshold": 90,
+      "memoryThreshold": 95,
+      "latencyThreshold": 2000,
+      "availabilityThreshold": 99,
+      "serviceDownFailures": 5,
+      "diskThreshold": 85,
+      "certExpiryDays": 14,
+      "emailNotifications": true,
+      "slackNotifications": false
+    },
+    "billingInfo": {
+      "contactEmail": "",
+      "companyAddress": "",
+      "taxId": ""
+    },
+    "notificationChannels": {
+      "emailEnabled": true,
+      "slackEnabled": true,
+      "discordEnabled": true,
+      "expoEnabled": false,
+      "webhookEnabled": false,
+      "slackWebhook": "https://hooks.slack.com/services/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",
+      "discordWebhook": "https://discord.com/api/webhooks/1492011132125450371/GPQ8FcwDMghLSDR3lt-NuuGEQYJIzGCNNbn-s0VXomnpnAjewidkyuDcWjrS3-t_7xVr",
+      "smtpHost": "smtp.gmail.com",
+      "smtpPort": 587,
+      "smtpUsername": "haroun20041@gmail.com",
+      "smtpPassword": "qedl pzxy nrhr pepe",
+      "smtpFromEmail": "noreply@innodeploy.com",
+      "emailRecipients": [],
+      "expoAccessToken": "",
+      "expoPushTokens": [],
+      "webhookUrl": "",
+      "webhookHeaders": {}
+    },
+    "dockerRegistry": {
+      "registryUrl": "",
+      "username": "",
+      "password": "",
+      "namespace": ""
+    },
+    "gitProvider": {
+      "provider": "none",
+      "installationUrl": "",
+      "webhookSecret": "",
+      "repositoryOwner": ""
+    },
+    "invitations": [],
+    "apiKeys": [],
+    "createdAt": {
+      "$date": "2026-06-14T02:34:31.890Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T02:34:32.211Z"
+    },
+    "__v": 1
+  },
+  {
+    "_id": {
+      "$oid": "6a2e133729c08418f35ef8b5"
+    },
+    "name": "e2e-org-1781404471805-u9kvoy",
+    "slug": "e2e-org-1781404471805-u9kvoy",
+    "industry": "",
+    "workspaceType": "",
+    "plan": "free",
+    "limits": {
+      "maxProjects": 0,
+      "maxDeploysPerMonth": 0,
+      "maxMembers": 0,
+      "logRetentionDays": 30
+    },
+    "members": [
+      {
+        "userId": {
+          "$oid": "6a2e133729c08418f35ef8ba"
+        },
+        "role": "owner",
+        "_id": {
+          "$oid": "6a2e133829c08418f35ef8c5"
+        },
+        "joinedAt": {
+          "$date": "2026-06-14T02:34:32.213Z"
+        }
+      }
+    ],
+    "alertRules": {
+      "cpuThreshold": 90,
+      "memoryThreshold": 95,
+      "latencyThreshold": 2000,
+      "availabilityThreshold": 99,
+      "serviceDownFailures": 5,
+      "diskThreshold": 85,
+      "certExpiryDays": 14,
+      "emailNotifications": true,
+      "slackNotifications": false
+    },
+    "billingInfo": {
+      "contactEmail": "",
+      "companyAddress": "",
+      "taxId": ""
+    },
+    "notificationChannels": {
+      "emailEnabled": true,
+      "slackEnabled": true,
+      "discordEnabled": true,
+      "expoEnabled": false,
+      "webhookEnabled": false,
+      "slackWebhook": "https://hooks.slack.com/services/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",
+      "discordWebhook": "https://discord.com/api/webhooks/1492011132125450371/GPQ8FcwDMghLSDR3lt-NuuGEQYJIzGCNNbn-s0VXomnpnAjewidkyuDcWjrS3-t_7xVr",
+      "smtpHost": "smtp.gmail.com",
+      "smtpPort": 587,
+      "smtpUsername": "haroun20041@gmail.com",
+      "smtpPassword": "qedl pzxy nrhr pepe",
+      "smtpFromEmail": "noreply@innodeploy.com",
+      "emailRecipients": [],
+      "expoAccessToken": "",
+      "expoPushTokens": [],
+      "webhookUrl": "",
+      "webhookHeaders": {}
+    },
+    "dockerRegistry": {
+      "registryUrl": "",
+      "username": "",
+      "password": "",
+      "namespace": ""
+    },
+    "gitProvider": {
+      "provider": "none",
+      "installationUrl": "",
+      "webhookSecret": "",
+      "repositoryOwner": ""
+    },
+    "invitations": [],
+    "apiKeys": [],
+    "createdAt": {
+      "$date": "2026-06-14T02:34:31.885Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T02:34:32.214Z"
+    },
+    "__v": 1
+  },
+  {
+    "_id": {
+      "$oid": "6a2e134b29c08418f35ef8dc"
+    },
+    "name": "pw-org-1781404471971-0qkju2",
+    "slug": "pw-org-1781404471971-0qkju2",
+    "industry": "",
+    "workspaceType": "",
+    "plan": "free",
+    "limits": {
+      "maxProjects": 0,
+      "maxDeploysPerMonth": 0,
+      "maxMembers": 0,
+      "logRetentionDays": 30
+    },
+    "members": [
+      {
+        "userId": {
+          "$oid": "6a2e134c29c08418f35ef8de"
+        },
+        "role": "owner",
+        "_id": {
+          "$oid": "6a2e134d29c08418f35ef8e0"
+        },
+        "joinedAt": {
+          "$date": "2026-06-14T02:34:53.922Z"
+        }
+      }
+    ],
+    "alertRules": {
+      "cpuThreshold": 90,
+      "memoryThreshold": 95,
+      "latencyThreshold": 2000,
+      "availabilityThreshold": 99,
+      "serviceDownFailures": 5,
+      "diskThreshold": 85,
+      "certExpiryDays": 14,
+      "emailNotifications": true,
+      "slackNotifications": false
+    },
+    "billingInfo": {
+      "contactEmail": "",
+      "companyAddress": "",
+      "taxId": ""
+    },
+    "notificationChannels": {
+      "emailEnabled": true,
+      "slackEnabled": true,
+      "discordEnabled": true,
+      "expoEnabled": false,
+      "webhookEnabled": false,
+      "slackWebhook": "https://hooks.slack.com/services/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",
+      "discordWebhook": "https://discord.com/api/webhooks/1492011132125450371/GPQ8FcwDMghLSDR3lt-NuuGEQYJIzGCNNbn-s0VXomnpnAjewidkyuDcWjrS3-t_7xVr",
+      "smtpHost": "smtp.gmail.com",
+      "smtpPort": 587,
+      "smtpUsername": "haroun20041@gmail.com",
+      "smtpPassword": "qedl pzxy nrhr pepe",
+      "smtpFromEmail": "noreply@innodeploy.com",
+      "emailRecipients": [],
+      "expoAccessToken": "",
+      "expoPushTokens": [],
+      "webhookUrl": "",
+      "webhookHeaders": {}
+    },
+    "dockerRegistry": {
+      "registryUrl": "",
+      "username": "",
+      "password": "",
+      "namespace": ""
+    },
+    "gitProvider": {
+      "provider": "none",
+      "installationUrl": "",
+      "webhookSecret": "",
+      "repositoryOwner": ""
+    },
+    "invitations": [],
+    "apiKeys": [],
+    "createdAt": {
+      "$date": "2026-06-14T02:34:51.839Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T02:34:53.927Z"
+    },
+    "__v": 1
+  },
+  {
+    "_id": {
+      "$oid": "6a2e141529c08418f35ef9c1"
+    },
+    "name": "e2e-org-1781404693549-b1zt4d",
+    "slug": "e2e-org-1781404693549-b1zt4d",
+    "industry": "",
+    "workspaceType": "",
+    "plan": "free",
+    "limits": {
+      "maxProjects": 0,
+      "maxDeploysPerMonth": 0,
+      "maxMembers": 0,
+      "logRetentionDays": 30
+    },
+    "members": [
+      {
+        "userId": {
+          "$oid": "6a2e141529c08418f35ef9c3"
+        },
+        "role": "owner",
+        "_id": {
+          "$oid": "6a2e141529c08418f35ef9c5"
+        },
+        "joinedAt": {
+          "$date": "2026-06-14T02:38:13.820Z"
+        }
+      }
+    ],
+    "alertRules": {
+      "cpuThreshold": 90,
+      "memoryThreshold": 95,
+      "latencyThreshold": 2000,
+      "availabilityThreshold": 99,
+      "serviceDownFailures": 5,
+      "diskThreshold": 85,
+      "certExpiryDays": 14,
+      "emailNotifications": true,
+      "slackNotifications": false
+    },
+    "billingInfo": {
+      "contactEmail": "",
+      "companyAddress": "",
+      "taxId": ""
+    },
+    "notificationChannels": {
+      "emailEnabled": true,
+      "slackEnabled": true,
+      "discordEnabled": true,
+      "expoEnabled": false,
+      "webhookEnabled": false,
+      "slackWebhook": "https://hooks.slack.com/services/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",
+      "discordWebhook": "https://discord.com/api/webhooks/1492011132125450371/GPQ8FcwDMghLSDR3lt-NuuGEQYJIzGCNNbn-s0VXomnpnAjewidkyuDcWjrS3-t_7xVr",
+      "smtpHost": "smtp.gmail.com",
+      "smtpPort": 587,
+      "smtpUsername": "haroun20041@gmail.com",
+      "smtpPassword": "qedl pzxy nrhr pepe",
+      "smtpFromEmail": "noreply@innodeploy.com",
+      "emailRecipients": [],
+      "expoAccessToken": "",
+      "expoPushTokens": [],
+      "webhookUrl": "",
+      "webhookHeaders": {}
+    },
+    "dockerRegistry": {
+      "registryUrl": "",
+      "username": "",
+      "password": "",
+      "namespace": ""
+    },
+    "gitProvider": {
+      "provider": "none",
+      "installationUrl": "",
+      "webhookSecret": "",
+      "repositoryOwner": ""
+    },
+    "invitations": [],
+    "apiKeys": [],
+    "createdAt": {
+      "$date": "2026-06-14T02:38:13.571Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T02:38:13.820Z"
+    },
+    "__v": 1
+  },
+  {
+    "_id": {
+      "$oid": "6a2e15c829c08418f35efaa6"
+    },
+    "name": "e2e-org-1781405128800-6vqc58",
+    "slug": "e2e-org-1781405128800-6vqc58",
+    "industry": "",
+    "workspaceType": "",
+    "plan": "free",
+    "limits": {
+      "maxProjects": 0,
+      "maxDeploysPerMonth": 0,
+      "maxMembers": 0,
+      "logRetentionDays": 30
+    },
+    "members": [
+      {
+        "userId": {
+          "$oid": "6a2e15c829c08418f35efaaa"
+        },
+        "role": "owner",
+        "_id": {
+          "$oid": "6a2e15c929c08418f35efab8"
+        },
+        "joinedAt": {
+          "$date": "2026-06-14T02:45:29.297Z"
+        }
+      }
+    ],
+    "alertRules": {
+      "cpuThreshold": 90,
+      "memoryThreshold": 95,
+      "latencyThreshold": 2000,
+      "availabilityThreshold": 99,
+      "serviceDownFailures": 5,
+      "diskThreshold": 85,
+      "certExpiryDays": 14,
+      "emailNotifications": true,
+      "slackNotifications": false
+    },
+    "billingInfo": {
+      "contactEmail": "",
+      "companyAddress": "",
+      "taxId": ""
+    },
+    "notificationChannels": {
+      "emailEnabled": true,
+      "slackEnabled": true,
+      "discordEnabled": true,
+      "expoEnabled": false,
+      "webhookEnabled": false,
+      "slackWebhook": "https://hooks.slack.com/services/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",
+      "discordWebhook": "https://discord.com/api/webhooks/1492011132125450371/GPQ8FcwDMghLSDR3lt-NuuGEQYJIzGCNNbn-s0VXomnpnAjewidkyuDcWjrS3-t_7xVr",
+      "smtpHost": "smtp.gmail.com",
+      "smtpPort": 587,
+      "smtpUsername": "haroun20041@gmail.com",
+      "smtpPassword": "qedl pzxy nrhr pepe",
+      "smtpFromEmail": "noreply@innodeploy.com",
+      "emailRecipients": [],
+      "expoAccessToken": "",
+      "expoPushTokens": [],
+      "webhookUrl": "",
+      "webhookHeaders": {}
+    },
+    "dockerRegistry": {
+      "registryUrl": "",
+      "username": "",
+      "password": "",
+      "namespace": ""
+    },
+    "gitProvider": {
+      "provider": "none",
+      "installationUrl": "",
+      "webhookSecret": "",
+      "repositoryOwner": ""
+    },
+    "invitations": [],
+    "apiKeys": [],
+    "createdAt": {
+      "$date": "2026-06-14T02:45:28.947Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T02:45:29.297Z"
+    },
+    "__v": 1
+  },
+  {
+    "_id": {
+      "$oid": "6a2e15c829c08418f35efaa8"
+    },
+    "name": "e2e-org-1781405128892-xijxrg",
+    "slug": "e2e-org-1781405128892-xijxrg",
+    "industry": "",
+    "workspaceType": "",
+    "plan": "free",
+    "limits": {
+      "maxProjects": 0,
+      "maxDeploysPerMonth": 0,
+      "maxMembers": 0,
+      "logRetentionDays": 30
+    },
+    "members": [
+      {
+        "userId": {
+          "$oid": "6a2e15c829c08418f35efaab"
+        },
+        "role": "owner",
+        "_id": {
+          "$oid": "6a2e15c929c08418f35efab6"
+        },
+        "joinedAt": {
+          "$date": "2026-06-14T02:45:29.295Z"
+        }
+      }
+    ],
+    "alertRules": {
+      "cpuThreshold": 90,
+      "memoryThreshold": 95,
+      "latencyThreshold": 2000,
+      "availabilityThreshold": 99,
+      "serviceDownFailures": 5,
+      "diskThreshold": 85,
+      "certExpiryDays": 14,
+      "emailNotifications": true,
+      "slackNotifications": false
+    },
+    "billingInfo": {
+      "contactEmail": "",
+      "companyAddress": "",
+      "taxId": ""
+    },
+    "notificationChannels": {
+      "emailEnabled": true,
+      "slackEnabled": true,
+      "discordEnabled": true,
+      "expoEnabled": false,
+      "webhookEnabled": false,
+      "slackWebhook": "https://hooks.slack.com/services/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",
+      "discordWebhook": "https://discord.com/api/webhooks/1492011132125450371/GPQ8FcwDMghLSDR3lt-NuuGEQYJIzGCNNbn-s0VXomnpnAjewidkyuDcWjrS3-t_7xVr",
+      "smtpHost": "smtp.gmail.com",
+      "smtpPort": 587,
+      "smtpUsername": "haroun20041@gmail.com",
+      "smtpPassword": "qedl pzxy nrhr pepe",
+      "smtpFromEmail": "noreply@innodeploy.com",
+      "emailRecipients": [],
+      "expoAccessToken": "",
+      "expoPushTokens": [],
+      "webhookUrl": "",
+      "webhookHeaders": {}
+    },
+    "dockerRegistry": {
+      "registryUrl": "",
+      "username": "",
+      "password": "",
+      "namespace": ""
+    },
+    "gitProvider": {
+      "provider": "none",
+      "installationUrl": "",
+      "webhookSecret": "",
+      "repositoryOwner": ""
+    },
+    "invitations": [],
+    "apiKeys": [],
+    "createdAt": {
+      "$date": "2026-06-14T02:45:28.957Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T02:45:29.296Z"
+    },
+    "__v": 1
+  },
+  {
+    "_id": {
+      "$oid": "6a2e15c929c08418f35efaad"
+    },
+    "name": "e2e-org-1781405128981-sp0h8y",
+    "slug": "e2e-org-1781405128981-sp0h8y",
+    "industry": "",
+    "workspaceType": "",
+    "plan": "free",
+    "limits": {
+      "maxProjects": 0,
+      "maxDeploysPerMonth": 0,
+      "maxMembers": 0,
+      "logRetentionDays": 30
+    },
+    "members": [
+      {
+        "userId": {
+          "$oid": "6a2e15c929c08418f35efaaf"
+        },
+        "role": "owner",
+        "_id": {
+          "$oid": "6a2e15c929c08418f35efac5"
+        },
+        "joinedAt": {
+          "$date": "2026-06-14T02:45:29.361Z"
+        }
+      }
+    ],
+    "alertRules": {
+      "cpuThreshold": 90,
+      "memoryThreshold": 95,
+      "latencyThreshold": 2000,
+      "availabilityThreshold": 99,
+      "serviceDownFailures": 5,
+      "diskThreshold": 85,
+      "certExpiryDays": 14,
+      "emailNotifications": true,
+      "slackNotifications": false
+    },
+    "billingInfo": {
+      "contactEmail": "",
+      "companyAddress": "",
+      "taxId": ""
+    },
+    "notificationChannels": {
+      "emailEnabled": true,
+      "slackEnabled": true,
+      "discordEnabled": true,
+      "expoEnabled": false,
+      "webhookEnabled": false,
+      "slackWebhook": "https://hooks.slack.com/services/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",
+      "discordWebhook": "https://discord.com/api/webhooks/1492011132125450371/GPQ8FcwDMghLSDR3lt-NuuGEQYJIzGCNNbn-s0VXomnpnAjewidkyuDcWjrS3-t_7xVr",
+      "smtpHost": "smtp.gmail.com",
+      "smtpPort": 587,
+      "smtpUsername": "haroun20041@gmail.com",
+      "smtpPassword": "qedl pzxy nrhr pepe",
+      "smtpFromEmail": "noreply@innodeploy.com",
+      "emailRecipients": [],
+      "expoAccessToken": "",
+      "expoPushTokens": [],
+      "webhookUrl": "",
+      "webhookHeaders": {}
+    },
+    "dockerRegistry": {
+      "registryUrl": "",
+      "username": "",
+      "password": "",
+      "namespace": ""
+    },
+    "gitProvider": {
+      "provider": "none",
+      "installationUrl": "",
+      "webhookSecret": "",
+      "repositoryOwner": ""
+    },
+    "invitations": [],
+    "apiKeys": [],
+    "createdAt": {
+      "$date": "2026-06-14T02:45:29.039Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T02:45:29.363Z"
+    },
+    "__v": 1
+  },
+  {
+    "_id": {
+      "$oid": "6a2e15c929c08418f35efab1"
+    },
+    "name": "e2e-org-1781405129139-vejdld",
+    "slug": "e2e-org-1781405129139-vejdld",
+    "industry": "",
+    "workspaceType": "",
+    "plan": "free",
+    "limits": {
+      "maxProjects": 0,
+      "maxDeploysPerMonth": 0,
+      "maxMembers": 0,
+      "logRetentionDays": 30
+    },
+    "members": [
+      {
+        "userId": {
+          "$oid": "6a2e15c929c08418f35efab3"
+        },
+        "role": "owner",
+        "_id": {
+          "$oid": "6a2e15c929c08418f35efad2"
+        },
+        "joinedAt": {
+          "$date": "2026-06-14T02:45:29.472Z"
+        }
+      }
+    ],
+    "alertRules": {
+      "cpuThreshold": 90,
+      "memoryThreshold": 95,
+      "latencyThreshold": 2000,
+      "availabilityThreshold": 99,
+      "serviceDownFailures": 5,
+      "diskThreshold": 85,
+      "certExpiryDays": 14,
+      "emailNotifications": true,
+      "slackNotifications": false
+    },
+    "billingInfo": {
+      "contactEmail": "",
+      "companyAddress": "",
+      "taxId": ""
+    },
+    "notificationChannels": {
+      "emailEnabled": true,
+      "slackEnabled": true,
+      "discordEnabled": true,
+      "expoEnabled": false,
+      "webhookEnabled": false,
+      "slackWebhook": "https://hooks.slack.com/services/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",
+      "discordWebhook": "https://discord.com/api/webhooks/1492011132125450371/GPQ8FcwDMghLSDR3lt-NuuGEQYJIzGCNNbn-s0VXomnpnAjewidkyuDcWjrS3-t_7xVr",
+      "smtpHost": "smtp.gmail.com",
+      "smtpPort": 587,
+      "smtpUsername": "haroun20041@gmail.com",
+      "smtpPassword": "qedl pzxy nrhr pepe",
+      "smtpFromEmail": "noreply@innodeploy.com",
+      "emailRecipients": [],
+      "expoAccessToken": "",
+      "expoPushTokens": [],
+      "webhookUrl": "",
+      "webhookHeaders": {}
+    },
+    "dockerRegistry": {
+      "registryUrl": "",
+      "username": "",
+      "password": "",
+      "namespace": ""
+    },
+    "gitProvider": {
+      "provider": "none",
+      "installationUrl": "",
+      "webhookSecret": "",
+      "repositoryOwner": ""
+    },
+    "invitations": [],
+    "apiKeys": [],
+    "createdAt": {
+      "$date": "2026-06-14T02:45:29.177Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T02:45:29.474Z"
+    },
+    "__v": 1
+  },
+  {
+    "_id": {
+      "$oid": "6a2e15d729c08418f35efad5"
+    },
+    "name": "pw-org-1781405128674-0menkl",
+    "slug": "pw-org-1781405128674-0menkl",
+    "industry": "",
+    "workspaceType": "",
+    "plan": "free",
+    "limits": {
+      "maxProjects": 0,
+      "maxDeploysPerMonth": 0,
+      "maxMembers": 0,
+      "logRetentionDays": 30
+    },
+    "members": [
+      {
+        "userId": {
+          "$oid": "6a2e15d729c08418f35efad7"
+        },
+        "role": "owner",
+        "_id": {
+          "$oid": "6a2e15d929c08418f35efadb"
+        },
+        "joinedAt": {
+          "$date": "2026-06-14T02:45:45.041Z"
+        }
+      }
+    ],
+    "alertRules": {
+      "cpuThreshold": 90,
+      "memoryThreshold": 95,
+      "latencyThreshold": 2000,
+      "availabilityThreshold": 99,
+      "serviceDownFailures": 5,
+      "diskThreshold": 85,
+      "certExpiryDays": 14,
+      "emailNotifications": true,
+      "slackNotifications": false
+    },
+    "billingInfo": {
+      "contactEmail": "",
+      "companyAddress": "",
+      "taxId": ""
+    },
+    "notificationChannels": {
+      "emailEnabled": true,
+      "slackEnabled": true,
+      "discordEnabled": true,
+      "expoEnabled": false,
+      "webhookEnabled": false,
+      "slackWebhook": "https://hooks.slack.com/services/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",
+      "discordWebhook": "https://discord.com/api/webhooks/1492011132125450371/GPQ8FcwDMghLSDR3lt-NuuGEQYJIzGCNNbn-s0VXomnpnAjewidkyuDcWjrS3-t_7xVr",
+      "smtpHost": "smtp.gmail.com",
+      "smtpPort": 587,
+      "smtpUsername": "haroun20041@gmail.com",
+      "smtpPassword": "qedl pzxy nrhr pepe",
+      "smtpFromEmail": "noreply@innodeploy.com",
+      "emailRecipients": [],
+      "expoAccessToken": "",
+      "expoPushTokens": [],
+      "webhookUrl": "",
+      "webhookHeaders": {}
+    },
+    "dockerRegistry": {
+      "registryUrl": "",
+      "username": "",
+      "password": "",
+      "namespace": ""
+    },
+    "gitProvider": {
+      "provider": "none",
+      "installationUrl": "",
+      "webhookSecret": "",
+      "repositoryOwner": ""
+    },
+    "invitations": [],
+    "apiKeys": [],
+    "createdAt": {
+      "$date": "2026-06-14T02:45:43.672Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T02:45:45.044Z"
+    },
+    "__v": 1
+  },
+  {
+    "_id": {
+      "$oid": "6a2ee4d3d1a8cf03f9e9a83c"
+    },
+    "name": "e2e-org-1781458131775-w10laj",
+    "slug": "e2e-org-1781458131775-w10laj",
+    "industry": "",
+    "workspaceType": "",
+    "plan": "free",
+    "limits": {
+      "maxProjects": 0,
+      "maxDeploysPerMonth": 0,
+      "maxMembers": 0,
+      "logRetentionDays": 30
+    },
+    "members": [
+      {
+        "userId": {
+          "$oid": "6a2ee4d3d1a8cf03f9e9a83e"
+        },
+        "role": "owner",
+        "_id": {
+          "$oid": "6a2ee4d4d1a8cf03f9e9a840"
+        },
+        "joinedAt": {
+          "$date": "2026-06-14T17:28:52.043Z"
+        }
+      }
+    ],
+    "alertRules": {
+      "cpuThreshold": 90,
+      "memoryThreshold": 95,
+      "latencyThreshold": 2000,
+      "availabilityThreshold": 99,
+      "serviceDownFailures": 5,
+      "diskThreshold": 85,
+      "certExpiryDays": 14,
+      "emailNotifications": true,
+      "slackNotifications": false
+    },
+    "billingInfo": {
+      "contactEmail": "",
+      "companyAddress": "",
+      "taxId": ""
+    },
+    "notificationChannels": {
+      "emailEnabled": true,
+      "slackEnabled": true,
+      "discordEnabled": true,
+      "expoEnabled": false,
+      "webhookEnabled": false,
+      "slackWebhook": "https://hooks.slack.com/services/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",
+      "discordWebhook": "https://discord.com/api/webhooks/1492011132125450371/GPQ8FcwDMghLSDR3lt-NuuGEQYJIzGCNNbn-s0VXomnpnAjewidkyuDcWjrS3-t_7xVr",
+      "smtpHost": "smtp.gmail.com",
+      "smtpPort": 587,
+      "smtpUsername": "haroun20041@gmail.com",
+      "smtpPassword": "qedl pzxy nrhr pepe",
+      "smtpFromEmail": "noreply@innodeploy.com",
+      "emailRecipients": [],
+      "expoAccessToken": "",
+      "expoPushTokens": [],
+      "webhookUrl": "",
+      "webhookHeaders": {}
+    },
+    "dockerRegistry": {
+      "registryUrl": "",
+      "username": "",
+      "password": "",
+      "namespace": ""
+    },
+    "gitProvider": {
+      "provider": "none",
+      "installationUrl": "",
+      "webhookSecret": "",
+      "repositoryOwner": ""
+    },
+    "invitations": [],
+    "apiKeys": [],
+    "createdAt": {
+      "$date": "2026-06-14T17:28:51.804Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T17:28:52.044Z"
+    },
+    "__v": 1
+  },
+  {
+    "_id": {
+      "$oid": "6a2ee5dfd1a8cf03f9e9a93c"
+    },
+    "name": "e2e-org-1781458399174-d11grn",
+    "slug": "e2e-org-1781458399174-d11grn",
+    "industry": "",
+    "workspaceType": "",
+    "plan": "free",
+    "limits": {
+      "maxProjects": 0,
+      "maxDeploysPerMonth": 0,
+      "maxMembers": 0,
+      "logRetentionDays": 30
+    },
+    "members": [
+      {
+        "userId": {
+          "$oid": "6a2ee5dfd1a8cf03f9e9a93e"
+        },
+        "role": "owner",
+        "_id": {
+          "$oid": "6a2ee5dfd1a8cf03f9e9a940"
+        },
+        "joinedAt": {
+          "$date": "2026-06-14T17:33:19.447Z"
+        }
+      }
+    ],
+    "alertRules": {
+      "cpuThreshold": 90,
+      "memoryThreshold": 95,
+      "latencyThreshold": 2000,
+      "availabilityThreshold": 99,
+      "serviceDownFailures": 5,
+      "diskThreshold": 85,
+      "certExpiryDays": 14,
+      "emailNotifications": true,
+      "slackNotifications": false
+    },
+    "billingInfo": {
+      "contactEmail": "",
+      "companyAddress": "",
+      "taxId": ""
+    },
+    "notificationChannels": {
+      "emailEnabled": true,
+      "slackEnabled": true,
+      "discordEnabled": true,
+      "expoEnabled": false,
+      "webhookEnabled": false,
+      "slackWebhook": "https://hooks.slack.com/services/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",
+      "discordWebhook": "https://discord.com/api/webhooks/1492011132125450371/GPQ8FcwDMghLSDR3lt-NuuGEQYJIzGCNNbn-s0VXomnpnAjewidkyuDcWjrS3-t_7xVr",
+      "smtpHost": "smtp.gmail.com",
+      "smtpPort": 587,
+      "smtpUsername": "haroun20041@gmail.com",
+      "smtpPassword": "qedl pzxy nrhr pepe",
+      "smtpFromEmail": "noreply@innodeploy.com",
+      "emailRecipients": [],
+      "expoAccessToken": "",
+      "expoPushTokens": [],
+      "webhookUrl": "",
+      "webhookHeaders": {}
+    },
+    "dockerRegistry": {
+      "registryUrl": "",
+      "username": "",
+      "password": "",
+      "namespace": ""
+    },
+    "gitProvider": {
+      "provider": "none",
+      "installationUrl": "",
+      "webhookSecret": "",
+      "repositoryOwner": ""
+    },
+    "invitations": [],
+    "apiKeys": [],
+    "createdAt": {
+      "$date": "2026-06-14T17:33:19.196Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T17:33:19.447Z"
+    },
+    "__v": 1
+  },
+  {
+    "_id": {
+      "$oid": "6a2ee8b1d1a8cf03f9e9b244"
+    },
+    "name": "e2e-org-1781459121160-xuh79y",
+    "slug": "e2e-org-1781459121160-xuh79y",
+    "industry": "",
+    "workspaceType": "",
+    "plan": "free",
+    "limits": {
+      "maxProjects": 0,
+      "maxDeploysPerMonth": 0,
+      "maxMembers": 0,
+      "logRetentionDays": 30
+    },
+    "members": [
+      {
+        "userId": {
+          "$oid": "6a2ee8b1d1a8cf03f9e9b248"
+        },
+        "role": "owner",
+        "_id": {
+          "$oid": "6a2ee8b1d1a8cf03f9e9b259"
+        },
+        "joinedAt": {
+          "$date": "2026-06-14T17:45:21.631Z"
+        }
+      }
+    ],
+    "alertRules": {
+      "cpuThreshold": 90,
+      "memoryThreshold": 95,
+      "latencyThreshold": 2000,
+      "availabilityThreshold": 99,
+      "serviceDownFailures": 5,
+      "diskThreshold": 85,
+      "certExpiryDays": 14,
+      "emailNotifications": true,
+      "slackNotifications": false
+    },
+    "billingInfo": {
+      "contactEmail": "",
+      "companyAddress": "",
+      "taxId": ""
+    },
+    "notificationChannels": {
+      "emailEnabled": true,
+      "slackEnabled": true,
+      "discordEnabled": true,
+      "expoEnabled": false,
+      "webhookEnabled": false,
+      "slackWebhook": "https://hooks.slack.com/services/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",
+      "discordWebhook": "https://discord.com/api/webhooks/1492011132125450371/GPQ8FcwDMghLSDR3lt-NuuGEQYJIzGCNNbn-s0VXomnpnAjewidkyuDcWjrS3-t_7xVr",
+      "smtpHost": "smtp.gmail.com",
+      "smtpPort": 587,
+      "smtpUsername": "haroun20041@gmail.com",
+      "smtpPassword": "qedl pzxy nrhr pepe",
+      "smtpFromEmail": "noreply@innodeploy.com",
+      "emailRecipients": [],
+      "expoAccessToken": "",
+      "expoPushTokens": [],
+      "webhookUrl": "",
+      "webhookHeaders": {}
+    },
+    "dockerRegistry": {
+      "registryUrl": "",
+      "username": "",
+      "password": "",
+      "namespace": ""
+    },
+    "gitProvider": {
+      "provider": "none",
+      "installationUrl": "",
+      "webhookSecret": "",
+      "repositoryOwner": ""
+    },
+    "invitations": [],
+    "apiKeys": [],
+    "createdAt": {
+      "$date": "2026-06-14T17:45:21.250Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T17:45:21.632Z"
+    },
+    "__v": 1
+  },
+  {
+    "_id": {
+      "$oid": "6a2ee8b1d1a8cf03f9e9b246"
+    },
+    "name": "e2e-org-1781459121149-l7jngh",
+    "slug": "e2e-org-1781459121149-l7jngh",
+    "industry": "",
+    "workspaceType": "",
+    "plan": "free",
+    "limits": {
+      "maxProjects": 0,
+      "maxDeploysPerMonth": 0,
+      "maxMembers": 0,
+      "logRetentionDays": 30
+    },
+    "members": [
+      {
+        "userId": {
+          "$oid": "6a2ee8b1d1a8cf03f9e9b249"
+        },
+        "role": "owner",
+        "_id": {
+          "$oid": "6a2ee8b1d1a8cf03f9e9b256"
+        },
+        "joinedAt": {
+          "$date": "2026-06-14T17:45:21.622Z"
+        }
+      }
+    ],
+    "alertRules": {
+      "cpuThreshold": 90,
+      "memoryThreshold": 95,
+      "latencyThreshold": 2000,
+      "availabilityThreshold": 99,
+      "serviceDownFailures": 5,
+      "diskThreshold": 85,
+      "certExpiryDays": 14,
+      "emailNotifications": true,
+      "slackNotifications": false
+    },
+    "billingInfo": {
+      "contactEmail": "",
+      "companyAddress": "",
+      "taxId": ""
+    },
+    "notificationChannels": {
+      "emailEnabled": true,
+      "slackEnabled": true,
+      "discordEnabled": true,
+      "expoEnabled": false,
+      "webhookEnabled": false,
+      "slackWebhook": "https://hooks.slack.com/services/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",
+      "discordWebhook": "https://discord.com/api/webhooks/1492011132125450371/GPQ8FcwDMghLSDR3lt-NuuGEQYJIzGCNNbn-s0VXomnpnAjewidkyuDcWjrS3-t_7xVr",
+      "smtpHost": "smtp.gmail.com",
+      "smtpPort": 587,
+      "smtpUsername": "haroun20041@gmail.com",
+      "smtpPassword": "qedl pzxy nrhr pepe",
+      "smtpFromEmail": "noreply@innodeploy.com",
+      "emailRecipients": [],
+      "expoAccessToken": "",
+      "expoPushTokens": [],
+      "webhookUrl": "",
+      "webhookHeaders": {}
+    },
+    "dockerRegistry": {
+      "registryUrl": "",
+      "username": "",
+      "password": "",
+      "namespace": ""
+    },
+    "gitProvider": {
+      "provider": "none",
+      "installationUrl": "",
+      "webhookSecret": "",
+      "repositoryOwner": ""
+    },
+    "invitations": [],
+    "apiKeys": [],
+    "createdAt": {
+      "$date": "2026-06-14T17:45:21.257Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T17:45:21.623Z"
+    },
+    "__v": 1
+  },
+  {
+    "_id": {
+      "$oid": "6a2ee8b1d1a8cf03f9e9b24b"
+    },
+    "name": "e2e-org-1781459121224-u00mhe",
+    "slug": "e2e-org-1781459121224-u00mhe",
+    "industry": "",
+    "workspaceType": "",
+    "plan": "free",
+    "limits": {
+      "maxProjects": 0,
+      "maxDeploysPerMonth": 0,
+      "maxMembers": 0,
+      "logRetentionDays": 30
+    },
+    "members": [
+      {
+        "userId": {
+          "$oid": "6a2ee8b1d1a8cf03f9e9b24d"
+        },
+        "role": "owner",
+        "_id": {
+          "$oid": "6a2ee8b1d1a8cf03f9e9b253"
+        },
+        "joinedAt": {
+          "$date": "2026-06-14T17:45:21.615Z"
+        }
+      }
+    ],
+    "alertRules": {
+      "cpuThreshold": 90,
+      "memoryThreshold": 95,
+      "latencyThreshold": 2000,
+      "availabilityThreshold": 99,
+      "serviceDownFailures": 5,
+      "diskThreshold": 85,
+      "certExpiryDays": 14,
+      "emailNotifications": true,
+      "slackNotifications": false
+    },
+    "billingInfo": {
+      "contactEmail": "",
+      "companyAddress": "",
+      "taxId": ""
+    },
+    "notificationChannels": {
+      "emailEnabled": true,
+      "slackEnabled": true,
+      "discordEnabled": true,
+      "expoEnabled": false,
+      "webhookEnabled": false,
+      "slackWebhook": "https://hooks.slack.com/services/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",
+      "discordWebhook": "https://discord.com/api/webhooks/1492011132125450371/GPQ8FcwDMghLSDR3lt-NuuGEQYJIzGCNNbn-s0VXomnpnAjewidkyuDcWjrS3-t_7xVr",
+      "smtpHost": "smtp.gmail.com",
+      "smtpPort": 587,
+      "smtpUsername": "haroun20041@gmail.com",
+      "smtpPassword": "qedl pzxy nrhr pepe",
+      "smtpFromEmail": "noreply@innodeploy.com",
+      "emailRecipients": [],
+      "expoAccessToken": "",
+      "expoPushTokens": [],
+      "webhookUrl": "",
+      "webhookHeaders": {}
+    },
+    "dockerRegistry": {
+      "registryUrl": "",
+      "username": "",
+      "password": "",
+      "namespace": ""
+    },
+    "gitProvider": {
+      "provider": "none",
+      "installationUrl": "",
+      "webhookSecret": "",
+      "repositoryOwner": ""
+    },
+    "invitations": [],
+    "apiKeys": [],
+    "createdAt": {
+      "$date": "2026-06-14T17:45:21.280Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T17:45:21.616Z"
+    },
+    "__v": 1
+  },
+  {
+    "_id": {
+      "$oid": "6a2ee8b1d1a8cf03f9e9b24f"
+    },
+    "name": "e2e-org-1781459121478-amvxfx",
+    "slug": "e2e-org-1781459121478-amvxfx",
+    "industry": "",
+    "workspaceType": "",
+    "plan": "free",
+    "limits": {
+      "maxProjects": 0,
+      "maxDeploysPerMonth": 0,
+      "maxMembers": 0,
+      "logRetentionDays": 30
+    },
+    "members": [
+      {
+        "userId": {
+          "$oid": "6a2ee8b1d1a8cf03f9e9b251"
+        },
+        "role": "owner",
+        "_id": {
+          "$oid": "6a2ee8b1d1a8cf03f9e9b266"
+        },
+        "joinedAt": {
+          "$date": "2026-06-14T17:45:21.797Z"
+        }
+      }
+    ],
+    "alertRules": {
+      "cpuThreshold": 90,
+      "memoryThreshold": 95,
+      "latencyThreshold": 2000,
+      "availabilityThreshold": 99,
+      "serviceDownFailures": 5,
+      "diskThreshold": 85,
+      "certExpiryDays": 14,
+      "emailNotifications": true,
+      "slackNotifications": false
+    },
+    "billingInfo": {
+      "contactEmail": "",
+      "companyAddress": "",
+      "taxId": ""
+    },
+    "notificationChannels": {
+      "emailEnabled": true,
+      "slackEnabled": true,
+      "discordEnabled": true,
+      "expoEnabled": false,
+      "webhookEnabled": false,
+      "slackWebhook": "https://hooks.slack.com/services/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",
+      "discordWebhook": "https://discord.com/api/webhooks/1492011132125450371/GPQ8FcwDMghLSDR3lt-NuuGEQYJIzGCNNbn-s0VXomnpnAjewidkyuDcWjrS3-t_7xVr",
+      "smtpHost": "smtp.gmail.com",
+      "smtpPort": 587,
+      "smtpUsername": "haroun20041@gmail.com",
+      "smtpPassword": "qedl pzxy nrhr pepe",
+      "smtpFromEmail": "noreply@innodeploy.com",
+      "emailRecipients": [],
+      "expoAccessToken": "",
+      "expoPushTokens": [],
+      "webhookUrl": "",
+      "webhookHeaders": {}
+    },
+    "dockerRegistry": {
+      "registryUrl": "",
+      "username": "",
+      "password": "",
+      "namespace": ""
+    },
+    "gitProvider": {
+      "provider": "none",
+      "installationUrl": "",
+      "webhookSecret": "",
+      "repositoryOwner": ""
+    },
+    "invitations": [],
+    "apiKeys": [],
+    "createdAt": {
+      "$date": "2026-06-14T17:45:21.517Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T17:45:21.797Z"
+    },
+    "__v": 1
+  },
+  {
+    "_id": {
+      "$oid": "6a2ee8c2d1a8cf03f9e9b275"
+    },
+    "name": "pw-org-1781459121109-r1euge",
+    "slug": "pw-org-1781459121109-r1euge",
+    "industry": "",
+    "workspaceType": "",
+    "plan": "free",
+    "limits": {
+      "maxProjects": 0,
+      "maxDeploysPerMonth": 0,
+      "maxMembers": 0,
+      "logRetentionDays": 30
+    },
+    "members": [
+      {
+        "userId": {
+          "$oid": "6a2ee8c2d1a8cf03f9e9b277"
+        },
+        "role": "owner",
+        "_id": {
+          "$oid": "6a2ee8c3d1a8cf03f9e9b27a"
+        },
+        "joinedAt": {
+          "$date": "2026-06-14T17:45:39.798Z"
+        }
+      }
+    ],
+    "alertRules": {
+      "cpuThreshold": 90,
+      "memoryThreshold": 95,
+      "latencyThreshold": 2000,
+      "availabilityThreshold": 99,
+      "serviceDownFailures": 5,
+      "diskThreshold": 85,
+      "certExpiryDays": 14,
+      "emailNotifications": true,
+      "slackNotifications": false
+    },
+    "billingInfo": {
+      "contactEmail": "",
+      "companyAddress": "",
+      "taxId": ""
+    },
+    "notificationChannels": {
+      "emailEnabled": true,
+      "slackEnabled": true,
+      "discordEnabled": true,
+      "expoEnabled": false,
+      "webhookEnabled": false,
+      "slackWebhook": "https://hooks.slack.com/services/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",
+      "discordWebhook": "https://discord.com/api/webhooks/1492011132125450371/GPQ8FcwDMghLSDR3lt-NuuGEQYJIzGCNNbn-s0VXomnpnAjewidkyuDcWjrS3-t_7xVr",
+      "smtpHost": "smtp.gmail.com",
+      "smtpPort": 587,
+      "smtpUsername": "haroun20041@gmail.com",
+      "smtpPassword": "qedl pzxy nrhr pepe",
+      "smtpFromEmail": "noreply@innodeploy.com",
+      "emailRecipients": [],
+      "expoAccessToken": "",
+      "expoPushTokens": [],
+      "webhookUrl": "",
+      "webhookHeaders": {}
+    },
+    "dockerRegistry": {
+      "registryUrl": "",
+      "username": "",
+      "password": "",
+      "namespace": ""
+    },
+    "gitProvider": {
+      "provider": "none",
+      "installationUrl": "",
+      "webhookSecret": "",
+      "repositoryOwner": ""
+    },
+    "invitations": [],
+    "apiKeys": [],
+    "createdAt": {
+      "$date": "2026-06-14T17:45:38.460Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-14T17:45:39.800Z"
+    },
+    "__v": 1
+  }
+]
