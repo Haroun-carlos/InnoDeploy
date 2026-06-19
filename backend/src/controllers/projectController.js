@@ -58,6 +58,7 @@ const mapProject = (project) => ({
   name: project.name,
   description: project.description,
   repoUrl: project.repoUrl,
+  repositoryPath: project.repositoryPath || "",
   branch: project.branch,
   status: project.status,
   lastDeployAt: project.lastDeployAt,
@@ -77,6 +78,52 @@ const mapProject = (project) => ({
   updatedAt: project.updatedAt,
 });
 
+const normalizePublicUrl = (value) => {
+  const raw = String(value || "").trim();
+  if (!raw) return "";
+
+  if (/^https?:\/\//i.test(raw)) {
+    return raw.replace(/\/+$/, "");
+  }
+
+  if (/^(localhost|127\.0\.0\.1|\d{1,3}(?:\.\d{1,3}){3})(?::\d+)?(\/.*)?$/i.test(raw)) {
+    return `http://${raw.replace(/\/+$/, "")}`;
+  }
+
+  return `https://${raw.replace(/\/+$/, "")}`;
+};
+
+const derivePublicUrl = (project) => {
+  const candidates = [];
+
+  for (const environment of Array.isArray(project?.environments) ? project.environments : []) {
+    const config = environment?.config || {};
+    candidates.push(
+      config.publicUrl,
+      config.siteUrl,
+      config.url,
+      config.baseUrl,
+      config.appUrl,
+      config.previewUrl,
+      config.domain,
+    );
+  }
+
+  const nextUrl = candidates.find((candidate) => typeof candidate === "string" && String(candidate).trim());
+  return normalizePublicUrl(nextUrl || "");
+};
+
+const mapPublicProject = (project) => ({
+  name: project.name,
+  description: project.description,
+  repoUrl: project.repoUrl,
+  branch: project.branch,
+  status: project.status,
+  lastDeployAt: project.lastDeployAt,
+  envCount: project.envCount,
+  publicUrl: derivePublicUrl(project),
+});
+
 const getProjectForOrganisation = async (projectId, organisationId) => {
   if (!mongoose.Types.ObjectId.isValid(projectId)) {
     return null;
@@ -84,7 +131,38 @@ const getProjectForOrganisation = async (projectId, organisationId) => {
   return Project.findOne({ _id: projectId, organisationId });
 };
 
+const getProjectByName = async (projectName) => {
+  const normalizedName = String(projectName || "").trim();
+  if (!normalizedName) return null;
+
+  return Project.findOne({
+    $or: [
+      { name: normalizedName },
+      { name: new RegExp(`^${normalizedName.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}$`, "i") },
+    ],
+  }).sort({ createdAt: -1 });
+};
+
 const normalizeEnvName = (name) => String(name || "").trim().toLowerCase();
+
+const normalizeRepositoryPath = (value) => {
+  const cleaned = String(value || "")
+    .trim()
+    .replace(/\\+/g, "/")
+    .replace(/^\/+/, "")
+    .replace(/\/+$/, "");
+
+  if (!cleaned) {
+    return "";
+  }
+
+  const normalized = cleaned.split("/").filter((segment) => segment && segment !== ".").join("/");
+  if (!normalized || normalized.includes("..")) {
+    throw new Error("repositoryPath must be a relative subdirectory inside the repository");
+  }
+
+  return normalized;
+};
 
 const listProjects = async (req, res, next) => {
   try {
@@ -118,6 +196,21 @@ const getProject = async (req, res, next) => {
   }
 };
 
+const getPublicProjectSite = async (req, res, next) => {
+  try {
+    const decodedName = decodeURIComponent(String(req.params.projectName || ""));
+    const project = await getProjectByName(decodedName);
+
+    if (!project) {
+      return res.status(404).json({ message: "Project not found" });
+    }
+
+    res.json({ project: mapPublicProject(project) });
+  } catch (error) {
+    next(error);
+  }
+};
+
 const createProject = async (req, res, next) => {
   try {
     let organisationId = await getOrganisationId(req.user.id);
@@ -133,7 +226,7 @@ const createProject = async (req, res, next) => {
       return res.status(403).json({ message: limitCheck.message });
     }
 
-    const { name, repoUrl, branch = "main", description = "", envCount = 0, setupMode, pipelineConfig, installCommand, buildCommand, startCommand } = req.body;
+    const { name, repoUrl, repositoryPath, branch = "main", description = "", envCount = 0, setupMode, pipelineConfig, installCommand, buildCommand, startCommand } = req.body;
     if (!name || !repoUrl) {
       return res.status(400).json({ message: "name and repoUrl are required" });
     }
@@ -150,6 +243,7 @@ const createProject = async (req, res, next) => {
     const project = await Project.create({
       name: normalizedName,
       repoUrl: String(repoUrl).trim(),
+      repositoryPath: normalizeRepositoryPath(repositoryPath),
       branch: String(branch).trim() || "main",
       description: String(description).trim(),
       status: "stopped",
@@ -600,4 +694,5 @@ module.exports = {
   rollbackDeployment,
   cancelDeployment,
   getDeploymentHistory,
+  getPublicProjectSite,
 };

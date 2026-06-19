@@ -1646,6 +1646,16 @@ messages["projects.repoUrl"] = {
   french: "URL du depot",
   arabic: "رابط المستودع",
 };
+messages["projects.repositoryPath"] = {
+  english: "Repository path",
+  french: "Chemin du depot",
+  arabic: "مسار المستودع",
+};
+messages["projects.repositoryPathHint"] = {
+  english: "Optional. Enter the subdirectory to run, such as apps/web. Leave blank to run from the repository root.",
+  french: "Facultatif. Saisissez le sous-repertoire a executer, par exemple apps/web. Laissez vide pour executer a la racine du depot.",
+  arabic: "اختياري. ادخل المجلد الفرعي الذي سيتم تشغيله مثل apps/web. اتركه فارغا للتشغيل من جذر المستودع.",
+};
 messages["projects.branch"] = {
   english: "Branch",
   french: "Branche",

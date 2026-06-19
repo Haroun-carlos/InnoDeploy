@@ -24,6 +24,7 @@ export default function CreateProjectModal({
   const language = useLanguagePreference();
   const [name, setName] = useState("");
   const [repoUrl, setRepoUrl] = useState("");
+  const [repositoryPath, setRepositoryPath] = useState("");
   const [branch, setBranch] = useState("main");
   const [envSetup, setEnvSetup] = useState("");
   const [loading, setLoading] = useState(false);
@@ -45,6 +46,7 @@ export default function CreateProjectModal({
       const payload: CreateProjectPayload = {
         name: name.trim(),
         repoUrl: repoUrl.trim(),
+        repositoryPath: repositoryPath.trim(),
         branch: branch.trim() || "main",
       };
       if (envSetup.trim()) payload.envSetup = envSetup.trim();
@@ -53,6 +55,7 @@ export default function CreateProjectModal({
       onCreated(data.project ?? data);
       setName("");
       setRepoUrl("");
+      setRepositoryPath("");
       setBranch("main");
       setEnvSetup("");
       onClose();
@@ -113,6 +116,19 @@ export default function CreateProjectModal({
               onChange={(e) => setRepoUrl(e.target.value)}
               required
             />
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="repository-path">{t(language, "projects.repositoryPath")}</Label>
+            <Input
+              id="repository-path"
+              placeholder="apps/web"
+              value={repositoryPath}
+              onChange={(e) => setRepositoryPath(e.target.value)}
+            />
+            <p className="text-xs text-muted-foreground">
+              {t(language, "projects.repositoryPathHint")}
+            </p>
           </div>
 
           <div className="space-y-2">

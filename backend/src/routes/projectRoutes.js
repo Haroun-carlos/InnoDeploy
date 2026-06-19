@@ -15,6 +15,7 @@ const {
 	rollbackDeployment,
 	cancelDeployment,
 	getDeploymentHistory,
+	getPublicProjectSite,
 } = require("../controllers/projectController");
 
 const router = express.Router();
@@ -23,7 +24,7 @@ router.get("/", authMiddleware, listProjects);
 router.post("/", authMiddleware, requireRole("owner", "admin", "developer"), audit("project.create", "project"), createProject);
 router.get("/:id", authMiddleware, getProject);
 router.patch("/:id", authMiddleware, requireRole("owner", "admin", "developer"), audit("project.update", "project"), updateProject);
-router.delete("/:id", authMiddleware, requireRole("owner", "admin"), audit("project.delete", "project"), deleteProject);
+router.delete("/:id", authMiddleware, requireRole("owner", "admin", "developer"), audit("project.delete", "project"), deleteProject);
 
 router.post("/:id/envs", authMiddleware, requireRole("owner", "admin", "developer"), audit("environment.create", "environment"), createEnvironment);
 router.patch("/:id/envs/:env", authMiddleware, requireRole("owner", "admin", "developer"), audit("environment.update", "environment"), updateEnvironment);
@@ -34,5 +35,7 @@ router.post("/:id/deploy", authMiddleware, requireRole("owner", "admin", "develo
 router.post("/:id/rollback", authMiddleware, requireRole("owner", "admin", "developer"), audit("deployment.rollback", "deployment"), rollbackDeployment);
 router.post("/:id/deploy/cancel", authMiddleware, requireRole("owner", "admin", "developer"), audit("deployment.cancel", "deployment"), cancelDeployment);
 router.get("/:id/deploy/history", authMiddleware, getDeploymentHistory);
+
+router.get("/public/sites/:projectName", getPublicProjectSite);
 
 module.exports = router;

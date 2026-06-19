@@ -706,17 +706,25 @@ function ProjectDetailPageContent() {
     try {
       setProjectError(null);
       setProjectSuccess(null);
+      const defaultBranch = project.branch || "main";
       await projectApi.triggerDeploy(_projectId, {
         environment: activeEnv?.name?.toLowerCase() || t(language, "projectDetail.defaultEnv"),
       });
+      const { data: pipelineData } = await pipelineApi.triggerRun(_projectId, {
+        branch: defaultBranch,
+        environment: activeEnv?.name?.toLowerCase() || t(language, "projectDetail.defaultEnv"),
+      });
+      const triggeredRun = mapBackendRunToUi(pipelineData.run as BackendPipelineRun);
+      mergeRun(triggeredRun);
+      setSelectedRun(triggeredRun);
       // Refresh project data to show updated status
       const { data } = await projectApi.getProject(_projectId);
       setProject(data.project);
-      setProjectSuccess("✅ Deployment triggered successfully! Project is now running.");
+      setProjectSuccess("✅ Deployment triggered successfully and the default pipeline started.");
       setTimeout(() => setProjectSuccess(null), 5000);
     } catch (error: unknown) {
       const axiosErr = error as { response?: { data?: { message?: string } } };
-      setProjectError(axiosErr.response?.data?.message || "Failed to trigger deployment");
+      setProjectError(axiosErr.response?.data?.message || "Failed to trigger deployment and default pipeline");
     }
   };
 

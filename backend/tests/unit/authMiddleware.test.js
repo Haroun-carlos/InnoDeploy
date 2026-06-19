@@ -60,6 +60,16 @@ describe("requireRole", () => {
     expect(next).toHaveBeenCalled();
   });
 
+  test("allows developer when included in allowed roles", () => {
+    const req = { user: { role: "developer" } };
+    const res = mockRes();
+    const next = jest.fn();
+
+    requireRole("owner", "admin", "developer")(req, res, next);
+
+    expect(next).toHaveBeenCalled();
+  });
+
   test("rejects user without matching role", () => {
     const req = { user: { role: "viewer" } };
     const res = mockRes();

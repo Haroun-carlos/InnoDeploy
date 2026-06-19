@@ -43,14 +43,11 @@ const cards = [
   },
 ];
 
-// Default mock values shown before the API loads
-const defaultValues = { total: 4, healthy: 2, anomalies: 1, errors: 1 };
-
 export default function AiOpsOverviewCards({ overview, loading }: Props) {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
       {cards.map(({ key, label, icon: Icon, gradient, borderColor, color }, index) => {
-        const value = loading ? "…" : overview ? overview[key] : defaultValues[key];
+        const value = loading ? "…" : overview ? overview[key] : "—";
 
         return (
           <div

@@ -19,7 +19,7 @@ interface DeployRow {
   version: string;
   environment: string;
   strategy: string;
-  status: "success" | "failed" | "in-progress";
+  status: "success" | "failed" | "in-progress" | "cancelled";
   triggeredBy: string;
   duration: string;
   createdAt: string;
@@ -29,18 +29,21 @@ const statusIcon = {
   success: <CheckCircle2 className="h-4 w-4 text-emerald-400" />,
   failed: <XCircle className="h-4 w-4 text-red-400" />,
   "in-progress": <Loader2 className="h-4 w-4 text-blue-400 animate-spin" />,
+  cancelled: <XCircle className="h-4 w-4 text-amber-400" />,
 };
 
 const statusLabel = {
   success: "Success",
   failed: "Failed",
   "in-progress": "In Progress",
+  cancelled: "Cancelled",
 };
 
 const statusBadge = {
   success: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
   failed: "bg-red-500/10 text-red-400 border-red-500/20",
   "in-progress": "bg-blue-500/10 text-blue-400 border-blue-500/20",
+  cancelled: "bg-amber-500/10 text-amber-400 border-amber-500/20",
 };
 
 export default function RecentDeployments() {

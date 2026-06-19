@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { useRequireAuth } from "@/hooks/useRequireAuth";
 import Sidebar from "@/components/shared/Sidebar";
 import Navbar from "@/components/shared/Navbar";
@@ -112,6 +113,12 @@ export default function AiOpsPage() {
                 </p>
               </div>
             </div>
+
+            {projects.length === 0 && !loading && (
+              <div className="rounded-xl border border-white/[0.08] bg-white/[0.03] px-4 py-3 text-sm text-slate-400">
+                No projects found. <Link href="/dashboard/new-project" className="text-purple-300 hover:text-purple-200">Create a project</Link> to connect AI monitoring to live data.
+              </div>
+            )}
             
             <div className="flex items-center gap-3 flex-wrap">
               {projects.length > 0 && (

@@ -113,6 +113,7 @@ export const projectApi = {
   createProject: (payload: {
     name: string;
     repoUrl: string;
+    repositoryPath?: string;
     branch: string;
     envSetup?: string;
     setupMode?: string;

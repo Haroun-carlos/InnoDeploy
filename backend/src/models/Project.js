@@ -40,6 +40,11 @@ const projectSchema = new mongoose.Schema(
       required: [true, "Repository URL is required"],
       trim: true,
     },
+    repositoryPath: {
+      type: String,
+      default: "",
+      trim: true,
+    },
     branch: {
       type: String,
       default: "main",

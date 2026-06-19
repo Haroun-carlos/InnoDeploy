@@ -18,35 +18,6 @@ import {
 import { Cpu, MemoryStick, Activity, AlertTriangle, Loader2 } from "lucide-react";
 import { projectApi } from "@/lib/apiClient";
 
-// ── Generate realistic mock chart data ───────────────────
-
-function generateTimeSeriesData(hours = 24, intervalMin = 15) {
-  const points: any[] = [];
-  const count = Math.floor((hours * 60) / intervalMin);
-  const now = Date.now();
-
-  for (let i = 0; i < count; i++) {
-    const ts = new Date(now - (count - 1 - i) * intervalMin * 60000);
-    const hour = ts.getHours();
-    const isRush = hour >= 9 && hour <= 18;
-    const loadFactor = isRush ? 1.3 : 0.8;
-    const spike = i > count - 10 ? 1 + (i - (count - 10)) * 0.08 : 1;
-
-    points.push({
-      time: ts.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", hour12: false }),
-      fullTime: ts.toLocaleString(),
-      cpu: Math.min(99, Math.round((25 + Math.random() * 15) * loadFactor * spike)),
-      memory: Math.min(99, Math.round((40 + Math.random() * 12) * loadFactor * spike * 0.9)),
-      latencyP50: Math.max(20, Math.round((80 + Math.random() * 40) * loadFactor * spike)),
-      latencyP95: Math.max(50, Math.round((150 + Math.random() * 80) * loadFactor * spike)),
-      latencyP99: Math.max(100, Math.round((250 + Math.random() * 150) * loadFactor * spike)),
-      errors: Math.round(Math.random() * (isRush ? 5 : 2) * spike),
-      requests: Math.round((200 + Math.random() * 300) * loadFactor),
-    });
-  }
-  return points;
-}
-
 interface Props {
   projectId?: string | null;
 }
@@ -76,6 +47,7 @@ export default function AiOpsMetricsCharts({ projectId }: Props) {
   useEffect(() => {
     if (!projectId) {
       setMetrics([]);
+      setLoadingMetrics(false);
       return;
     }
     const fetchMetrics = async () => {
@@ -95,9 +67,7 @@ export default function AiOpsMetricsCharts({ projectId }: Props) {
 
   const data = useMemo(() => {
     if (!projectId || metrics.length === 0) {
-      const hours = timeRange === "1h" ? 1 : timeRange === "6h" ? 6 : 24;
-      const interval = timeRange === "1h" ? 2 : timeRange === "6h" ? 5 : 15;
-      return generateTimeSeriesData(hours, interval);
+      return [];
     }
 
     // Sort by recordedAt ascending (chronological)
@@ -184,11 +154,32 @@ export default function AiOpsMetricsCharts({ projectId }: Props) {
           <div className="absolute inset-0 bg-[#030711]/45 backdrop-blur-sm z-50 flex items-center justify-center rounded-2xl min-h-[300px]">
             <div className="flex items-center gap-3 bg-[#0a1628]/85 border border-white/[0.08] px-4 py-2.5 rounded-xl shadow-2xl">
               <Loader2 className="h-4 w-4 animate-spin text-cyan-400" />
-              <span className="text-xs text-slate-400 font-medium">Fetching live database metrics...</span>
+              <span className="text-xs text-slate-400 font-medium">Fetching project metrics...</span>
             </div>
           </div>
         )}
-        <div className="grid gap-6 lg:grid-cols-2">
+        {!projectId ? (
+          <div className={`${chartCardClass} min-h-[300px] flex items-center justify-center text-center`}>
+            <div className="max-w-sm space-y-3">
+              <Activity className="mx-auto h-10 w-10 text-cyan-400/70" />
+              <div>
+                <h4 className="text-sm font-semibold text-white">Select a project</h4>
+                <p className="mt-1 text-sm text-slate-500">Pick one of your projects to load its live CPU, memory, latency, and request metrics.</p>
+              </div>
+            </div>
+          </div>
+        ) : data.length === 0 ? (
+          <div className={`${chartCardClass} min-h-[300px] flex items-center justify-center text-center`}>
+            <div className="max-w-sm space-y-3">
+              <Activity className="mx-auto h-10 w-10 text-cyan-400/70" />
+              <div>
+                <h4 className="text-sm font-semibold text-white">No metrics yet</h4>
+                <p className="mt-1 text-sm text-slate-500">This project has not produced monitoring metrics yet. Once the monitor worker sends data, the charts will appear here.</p>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div className="grid gap-6 lg:grid-cols-2">
           {/* CPU & Memory Chart */}
           <div className={chartCardClass}>
             <div className="mb-4 flex items-center gap-2">
@@ -343,6 +334,7 @@ export default function AiOpsMetricsCharts({ projectId }: Props) {
             </ResponsiveContainer>
           </div>
         </div>
+        )}
       </div>
     </div>
   );

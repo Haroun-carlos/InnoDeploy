@@ -556,6 +556,30 @@ const runProcess = ({ command, args = [], cwd, shell = false, timeoutMs = RUNNER
 
 const asPosixPath = (inputPath) => String(inputPath || "").replace(/\\/g, "/");
 
+const normalizeRepositoryPath = (value) => {
+  const cleaned = String(value || "")
+    .trim()
+    .replace(/\\+/g, "/")
+    .replace(/^\/+/, "")
+    .replace(/\/+$/, "");
+
+  if (!cleaned) {
+    return "";
+  }
+
+  const normalized = path.posix.normalize(cleaned).replace(/^\.\/?/, "");
+  if (!normalized || normalized === "." || normalized.startsWith("..") || normalized.includes("/../")) {
+    throw new Error("Invalid repository path configured for project");
+  }
+
+  return normalized;
+};
+
+const getRunWorkspace = (rootWorkspace, repositoryPath) => {
+  const normalizedPath = normalizeRepositoryPath(repositoryPath);
+  return normalizedPath ? path.join(rootWorkspace, normalizedPath) : rootWorkspace;
+};
+
 const detectDockerAvailability = async () => {
   if (dockerAvailable !== null) {
     return dockerAvailable;
@@ -576,8 +600,10 @@ const detectDockerAvailability = async () => {
   return dockerAvailable;
 };
 
-const runStepInsideDocker = async ({ workspace, image, command, timeoutMs }) => {
+const runStepInsideDocker = async ({ workspaceRoot, workspace, image, command, timeoutMs }) => {
   const workspacePosix = asPosixPath(workspace);
+  const relativeWorkspace = path.relative(workspaceRoot, workspace);
+  const containerWorkspace = relativeWorkspace ? path.posix.join("/workspace", asPosixPath(relativeWorkspace)) : "/workspace";
   return runProcess({
     command: "docker",
     args: [
@@ -586,7 +612,7 @@ const runStepInsideDocker = async ({ workspace, image, command, timeoutMs }) => 
       "-v",
       `${workspacePosix}:/workspace`,
       "-w",
-      "/workspace",
+      containerWorkspace,
       image,
       "sh",
       "-lc",
@@ -639,15 +665,34 @@ const prepareWorkspace = async ({ runId, project, branch }) => {
   if (!cloneResult.success) {
     return {
       success: false,
+      workspaceRoot: runWorkspace,
       workspace: runWorkspace,
       output: `Failed to clone repository ${project.repoUrl}\n${cloneResult.output}`,
       durationMs: cloneResult.durationMs,
     };
   }
 
+  const repositoryPath = normalizeRepositoryPath(project.repositoryPath);
+  const workspace = getRunWorkspace(runWorkspace, repositoryPath);
+
+  try {
+    await fs.access(workspace);
+  } catch {
+    return {
+      success: false,
+      workspaceRoot: runWorkspace,
+      workspace,
+      output: repositoryPath
+        ? `Repository path '${repositoryPath}' does not exist in the cloned repository`
+        : `Repository workspace is unavailable`,
+      durationMs: cloneResult.durationMs,
+    };
+  }
+
   return {
     success: true,
-    workspace: runWorkspace,
+    workspaceRoot: runWorkspace,
+    workspace,
     output: cloneResult.output,
     durationMs: cloneResult.durationMs,
   };
@@ -855,7 +900,7 @@ const processPipelineRun = async (runId) => {
     return;
   }
 
-  const project = await Project.findById(run.projectId).select("repoUrl branch");
+  const project = await Project.findById(run.projectId).select("repoUrl branch repositoryPath");
   if (!project) {
     run.status = "failed";
     run.duration = Date.now() - startedAt;
@@ -937,6 +982,7 @@ const processPipelineRun = async (runId) => {
 
       result = shouldUseDocker
         ? await runStepInsideDocker({
+            workspaceRoot: checkout.workspaceRoot,
             workspace: checkout.workspace,
             image: String(step.image || "node:20-alpine"),
             command: step.command,

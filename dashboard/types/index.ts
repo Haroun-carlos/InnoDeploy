@@ -23,6 +23,7 @@ export interface Project {
   name: string;
   description?: string;
   repoUrl: string;
+  repositoryPath: string;
   branch: string;
   status: ProjectStatus;
   lastDeployAt: string | null;
@@ -43,6 +44,7 @@ export interface Project {
 export interface CreateProjectPayload {
   name: string;
   repoUrl: string;
+  repositoryPath?: string;
   branch: string;
   envSetup?: string;
   setupMode?: 'automatic' | 'manual';

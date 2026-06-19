@@ -76,20 +76,6 @@ const statusConfig = {
   resolved: { label: "Resolved", className: "text-emerald-400 bg-emerald-500/10 border-emerald-500/20" },
 };
 
-// Mock alerts for demo
-const MOCK_ALERTS: AlertItem[] = [
-  { id: "a1", severity: "critical", ruleType: "cpu", message: "CPU usage exceeded 90% on Payment Gateway — currently at 94%", status: "open", createdAt: new Date(Date.now() - 300000).toISOString(), metricAtTrigger: [{ label: "CPU", value: 94, unit: "%" }] },
-  { id: "a2", severity: "critical", ruleType: "availability", message: "Payment Gateway health check failed 5 times consecutively", status: "open", createdAt: new Date(Date.now() - 600000).toISOString(), metricAtTrigger: [{ label: "Failed Probes", value: 5, unit: "count" }] },
-  { id: "a3", severity: "warning", ruleType: "memory", message: "Admin Dashboard memory usage at 82% — GC pressure increasing", status: "open", createdAt: new Date(Date.now() - 3600000).toISOString(), metricAtTrigger: [{ label: "Memory", value: 82, unit: "%" }, { label: "GC Pause", value: 180, unit: "ms" }] },
-  { id: "a4", severity: "critical", ruleType: "latency", message: "HTTP latency spiked to 2,400ms on Payment Gateway — SLO breached", status: "open", createdAt: new Date(Date.now() - 1200000).toISOString(), metricAtTrigger: [{ label: "Latency", value: 2400, unit: "ms" }] },
-  { id: "a5", severity: "warning", ruleType: "cpu", message: "CPU usage at 78% on E-Commerce API during peak traffic", status: "acknowledged", createdAt: new Date(Date.now() - 14400000).toISOString(), metricAtTrigger: [{ label: "CPU", value: 78, unit: "%" }] },
-  { id: "a6", severity: "warning", ruleType: "disk", message: "Disk usage at 78% on prod-server-01 — growing 0.5 GB/day", status: "open", createdAt: new Date(Date.now() - 21600000).toISOString(), metricAtTrigger: [{ label: "Disk", value: 78, unit: "%" }] },
-  { id: "a7", severity: "info", ruleType: "deployment", message: "Deployment v2.4.2 completed successfully on E-Commerce API", status: "resolved", createdAt: new Date(Date.now() - 7200000).toISOString(), metricAtTrigger: [{ label: "Duration", value: 45, unit: "s" }] },
-  { id: "a8", severity: "warning", ruleType: "deployment", message: "Payment Gateway deployment v3.1.1 failed — rollback initiated", status: "open", createdAt: new Date(Date.now() - 1800000).toISOString(), metricAtTrigger: [{ label: "Exit Code", value: 1, unit: "" }] },
-  { id: "a9", severity: "info", ruleType: "certificate", message: "SSL certificate expires in 12 days for auth.innodeploy.io", status: "open", createdAt: new Date(Date.now() - 43200000).toISOString(), metricAtTrigger: [{ label: "Days", value: 12, unit: "days" }] },
-  { id: "a10", severity: "warning", ruleType: "latency", message: "Admin Dashboard slow page load detected — 3.2s TTFB", status: "acknowledged", createdAt: new Date(Date.now() - 2700000).toISOString(), metricAtTrigger: [{ label: "TTFB", value: 3200, unit: "ms" }] },
-];
-
 function timeAgo(dateStr: string): string {
   const diff = Date.now() - new Date(dateStr).getTime();
   const mins = Math.floor(diff / 60000);
@@ -131,10 +117,10 @@ export default function AiOpsAlertsFeed({ projectId }: Props) {
             }))
           );
         } else {
-          setAlerts(projectId ? [] : MOCK_ALERTS);
+          setAlerts([]);
         }
       } catch {
-        setAlerts(projectId ? [] : MOCK_ALERTS);
+        setAlerts([]);
       } finally {
         setLoading(false);
       }
@@ -146,7 +132,7 @@ export default function AiOpsAlertsFeed({ projectId }: Props) {
     try {
       await alertApi.acknowledgeAlert(alertId);
     } catch {
-      // ignore in demo
+      // Keep the optimistic local update even if the API call fails.
     }
     setAlerts((prev) =>
       prev.map((a) => (a.id === alertId ? { ...a, status: "acknowledged" as const } : a))
@@ -210,10 +196,15 @@ export default function AiOpsAlertsFeed({ projectId }: Props) {
             <div className="h-5 w-5 animate-spin rounded-full border-2 border-cyan-400 border-t-transparent" />
             <span className="ml-3 text-sm text-slate-500">Loading alerts...</span>
           </div>
+        ) : !projectId ? (
+          <div className="flex flex-col items-center justify-center py-10 text-center">
+            <Bell className="h-8 w-8 text-slate-600 mb-2" />
+            <p className="text-sm text-slate-500">Select a project to view its alerts.</p>
+          </div>
         ) : filteredAlerts.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-10">
             <CheckCircle2 className="h-8 w-8 text-emerald-500/50 mb-2" />
-            <p className="text-sm text-slate-500">No alerts matching filter</p>
+            <p className="text-sm text-slate-500">No alerts have been recorded for this project yet.</p>
           </div>
         ) : (
           filteredAlerts.map((alert, index) => {
