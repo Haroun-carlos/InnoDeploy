@@ -29,6 +29,9 @@ const DEPLOY_CANARY_ERROR_RATE_THRESHOLD = Math.max(
 const DEPLOY_BLUE_GREEN_DRAIN_MS = Math.max(1000, Number(process.env.DEPLOY_BLUE_GREEN_DRAIN_MS) || 60000);
 const DEPLOY_HEALTHCHECK_INTERVAL_MS = Math.max(1000, Number(process.env.DEPLOY_HEALTHCHECK_INTERVAL_MS) || 5000);
 const DEPLOY_HEALTHCHECK_ATTEMPTS = Math.max(1, Number(process.env.DEPLOY_HEALTHCHECK_ATTEMPTS) || 5);
+// The project container installs deps, builds, and boots on startup, which can take
+// minutes — so the first-boot health gate needs many more attempts than a routine check.
+const DEPLOY_BOOT_HEALTHCHECK_ATTEMPTS = Math.max(1, Number(process.env.DEPLOY_BOOT_HEALTHCHECK_ATTEMPTS) || 120);
 const TRAEFIK_ROUTE_EVENTS_CHANNEL = String(process.env.TRAEFIK_ROUTE_EVENTS_CHANNEL || "traefik:route-events");
 const REDIS_URL = process.env.REDIS_URL || "redis://localhost:6379";
 const DEPLOY_AUTO_ROLLBACK = TRUE_VALUES.has(
@@ -166,6 +169,192 @@ const cloneProjectWorkspace = async ({ project, deploymentId }) => {
   return { workspaceRoot, appWorkspace, repositoryPath, projectSlug };
 };
 
+const fileExists = async (filePath) => {
+  try {
+    await fs.access(filePath);
+    return true;
+  } catch {
+    return false;
+  }
+};
+
+const projectDependsOnNext = async (appWorkspace) => {
+  try {
+    const pkgRaw = await fs.readFile(path.join(appWorkspace, "package.json"), "utf8");
+    const pkg = JSON.parse(pkgRaw);
+    const deps = { ...(pkg.dependencies || {}), ...(pkg.devDependencies || {}) };
+    return Boolean(deps.next);
+  } catch {
+    return false;
+  }
+};
+
+const NEXT_CONFIG_CANDIDATES = ["next.config.js", "next.config.cjs", "next.config.mjs", "next.config.ts"];
+
+// Rewrites the project's Next.js config so the app is served under `basePath`.
+// Each project is exposed at /sites/<slug>; with basePath set, Next emits every
+// route and asset URL (/sites/<slug>/_next/...) under that prefix, so the app works
+// WITHOUT the prefix being stripped. The original config is preserved and merged.
+// No-op for non-Next projects. Returns true when basePath was applied (Next app).
+const applyNextBasePath = async ({ appWorkspace, basePath }) => {
+  const normalizedBase = String(basePath || "").replace(/\/+$/, "");
+  if (!normalizedBase) return false;
+
+  let configFile = null;
+  for (const candidate of NEXT_CONFIG_CANDIDATES) {
+    if (await fileExists(path.join(appWorkspace, candidate))) {
+      configFile = candidate;
+      break;
+    }
+  }
+
+  const isNext = await projectDependsOnNext(appWorkspace);
+  if (!configFile && !isNext) {
+    return false;
+  }
+
+  if (!configFile) {
+    // Next app with no config file — create a minimal one.
+    await fs.writeFile(
+      path.join(appWorkspace, "next.config.js"),
+      `module.exports = { basePath: ${JSON.stringify(normalizedBase)} };\n`
+    );
+    return true;
+  }
+
+  const ext = path.extname(configFile);
+  const isEsm = ext === ".mjs" || ext === ".ts";
+  const originalName = `next.config.inno-original${ext === ".js" ? ".cjs" : ext}`;
+  await fs.rename(path.join(appWorkspace, configFile), path.join(appWorkspace, originalName));
+
+  if (isEsm) {
+    const wrapperName = ext === ".ts" ? "next.config.ts" : "next.config.mjs";
+    await fs.writeFile(
+      path.join(appWorkspace, wrapperName),
+      [
+        `const __innoBasePath = ${JSON.stringify(normalizedBase)};`,
+        `export default async (phase, ctx) => {`,
+        `  const mod = await import(${JSON.stringify("./" + originalName)});`,
+        `  const original = mod.default ?? mod;`,
+        `  const resolved = typeof original === "function" ? await original(phase, ctx) : original;`,
+        `  return { ...(resolved || {}), basePath: __innoBasePath };`,
+        `};`,
+        ``,
+      ].join("\n")
+    );
+  } else {
+    await fs.writeFile(
+      path.join(appWorkspace, "next.config.js"),
+      [
+        `const __innoBasePath = ${JSON.stringify(normalizedBase)};`,
+        `const __innoOriginal = require(${JSON.stringify("./" + originalName)});`,
+        `module.exports = async (phase, ctx) => {`,
+        `  const base = typeof __innoOriginal === "function"`,
+        `    ? await __innoOriginal(phase, ctx)`,
+        `    : (__innoOriginal && __innoOriginal.default) || __innoOriginal;`,
+        `  return { ...(base || {}), basePath: __innoBasePath };`,
+        `};`,
+        ``,
+      ].join("\n")
+    );
+  }
+
+  return true;
+};
+
+// Clones the repo, then launches a persistent project container wired to Traefik so
+// the app is served at https://<host>/sites/<slug>. The container installs deps,
+// builds, and runs the start command on boot. Returns once the app passes its
+// health gate. This is the real CD action behind a deployment run.
+const launchProjectContainer = async ({ project, deployment }) => {
+  const { workspaceRoot, appWorkspace, projectSlug } = await cloneProjectWorkspace({
+    project,
+    deploymentId: deployment._id,
+  });
+
+  const basePath = `/sites/${projectSlug}`;
+  // Next.js apps are served under basePath (no prefix stripping); everything else
+  // gets the prefix stripped so it can serve from "/".
+  const isNextApp = await applyNextBasePath({ appWorkspace, basePath });
+
+  const containerName = `innodeploy-${projectSlug}`;
+  const routeName = `project-${projectSlug}`;
+  const startCommand = String(project.startCommand || "").trim() || "npm start";
+  const appWorkdir = appWorkspace === workspaceRoot
+    ? "/workspace"
+    : `/workspace/${normalizeRepositoryPath(project.repositoryPath)}`;
+
+  await removeExistingProjectContainer(containerName);
+
+  const labels = {
+    "traefik.enable": "true",
+    [`traefik.http.routers.${routeName}.rule`]: `Host(\`${PROJECT_SITE_HOST}\`) && PathPrefix(\`${basePath}\`)`,
+    [`traefik.http.routers.${routeName}.entrypoints`]: "websecure",
+    [`traefik.http.routers.${routeName}.tls`]: "true",
+    [`traefik.http.routers.${routeName}.tls.certresolver`]: "letsencrypt",
+    [`traefik.http.routers.${routeName}.priority`]: "250",
+    [`traefik.http.services.${routeName}.loadbalancer.server.port`]: "3000",
+    "innodeploy.projectId": String(project._id),
+    "innodeploy.deploymentId": String(deployment._id),
+  };
+
+  if (!isNextApp) {
+    // Non-Next app: strip /sites/<slug> so the app can serve from root.
+    labels[`traefik.http.routers.${routeName}.middlewares`] = `${routeName}-strip`;
+    labels[`traefik.http.middlewares.${routeName}-strip.stripprefix.prefixes`] = basePath;
+  }
+
+  const container = await getDockerClient().createContainer({
+    name: containerName,
+    Image: "node:20-alpine",
+    Cmd: [
+      "sh",
+      "-lc",
+      [
+        "set -e",
+        'cd "$APP_WORKDIR"',
+        'if [ -n "$APP_INSTALL_COMMAND" ]; then sh -lc "$APP_INSTALL_COMMAND"; else (npm ci || npm install); fi',
+        'if [ -n "$APP_BUILD_COMMAND" ]; then sh -lc "$APP_BUILD_COMMAND"; fi',
+        'exec sh -lc "$APP_START_COMMAND"',
+      ].join(" && "),
+    ],
+    Env: [
+      "NODE_ENV=production",
+      "PORT=3000",
+      "HOST=0.0.0.0",
+      `APP_WORKDIR=${appWorkdir}`,
+      `APP_INSTALL_COMMAND=${String(project.installCommand || "").trim()}`,
+      `APP_BUILD_COMMAND=${String(project.buildCommand || "").trim()}`,
+      `APP_START_COMMAND=${startCommand}`,
+    ],
+    ExposedPorts: { "3000/tcp": {} },
+    HostConfig: {
+      Binds: [`${workspaceRoot}:/workspace`],
+      NetworkMode: "innodeploy-net",
+      RestartPolicy: { Name: "unless-stopped" },
+    },
+    Labels: labels,
+  });
+
+  await container.start();
+
+  // Next apps respond under basePath ("/sites/<slug>"); others respond at "/".
+  const healthPath = isNextApp ? basePath : "";
+  const healthy = await waitForHealthGate(
+    `http://${containerName}:3000${healthPath}`,
+    DEPLOY_BOOT_HEALTHCHECK_ATTEMPTS
+  );
+  if (!healthy) {
+    throw new Error(`project container failed to become healthy for ${project.name}`);
+  }
+
+  return {
+    containerName,
+    projectSlug,
+    publicUrl: `https://${PROJECT_SITE_HOST}${basePath}`,
+  };
+};
+
 const isValidObjectId = (value) => mongoose.Types.ObjectId.isValid(value);
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -197,8 +386,8 @@ const checkHealth = async (url) => {
   }
 };
 
-const waitForHealthGate = async (url) => {
-  for (let attempt = 1; attempt <= DEPLOY_HEALTHCHECK_ATTEMPTS; attempt += 1) {
+const waitForHealthGate = async (url, attempts = DEPLOY_HEALTHCHECK_ATTEMPTS) => {
+  for (let attempt = 1; attempt <= attempts; attempt += 1) {
     if (await checkHealth(url)) {
       return true;
     }
@@ -815,6 +1004,50 @@ const processDeploymentRun = async (runId) => {
 
     await triggerAutoRollback(run);
     return;
+  }
+
+  run = await Pipeline.findById(runId);
+  if (!run) return;
+
+  // Strategy timeline finished — now actually build & launch the routed container
+  // so the app is reachable at /sites/<slug>. This is the step that turns the
+  // placeholder into the real running project.
+  if (run.status !== "cancelled") {
+    try {
+      const { publicUrl } = await launchProjectContainer({ project, deployment: run });
+      await appendDeploymentLog({
+        run,
+        projectId: project._id,
+        level: "info",
+        message: `Project container is live at ${publicUrl}`,
+      });
+    } catch (error) {
+      run = await Pipeline.findById(runId);
+      if (!run) return;
+
+      run.status = "failed";
+      run.duration = Date.now() - startedAt;
+      if (run.steps.length > 0) {
+        const lastStep = run.steps[run.steps.length - 1];
+        lastStep.status = "failed";
+        lastStep.output = clampOutput(`${lastStep.output || ""}\n${error.message}`.trim());
+      }
+      await run.save();
+
+      project.status = "failed";
+      await project.save();
+
+      await emitRunSnapshot(run._id, "deploy-step-failed");
+      await appendDeploymentLog({
+        run,
+        projectId: project._id,
+        level: "error",
+        message: `${run.runType} failed while launching container: ${error.message}`,
+      });
+
+      await triggerAutoRollback(run);
+      return;
+    }
   }
 
   run = await Pipeline.findById(runId);

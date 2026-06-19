@@ -17,6 +17,8 @@ const Pipeline = require("../models/Pipeline");
 const Project = require("../models/Project");
 const { uploadJsonArtifact } = require("./objectStore");
 const { dequeuePipelineRun, bootstrapPendingRuns } = require("./pipelineQueue");
+const { enqueueDeploymentRun } = require("./deploymentQueue");
+const { buildDeploymentSteps } = require("../utils/deploymentStrategy");
 const { emitPipelineUpdate } = require("./pipelineEvents");
 
 const TRUE_VALUES = new Set(["1", "true", "yes", "on"]);
@@ -247,9 +249,9 @@ const createPipelineFromJob = async (job) => {
   } else if (project && project.setupMode === 'automatic') {
     // Build steps from project's custom commands if available
     const autoSteps = [];
+    // Pipeline is CI only (install + build). Start/serving is the deploy worker's job.
     if (project.installCommand) autoSteps.push({ name: "Install", command: project.installCommand });
     if (project.buildCommand) autoSteps.push({ name: "Build", command: project.buildCommand });
-    if (project.startCommand) autoSteps.push({ name: "Start", command: project.startCommand });
     steps = autoSteps.length > 0 ? autoSteps : [
       { name: "Install", command: "echo install" },
       { name: "Test", command: "echo test" },
@@ -714,6 +716,33 @@ const markRemainingStepsSkipped = (run, fromIndex) => {
   }
 };
 
+// After a pipeline (CI) run succeeds, create a deployment (CD) run and enqueue it
+// for the deploy worker, which launches the persistent, Traefik-routed container.
+const enqueueDeploymentForPipeline = async (pipelineRun) => {
+  try {
+    const strategy = String(pipelineRun.strategy || "rolling");
+    const deploymentRun = await Pipeline.create({
+      projectId: pipelineRun.projectId,
+      version: pipelineRun.version,
+      strategy,
+      runType: "deployment",
+      status: "pending",
+      branch: pipelineRun.branch || "main",
+      triggeredBy: pipelineRun.triggeredBy || "pipeline",
+      environment: pipelineRun.environment || "production",
+      duration: 0,
+      steps: buildDeploymentSteps({ strategy, runType: "deployment" }),
+      config: pipelineRun.config || "",
+    });
+
+    await enqueueDeploymentRun(deploymentRun._id);
+    return deploymentRun;
+  } catch (error) {
+    console.error("Pipeline Runner: failed to auto-enqueue deployment:", error?.message || error);
+    return null;
+  }
+};
+
 const simulatePipelineRun = async (runId) => {
   const startedAt = Date.now();
   let run = await Pipeline.findById(runId);
@@ -1038,6 +1067,11 @@ const processPipelineRun = async (runId) => {
   run.duration = Date.now() - startedAt;
   await run.save();
   await emitRunSnapshot(run._id, "run-success");
+
+  // CI succeeded → hand off to CD so the app actually gets deployed and served.
+  if (run.status === "success") {
+    await enqueueDeploymentForPipeline(run);
+  }
 };
 
 const startPipelineRunner = async () => {

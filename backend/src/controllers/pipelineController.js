@@ -140,16 +140,15 @@ const triggerPipelineRun = async (req, res, next) => {
     } else if (configSteps.length > 0) {
       selectedSteps = configSteps.map(normalizeStep);
     } else if (!isManualMode) {
-      // Automatic mode: build steps from project's custom commands or use defaults
+      // Automatic mode: build steps from project's custom commands or use defaults.
+      // NOTE: the pipeline is CI only (install + build). The long-running start
+      // command is intentionally NOT a pipeline step — it would never exit inside
+      // the ephemeral build container and hang the run. Starting/serving the app
+      // is handled by the deploy worker, which launches a persistent container.
       const autoSteps = [];
-      if (project.installCommand) {
-        autoSteps.push(normalizeStep({ name: "install", command: project.installCommand }));
-      }
+      autoSteps.push(normalizeStep({ name: "install", command: project.installCommand || "npm install" }));
       if (project.buildCommand) {
         autoSteps.push(normalizeStep({ name: "build", command: project.buildCommand }));
-      }
-      if (project.startCommand) {
-        autoSteps.push(normalizeStep({ name: "start", command: project.startCommand }));
       }
       selectedSteps = autoSteps.length > 0 ? autoSteps : getDefaultSteps(project.branch || "main", project.repoUrl);
     } else {
