@@ -181,7 +181,7 @@ export const hostApi = {
 };
 
 export const pipelineApi = {
-  triggerRun: (projectId: string, payload: { branch?: string; config?: string }) =>
+  triggerRun: (projectId: string, payload: { branch?: string; config?: string; environment?: string }) =>
     apiClient.post(`/projects/${projectId}/pipelines`, payload),
 
   listProjectRuns: (projectId: string) => apiClient.get(`/projects/${projectId}/pipelines`),
