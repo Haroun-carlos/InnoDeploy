@@ -114,9 +114,11 @@ services:
     command: ["node", "src/workers/pipelineRunnerMain.js"]
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+      - /opt/innodeploy/workspaces:/opt/innodeploy/workspaces
     environment:
       PIPELINE_RUNNER_ENABLED: "true"
       OBJECT_STORE_ENABLED: "true"
+      PROJECT_WORKSPACES_DIR: /opt/innodeploy/workspaces
     env_file:
       - ../backend/.env
     depends_on:

@@ -1,5 +1,4 @@
 const fs = require("fs/promises");
-const os = require("os");
 const path = require("path");
 const { spawn } = require("child_process");
 const { PassThrough } = require("stream");
@@ -649,7 +648,15 @@ const emitRunSnapshot = async (runId, event) => {
 };
 
 const prepareWorkspace = async ({ runId, project, branch }) => {
-  const rootWorkspace = path.join(os.tmpdir(), "innodeploy-runs");
+  // Must be a directory that is shared with the host (identical path inside the
+  // runner container and on the host), so that the sibling build container's
+  // `docker run -v <path>:/workspace` bind mount — resolved by the host daemon —
+  // actually contains the cloned repo. os.tmpdir() lives only inside this
+  // container and would mount as an empty dir, causing npm ENOENT package.json.
+  const rootWorkspace = path.join(
+    process.env.PROJECT_WORKSPACES_DIR || "/opt/innodeploy/workspaces",
+    "pipeline-runs"
+  );
   const runWorkspace = path.join(rootWorkspace, runId);
 
   await fs.rm(runWorkspace, { recursive: true, force: true });
