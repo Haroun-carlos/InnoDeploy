@@ -29,6 +29,11 @@ type GithubApiError = {
   };
 };
 
+type GithubDirectoriesResponse = {
+  directories: string[];
+  branch?: string;
+};
+
 const GITHUB_INSTALLATIONS_URL = "https://github.com/settings/installations";
 
 export default function DeployWebApplicationView() {
@@ -43,6 +48,8 @@ export default function DeployWebApplicationView() {
   // Setup configuration step
   const [selectedRepo, setSelectedRepo] = useState<GithubRepository | null>(null);
   const [repositoryPath, setRepositoryPath] = useState('');
+  const [repositoryDirectories, setRepositoryDirectories] = useState<string[]>([]);
+  const [directoriesLoading, setDirectoriesLoading] = useState(false);
   const [setupMode, setSetupMode] = useState<'automatic' | 'manual'>('automatic');
   const [installCommand, setInstallCommand] = useState('');
   const [buildCommand, setBuildCommand] = useState('');
@@ -112,12 +119,34 @@ export default function DeployWebApplicationView() {
   const handleSelectRepository = async (repo: GithubRepository) => {
     setSelectedRepo(repo);
     setError("");
+    setRepositoryPath("");
+    setRepositoryDirectories([]);
+    setDirectoriesLoading(true);
+
+    try {
+      const [owner, repoName] = repo.fullName.split("/");
+      const { data } = await githubApi.listRepositoryDirectories(owner, repoName, repo.defaultBranch || "main");
+      const payload = data as GithubDirectoriesResponse;
+      const directories = Array.isArray(payload.directories) ? payload.directories : [];
+      setRepositoryDirectories(directories);
+      if (directories.length === 1) {
+        setRepositoryPath(directories[0]);
+      }
+    } catch (err: unknown) {
+      const apiErr = err as GithubApiError;
+      setError(apiErr.response?.data?.message || "Unable to load repository directories.");
+      setRepositoryDirectories([""]);
+    } finally {
+      setDirectoriesLoading(false);
+    }
   };
 
   const handleBackToRepos = () => {
     setSelectedRepo(null);
     setError("");
     setRepositoryPath('');
+    setRepositoryDirectories([]);
+    setDirectoriesLoading(false);
     setSetupMode('automatic');
     setInstallCommand('');
     setBuildCommand('');
@@ -193,15 +222,25 @@ export default function DeployWebApplicationView() {
               {/* Repository subdirectory */}
               <div>
                 <label className="block text-sm font-medium text-slate-300 mb-1">Repository Subdirectory</label>
-                <input
-                  type="text"
+                <select
                   value={repositoryPath}
                   onChange={(e) => setRepositoryPath(e.target.value)}
-                  placeholder="apps/web"
-                  className="w-full rounded-md border border-slate-600/50 bg-[#091d3b] px-3 py-2 text-sm text-slate-100 placeholder:text-slate-500 outline-none focus:border-emerald-400"
-                />
+                  disabled={directoriesLoading}
+                  className="w-full rounded-md border border-slate-600/50 bg-[#091d3b] px-3 py-2 text-sm text-slate-100 outline-none focus:border-emerald-400 disabled:opacity-70"
+                >
+                  <option value="">Repository root</option>
+                  {repositoryDirectories
+                    .filter((directory) => directory !== "")
+                    .map((directory) => (
+                      <option key={directory} value={directory}>
+                        {directory}
+                      </option>
+                    ))}
+                </select>
                 <p className="mt-1 text-xs text-slate-400">
-                  Optional. Leave blank to deploy from the repository root.
+                  {directoriesLoading
+                    ? "Loading subdirectories from the repository..."
+                    : "Choose the subdirectory that contains the app, or leave it on repository root."}
                 </p>
               </div>
 

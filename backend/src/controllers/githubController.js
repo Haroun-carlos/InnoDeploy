@@ -72,6 +72,88 @@ const listRepositories = async (req, res, next) => {
   }
 };
 
+const listRepositoryDirectories = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.user.id).select("+github.accessToken github.username");
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const githubAccessToken = user.github?.accessToken;
+    if (!githubAccessToken) {
+      return res.status(409).json({
+        message: "GitHub account is not connected",
+        connectUrl: buildGithubConnectUrl(user._id.toString()),
+      });
+    }
+
+    const owner = String(req.params.owner || "").trim();
+    const repo = String(req.params.repo || "").trim();
+    const branch = String(req.query.branch || "main").trim() || "main";
+
+    if (!owner || !repo) {
+      return res.status(400).json({ message: "Repository owner and name are required" });
+    }
+
+    const treeResponse = await fetch(
+      `https://api.github.com/repos/${encodeURIComponent(owner)}/${encodeURIComponent(repo)}/git/trees/${encodeURIComponent(branch)}?recursive=1`,
+      {
+        headers: {
+          Authorization: `Bearer ${githubAccessToken}`,
+          Accept: "application/vnd.github+json",
+          "User-Agent": "InnoDeploy",
+          "X-GitHub-Api-Version": "2022-11-28",
+        },
+      }
+    );
+
+    if (!treeResponse.ok) {
+      const status = treeResponse.status;
+      if (status === 401 || status === 403) {
+        return res.status(409).json({
+          message: "GitHub connection expired. Please reconnect.",
+          connectUrl: buildGithubConnectUrl(user._id.toString()),
+        });
+      }
+
+      const details = await treeResponse.text();
+      return res.status(502).json({ message: `Failed to load repository tree from GitHub: ${details}` });
+    }
+
+    const payload = await treeResponse.json();
+    const tree = Array.isArray(payload.tree) ? payload.tree : [];
+    const directories = new Set([""]);
+
+    for (const entry of tree) {
+      if (!entry || entry.type !== "tree" || typeof entry.path !== "string") {
+        continue;
+      }
+
+      const normalized = entry.path.replace(/^\/+/, "").replace(/\/+$/, "");
+      if (!normalized) {
+        continue;
+      }
+
+      const parts = normalized.split("/");
+      for (let index = 1; index <= parts.length; index += 1) {
+        const nextPath = parts.slice(0, index).join("/");
+        if (nextPath) {
+          directories.add(nextPath);
+        }
+      }
+    }
+
+    return res.json({
+      directories: Array.from(directories).sort((a, b) => a.localeCompare(b)),
+      githubUsername: user.github?.username || null,
+      branch,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   listRepositories,
+  listRepositoryDirectories,
 };

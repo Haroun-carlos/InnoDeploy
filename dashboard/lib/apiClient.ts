@@ -301,6 +301,10 @@ export const settingsApi = {
 
 export const githubApi = {
   listRepositories: () => apiClient.get("/github/repositories"),
+  listRepositoryDirectories: (owner: string, repo: string, branch?: string) =>
+    apiClient.get(`/github/repositories/${encodeURIComponent(owner)}/${encodeURIComponent(repo)}/directories`, {
+      params: branch ? { branch } : undefined,
+    }),
 };
 
 export const adminApi = {
