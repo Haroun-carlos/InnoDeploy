@@ -284,9 +284,6 @@ const launchProjectContainer = async ({ project, deployment }) => {
   const containerName = `innodeploy-${projectSlug}`;
   const routeName = `project-${projectSlug}`;
   const startCommand = String(project.startCommand || "").trim() || "npm start";
-  const appWorkdir = appWorkspace === workspaceRoot
-    ? "/workspace"
-    : `/workspace/${normalizeRepositoryPath(project.repositoryPath)}`;
 
   await removeExistingProjectContainer(containerName);
 
@@ -316,7 +313,7 @@ const launchProjectContainer = async ({ project, deployment }) => {
       "-lc",
       [
         "set -e",
-        'cd "$APP_WORKDIR"',
+        "cd /app",
         'if [ -n "$APP_INSTALL_COMMAND" ]; then sh -lc "$APP_INSTALL_COMMAND"; else (npm ci || npm install); fi',
         'if [ -n "$APP_BUILD_COMMAND" ]; then sh -lc "$APP_BUILD_COMMAND"; fi',
         'exec sh -lc "$APP_START_COMMAND"',
@@ -326,19 +323,32 @@ const launchProjectContainer = async ({ project, deployment }) => {
       "NODE_ENV=production",
       "PORT=3000",
       "HOST=0.0.0.0",
-      `APP_WORKDIR=${appWorkdir}`,
       `APP_INSTALL_COMMAND=${String(project.installCommand || "").trim()}`,
       `APP_BUILD_COMMAND=${String(project.buildCommand || "").trim()}`,
       `APP_START_COMMAND=${startCommand}`,
     ],
+    WorkingDir: "/app",
     ExposedPorts: { "3000/tcp": {} },
     HostConfig: {
-      Binds: [`${workspaceRoot}:/workspace`],
       NetworkMode: PROJECT_NETWORK,
       RestartPolicy: { Name: "unless-stopped" },
     },
     Labels: labels,
   });
+
+  // Bake the cloned + basePath-injected app into the container's own filesystem
+  // with `docker cp` instead of bind-mounting a host path. This sidesteps
+  // Docker-in-Docker path sharing entirely — the files live inside the container,
+  // so /app is never empty regardless of what happens to the host workspace dir.
+  const copyResult = await runProcess({
+    command: "docker",
+    args: ["cp", appWorkspace, `${containerName}:/app`],
+    shell: false,
+  });
+  if (!copyResult.success) {
+    await removeExistingProjectContainer(containerName);
+    throw new Error(`failed to copy app into project container: ${copyResult.output}`);
+  }
 
   await container.start();
 
