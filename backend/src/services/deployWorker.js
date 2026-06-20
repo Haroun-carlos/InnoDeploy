@@ -342,7 +342,9 @@ const launchProjectContainer = async ({ project, deployment }) => {
   // so /app is never empty regardless of what happens to the host workspace dir.
   const copyResult = await runProcess({
     command: "docker",
-    args: ["cp", appWorkspace, `${containerName}:/app`],
+    // Trailing "/." copies the CONTENTS of the source into /app. Without it, since
+    // WorkingDir creates /app first, docker cp would nest files at /app/<dir>/...
+    args: ["cp", `${appWorkspace}/.`, `${containerName}:/app`],
     shell: false,
   });
   if (!copyResult.success) {
