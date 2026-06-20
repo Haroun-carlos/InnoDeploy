@@ -314,13 +314,16 @@ const launchProjectContainer = async ({ project, deployment }) => {
       [
         "set -e",
         "cd /app",
+        // install + build need devDependencies (autoprefixer, tailwind, typescript,
+        // etc.), so they must NOT run under NODE_ENV=production, which omits devDeps.
+        // NODE_ENV=production is set only for the runtime start command below.
         'if [ -n "$APP_INSTALL_COMMAND" ]; then sh -lc "$APP_INSTALL_COMMAND"; else (npm ci || npm install); fi',
         'if [ -n "$APP_BUILD_COMMAND" ]; then sh -lc "$APP_BUILD_COMMAND"; fi',
+        "export NODE_ENV=production",
         'exec sh -lc "$APP_START_COMMAND"',
       ].join(" && "),
     ],
     Env: [
-      "NODE_ENV=production",
       "PORT=3000",
       "HOST=0.0.0.0",
       `APP_INSTALL_COMMAND=${String(project.installCommand || "").trim()}`,
