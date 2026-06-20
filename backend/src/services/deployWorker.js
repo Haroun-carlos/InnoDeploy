@@ -44,6 +44,10 @@ const DEPLOY_STEP_TIMEOUT_MS = Math.max(1000, Number(process.env.DEPLOY_STEP_TIM
 const MAX_STEP_OUTPUT_LENGTH = 60_000;
 const PROJECT_WORKSPACES_DIR = String(process.env.PROJECT_WORKSPACES_DIR || "/opt/innodeploy/workspaces");
 const PROJECT_SITE_HOST = String(process.env.PROJECT_SITE_HOST || process.env.TRAEFIK_APP_HOST || "inverp.cloud").trim() || "inverp.cloud";
+// The Docker network Traefik and the app containers share. Compose prefixes network
+// names with the project folder unless pinned, so allow an override (e.g. set
+// DEPLOY_NETWORK=docker_innodeploy-net) without recreating the whole stack.
+const PROJECT_NETWORK = String(process.env.DEPLOY_NETWORK || "innodeploy-net").trim() || "innodeploy-net";
 let dockerClient = null;
 
 const clampOutput = (output) => {
@@ -330,7 +334,7 @@ const launchProjectContainer = async ({ project, deployment }) => {
     ExposedPorts: { "3000/tcp": {} },
     HostConfig: {
       Binds: [`${workspaceRoot}:/workspace`],
-      NetworkMode: "innodeploy-net",
+      NetworkMode: PROJECT_NETWORK,
       RestartPolicy: { Name: "unless-stopped" },
     },
     Labels: labels,

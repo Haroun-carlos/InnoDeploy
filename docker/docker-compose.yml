@@ -262,4 +262,8 @@ volumes:
 
 networks:
   innodeploy-net:
+    # Pin the network name so it is NOT prefixed with the compose project folder
+    # (e.g. "docker_innodeploy-net"). The deploy worker attaches project containers
+    # to "innodeploy-net" by name, so this must match exactly.
+    name: innodeploy-net
     driver: bridge
